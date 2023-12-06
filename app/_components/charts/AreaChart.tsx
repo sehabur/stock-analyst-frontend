@@ -1,20 +1,30 @@
 'use client';
 import React, { useRef, useEffect } from 'react';
 import { createChart, ColorType } from 'lightweight-charts';
-import { useTheme } from '@mui/material';
+import { useTheme, useMediaQuery } from '@mui/material';
 import { alpha } from '@mui/system';
 import './tooltip.css';
+import { DateTime } from 'luxon';
 
 interface AreaChartProps {
   data: { time: string; value: number }[];
   color: string;
+  fullWidth?: Boolean;
+  height: number;
 }
 
 export default function AreaChart(props: AreaChartProps) {
-  const { data, color } = props;
-  console.log(data);
-  const theme = useTheme();
+  const { data, color, fullWidth = false, height } = props;
 
+  const theme = useTheme();
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+  let fitContent: Boolean;
+  if (fullWidth) {
+    fitContent = fullWidth;
+  } else {
+    fitContent = matchesSmDown;
+  }
   const chartContainerRef: { current: any } = useRef(null);
   const chart: { current: any } = useRef(null);
   const tooltip: { current: any } = useRef(null);
@@ -37,12 +47,16 @@ export default function AreaChart(props: AreaChartProps) {
       rightPriceScale: {
         borderVisible: false,
         scaleMargins: {
-          top: 0,
+          top: 0.05,
           bottom: 0.3,
         },
       },
+
       timeScale: {
         borderVisible: false,
+        timeVisible: true,
+        rightOffset: 5,
+        barSpacing: 648 / data.length,
       },
       crosshair: {
         horzLine: {
@@ -62,7 +76,7 @@ export default function AreaChart(props: AreaChartProps) {
         },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height,
     });
 
     const series = chart.current.addAreaSeries({
@@ -70,11 +84,14 @@ export default function AreaChart(props: AreaChartProps) {
       topColor: alpha(color, 0.7),
       bottomColor: alpha(color, 0),
       lineWidth: 2,
+      priceLineVisible: false,
     });
 
     series.setData(data);
 
-    chart.current.timeScale().fitContent();
+    if (fitContent) {
+      chart.current.timeScale().fitContent();
+    }
 
     const toolTipWidth = 80;
     const toolTipHeight = 80;
@@ -82,7 +99,7 @@ export default function AreaChart(props: AreaChartProps) {
 
     tooltip.current = document.createElement('div');
 
-    tooltip.current.className = 'custom-tooltip';
+    tooltip.current.className = 'custom-tooltip area-chart';
     tooltip.current.style.background = 'white';
 
     chartContainerRef.current.appendChild(tooltip.current);
@@ -99,11 +116,14 @@ export default function AreaChart(props: AreaChartProps) {
       ) {
         tooltip.current.style.display = 'none';
       } else {
-        const dateStr = param.time;
+        const dateStr = DateTime.fromSeconds(param.time)
+          .minus({ hours: 6 })
+          .toFormat('yyyy-MM-dd HH:mm');
+
         tooltip.current.style.display = 'block';
         const data = param.seriesData.get(series);
         const price = data.value !== undefined ? data.value : data.close;
-        tooltip.current.innerHTML = `<div><div style="color: ${'#2962FF'}">Apple Inc.</div><div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
+        tooltip.current.innerHTML = `<div><div style="color: #2962FF">Index value</div><div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">
                 ${Math.round(100 * price) / 100}
                 </div><div style="color: ${'black'}">
                 ${dateStr}
@@ -127,14 +147,14 @@ export default function AreaChart(props: AreaChartProps) {
 
     return () => {
       if (chart.current) {
-        chart.current.remove();
+        chart?.current?.remove();
       }
-      if (tooltip.current) {
+      if (tooltip?.current) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        chartContainerRef.current.removeChild(tooltip.current);
+        chartContainerRef?.current?.removeChild(tooltip.current);
       }
     };
-  }, [color, data, theme]);
+  }, [color, data, fullWidth, height, theme]);
 
-  return <div ref={chartContainerRef} className="candle-chart"></div>;
+  return <div ref={chartContainerRef} className="chart-container"></div>;
 }

@@ -2,37 +2,79 @@ import PieChart from '@/components/charts/PieChart';
 import { Box } from '@mui/material';
 import { Paper, Grid, Typography, Stack, Button, Chip } from '@mui/material';
 import Link from 'next/link';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
-export default function MarketMoverChart() {
-  const data = [31, 44, 56];
-  const colors = ['#f23645', '#2962ff', '#089981'];
-  const labels = ['a', 'b', 'c'];
+import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
+import KeyboardDoubleArrowDownRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowDownRounded';
+import PauseCircleOutlineRoundedIcon from '@mui/icons-material/PauseCircleOutlineRounded';
+
+export default function MarketMoverChart({ data }: any) {
+  const colors = ['#24b29b', '#448aff', '#ff4081'];
+  const labels = ['Uptrend', 'Neutral', 'Downtrend'];
   return (
-    <Box>
-      <Stack direction="row" alignItems="center" sx={{ mt: 1, mb: 2 }}>
-        <KeyboardDoubleArrowUpIcon
-          sx={{ color: 'success.main', fontSize: '1.3rem' }}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        p: 2,
+      }}
+    >
+      <Typography
+        color="text.primary"
+        sx={{ fontSize: '1.4rem', ml: 1, mt: 1 }}
+      >
+        Market trend
+      </Typography>
+      <Stack direction="row" alignItems="center" sx={{ mt: 1, mb: 2, ml: 1 }}>
+        <KeyboardDoubleArrowUpRoundedIcon
+          sx={{ color: colors[0], fontSize: '2rem', mr: 1 }}
         />
-        <Typography sx={{ color: 'success.main', mr: 3, fontSize: '1.3rem' }}>
-          data.uptrend
+        <Typography
+          sx={{
+            color: colors[0],
+            fontWeight: 700,
+            mr: 5,
+            fontSize: '2rem',
+          }}
+        >
+          {data.issuesAdvanced}
         </Typography>
-        <PauseCircleOutlineIcon
-          sx={{ color: 'primary.main', mr: 0.5, fontSize: '1.3rem' }}
+        <PauseCircleOutlineRoundedIcon
+          sx={{ color: colors[1], mr: 1, fontSize: '1.8rem' }}
         />
-        <Typography sx={{ color: 'primary.main', mr: 3, fontSize: '1.3rem' }}>
-          data.neutral
+        <Typography
+          sx={{
+            color: colors[1],
+            mr: 5,
+            fontSize: '2rem',
+            fontWeight: 700,
+          }}
+        >
+          {data.issuesUnchanged}
         </Typography>
-        <KeyboardDoubleArrowDownIcon
-          sx={{ color: 'error.main', fontSize: '1.3rem' }}
+        <KeyboardDoubleArrowDownRoundedIcon
+          sx={{ color: colors[2], fontSize: '2rem', mr: 1 }}
         />
-        <Typography sx={{ color: 'error.main', fontSize: '1.3rem' }}>
-          data.downtred
+        <Typography
+          sx={{ color: colors[2], fontSize: '2rem', fontWeight: 700 }}
+        >
+          {data.issuesDeclined}
         </Typography>
       </Stack>
-      <PieChart data={data} colors={colors} labels={labels} />
+      <Box>
+        <PieChart
+          data={[
+            data.issuesAdvanced,
+            data.issuesUnchanged,
+            data.issuesDeclined,
+          ]}
+          colors={colors}
+          labels={labels}
+          height={320}
+          width={500}
+          donutSize="60%"
+        />
+      </Box>
     </Box>
   );
 }

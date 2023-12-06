@@ -1,6 +1,10 @@
 'use client';
 import React, { Component } from 'react';
-import ReactApexChart from 'react-apexcharts';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+});
 
 interface SingleBarChartProps {
   textColor: string;
@@ -21,17 +25,11 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
     colors: [barColor],
     chart: {
       foreColor: textColor,
+      fontFamily: "'DM Sans', sans-serif",
       type: 'bar',
       toolbar: {
-        show: true,
-        offsetX: 0,
-        offsetY: 0,
         tools: {
-          download: true,
-          selection: true,
-          zoom: true,
-          zoomin: true,
-          zoomout: true,
+          download: false,
         },
       },
     },
@@ -39,36 +37,36 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
       bar: {
         borderRadius: 9,
         horizontal: true,
-        dataLabels: {
-          position: 'top',
-        },
-        columnWidth: '70%',
         barHeight: '20px',
       },
     },
     dataLabels: {
       enabled: true,
       style: {
-        fontSize: '14px',
+        fontSize: '12px',
         colors: ['#fff'],
       },
-      offsetX: -15,
+      offsetX: 0,
+      formatter: function (val: any) {
+        return val + '%';
+      },
     },
     xaxis: {
       labels: {
-        style: {
-          colors: [textColor],
-        },
+        show: false,
       },
       categories: data.categories,
-      lines: {
-        show: true,
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
       },
     },
     grid: {
       xaxis: {
         lines: {
-          show: true,
+          show: false,
         },
       },
       yaxis: {
@@ -76,11 +74,18 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
           show: false,
         },
       },
-      padding: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
+    },
+    tooltip: {
+      // x: {
+      //   show: true,
+      //   format: 'dd MMM',
+      //   formatter: undefined,
+      // },
+      y: {
+        formatter: undefined,
+        title: {
+          formatter: () => '% Change:',
+        },
       },
     },
     // yaxis: {
@@ -97,7 +102,7 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
         options={chartOptions}
         series={dataSeries}
         type="bar"
-        height={480}
+        height={380}
       />
     </div>
   );

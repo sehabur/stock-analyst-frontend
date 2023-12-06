@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import { grey, blueGrey } from '@mui/material/colors';
 
 const palleteColors = {
   primary: {
@@ -14,19 +15,31 @@ const palleteColors = {
     contrastText: '#fff',
   },
   success: {
-    main: '#089981',
-    light: '#39ad9a',
-    dark: '#056b5a',
-    contrastText: '#fff',
+    main: '#00A25B',
+    light: '#33b47b',
+    dark: '#00713f',
   },
+  // success: {
+  //   main: '#089981',
+  //   light: '#39ad9a',
+  //   dark: '#056b5a',
+  //   contrastText: '#fff',
+  // }, // trading view
 };
 
 const defaultSettings = {
   typography: {
-    fontFamily: "'Open Sans', sans-serif",
-    fontWeightRegular: 500,
+    fontFamily: "'DM Sans', sans-serif",
     body1: {
       fontSize: '.875rem',
+      fontWeight: 500,
+    },
+    number: {
+      fontFamily: "'Nunito Sans', sans-serif",
+      fontSize: '.875rem',
+      fontWeight: 400,
+      lineHeight: 1.5,
+      letterSpacing: '0.00938em',
     },
   },
   components: {
@@ -45,6 +58,9 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     ...palleteColors,
+    secondaryBackground: '#f5f7fa',
+    secondaryPaperBackground: '#f0f0f0',
+    chartGridColor: '#eeeeee',
   },
   ...defaultSettings,
 });
@@ -53,6 +69,9 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     ...palleteColors,
+    secondaryBackground: '#151515',
+    secondaryPaperBackground: '#212121',
+    chartGridColor: '#494949',
   },
   ...defaultSettings,
 });

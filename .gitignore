@@ -15,6 +15,10 @@
 # production
 /build
 
+#environment
+.env.development
+.env.production
+
 # misc
 .DS_Store
 *.pem

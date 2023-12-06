@@ -17,13 +17,13 @@ export default async function Page() {
     <Box component="main" sx={{ bgcolor: 'background.default' }}>
       <Box
         sx={{
-          // maxWidth: { xs: '100vw', sm: '1340px' },
+          maxWidth: { xs: '100vw', sm: '1280px' },
           mx: 'auto',
           py: 2,
           px: 2,
         }}
       >
-        <SharePrice data={data.latestPrice} />
+        <SharePrice data={data} />
       </Box>
     </Box>
   );

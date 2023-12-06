@@ -174,5 +174,5 @@ export default function CandlestickChart(props: { data: any[] }) {
     };
   }, [data, theme]);
 
-  return <div ref={chartContainerRef} className="candle-chart" />;
+  return <div ref={chartContainerRef} className="chart-container" />;
 }

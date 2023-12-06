@@ -7,6 +7,13 @@ import Header from './_components/Header';
 import store from './_store';
 import { Provider } from 'react-redux';
 import React, { FC } from 'react';
+import TimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en.json';
+import ru from 'javascript-time-ago/locale/ru.json';
+
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +27,33 @@ export default function RootLayout({ children }: any) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        ></link>
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,700&display=swap"
+          rel="stylesheet"
+        ></link>
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;500;700&family=Urbanist:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;700&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,700&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
           rel="stylesheet"
         ></link>
       </head>

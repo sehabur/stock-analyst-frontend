@@ -5,17 +5,17 @@ import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
 export default function SectorSummaryCard({ data }: { data: any }) {
-  const sectorTag = data._id.split(' ')[0].toLowerCase();
+  const sectorTag = data.sector.split(' ')[0].toLowerCase();
 
   return (
     <Paper
-      sx={{ width: 360, my: { xs: 1, sm: 2 }, p: 2, mx: { xs: 0, sm: 1 } }}
+      sx={{ width: 360, my: { xs: 1, sm: 2 }, mx: { xs: 0, sm: 1.5 }, p: 2 }}
       variant="outlined"
     >
       <Grid container alignItems="center" justifyContent="center">
-        <Grid item xs={9.5}>
+        <Grid item xs={9.2}>
           <Typography sx={{ fontSize: '1.15rem', fontWeight: 'medium' }}>
-            {data._id}
+            {data.sector}
           </Typography>
           <Stack direction="row" alignItems="center" sx={{ mt: 1, mb: 2 }}>
             <KeyboardDoubleArrowUpIcon
@@ -43,10 +43,10 @@ export default function SectorSummaryCard({ data }: { data: any }) {
           </Stack>
         </Grid>
 
-        <Grid item xs={2.5}>
+        <Grid item xs={2.8}>
           <Typography
             sx={{
-              fontSize: '1.5rem',
+              fontSize: '1.6rem',
               color:
                 data.change == 0
                   ? 'primary.main'
@@ -57,29 +57,12 @@ export default function SectorSummaryCard({ data }: { data: any }) {
           >
             {data.ltp}
           </Typography>
-          {data.change !== 0 && (
-            <Chip
-              label={data.change}
-              size="small"
-              sx={{
-                borderRadius: 1,
-                mr: 1,
-                mb: 1,
-                fontSize: '.7rem',
-                color:
-                  data.change === 0
-                    ? 'primary.main'
-                    : data.change < 0
-                    ? 'error.main'
-                    : 'success.main',
-              }}
-            />
-          )}
 
           <Chip
-            label={`${data.change}%`}
+            label={data.change}
             size="small"
             sx={{
+              fontSize: '.9rem',
               borderRadius: 1,
               color:
                 data.change === 0
@@ -93,7 +76,7 @@ export default function SectorSummaryCard({ data }: { data: any }) {
       </Grid>
       <Button
         component={Link}
-        href="/sector/sector-chart"
+        href={`/sector/chart?sector=${sectorTag}`}
         variant="outlined"
         size="small"
         color="info"

@@ -1,5 +1,10 @@
 'use client';
-import ReactApexChart from 'react-apexcharts';
+import { useTheme } from '@mui/material';
+
+import dynamic from 'next/dynamic';
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+});
 
 interface PieChartProps {
   data: Array<number>;
@@ -7,17 +12,21 @@ interface PieChartProps {
   labels: Array<string>;
 }
 
-export default function PieChart(props: PieChartProps) {
-  const { data, colors, labels } = props;
+export default function PieChart(props: any) {
+  const { data, colors, labels, height, width, donutSize } = props;
+
+  const theme = useTheme();
 
   const chartOptions: {} = {
     chart: {
       type: 'donut',
+      foreColor: theme.palette.text.primary,
+      fontFamily: "'DM Sans', sans-serif",
     },
     plotOptions: {
       pie: {
         donut: {
-          size: '50%',
+          size: donutSize,
         },
       },
     },
@@ -26,6 +35,13 @@ export default function PieChart(props: PieChartProps) {
     },
     colors: colors,
     labels: labels,
+    legend: {
+      itemMargin: {
+        horizontal: 15,
+        vertical: 2,
+      },
+      position: 'bottom', // Change the legend position for smaller screens
+    },
     responsive: [
       {
         breakpoint: 480,
@@ -33,9 +49,9 @@ export default function PieChart(props: PieChartProps) {
           chart: {
             width: 380, // Adjust the chart width for smaller screens
           },
-          legend: {
-            position: 'bottom', // Change the legend position for smaller screens
-          },
+          // legend: {
+          //   position: 'bottom', // Change the legend position for smaller screens
+          // },
         },
       },
     ],
@@ -47,7 +63,8 @@ export default function PieChart(props: PieChartProps) {
         options={chartOptions}
         series={data}
         type="donut"
-        width="400"
+        height={height}
+        width={width}
       />
     </div>
   );

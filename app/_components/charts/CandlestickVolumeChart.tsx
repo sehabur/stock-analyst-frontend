@@ -1,13 +1,16 @@
 'use client';
 import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
 import { useEffect, useRef } from 'react';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import './tooltip.css';
+import { DateTime } from 'luxon';
 
-export default function CandlestickVolumeChart(props: { data: any[] }) {
-  const { data } = props;
+export default function CandlestickVolumeChart(props: any) {
+  const { candledata, volumedata } = props;
 
   const theme = useTheme();
+
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   const chartContainerRef: { current: any } = useRef(null);
   const chart: { current: any } = useRef(null);
@@ -33,6 +36,8 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
       },
       timeScale: {
         borderVisible: false,
+        rightOffset: 0.5,
+        barSpacing: matchesSmUp ? 9 : 8,
       },
       crosshair: {
         horzLine: {
@@ -45,35 +50,40 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
       },
       grid: {
         vertLines: {
-          visible: true,
+          visible: false,
         },
         horzLines: {
-          visible: true,
+          visible: false,
         },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 300,
+      height: 530,
     };
 
     chart.current = createChart(chartContainerRef.current, chartOptions);
 
     const candleSeries = chart.current.addCandlestickSeries({
-      upColor: '#26a69a',
-      downColor: '#ef5350',
-      borderVisible: false,
-      wickUpColor: '#26a69a',
-      wickDownColor: '#ef5350',
+      // upColor: '#089981',
+      // downColor: '#f23645',
+      // borderVisible: false,
+      // wickUpColor: '#089981',
+      // wickDownColor: '#f23645',
+      upColor: '#22ab94',
+      downColor: '#f7525f',
+      borderUpColor: '#22ab94',
+      borderDownColor: '#f7525f',
+      wickUpColor: '#22ab94',
+      wickDownColor: '#f7525f',
     });
 
     candleSeries.priceScale().applyOptions({
       scaleMargins: {
-        top: 0.1,
-        bottom: 0.4,
+        top: 0.08,
+        bottom: 0.35,
       },
     });
 
     const volumeSeries = chart.current.addHistogramSeries({
-      color: '#26a69a',
       priceFormat: {
         type: 'volume',
       },
@@ -83,15 +93,15 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
     volumeSeries.priceScale().applyOptions({
       scaleMargins: {
         top: 0.7,
-        bottom: 0,
+        bottom: 0.02,
       },
     });
 
-    candleSeries.setData(data);
+    candleSeries.setData(candledata);
 
-    volumeSeries.setData(data);
+    volumeSeries.setData(volumedata);
 
-    chart.current.timeScale().fitContent();
+    // chart.current.timeScale().fitContent();
 
     const toolTipWidth = 80;
     const toolTipHeight = 80;
@@ -99,8 +109,8 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
 
     tooltip.current = document.createElement('div');
 
-    tooltip.current.className = 'custom-tooltip';
-    tooltip.current.style.background = 'white';
+    tooltip.current.className = 'custom-tooltip-candle-volume';
+    tooltip.current.style.background = '#fafafa';
 
     chartContainerRef.current.appendChild(tooltip.current);
 
@@ -116,15 +126,22 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
       ) {
         tooltip.current.style.display = 'none';
       } else {
-        const dateStr = param.time;
+        const dateStr = DateTime.fromSeconds(param.time)
+          .minus({ hours: 6 })
+          .toFormat('yyyy-MM-dd');
         tooltip.current.style.display = 'block';
-        const data = param.seriesData.get(candleSeries);
-        console.log(data);
-        // const price = data.value !== undefined ? data.value : data.close;
-        tooltip.current.innerHTML = `<div><div style="color: ${'#2962FF'}">Apple Inc.</div><div style="font-size: 24px; margin: 4px 0px; color: ${'black'}">
-                ${Math.round(100 * data.close) / 100}
+        const candleData = param.seriesData.get(candleSeries);
+        const volumeData = param.seriesData.get(volumeSeries);
+        tooltip.current.innerHTML = `<div><div style="font-size: 15px; font-weight: bold; margin-bottom: 6px; color: ${'#2962ff'}">${dateStr}</div><div style="color: ${'black'}">
+                Open: ${candleData.open}
                 </div><div style="color: ${'black'}">
-                ${dateStr}
+                High: ${candleData.high}
+                </div><div style="color: ${'black'}">
+                Low: ${candleData.low}
+                </div><div style="color: ${'black'}">
+                Close: ${candleData.close}
+                </div><div style="color: ${'black'}; margin-top: 6px;">
+                Volume: ${volumeData.value}
                 </div></div>`;
 
         const y = param.point.y;
@@ -146,14 +163,14 @@ export default function CandlestickVolumeChart(props: { data: any[] }) {
 
     return () => {
       if (chart.current) {
-        chart.current.remove();
+        chart?.current?.remove();
       }
-      if (tooltip.current) {
+      if (tooltip?.current) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        chartContainerRef.current.removeChild(tooltip.current);
+        chartContainerRef?.current?.removeChild(tooltip.current);
       }
     };
-  }, [data, theme]);
+  }, [candledata, theme, volumedata]);
 
-  return <div ref={chartContainerRef} className="candle-chart" />;
+  return <div ref={chartContainerRef} className="chart-container" />;
 }

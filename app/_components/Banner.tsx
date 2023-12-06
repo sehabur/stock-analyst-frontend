@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 export default function Banner() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const secondColor = theme.palette.mode === 'light' ? '#F0F7FF ' : '#162055';
+  const secondColor = theme.palette.mode === 'light' ? '#f5f7fa ' : '#162055';
 
   // useEffect(() => {
   //   dispatch(themeColorActions.setThemeColor('dark'));
@@ -36,18 +36,27 @@ export default function Banner() {
       <Box sx={{ maxWidth: 800 }}>
         <Typography
           component="div"
-          sx={{ fontSize: '3.8rem', fontWeight: 700, lineHeight: 1.1 }}
+          sx={{
+            fontFamily: "'Raleway', sans-serif",
+            fontSize: '4.5rem',
+            fontWeight: 700,
+            lineHeight: 1.2,
+          }}
           color="text.primary"
         >
           Know your stock first, then trade
         </Typography>
         <Typography
           component="div"
-          sx={{ fontSize: '1.6rem', my: 5 }}
+          sx={{
+            fontFamily: "'Barlow', sans-serif",
+            fontSize: '1.6rem',
+            my: 5,
+          }}
           color="text.secondary"
         >
           Get prepared analytics and scores for shares helping you find the
-          perfect trade. Suitable for investors will all skill levels
+          perfect trade. Suitable for investors with all skill levels
         </Typography>
         <Button
           variant="contained"
@@ -60,7 +69,7 @@ export default function Banner() {
           color="success"
           sx={{ fontSize: '1.3rem', borderRadius: 6, py: 1, px: 5 }}
         >
-          Create new Account
+          Create account
         </Button>
       </Box>
     </Box>

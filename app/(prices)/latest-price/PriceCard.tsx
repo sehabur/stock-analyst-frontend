@@ -96,10 +96,27 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
               <Grid item xs={10}>
                 <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
                   <Typography
-                    sx={{ fontSize: '1rem', color: 'text.primary', mr: 2 }}
+                    sx={{
+                      fontSize: '1rem',
+                      fontWeight: 500,
+                      color: 'text.primary',
+                      mr: 1,
+                    }}
                   >
                     {item.tradingCode}
                   </Typography>
+                  <Chip
+                    label={item.category}
+                    size="small"
+                    // color="primary"
+                    variant="outlined"
+                    sx={{
+                      borderRadius: '50%',
+                      mr: 2,
+                      p: 0,
+                    }}
+                  />
+
                   {item.change !== 0 && (
                     <Chip
                       label={item.change}
@@ -107,7 +124,6 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                       sx={{
                         borderRadius: 1,
                         mr: 1,
-                        fontSize: '.7rem',
                         color:
                           item.change === 0
                             ? 'primary.main'
@@ -132,8 +148,9 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                     }}
                   />
                 </Stack>
-                <Typography sx={{ fontSize: '.7rem' }} color="text.secondary">
-                  Vol: {item.volume} | Val: {item.value}mn | Trd: {item.trade}
+                <Typography sx={{ fontSize: '.8rem' }} color="text.secondary">
+                  Vol: {item.volume} | Val: {(item.value / 10).toFixed(2)}cr |
+                  Trd: {item.trade}
                 </Typography>
               </Grid>
 
@@ -141,7 +158,8 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                 <Stack alignItems="flex-end" sx={{ mr: 0.7 }}>
                   <Typography
                     sx={{
-                      fontSize: '1.3rem',
+                      fontSize: '1.4rem',
+                      fontWeight: 500,
                       color:
                         item.change === 0
                           ? 'primary.main'
@@ -152,10 +170,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                   >
                     {item.ltp}
                   </Typography>
-                  <Typography
-                    sx={{ fontSize: '.65rem' }}
-                    color="text.secondary"
-                  >
+                  <Typography sx={{ fontSize: '.7rem' }} color="text.secondary">
                     BDT
                   </Typography>
                 </Stack>

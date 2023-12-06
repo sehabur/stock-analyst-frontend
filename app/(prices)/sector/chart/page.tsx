@@ -1,9 +1,9 @@
-import SectorSummaryCard from './sectorCard';
 import { Box } from '@mui/material';
+import SectorChart from './SectorChart';
 
-async function getData() {
+async function getData(sectorTag: string) {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/sectorWiseLatestPrice`,
+    `${process.env.BACKEND_URL}/api/prices/dailySectorPrice/${sectorTag}`,
     {
       next: { revalidate: 0 },
     }
@@ -14,8 +14,10 @@ async function getData() {
   return res.json();
 }
 
-export default async function Sector() {
-  const data = await getData();
+export default async function Sector(props: any) {
+  const sectorTag = props.searchParams.sector;
+
+  const data = await getData(sectorTag);
 
   return (
     <Box component="main" sx={{ bgcolor: 'background.default' }}>
@@ -30,9 +32,7 @@ export default async function Sector() {
           py: 2,
         }}
       >
-        {data.map((item: { _id: string }) => (
-          <SectorSummaryCard data={item} key={item._id} />
-        ))}
+        <SectorChart data={data} />
       </Box>
     </Box>
   );

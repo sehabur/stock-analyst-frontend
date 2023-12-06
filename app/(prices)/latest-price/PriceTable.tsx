@@ -15,7 +15,7 @@ const columns: GridColDef[] = [
   {
     field: 'tradingCode',
     headerName: 'TRADING CODE',
-    width: 160,
+    width: 130,
     align: 'left',
     headerAlign: 'left',
     renderCell: (params) => {
@@ -25,12 +25,18 @@ const columns: GridColDef[] = [
     },
     cellClassName: styles.tradingCodeCell,
   },
+  {
+    field: 'category',
+    headerName: 'CATEGORY',
+    align: 'center',
+    headerAlign: 'center',
+    width: 90,
+  },
   { field: 'ltp', headerName: 'LTP', align: 'right', headerAlign: 'right' },
-  { field: 'open', headerName: 'OPEN', align: 'right', headerAlign: 'right' },
+  { field: 'ycp', headerName: 'OPEN', align: 'right', headerAlign: 'right' },
   { field: 'high', headerName: 'HIGH', align: 'right', headerAlign: 'right' },
   { field: 'low', headerName: 'LOW', align: 'right', headerAlign: 'right' },
   { field: 'close', headerName: 'CLOSE', align: 'right', headerAlign: 'right' },
-  { field: 'ycp', headerName: 'YCP', align: 'right', headerAlign: 'right' },
   {
     field: 'change',
     headerName: 'CHANGE',
@@ -53,9 +59,20 @@ const columns: GridColDef[] = [
     headerName: 'CHANGE(%)',
     align: 'right',
     headerAlign: 'right',
-    // valueFormatter: (params) => {
-    //   return params.value + '%';
-    // },
+    cellClassName: (params: any) => {
+      let cellClass;
+      if (params.value < 0) {
+        cellClass = styles.downTrend;
+      } else if (params.value > 0) {
+        cellClass = styles.upTrend;
+      } else {
+        cellClass = styles.neutral;
+      }
+      return cellClass;
+    },
+    valueFormatter: (params) => {
+      return params.value + '%';
+    },
   },
   { field: 'trade', headerName: 'TRADE', align: 'right', headerAlign: 'right' },
   {
@@ -150,6 +167,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
         }}
         pageSizeOptions={[10, 25, 50, 100]}
         sx={{
+          // border: 'none',
           '.MuiDataGrid-columnHeader': {
             color: 'text.secondary',
             fontSize: '.8rem',
@@ -157,6 +175,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
           },
           '.MuiDataGrid-cell': {
             fontWeight: 500,
+            fontFamily: "'Nunito Sans', sans-serif",
           },
         }}
       />

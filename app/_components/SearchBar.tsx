@@ -12,17 +12,13 @@ const Search = styled('div')(({ theme }) => ({
     backgroundColor: alpha(theme.palette.text.secondary, 0.1),
   },
   marginRight: theme.spacing(2),
-  marginLeft: 0,
-  //   width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 270,
-  },
+  marginLeft: 12,
+  width: 200,
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   color: theme.palette.text.secondary,
-  padding: theme.spacing(0, 2),
+  padding: 18,
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
@@ -35,17 +31,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1.5, 1, 1.5, 1),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: 48,
     transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
   },
 }));
 
-export default function SearchBar() {
+export default function SearchBar({ onClick }: any) {
   return (
     <Box>
       <Search>
@@ -53,8 +44,9 @@ export default function SearchBar() {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="Search shares"
-          inputProps={{ 'aria-label': 'search' }}
+          readOnly
+          onClick={onClick}
+          placeholder="Search stocks"
         />
       </Search>
     </Box>
