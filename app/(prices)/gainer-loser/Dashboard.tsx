@@ -17,6 +17,7 @@ import { grey } from '@mui/material/colors';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import styles from './Dashboard.module.css';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const variantMap = [
   {
@@ -171,7 +172,12 @@ const variantMap = [
   },
 ];
 
-export default function Dashboard({ data, type, variant }: any) {
+export default function Dashboard({ data }: any) {
+  const searchParams = useSearchParams();
+
+  const type = searchParams.get('type');
+  const variant = searchParams.get('variant');
+
   const theme = useTheme();
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));

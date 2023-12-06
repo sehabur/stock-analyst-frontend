@@ -15,8 +15,8 @@ async function getData() {
   return res.json();
 }
 
-export default async function GainerLooser(props: any) {
-  const { type, variant } = props.searchParams;
+export default async function GainerLooser() {
+  // const { type, variant } = props.searchParams;
 
   const data = await getData();
 
@@ -27,7 +27,7 @@ export default async function GainerLooser(props: any) {
         bgcolor: 'background.default',
       }}
     >
-      <Dashboard data={data} type={type} variant={variant} />
+      <Dashboard data={data} />
     </Box>
   );
 }

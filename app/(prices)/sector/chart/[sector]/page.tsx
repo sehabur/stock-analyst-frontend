@@ -15,7 +15,7 @@ async function getData(sectorTag: string) {
 }
 
 export default async function Sector(props: any) {
-  const sectorTag = props.searchParams.sector;
+  const sectorTag = props.params.sector;
 
   const data = await getData(sectorTag);
 
