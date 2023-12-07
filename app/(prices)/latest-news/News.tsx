@@ -27,7 +27,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
 export default function News({ data }: any) {
-  console.log(data);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [dialogContent, setDialogContent] = useState<any>({});

@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import SectorChart from './SectorChart';
+import { sectorList } from '@/data/dse';
 
 async function getData(sectorTag: string) {
   const res = await fetch(
@@ -12,6 +13,12 @@ async function getData(sectorTag: string) {
     throw new Error('Failed to fetch data');
   }
   return res.json();
+}
+
+export function generateStaticParams() {
+  return sectorList.map((item) => ({
+    sector: item.tag,
+  }));
 }
 
 export default async function Sector(props: any) {
