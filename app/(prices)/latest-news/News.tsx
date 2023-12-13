@@ -52,7 +52,7 @@ export default function News({ data }: any) {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle sx={{ fontWeight: 700, fontSize: '1.5rem' }}>
+        <DialogTitle sx={{ fontWeight: 700, fontSize: '1.3jhjrem' }}>
           {dialogContent?.title}
         </DialogTitle>
         <DialogContent dividers>

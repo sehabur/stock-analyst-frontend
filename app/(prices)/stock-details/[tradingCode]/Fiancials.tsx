@@ -39,28 +39,7 @@ import { yearEndMap } from '@/data/dse';
 import LineChart from '@/components/charts/ShareholdingBarChart';
 import ShareholdingBarChart from '@/components/charts/ShareholdingBarChart';
 import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
-
-// const calculateCurrentEps = (quarterlyData: any) => {
-//   if (quarterlyData?.annual !== 0) {
-//     return quarterlyData.annual;
-//   }
-
-//   let count = 0;
-
-//   if (quarterlyData?.q3 !== 0) {
-//     count++;
-//   }
-//   if (quarterlyData?.q2 !== 0) {
-//     count++;
-//   }
-//   if (quarterlyData?.q1 !== 0) {
-//     count++;
-//   }
-
-//   if (count === 0) return 0;
-//   const total = quarterlyData?.q1 + quarterlyData?.q2 + quarterlyData?.q3;
-//   return ((total / count) * 4).toFixed(3);
-// };
+import MultipleLineChart from '@/components/charts/MultipleLineChart';
 
 const formatPeData = (value: number, sectorRatio: any) => {
   const changeText =
@@ -81,6 +60,8 @@ const formatPeData = (value: number, sectorRatio: any) => {
     current: value,
     changeText,
     changeTextColor,
+    position: sectorRatio.position,
+    totalshares: sectorRatio.items,
     sectorRatio,
   };
 };
@@ -400,35 +381,29 @@ const formatShareholdingData = (data: any) => {
     changeText: [
       createChangeText(director, 'Director'),
       createChangeText(institute, 'Institute'),
+      createChangeText(publicShare, 'Public'),
     ],
-    director: [
+    series: [
       {
-        name: 'Director (%)',
+        name: 'Director',
         data: director,
       },
-    ],
-    govt: [
       {
-        name: 'Government (%)',
-        data: govt,
-      },
-    ],
-    institute: [
-      {
-        name: 'Institute (%)',
+        name: 'Institute',
         data: institute,
       },
-    ],
-    foreign: [
       {
-        name: 'Foreign (%)',
-        data: foreign,
-      },
-    ],
-    public: [
-      {
-        name: 'Public (%)',
+        name: 'Public',
         data: publicShare,
+      },
+      {
+        name: 'Government',
+        data: govt,
+      },
+
+      {
+        name: 'Foreign',
+        data: foreign,
       },
     ],
     categories,
@@ -558,7 +533,7 @@ export default function Financials({ data }: any) {
     setDialogContent(type);
   };
 
-  const pe = formatPeData(data.pe, data.sectorPeRatio);
+  const pe = formatPeData(data.peRatio, data.sectorPeRatio);
   const priceToBookValueRatio = formatPeData(
     data.priceToBookValueRatio,
     data.sectorPbvRatio
@@ -580,7 +555,6 @@ export default function Financials({ data }: any) {
     data.epsCurrent,
     data.yearEnd
   );
-  console.log(epsQuarterly);
   const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
   const nocfpsQuaterly = formatQuarterlyData(data.nocfpsQuaterly, data.yearEnd);
   const shareholdings = formatShareholdingData(data.shareHoldingPercentage);
@@ -743,11 +717,23 @@ export default function Financials({ data }: any) {
         {dialogContent === 'pe' && (
           <>
             <DialogTitle>
-              Price-to-EPS (P/E) ratio of {data.tradingCode}
+              Price-to-EPS (P/E) Ratio of {data.tradingCode}
             </DialogTitle>
 
             <DialogContent dividers>
-              <Box sx={{ my: 8, mx: { xs: 0, sm: 12 } }}>
+              <Box sx={{ my: 6, mx: { xs: 0, sm: 12 } }}>
+                <Typography
+                  sx={{
+                    fontSize: '1.2rem',
+                    fontWeight: 700,
+                    mb: 8,
+                    textAlign: 'center',
+                    color: pe.changeTextColor,
+                  }}
+                >
+                  P/E ratio of {data.tradingCode} is below {pe.position} stocks
+                  among total {pe.totalshares} stocks in sector
+                </Typography>
                 <Stack
                   spacing={{ xs: 4, sm: 8 }}
                   direction="row"
@@ -926,6 +912,19 @@ export default function Financials({ data }: any) {
 
             <DialogContent dividers>
               <Box sx={{ my: 8, mx: { xs: 0, sm: 12 } }}>
+                <Typography
+                  sx={{
+                    fontSize: '1.2rem',
+                    fontWeight: 700,
+                    mb: 8,
+                    textAlign: 'center',
+                    color: priceToBookValueRatio.changeTextColor,
+                  }}
+                >
+                  P/BV ratio of {data.tradingCode} is below{' '}
+                  {priceToBookValueRatio.position} stocks among total{' '}
+                  {priceToBookValueRatio.totalshares} stocks in sector
+                </Typography>
                 <Stack
                   spacing={{ xs: 4, sm: 8 }}
                   direction="row"
@@ -1013,6 +1012,28 @@ export default function Financials({ data }: any) {
                       textAlign: 'center',
                     }}
                   >
+                    Shareholding percentage history
+                  </Typography>
+                  <MultipleLineChart
+                    data={shareholdings.series}
+                    categories={shareholdings.categories}
+                    lineColors={[
+                      '#4dd0e1',
+                      '#b388ff',
+                      '#448aff',
+                      '#42bda8',
+                      '#f57f17',
+                    ]}
+                  />
+                </Box>
+                {/* <Box sx={{ mb: 3 }}>
+                  <Typography
+                    sx={{
+                      fontSize: '1.1rem',
+                      fontWeight: 500,
+                      textAlign: 'center',
+                    }}
+                  >
                     Director shareholding (%)
                   </Typography>
                   <ShareholdingBarChart
@@ -1020,71 +1041,7 @@ export default function Financials({ data }: any) {
                     categories={shareholdings.categories}
                     lineColors={['#448aff']}
                   />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 500,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Institute shareholding (%)
-                  </Typography>
-                  <ShareholdingBarChart
-                    data={shareholdings.institute}
-                    categories={shareholdings.categories}
-                    lineColors={['#42bda8']}
-                  />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 500,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Public shareholding (%)
-                  </Typography>
-                  <ShareholdingBarChart
-                    data={shareholdings.public}
-                    categories={shareholdings.categories}
-                    lineColors={['#b388ff']}
-                  />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 500,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Foreign shareholding (%)
-                  </Typography>
-                  <ShareholdingBarChart
-                    data={shareholdings.foreign}
-                    categories={shareholdings.categories}
-                    lineColors={['#f57f17']}
-                  />
-                </Box>
-                <Box sx={{ mb: 3 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 500,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Government shareholding (%)
-                  </Typography>
-                  <ShareholdingBarChart
-                    data={shareholdings.govt}
-                    categories={shareholdings.categories}
-                    lineColors={['#4dd0e1']}
-                  />
-                </Box>
+                </Box> */}
               </Box>
             </DialogContent>
           </>
@@ -1593,6 +1550,24 @@ export default function Financials({ data }: any) {
                   }}
                 >
                   {shareholdings.changeText[1].text}
+                </Typography>
+              </Stack>
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={1.5}
+                sx={{ my: 2 }}
+              >
+                <SquareRoundedIcon
+                  sx={{ color: '#448aff', fontSize: '1rem' }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: '1rem',
+                    color: shareholdings.changeText[2].color,
+                  }}
+                >
+                  {shareholdings.changeText[2].text}
                 </Typography>
               </Stack>
 

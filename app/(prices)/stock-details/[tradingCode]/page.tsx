@@ -54,7 +54,9 @@ const getBlocktr = async (tradingCode: string) => {
 const addPlusSign = (value: number) => {
   let result;
   if (value > 0) {
-    result = '+' + value;
+    result = '+' + value.toFixed(2);
+  } else if (value < 0) {
+    result = value.toFixed(2);
   } else {
     result = value;
   }
@@ -87,7 +89,6 @@ export default async function StockDetails({
 }: {
   params: { tradingCode: string };
 }) {
-  let load = true;
   const [stock, news, blocktr] = await Promise.all([
     getStockDetails(tradingCode),
     getNews(tradingCode),
@@ -103,8 +104,6 @@ export default async function StockDetails({
       ? 'error.main'
       : 'success.main';
 
-  load = false;
-
   return (
     <Box
       component="main"
@@ -113,7 +112,6 @@ export default async function StockDetails({
         pt: 4,
       }}
     >
-      {load && <Box>AAA</Box>}
       <Box
         sx={{
           maxWidth: 1250,
@@ -165,7 +163,7 @@ export default async function StockDetails({
               fontFamily: "'Nunito Sans', sans-serif",
             }}
           >
-            {latestPriceData.price}
+            {latestPriceData.price.toFixed(2)}
           </Typography>
 
           <Typography

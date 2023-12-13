@@ -23,9 +23,9 @@ async function getIndexData() {
   return res.json();
 }
 
-async function getTopGainerLoserData() {
+async function getGainerLoserData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/topGainerLoser`,
+    `${process.env.BACKEND_URL}/api/prices/allGainerLoser`,
     {
       next: { revalidate: 0 },
     }
@@ -52,11 +52,9 @@ async function getSectorData() {
 export default async function MarketToday() {
   const [indexData, gainerLoserData, sectorData] = await Promise.all([
     getIndexData(),
-    getTopGainerLoserData(),
+    getGainerLoserData(),
     getSectorData(),
   ]);
-
-  // console.log(indexData, gainerLoserData);
 
   return (
     <Box

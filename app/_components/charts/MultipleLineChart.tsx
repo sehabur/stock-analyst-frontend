@@ -6,17 +6,16 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
 
-export default function LineColumnChart(props: any) {
-  const { data } = props;
+export default function MultipleLineChart(props: any) {
+  const { data, categories, lineColors } = props;
 
   const theme: any = useTheme();
 
   const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const chartOptions: {} = {
-    colors: ['#448aff', '#f57f17', '#42bda8'],
+    colors: lineColors,
     chart: {
-      type: 'line',
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
       toolbar: {
@@ -27,21 +26,15 @@ export default function LineColumnChart(props: any) {
       },
     },
     markers: {
-      size: matchesSmDown ? 5 : 6,
+      size: 6,
     },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        borderRadius: 4,
-        borderRadiusApplication: 'end',
-        columnWidth: matchesSmDown ? '75%' : '65%',
-      },
-    },
+    plotOptions: {},
     dataLabels: {
       enabled: false,
     },
     xaxis: {
-      categories: data.categories,
+      tickPlacement: 'between',
+      categories: categories,
       axisBorder: {
         show: false,
       },
@@ -49,39 +42,29 @@ export default function LineColumnChart(props: any) {
         show: false,
       },
     },
-    yaxis: [
-      {
-        labels: {
-          formatter: (value: any) => {
-            return Number.isInteger(value) ? value : value.toFixed(2);
-          },
+    yaxis: {
+      labels: {
+        formatter: (value: any) => {
+          return Number.isInteger(value) ? value : value.toFixed(2);
         },
       },
-      {
-        opposite: true,
-        labels: {
-          formatter: (value: any) => {
-            return Number.isInteger(value) ? value : value.toFixed(2);
-          },
-        },
-      },
-    ],
+    },
     stroke: {
       show: true,
-      width: matchesSmDown ? [1, 3, 0] : 4,
-      colors: ['transparent', '#f57f17', 'transparent'],
-      // curve: 'smooth',
     },
     tooltip: {
       theme: 'dark',
+      y: {
+        formatter: (value: any) => value + '%',
+      },
     },
     grid: {
       borderColor: theme.palette.chartGridColor,
     },
     legend: {
       itemMargin: {
-        horizontal: matchesSmDown ? 10 : 20,
-        vertical: matchesSmDown ? 5 : 20,
+        horizontal: 15,
+        vertical: 5,
       },
     },
   };
@@ -90,9 +73,9 @@ export default function LineColumnChart(props: any) {
     <div id="chart">
       <ReactApexChart
         options={chartOptions}
-        series={data.dataSeries}
+        series={data}
         type="line"
-        height={300}
+        height={325}
       />
     </div>
   );

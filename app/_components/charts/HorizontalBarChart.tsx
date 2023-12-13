@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { Box, useTheme } from '@mui/material';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -9,12 +10,14 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), {
 interface SingleBarChartProps {
   textColor: string;
   barColor: string;
-  data: { dataPoints: number[]; categories: string[] };
+  data: { dataPoints: number[]; categories: string[]; type: string };
   isReversed?: Boolean;
 }
 
 export default function HorizontalBarChart(props: SingleBarChartProps) {
   const { textColor, barColor, data, isReversed } = props;
+
+  const theme: any = useTheme();
 
   const dataSeries = [
     {
@@ -35,20 +38,34 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
     },
     plotOptions: {
       bar: {
-        borderRadius: 9,
+        borderRadius: 7,
         horizontal: true,
-        barHeight: '20px',
+        barHeight: '18px',
+        dataLabels: {
+          position: 'top',
+        },
       },
     },
     dataLabels: {
       enabled: true,
       style: {
         fontSize: '12px',
-        colors: ['#fff'],
+        colors: [textColor],
       },
-      offsetX: 0,
+      offsetX: 45,
       formatter: function (val: any) {
         return val + '%';
+      },
+    },
+    legend: {
+      showForSingleSeries: true,
+      position: 'bottom',
+      formatter: function () {
+        return data.type + ' % Change';
+      },
+      markers: {
+        offsetX: -8,
+        radius: 12,
       },
     },
     xaxis: {
@@ -63,10 +80,24 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
         show: false,
       },
     },
+    yaxis: {
+      labels: {
+        show: true,
+        offsetX: 0,
+        style: {
+          fontSize: '12px',
+          fontFamily: "'DM Sans', sans-serif",
+        },
+        formatter: (value: any) => {
+          return value;
+        },
+      },
+    },
     grid: {
+      borderColor: theme.palette.chartGridColor,
       xaxis: {
         lines: {
-          show: false,
+          show: true,
         },
       },
       yaxis: {
@@ -81,10 +112,11 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
       //   format: 'dd MMM',
       //   formatter: undefined,
       // },
+      theme: 'dark',
       y: {
         formatter: undefined,
         title: {
-          formatter: () => '% Change:',
+          formatter: () => data.type + ' % Change:',
         },
       },
     },
@@ -97,13 +129,13 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
   };
 
   return (
-    <div id="chart">
+    <Box component="div" id="chart" sx={{ px: 2 }}>
       <ReactApexChart
         options={chartOptions}
         series={dataSeries}
         type="bar"
-        height={380}
+        height={420}
       />
-    </div>
+    </Box>
   );
 }

@@ -8,6 +8,7 @@ import {
   useTheme,
   useMediaQuery,
   Link,
+  Paper,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -110,11 +111,23 @@ export default function Overview({ stock }: any) {
 
   return (
     <Box sx={{ maxWidth: '1250px', mx: 'auto', py: { xs: 2, sm: 4 }, px: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: '1.4rem',
+          fontWeight: 700,
+          my: 2,
+          color: 'text.primary',
+        }}
+      >
+        {stock.fundamentals.tradingCode} Chart
+      </Typography>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <ToggleButtonGroup
-          // size="small"
+          size="small"
           value={alignment}
-          color="success"
+          color="primary"
           exclusive
           onChange={handleAlignment}
           sx={{
@@ -137,14 +150,16 @@ export default function Overview({ stock }: any) {
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
+
       <Box sx={{ mb: 4 }}>
         {alignment === 'minute' && (
-          <Box>
+          <Box sx={{ mt: 4 }}>
             <AreaChart
               data={minuteChartData}
               color={chartColor}
-              fullWidth={true}
-              height={420}
+              height={325}
+              tooltipTitle={stock.fundamentals.tradingCode}
+              chartWidthValue={1120}
             />
           </Box>
         )}
@@ -172,6 +187,7 @@ export default function Overview({ stock }: any) {
             />
           </Box>
         )}
+
         <Box
           sx={{
             display: 'flex',
@@ -285,11 +301,204 @@ export default function Overview({ stock }: any) {
         <Grid
           container
           alignItems="center"
-          justifyContent="left"
+          justifyContent="center"
           spacing={2}
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, px: 8 }}
         >
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Open (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.ycp}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                High (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.high}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Low (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.low}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                YCP (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.ycp}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Volume
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.volume}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Trade
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.latest.trade}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Value (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {(stock.latest.value / 10).toFixed(3)} Crore
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Floor price (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.fundamentals.floorPrice}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                52W High (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.lastDay.oneYearHigh}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                52W Low (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.lastDay.oneYearLow}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Circuit Up (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.fundamentals.circuitUp}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <Box>
+              <Typography
+                color="text.secondary"
+                sx={{ fontSize: '1rem', fontWeight: 700 }}
+              >
+                Circuit Low (BDT)
+              </Typography>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+              >
+                {stock.fundamentals.circuitLow}
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* <Grid item xs={6} sm={2.4}>
             <Box>
               <Typography
                 gutterBottom
@@ -425,10 +634,10 @@ export default function Overview({ stock }: any) {
                 {stock.lastDay.oneYearHigh} / {stock.lastDay.oneYearLow}
               </Typography>
             </Box>
-          </Grid>
+          </Grid>*/}
         </Grid>
 
-        <Box>
+        {/* <Box>
           <Typography
             sx={{
               color: 'text.primary',
@@ -483,7 +692,7 @@ export default function Overview({ stock }: any) {
               {stock.fundamentals.address.website}
             </Link>
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

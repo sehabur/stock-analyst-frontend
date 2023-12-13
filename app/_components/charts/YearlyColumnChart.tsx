@@ -29,11 +29,19 @@ export default function YearlyColumnChart(props: any) {
       bar: {
         horizontal: false,
         columnWidth: matchesSmDown ? '50%' : '50px',
-        borderRadius: 2,
+        borderRadius: 4,
+        borderRadiusApplication: 'end',
+        dataLabels: {
+          position: 'top',
+        },
       },
     },
     dataLabels: {
       enabled: matchesSmDown ? false : true,
+      style: {
+        colors: [theme.palette.text.primary],
+      },
+      offsetY: -20,
     },
     xaxis: {
       categories: data.categories,
@@ -58,9 +66,6 @@ export default function YearlyColumnChart(props: any) {
     // },
     tooltip: {
       theme: 'dark',
-      style: {
-        fontSize: '12px',
-      },
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

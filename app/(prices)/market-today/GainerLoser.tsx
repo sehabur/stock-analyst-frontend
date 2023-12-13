@@ -12,18 +12,19 @@ import {
 import Link from 'next/link';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 
+const dataFormatter = (inputdata: any, dataPointKey: string, type: string) => {
+  const data = inputdata.slice(0, 10);
+  let dataPoints: number[] = [];
+  let categories: string[] = [];
+  for (let item of data) {
+    categories.push(item.tradingCode);
+    dataPoints.push(item[dataPointKey]);
+  }
+  return { dataPoints, categories, type };
+};
+
 export default function GainerLoser({ data }: any) {
   const theme = useTheme();
-
-  const dataFormatter = (inputdata: any) => {
-    let dataPoints = [];
-    let categories = [];
-    for (let item of inputdata) {
-      categories.push(item.tradingCode);
-      dataPoints.push(item.percentChange);
-    }
-    return { dataPoints, categories };
-  };
 
   return (
     <Grid container direction="row" justifyContent="center" spacing={2}>
@@ -60,7 +61,7 @@ export default function GainerLoser({ data }: any) {
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.success.main}
-            data={dataFormatter(data.gainerDaily)}
+            data={dataFormatter(data.gainerDaily, 'percentChange', 'Daily')}
           />
         </Paper>
       </Grid>
@@ -97,7 +98,11 @@ export default function GainerLoser({ data }: any) {
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.success.main}
-            data={dataFormatter(data.gainerOneYear)}
+            data={dataFormatter(
+              data.gainerOneYear,
+              'oneYearPercentChange',
+              'Yearly'
+            )}
           />
         </Paper>
       </Grid>
@@ -123,11 +128,11 @@ export default function GainerLoser({ data }: any) {
               All time top gainer
             </Typography>
           </Box>
-          <HorizontalBarChart
+          {/* <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor="#00A25B"
             data={dataFormatter(data.gainerAlltime)}
-          />
+          /> */}
         </Paper>
       </Grid>
       <Grid item xs={12} sm={4}>
@@ -163,7 +168,7 @@ export default function GainerLoser({ data }: any) {
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.error.main}
-            data={dataFormatter(data.loserDaily)}
+            data={dataFormatter(data.loserDaily, 'percentChange', 'Daily')}
           />
         </Paper>
       </Grid>
@@ -198,8 +203,12 @@ export default function GainerLoser({ data }: any) {
           </Box>
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
-            barColor={theme.palette.error.light}
-            data={dataFormatter(data.loserOneYear)}
+            barColor={theme.palette.error.main}
+            data={dataFormatter(
+              data.loserOneYear,
+              'oneYearPercentChange',
+              'Yearly'
+            )}
           />
         </Paper>
       </Grid>
@@ -224,11 +233,11 @@ export default function GainerLoser({ data }: any) {
               All time top loser
             </Typography>
           </Box>
-          <HorizontalBarChart
+          {/* <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.error.light}
             data={dataFormatter(data.loserAlltime)}
-          />
+          /> */}
         </Paper>
       </Grid>
     </Grid>

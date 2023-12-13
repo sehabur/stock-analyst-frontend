@@ -11,10 +11,19 @@ interface AreaChartProps {
   color: string;
   fullWidth?: Boolean;
   height: number;
+  tooltipTitle: string;
+  chartWidthValue: number;
 }
 
 export default function AreaChart(props: AreaChartProps) {
-  const { data, color, fullWidth = false, height } = props;
+  const {
+    data,
+    color,
+    fullWidth = false,
+    height,
+    tooltipTitle,
+    chartWidthValue,
+  } = props;
 
   const theme = useTheme();
   const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -51,16 +60,25 @@ export default function AreaChart(props: AreaChartProps) {
           bottom: 0.3,
         },
       },
-
+      handleScroll: {
+        mouseWheel: false,
+        pressedMouseMove: false,
+        horzTouchDrag: false,
+        vertTouchDrag: false,
+      },
+      handleScale: {
+        axisPressedMouseMove: false,
+        mouseWheel: false,
+        pinch: false,
+      },
       timeScale: {
         borderVisible: false,
         timeVisible: true,
         rightOffset: 5,
-        barSpacing: 648 / data.length,
+        barSpacing: chartWidthValue / data.length,
       },
       crosshair: {
         horzLine: {
-          visible: false,
           labelVisible: false,
         },
         vertLine: {
@@ -81,7 +99,7 @@ export default function AreaChart(props: AreaChartProps) {
 
     const series = chart.current.addAreaSeries({
       lineColor: color,
-      topColor: alpha(color, 0.7),
+      topColor: alpha(color, 0.5),
       bottomColor: alpha(color, 0),
       lineWidth: 2,
       priceLineVisible: false,
@@ -99,7 +117,7 @@ export default function AreaChart(props: AreaChartProps) {
 
     tooltip.current = document.createElement('div');
 
-    tooltip.current.className = 'custom-tooltip area-chart';
+    tooltip.current.className = 'custom-tooltip-area-chart';
     tooltip.current.style.background = 'white';
 
     chartContainerRef.current.appendChild(tooltip.current);
@@ -123,7 +141,7 @@ export default function AreaChart(props: AreaChartProps) {
         tooltip.current.style.display = 'block';
         const data = param.seriesData.get(series);
         const price = data.value !== undefined ? data.value : data.close;
-        tooltip.current.innerHTML = `<div><div style="color: #2962FF">Index value</div><div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">
+        tooltip.current.innerHTML = `<div><div style="color: #2962FF">${tooltipTitle}</div><div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">
                 ${Math.round(100 * price) / 100}
                 </div><div style="color: ${'black'}">
                 ${dateStr}

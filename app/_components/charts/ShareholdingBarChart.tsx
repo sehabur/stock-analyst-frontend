@@ -59,9 +59,6 @@ export default function ShareholdingBarChart(props: any) {
     ],
     tooltip: {
       theme: 'dark',
-      style: {
-        fontSize: '12px',
-      },
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

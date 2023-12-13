@@ -83,6 +83,9 @@ export default function HorizontalStackedBarChart(props: any) {
         horizontal: 15,
       },
     },
+    tooltip: {
+      theme: 'dark',
+    },
   };
 
   return (

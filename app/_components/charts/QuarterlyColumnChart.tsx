@@ -28,11 +28,19 @@ export default function QuarterlyColumnChart(props: any) {
       bar: {
         horizontal: false,
         columnWidth: matchesSmDown ? '60%' : '50px',
-        borderRadius: 2,
+        borderRadius: 4,
+        borderRadiusApplication: 'end',
+        dataLabels: {
+          position: 'top',
+        },
       },
     },
     dataLabels: {
-      enabled: false,
+      enabled: matchesSmDown ? false : true,
+      style: {
+        colors: [theme.palette.text.primary],
+      },
+      offsetY: -20,
     },
     xaxis: {
       categories: data.categories,
@@ -46,7 +54,7 @@ export default function QuarterlyColumnChart(props: any) {
     yaxis: {
       labels: {
         formatter: (value: any) => {
-          return Number.isInteger(value) ? value : value.toFixed(2);
+          return Number.isInteger(value) ? value : value?.toFixed(2);
         },
       },
     },
@@ -57,9 +65,6 @@ export default function QuarterlyColumnChart(props: any) {
     },
     tooltip: {
       theme: 'dark',
-      style: {
-        fontSize: '12px',
-      },
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

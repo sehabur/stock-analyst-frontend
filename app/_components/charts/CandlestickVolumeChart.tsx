@@ -41,7 +41,6 @@ export default function CandlestickVolumeChart(props: any) {
       },
       crosshair: {
         horzLine: {
-          visible: false,
           labelVisible: false,
         },
         vertLine: {
