@@ -177,7 +177,7 @@ export default function Header(props: any) {
           }}
         >
           <Typography variant="h6" component={Link} href="/">
-            Stock Analyst
+            Stock Supporter
           </Typography>
 
           {matchesSmUp && (

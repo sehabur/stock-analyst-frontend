@@ -1,8 +1,12 @@
 'use client';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Box, useTheme } from '@mui/material';
+import './tooltip.css';
+
+import { useRouter } from 'next/navigation';
+
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 });
@@ -17,7 +21,70 @@ interface SingleBarChartProps {
 export default function HorizontalBarChart(props: SingleBarChartProps) {
   const { textColor, barColor, data, isReversed } = props;
 
+  const router = useRouter();
+
   const theme: any = useTheme();
+
+  function goTo(index: any) {
+    let url = '';
+
+    switch (index) {
+      case 0:
+        url = 'https://apexcharts.com/';
+        break;
+      case 1:
+        url = 'https://github.com/apexcharts/apexcharts.js';
+        break;
+      case 2:
+        url = 'https://www.jsdelivr.com/package/npm/apexcharts';
+        break;
+    }
+
+    window.location.href = url;
+  }
+
+  useEffect(() => {
+    // let labels = document.querySelectorAll('.apexcharts-yaxis-label');
+
+    // for (let i = 0; i < labels.length; i++) {
+    //   labels[i].setAttribute('onclick', (event: any) => {
+    //     console.log(event);
+    //   });
+    // }
+
+    //   document.addEventListener('DOMContentLoaded', (event) => {
+    //     console.log('DOM fully loaded and parsed');
+    //   });
+
+    const test = document.querySelectorAll<HTMLElement>(
+      '.apexcharts-yaxis-label'
+    );
+    test.forEach((item) => {
+      console.log(item);
+      item.style.padding = '10px';
+      // do whatever onClick
+      // console.log(event.target);
+    });
+
+    // const labels = window.document.querySelectorAll('.apexcharts-yaxis-label');
+
+    // console.log(labels);
+
+    // labels.forEach((item) => {
+    //   // item.innerHTML = `<a href="/stock-details/${item.textContent}">${item.textContent}</a>`;
+    //   item.addEventListener('click', (event) => {
+    //     const code: any = item.textContent;
+    //     const tradingCode = code.slice(0, code.length / 2);
+    //     router.push(`/stock-details/${tradingCode}`);
+    //   });
+    // });
+
+    // labels.forEach((item) => {
+    //   item.addEventListener('click', (event) => {
+    //     // do whatever onClick
+    //     // console.log(event.target);
+    //   });
+  });
 
   const dataSeries = [
     {
@@ -87,6 +154,7 @@ export default function HorizontalBarChart(props: SingleBarChartProps) {
         style: {
           fontSize: '12px',
           fontFamily: "'DM Sans', sans-serif",
+          cssClass: 'chart-label-x',
         },
         formatter: (value: any) => {
           return value;

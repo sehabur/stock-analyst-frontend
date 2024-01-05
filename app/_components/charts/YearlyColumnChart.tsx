@@ -41,7 +41,7 @@ export default function YearlyColumnChart(props: any) {
       style: {
         colors: [theme.palette.text.primary],
       },
-      offsetY: -20,
+      offsetY: -23,
     },
     xaxis: {
       categories: data.categories,

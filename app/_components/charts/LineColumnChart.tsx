@@ -14,7 +14,7 @@ export default function LineColumnChart(props: any) {
   const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const chartOptions: {} = {
-    colors: ['#448aff', '#f57f17', '#42bda8'],
+    colors: ['#42bda8', '#f57f17', '#448aff'],
     chart: {
       type: 'line',
       foreColor: theme.palette.text.primary,

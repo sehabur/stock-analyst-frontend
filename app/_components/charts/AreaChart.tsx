@@ -123,7 +123,7 @@ export default function AreaChart(props: AreaChartProps) {
     chartContainerRef.current.appendChild(tooltip.current);
 
     chart.current.subscribeCrosshairMove((param: any) => {
-      console.log(param);
+      // console.log(param);
       if (
         param.point === undefined ||
         !param.time ||

@@ -13,7 +13,7 @@ export default function QuarterlyColumnChart(props: any) {
   const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   const chartOptions: {} = {
-    colors: ['#448aff', '#42bda8', '#4dd0e1'],
+    colors: ['#448aff', '#42bda8'],
     chart: {
       type: 'bar',
       foreColor: theme.palette.text.primary,
@@ -40,7 +40,7 @@ export default function QuarterlyColumnChart(props: any) {
       style: {
         colors: [theme.palette.text.primary],
       },
-      offsetY: -20,
+      offsetY: -23,
     },
     xaxis: {
       categories: data.categories,

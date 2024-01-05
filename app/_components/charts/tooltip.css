@@ -32,3 +32,11 @@
 .chart-container {
   position: relative;
 }
+
+.chart-label-x {
+  border-style: solid;
+  border: 5px solid red;
+  background: blue;
+  color: yellow;
+  background-color: '#f00';
+}
