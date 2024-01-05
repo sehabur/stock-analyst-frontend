@@ -63,6 +63,7 @@ export const lightTheme = createTheme({
     financeCardTitlecolor: '#f0f3f5',
     secondaryPaperBackground: '#f0f0f0',
     chartGridColor: '#eeeeee',
+    overviewHeader: '#e0e0e0',
   },
   ...defaultSettings,
 });
@@ -76,6 +77,7 @@ export const darkTheme = createTheme({
     financeCardTitlecolor: '#212121',
     secondaryPaperBackground: '#212121',
     chartGridColor: '#494949',
+    overviewHeader: '#212121',
   },
   ...defaultSettings,
 });

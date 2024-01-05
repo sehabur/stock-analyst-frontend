@@ -22,6 +22,7 @@ import {
   CardActionArea,
   CardContent,
   Slider,
+  styled,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -43,31 +44,39 @@ import MultipleLineChart from '@/components/charts/MultipleLineChart';
 import FinancialCard from '@/components/cards/FinancialCard';
 import InfoIcon from '@mui/icons-material/Info';
 import Link from 'next/link';
+import { fundamentalsTooltip } from '@/data/info';
+import FundamentalInfoCard from '@/components/cards/FundamentalInfoCard';
 
-const formatPeData = (value: number, sectorRatio: any) => {
-  const changeText =
-    value === sectorRatio.median
-      ? 'Lies at median of sector '
-      : value > sectorRatio.median
-      ? 'Above median value of sector'
-      : 'Below than median value of sector';
+const Heading = styled(Typography)({
+  fontSize: '1.1rem',
+  fontWeight: 700,
+  marginLeft: '16px',
+});
 
-  const changeTextColor =
-    value === sectorRatio.median
-      ? 'primary.main'
-      : value > sectorRatio.median
-      ? 'error.main'
-      : 'success.main';
+// const formatPeData = (value: number, sectorRatio: any) => {
+//   const changeText =
+//     value === sectorRatio.median
+//       ? 'Lies at median of sector '
+//       : value > sectorRatio.median
+//       ? 'Above median value of sector'
+//       : 'Below than median value of sector';
 
-  return {
-    current: value,
-    changeText,
-    changeTextColor,
-    position: sectorRatio.position,
-    totalshares: sectorRatio.items,
-    sectorRatio,
-  };
-};
+//   const changeTextColor =
+//     value === sectorRatio.median
+//       ? 'primary.main'
+//       : value > sectorRatio.median
+//       ? 'error.main'
+//       : 'success.main';
+
+//   return {
+//     current: value,
+//     changeText,
+//     changeTextColor,
+//     position: sectorRatio.position,
+//     totalshares: sectorRatio.items,
+//     sectorRatio,
+//   };
+// };
 
 const formatYearlyData = (data: any, divideFactor = 1) => {
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
@@ -152,6 +161,8 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
     lastYearData.year
   );
 
+  const categories = qMonths;
+
   let datapointSeries1: any;
   if (lastYearData) {
     datapointSeries1 = [
@@ -170,47 +181,46 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
     thisYearData?.q3 || null,
     thisYearData?.q4 || null,
   ];
-  const categories = qMonths;
 
-  let currentValue, lastValue;
-  if (thisYearData?.q4) {
-    currentValue = thisYearData.q4;
-    lastValue = thisYearData.q3;
-  } else if (thisYearData?.q3) {
-    currentValue = thisYearData.q3;
-    lastValue = thisYearData.q2;
-  } else if (thisYearData?.q2) {
-    currentValue = thisYearData.q2;
-    lastValue = thisYearData.q1;
-  } else if (thisYearData?.q1) {
-    currentValue = thisYearData.q1;
-    lastValue = lastYearData.q4;
-  } else {
-    currentValue = 0;
-    lastValue = 0;
-  }
+  // let currentValue, lastValue;
+  // if (thisYearData?.q4) {
+  //   currentValue = thisYearData.q4;
+  //   lastValue = thisYearData.q3;
+  // } else if (thisYearData?.q3) {
+  //   currentValue = thisYearData.q3;
+  //   lastValue = thisYearData.q2;
+  // } else if (thisYearData?.q2) {
+  //   currentValue = thisYearData.q2;
+  //   lastValue = thisYearData.q1;
+  // } else if (thisYearData?.q1) {
+  //   currentValue = thisYearData.q1;
+  //   lastValue = lastYearData.q4;
+  // } else {
+  //   currentValue = 0;
+  //   lastValue = 0;
+  // }
 
-  const percentChange = ((currentValue - lastValue) / lastValue) * 100;
+  // const percentChange = ((currentValue - lastValue) / lastValue) * 100;
 
-  const changeText =
-    percentChange === 0
-      ? 'No change since last quarter'
-      : percentChange.toFixed(2) +
-        '% ' +
-        (percentChange > 0 ? 'increased over' : 'decreased from') +
-        ' last quarter';
+  // const changeText =
+  //   percentChange === 0
+  //     ? 'No change since last quarter'
+  //     : percentChange.toFixed(2) +
+  //       '% ' +
+  //       (percentChange > 0 ? 'increased over' : 'decreased from') +
+  //       ' last quarter';
 
-  const changeTextColor =
-    percentChange === 0
-      ? 'primary.main'
-      : percentChange < 0
-      ? 'error.main'
-      : 'success.main';
+  // const changeTextColor =
+  //   percentChange === 0
+  //     ? 'primary.main'
+  //     : percentChange < 0
+  //     ? 'error.main'
+  //     : 'success.main';
 
   return {
-    current: currentValue,
-    changeText,
-    changeTextColor,
+    // current: currentValue,
+    // changeText,
+    // changeTextColor,
     categories,
     dataSeries: [
       {
@@ -225,11 +235,7 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
   };
 };
 
-const formatQuarterlyEpsData = (
-  data: any,
-  epsCurrent: number,
-  yearEnd: string
-) => {
+const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
 
   const thisYearData = data[data.length - 1];
@@ -240,36 +246,19 @@ const formatQuarterlyEpsData = (
     thisYearData.year,
     lastYearData.year
   );
-
-  let datapointSeries2 = [
+  const categories = qMonths;
+  const datapointSeries2 = [
     thisYearData?.q1 || null,
     thisYearData?.q2 || null,
     thisYearData?.q3 || null,
     thisYearData?.q4 || null,
-    // thisYearData?.annual !== 0
-    //   ? Number(
-    //       (
-    //         thisYearData?.annual -
-    //         (thisYearData?.q1 + thisYearData?.q2 + thisYearData?.q3)
-    //       ).toFixed(2)
-    //     )
-    //   : 0,
   ];
-  let datapointSeries1 = [
+  const datapointSeries1 = [
     lastYearData?.q1 || null,
     lastYearData?.q2 || null,
     lastYearData?.q3 || null,
     lastYearData?.q4 || null,
-    // lastYearData?.annual !== 0
-    //   ? Number(
-    //       (
-    //         lastYearData?.annual -
-    //         (lastYearData?.q1 + lastYearData?.q2 + lastYearData?.q3)
-    //       ).toFixed(2)
-    //     )
-    //   : 0,
   ];
-  let categories = qMonths;
 
   // let currentValue, lastValue;
 
@@ -545,30 +534,29 @@ export default function Financials({ data }: any) {
   //   data.sectorPbvRatio
   // );
   const epsYearly = formatYearlyData(data.epsYearly);
+  const navYearly = formatYearlyData(data.navYearly);
+  const roe = formatYearlyData(data.roe);
+  const roce = formatYearlyData(data.roce);
+  const de = formatYearlyData(data.de);
+  const currentRatio = formatYearlyData(data.currentRatio);
+  const netIncome = formatYearlyData(data.netIncome, 10000000);
+  const netIncomeRatio = formatYearlyData(data.netIncomeRatio);
+  const nocfpsYearly = formatYearlyData(data.nocfpsYearly);
+  const profitMargin = formatYearlyData(data.profitMargin);
+  const revenue = formatYearlyData(data.revenue, 10000000);
+  const operatingProfit = formatYearlyData(data.operatingProfit, 10000000);
+  const totalAsset = formatYearlyData(data.totalAsset, 10000000);
+  const divPayoutRatio = formatYearlyData(
+    data.screener.dividendPayoutRatio.data
+  );
+  const dividendYield = formatYearlyData(data.dividendYield);
 
-  // const navYearly = formatYearlyData(data.navYearly);
-  // const roe = formatYearlyData(data.roe);
-  // const roce = formatYearlyData(data.roce);
-  // const revenue = formatYearlyData(data.revenue, 10000000);
-  // const profit = formatYearlyData(data.profitYearly, 10);
-  // const totalAsset = formatYearlyData(data.totalAsset, 10000000);
-  // const totalLiabilities = formatYearlyData(data.totalLiabilities, 10000000);
-  // const profitMargin = formatProfitData(
-  //   data.profitMargin,
-  //   data.profitYearly,
-  //   data.revenue
-  // );
-  // const divPayoutRatio = formatYearlyData(data.divPayoutRatio);
-  // const dividendYield = formatYearlyData(data.dividendYield);
-  // const de = formatYearlyData(data.de);
-
-  // const epsQuarterly = formatQuarterlyEpsData(
-  //   data.epsQuaterly,
-  //   data.epsCurrent,
-  //   data.yearEnd
-  // );
-  // const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
-  // const nocfpsQuaterly = formatQuarterlyData(data.nocfpsQuaterly, data.yearEnd);
+  const epsQuarterly = formatQuarterlyEpsData(data.epsQuaterly, data.yearEnd);
+  const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
+  const nocfpsQuarterly = formatQuarterlyData(
+    data.nocfpsQuaterly,
+    data.yearEnd
+  );
   // const shareholdings = formatShareholdingData(data.shareHoldingPercentage);
 
   // const cashdividend = formatDividendData(
@@ -580,7 +568,7 @@ export default function Financials({ data }: any) {
   return (
     <Box sx={{ bgcolor: 'financePageBgcolor' }}>
       <Box sx={{ maxWidth: '1250px', mx: 'auto', py: 2, px: 2 }}>
-        {/* <Dialog
+        <Dialog
           open={openDialog}
           onClose={handleDialogClose}
           fullWidth
@@ -594,43 +582,9 @@ export default function Financials({ data }: any) {
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <Card
-                    elevation={0}
-                    sx={{
-                      bgcolor: 'secondaryBackground',
-                      mx: { xs: 0, sm: 2 },
-                      mb: 2,
-                    }}
-                  >
-                    <CardContent>
-                      <Stack
-                        direction="row"
-                        alignItems="flex-start"
-                        spacing={2}
-                      >
-                        {matchesSmUp && <InfoIcon color="info" />}
-                        <Typography>
-                          Net Asset Value is the net value of an investment
-                          funds assets less its liabilities, divided by the
-                          number of shares outstanding. Most commonly used in
-                          the context of a mutual fund or an exchange-traded
-                          fund (ETF).
-                          <Typography
-                            component={Link}
-                            target="_blank"
-                            href="/ss"
-                            sx={{
-                              color: 'primary.main',
-                              textDecoration: 'underline',
-                              ml: 1,
-                            }}
-                          >
-                            Learn more
-                          </Typography>
-                        </Typography>
-                      </Stack>
-                    </CardContent>
-                  </Card>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.nav?.definition}
+                  />
                   <Box sx={{ mx: 2 }}>
                     <Typography
                       gutterBottom
@@ -646,8 +600,7 @@ export default function Financials({ data }: any) {
                         fontWeight: 500,
                       }}
                     >
-                      NAV for Q1 2024 was 4.86. NAV decreased by 265.87%
-                      compared to same quarter of previous year
+                      {data.screener.navQuarterly.overview}
                     </Typography>
                   </Box>
                   <Typography
@@ -672,7 +625,7 @@ export default function Financials({ data }: any) {
                   >
                     Yearly
                   </Typography>
-                  <Box sx={{ px: 0, mx: 0 }}>
+                  <Box>
                     <YearlyColumnChart data={navYearly} />
                   </Box>
                 </Box>
@@ -686,54 +639,36 @@ export default function Financials({ data }: any) {
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Quarterly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.eps?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.navQuarterly.overview}
+                    </Typography>
+                  </Box>
+
                   <Box>
+                    <Heading>Quarterly</Heading>
                     <QuarterlyColumnChart data={epsQuarterly} />
                   </Box>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                      mt: 2,
-                    }}
-                  >
-                    Yearly
-                  </Typography>
-                  <Box>
-                    <YearlyColumnChart data={epsYearly} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'nocfps' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Net Operating Cash Flow Per Share (NOCFPS) of {data.tradingCode}
-              </DialogTitle>
 
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Quarterly
-                  </Typography>
                   <Box>
-                    <QuarterlyColumnChart data={nocfpsQuaterly} />
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={epsYearly} />
                   </Box>
                 </Box>
               </DialogContent>
@@ -746,16 +681,29 @@ export default function Financials({ data }: any) {
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.roe?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.roe.overview}
+                    </Typography>
+                  </Box>
                   <Box>
+                    <Heading>Yearly</Heading>
                     <YearlyColumnChart data={roe} />
                   </Box>
                 </Box>
@@ -769,16 +717,30 @@ export default function Financials({ data }: any) {
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.roce?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.roce.overview}
+                    </Typography>
+                  </Box>
+
                   <Box>
+                    <Heading>Yearly</Heading>
                     <YearlyColumnChart data={roce} />
                   </Box>
                 </Box>
@@ -792,85 +754,97 @@ export default function Financials({ data }: any) {
               </DialogTitle>
 
               <DialogContent dividers>
-                <Box sx={{ my: 6, mx: { xs: 0, sm: 12 } }}>
+                <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.pe?.definition}
+                  />
                   <Typography
                     sx={{
                       fontSize: '1.2rem',
                       fontWeight: 700,
-                      mb: 8,
+                      mt: 4,
+                      mb: 6,
+                      mx: 10,
                       textAlign: 'center',
                       color: data.pe.color,
                     }}
                   >
                     {data.pe.overview}
                   </Typography>
-                  <Stack
-                    spacing={{ xs: 4, sm: 8 }}
-                    direction="row"
-                    sx={{ mb: 1 }}
-                    alignItems="center"
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      mx: { xs: 0, sm: 2 },
+                    }}
                   >
-                    <Typography
-                      color="error"
-                      sx={{ fontSize: '1rem', fontWeight: 700 }}
+                    <Stack
+                      spacing={{ xs: 4, sm: 8 }}
+                      direction="row"
+                      sx={{ mb: 1 }}
+                      alignItems="center"
                     >
-                      Lowest P/E of sector
-                    </Typography>
-
-                    <Slider
-                      value={data.pe.value}
-                      aria-label="Disabled slider"
-                      valueLabelDisplay="on"
-                      valueLabelFormat={() => {
-                        return `P/E: ${data.pe.value}`;
-                      }}
-                      min={data.pe.min}
-                      max={data.pe.max}
-                      marks={[
-                        {
-                          value: data.pe.min,
-                          label: data.pe.min,
-                        },
-                        {
-                          value: data.pe.max,
-                          label: data.pe.max,
-                        },
-                      ]}
-                      sx={{
-                        color: data.pe.color,
-                        height: 10,
-                        '& .MuiSlider-thumb': {
-                          height: 28,
-                          width: 28,
-                          bgcolor: '#fff',
-                          border: '6px solid currentcolor',
-                        },
-                        '& .MuiSlider-mark': {
-                          opacity: 0,
-                        },
-                        '& .MuiSlider-valueLabel': {
-                          fontSize: 18,
-                          px: 1.5,
-                          py: 1,
-                          borderRadius: 1,
-                          opacity: 0.9,
-                        },
-                        '& .MuiSlider-track': {
-                          color: 'transparent',
-                        },
-                      }}
-                    />
-
-                    <Typography
-                      sx={{
-                        fontSize: '1rem',
-                        color: 'success.main',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Highest P/E of sector
-                    </Typography>
-                  </Stack>
+                      <Typography
+                        color="error"
+                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                      >
+                        Lowest P/E of sector
+                      </Typography>
+                      <Slider
+                        value={data.pe.value}
+                        aria-label="Disabled slider"
+                        valueLabelDisplay="on"
+                        valueLabelFormat={() => {
+                          return `P/E: ${data.pe.value}`;
+                        }}
+                        min={data.pe.min}
+                        max={data.pe.max}
+                        marks={[
+                          {
+                            value: data.pe.min,
+                            label: data.pe.min,
+                          },
+                          {
+                            value: data.pe.max,
+                            label: data.pe.max,
+                          },
+                        ]}
+                        sx={{
+                          color: data.pe.color,
+                          height: 10,
+                          '& .MuiSlider-thumb': {
+                            height: 28,
+                            width: 28,
+                            bgcolor: '#fff',
+                            border: '6px solid currentcolor',
+                          },
+                          '& .MuiSlider-mark': {
+                            opacity: 0,
+                          },
+                          '& .MuiSlider-valueLabel': {
+                            fontSize: 18,
+                            px: 1.5,
+                            py: 1,
+                            borderRadius: 1,
+                            opacity: 0.9,
+                          },
+                          '& .MuiSlider-track': {
+                            color: 'transparent',
+                          },
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: '1rem',
+                          color: 'success.main',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Highest P/E of sector
+                      </Typography>
+                    </Stack>
+                  </Paper>
                 </Box>
               </DialogContent>
             </>
@@ -882,138 +856,386 @@ export default function Financials({ data }: any) {
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.de?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.de.overview}
+                    </Typography>
+                  </Box>
+
                   <Box>
+                    <Heading>Yearly</Heading>
                     <YearlyColumnChart data={de} />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'divPayoutRatio' && (
+
+          {dialogContent === 'pbv' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Dividend Payout Ratio of {data.tradingCode}
+                Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
               </DialogTitle>
+
               <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.pbv?.definition}
+                  />
                   <Typography
                     sx={{
                       fontSize: '1.2rem',
                       fontWeight: 700,
+                      mt: 4,
+                      mb: 6,
+                      mx: 10,
                       textAlign: 'center',
+                      color: data.pbv.color,
                     }}
                   >
-                    Yearly
+                    {data.pbv.overview}
                   </Typography>
-                  <Box>
-                    <YearlyColumnChart data={divPayoutRatio} />
-                  </Box>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      mx: { xs: 0, sm: 2 },
+                    }}
+                  >
+                    <Stack
+                      spacing={{ xs: 4, sm: 8 }}
+                      direction="row"
+                      sx={{ mb: 1 }}
+                      alignItems="center"
+                    >
+                      <Typography
+                        color="error"
+                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                      >
+                        Lowest P/Bv of sector
+                      </Typography>
+
+                      <Slider
+                        value={data.pbv.value}
+                        aria-label="Disabled slider"
+                        valueLabelDisplay="on"
+                        valueLabelFormat={() => {
+                          return `P/BV: ${data.pbv.value}`;
+                        }}
+                        min={data.pbv.min}
+                        max={data.pbv.max}
+                        marks={[
+                          {
+                            value: data.pbv.min,
+                            label: data.pbv.min,
+                          },
+                          {
+                            value: data.pbv.max,
+                            label: data.pbv.max,
+                          },
+                        ]}
+                        sx={{
+                          color: data.pbv.color,
+                          height: 10,
+                          '& .MuiSlider-thumb': {
+                            height: 28,
+                            width: 28,
+                            bgcolor: '#fff',
+                            border: '6px solid currentcolor',
+                          },
+                          '& .MuiSlider-mark': {
+                            opacity: 0,
+                          },
+                          '& .MuiSlider-valueLabel': {
+                            fontSize: 18,
+                            px: 1.5,
+                            py: 1,
+                            borderRadius: 1,
+                            opacity: 0.9,
+                          },
+                          '& .MuiSlider-track': {
+                            color: 'transparent',
+                          },
+                        }}
+                      />
+
+                      <Typography
+                        sx={{
+                          fontSize: '1rem',
+                          color: 'success.main',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Highest P/Bv of sector
+                      </Typography>
+                    </Stack>
+                  </Paper>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'dividend' && (
+          {dialogContent === 'ps' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Dividend history of {data.tradingCode}
+                Price-to-Sales (P/S) Ratio of {data.tradingCode}
               </DialogTitle>
+
               <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.pe?.definition}
+                  />
                   <Typography
                     sx={{
                       fontSize: '1.2rem',
                       fontWeight: 700,
+                      mt: 4,
+                      mb: 6,
+                      mx: 10,
                       textAlign: 'center',
+                      color: data.screener.ps.color,
                     }}
                   >
-                    Cash dividend
+                    {data.screener.ps.overview}
                   </Typography>
-                  <Box>
-                    <LineColumnChart data={cashdividend} />
-                  </Box>
-                  <Typography sx={{ fontSize: '1.2rem', fontWeight: 700 }}>
-                    Bonus dividend
-                  </Typography>
-                  <Box>
-                    <YearlyColumnChart data={bonusdividend} />
-                  </Box>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      mx: { xs: 0, sm: 2 },
+                    }}
+                  >
+                    <Stack
+                      spacing={{ xs: 4, sm: 8 }}
+                      direction="row"
+                      sx={{ mb: 1 }}
+                      alignItems="center"
+                    >
+                      <Typography
+                        color="error"
+                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                      >
+                        Lowest P/S of sector
+                      </Typography>
+
+                      <Slider
+                        value={data.screener.ps.value}
+                        aria-label="Disabled slider"
+                        valueLabelDisplay="on"
+                        valueLabelFormat={() => {
+                          return `P/BV: ${data.screener.ps.value}`;
+                        }}
+                        min={data.screener.ps.min}
+                        max={data.screener.ps.max}
+                        marks={[
+                          {
+                            value: data.screener.ps.min,
+                            label: data.screener.ps.min,
+                          },
+                          {
+                            value: data.screener.ps.max,
+                            label: data.screener.ps.max,
+                          },
+                        ]}
+                        sx={{
+                          color: data.screener.ps.color,
+                          height: 10,
+                          '& .MuiSlider-thumb': {
+                            height: 28,
+                            width: 28,
+                            bgcolor: '#fff',
+                            border: '6px solid currentcolor',
+                          },
+                          '& .MuiSlider-mark': {
+                            opacity: 0,
+                          },
+                          '& .MuiSlider-valueLabel': {
+                            fontSize: 18,
+                            px: 1.5,
+                            py: 1,
+                            borderRadius: 1,
+                            opacity: 0.9,
+                          },
+                          '& .MuiSlider-track': {
+                            color: 'transparent',
+                          },
+                        }}
+                      />
+
+                      <Typography
+                        sx={{
+                          fontSize: '1rem',
+                          color: 'success.main',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Highest P/S of sector
+                      </Typography>
+                    </Stack>
+                  </Paper>
                 </Box>
               </DialogContent>
             </>
           )}
+
           {dialogContent === 'profitMargin' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Profit and Revenue of {data.tradingCode}
+                Profit Margin of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.profitMargin?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.profitMargin.overview}
+                    </Typography>
+                  </Box>
                   <Box>
-                    <LineColumnChart data={profitMargin} />
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={profitMargin} />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'totalLiabilities' && (
+
+          {dialogContent === 'currentRatio' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Total Liabilities of {data.tradingCode} in crore BDT
+                Current Ratio of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.currentRatio?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.currentRatio.overview}
+                    </Typography>
+                  </Box>
                   <Box>
-                    <YearlyColumnChart data={totalLiabilities} />
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={currentRatio} />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'totalAsset' && (
+          {dialogContent === 'netIncomeRatio' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Total Assets of {data.tradingCode} in crore BDT
+                Net Income Ratio of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.netIncomeRatio?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.netIncomeRatio.overview}
+                    </Typography>
+                  </Box>
                   <Box>
-                    <YearlyColumnChart data={totalAsset} />
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={netIncomeRatio} />
+                  </Box>
+                </Box>
+              </DialogContent>
+            </>
+          )}
+          {dialogContent === 'dividendYield' && (
+            <>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+                Dividend Yield of {data.tradingCode}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.dividendYield?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.dividendYield.overview}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={dividendYield} />
                   </Box>
                 </Box>
               </DialogContent>
@@ -1022,175 +1244,309 @@ export default function Financials({ data }: any) {
           {dialogContent === 'revenue' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Revenue of {data.tradingCode} in crore BDT
+                Revenue of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                    }}
-                  >
-                    Yearly
-                  </Typography>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.revenue?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.revenue.overview}
+                    </Typography>
+                  </Box>
                   <Box>
+                    <Heading>Yearly</Heading>
                     <YearlyColumnChart data={revenue} />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'profit' && (
+          {dialogContent === 'netIncome' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Profit of {data.tradingCode} in crore BDT
+                Net Income of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
                 <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.netIncome?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.netIncome.overview}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={netIncome} />
+                  </Box>
+                </Box>
+              </DialogContent>
+            </>
+          )}
+          {dialogContent === 'totalAsset' && (
+            <>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+                Total Asset of {data.tradingCode}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.totalAsset?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.totalAsset.overview}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={totalAsset} />
+                  </Box>
+                </Box>
+              </DialogContent>
+            </>
+          )}
+          {dialogContent === 'operatingProfit' && (
+            <>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+                Operating Profit of {data.tradingCode}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.operatingProfit?.definition}
+                  />
+                  <Box sx={{ mx: 2, mb: 4 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.operatingProfit.overview}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Heading>Yearly</Heading>
+                    <YearlyColumnChart data={operatingProfit} />
+                  </Box>
+                </Box>
+              </DialogContent>
+            </>
+          )}
+          {dialogContent === 'nocfps' && (
+            <>
+              <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
+                NOCFPS of {data.tradingCode}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.nocfps?.definition}
+                  />
+                  <Box sx={{ mx: 2 }}>
+                    <Typography
+                      gutterBottom
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 700,
+                      }}
+                    >
+                      Overview
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                      }}
+                    >
+                      {data.screener.nocfpsQuarterly.overview}
+                    </Typography>
+                  </Box>
                   <Typography
                     sx={{
-                      fontSize: '1.2rem',
+                      fontSize: '1.1rem',
                       fontWeight: 700,
-                      textAlign: 'center',
+                      ml: 2,
+                      mt: 4,
+                    }}
+                  >
+                    Quarterly
+                  </Typography>
+                  <Box>
+                    <QuarterlyColumnChart data={nocfpsQuarterly} />
+                  </Box>
+                  <Typography
+                    sx={{
+                      fontSize: '1.1rem',
+                      fontWeight: 700,
+                      ml: 2,
                     }}
                   >
                     Yearly
                   </Typography>
                   <Box>
-                    <YearlyColumnChart data={profit} />
+                    <YearlyColumnChart data={nocfpsYearly} />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
 
-          {dialogContent === 'priceToBookvalue' && (
+          {dialogContent === 'pcf' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
+                Price-to-Cashflow (P/Cf) Ratio of {data.tradingCode}
               </DialogTitle>
 
               <DialogContent dividers>
-                <Box sx={{ my: 8, mx: { xs: 0, sm: 12 } }}>
+                <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
+                  <FundamentalInfoCard
+                    text={fundamentalsTooltip.pcf?.definition}
+                  />
                   <Typography
                     sx={{
                       fontSize: '1.2rem',
                       fontWeight: 700,
-                      mb: 8,
+                      mt: 4,
+                      mb: 6,
+                      mx: 10,
                       textAlign: 'center',
-                      color: data.pbv.color,
+                      color: data.pcf.color,
                     }}
                   >
-                    {data.pbv.overview}
+                    {data.pcf.overview}
                   </Typography>
-                  <Stack
-                    spacing={{ xs: 4, sm: 8 }}
-                    direction="row"
-                    sx={{ mb: 1 }}
-                    alignItems="center"
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      mx: { xs: 0, sm: 2 },
+                    }}
                   >
-                    <Typography
-                      color="error"
-                      sx={{ fontSize: '1rem', fontWeight: 700 }}
+                    <Stack
+                      spacing={{ xs: 4, sm: 8 }}
+                      direction="row"
+                      sx={{ mb: 1 }}
+                      alignItems="center"
                     >
-                      Lowest P/BV of sector
-                    </Typography>
+                      <Typography
+                        color="error"
+                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                      >
+                        Lowest P/Cf of sector
+                      </Typography>
 
-                    <Slider
-                      value={data.pbv.value}
-                      aria-label="Disabled slider"
-                      valueLabelDisplay="on"
-                      valueLabelFormat={() => {
-                        return `P/BV: ${data.pbv.value}`;
-                      }}
-                      min={data.pbv.min}
-                      max={data.pbv.max}
-                      marks={[
-                        {
-                          value: data.pbv.min,
-                          label: data.pbv.min,
-                        },
-                        {
-                          value: data.pbv.max,
-                          label: data.pbv.max,
-                        },
-                      ]}
-                      sx={{
-                        color: data.pbv.color,
-                        height: 10,
-                        '& .MuiSlider-thumb': {
-                          height: 28,
-                          width: 28,
-                          bgcolor: '#fff',
-                          border: '6px solid currentcolor',
-                        },
-                        '& .MuiSlider-mark': {
-                          opacity: 0,
-                        },
-                        '& .MuiSlider-valueLabel': {
-                          fontSize: 18,
-                          px: 1.5,
-                          py: 1,
-                          borderRadius: 1,
-                          opacity: 0.9,
-                        },
-                        '& .MuiSlider-track': {
-                          color: 'transparent',
-                        },
-                      }}
-                    />
+                      <Slider
+                        value={data.pcf.value}
+                        aria-label="Disabled slider"
+                        valueLabelDisplay="on"
+                        valueLabelFormat={() => {
+                          return `P/BV: ${data.pcf.value}`;
+                        }}
+                        min={data.pcf.min}
+                        max={data.pcf.max}
+                        marks={[
+                          {
+                            value: data.pcf.min,
+                            label: data.pcf.min,
+                          },
+                          {
+                            value: data.pcf.max,
+                            label: data.pcf.max,
+                          },
+                        ]}
+                        sx={{
+                          color: data.pcf.color,
+                          height: 10,
+                          '& .MuiSlider-thumb': {
+                            height: 28,
+                            width: 28,
+                            bgcolor: '#fff',
+                            border: '6px solid currentcolor',
+                          },
+                          '& .MuiSlider-mark': {
+                            opacity: 0,
+                          },
+                          '& .MuiSlider-valueLabel': {
+                            fontSize: 18,
+                            px: 1.5,
+                            py: 1,
+                            borderRadius: 1,
+                            opacity: 0.9,
+                          },
+                          '& .MuiSlider-track': {
+                            color: 'transparent',
+                          },
+                        }}
+                      />
 
-                    <Typography
-                      sx={{
-                        fontSize: '1rem',
-                        color: 'success.main',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Highest P/E of sector
-                    </Typography>
-                  </Stack>
+                      <Typography
+                        sx={{
+                          fontSize: '1rem',
+                          color: 'success.main',
+                          fontWeight: 700,
+                        }}
+                      >
+                        Highest P/Cf of sector
+                      </Typography>
+                    </Stack>
+                  </Paper>
                 </Box>
               </DialogContent>
             </>
           )}
-
-          {dialogContent === 'shareholdings' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Shareholding percentage history of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '600px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <Box sx={{ mb: 3 }}>
-                    <Typography
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 500,
-                        textAlign: 'center',
-                      }}
-                    >
-                      Shareholding percentage history
-                    </Typography>
-                    <MultipleLineChart
-                      data={shareholdings.series}
-                      categories={shareholdings.categories}
-                      lineColors={[
-                        '#4dd0e1',
-                        '#b388ff',
-                        '#448aff',
-                        '#42bda8',
-                        '#f57f17',
-                      ]}
-                    />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-
           <IconButton
             aria-label="close"
             onClick={handleDialogClose}
@@ -1202,7 +1558,7 @@ export default function Financials({ data }: any) {
           >
             <CloseIcon sx={{ fontSize: '1.6rem' }} />
           </IconButton>
-        </Dialog> */}
+        </Dialog>
 
         <Typography
           sx={{
@@ -1285,8 +1641,8 @@ export default function Financials({ data }: any) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <FinancialCard
-              titleShort="Dividend Yield(%)"
-              title="Price-to-Sales (P/S) Ratio"
+              titleShort="P/S Ratio"
+              title="Price/Sales Ratio"
               data={data.screener.ps}
               dialogtype="ps"
               handleItemClick={handleItemClick}
@@ -1297,7 +1653,7 @@ export default function Financials({ data }: any) {
               titleShort="Price/Bookvalue Ratio"
               title="Price/Bookvalue Ratio"
               data={data.pbv}
-              dialogtype="priceToBookvalue"
+              dialogtype="pbv"
               handleItemClick={handleItemClick}
             />
           </Grid>
@@ -1333,7 +1689,7 @@ export default function Financials({ data }: any) {
               titleShort="Price/Cashflow Ratio"
               title="Price/Cashflow Ratio"
               data={data.pcf}
-              dialogtype="priceToCashflow"
+              dialogtype="pcf"
               handleItemClick={handleItemClick}
             />
           </Grid>
@@ -1355,7 +1711,7 @@ export default function Financials({ data }: any) {
               title="Divident Yield"
               unit="%"
               data={data.screener.dividendYield}
-              dialogtype="dividend"
+              dialogtype="dividendYield"
               handleItemClick={handleItemClick}
             />
           </Grid>
@@ -1388,7 +1744,7 @@ export default function Financials({ data }: any) {
               unit="Crore"
               divideFactor={10000000}
               data={data.screener.netIncome}
-              dialogtype="profit"
+              dialogtype="netIncome"
               handleItemClick={handleItemClick}
             />
           </Grid>
@@ -1410,7 +1766,7 @@ export default function Financials({ data }: any) {
               unit="Crore"
               divideFactor={10000000}
               data={data.screener.operatingProfit}
-              dialogtype="totalAsset"
+              dialogtype="operatingProfit"
               handleItemClick={handleItemClick}
             />
           </Grid>

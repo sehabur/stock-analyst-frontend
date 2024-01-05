@@ -9,12 +9,18 @@ import {
   useMediaQuery,
   Link,
   Paper,
+  Card,
+  CardActionArea,
+  CardContent,
+  Slider,
+  Divider,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import React from 'react';
 import { grey } from '@mui/material/colors';
+import OverviewCard from '@/components/cards/OverviewCard';
 
 const formatCandleChartData = (data: any) => {
   let candle = [];
@@ -302,10 +308,56 @@ export default function Overview({ stock }: any) {
           container
           alignItems="center"
           justifyContent="center"
-          spacing={2}
-          sx={{ mt: 2, px: 8 }}
+          rowSpacing={{ xs: 4, sm: 4 }}
+          columnSpacing={{ xs: 2, sm: 6 }}
+          sx={{ mt: 2 }}
         >
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="Open" data={stock.latest.ycp} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="High" data={stock.latest.high} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="Low" data={stock.latest.low} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="YCP" data={stock.latest.ycp} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="Volume" data={stock.latest.volume} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="Value (Cr)" data={stock.latest.value} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="Trade" data={stock.latest.trade} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard
+              title="Floor price"
+              data={stock.lastDay.oneYearHigh}
+            />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="52W High" data={stock.latest.volume} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard title="52W Low" data={stock.lastDay.oneYearLow} />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard
+              title="Circuit Up"
+              data={stock.fundamentals.circuitUp}
+            />
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <OverviewCard
+              title="Circuit Low"
+              data={stock.fundamentals.circuitLow}
+            />
+          </Grid>
+          {/* <Grid item xs={4} sm={2}>
             <Box>
               <Typography
                 color="text.secondary"
@@ -496,7 +548,7 @@ export default function Overview({ stock }: any) {
                 {stock.fundamentals.circuitLow}
               </Typography>
             </Box>
-          </Grid>
+          </Grid> */}
 
           {/* <Grid item xs={6} sm={2.4}>
             <Box>

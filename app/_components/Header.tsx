@@ -26,6 +26,7 @@ import {
   Chip,
   Paper,
   DialogTitle,
+  InputBase,
 } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import Link from 'next/link';
@@ -58,6 +59,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import CloseIcon from '@mui/icons-material/Close';
+
+const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function Header(props: any) {
   const dispatch = useDispatch();
@@ -123,15 +126,25 @@ export default function Header(props: any) {
     setSearchResultFallbackText('Loading..');
     setSearchResult([]);
 
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prices/latestPricesBySearch?search=${searchText}`
-    );
-
-    if (res.data.length === 0) {
+    const res = await fetch(`/api/search?id=${searchText}`);
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    const data = await res.json();
+    if (data.length === 0) {
       setSearchResultFallbackText('No results found');
     } else {
-      setSearchResult(res.data);
+      setSearchResult(data);
     }
+    // const res = await axios.get(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prices/latestPricesBySearch?search=${searchText}`
+    // );
+
+    // if (res.data.length === 0) {
+    //   setSearchResultFallbackText('No results found');
+    // } else {
+    //   setSearchResult(res.data);
+    // }
   };
 
   // console.log(searchResult);
@@ -638,45 +651,32 @@ export default function Header(props: any) {
         fullWidth
         maxWidth="sm"
         disableScrollLock={true}
+        sx={{ '& .MuiDialog-paper': { borderRadius: 3 } }}
       >
-        <IconButton
-          onClick={handleSearchDialogClose}
-          sx={{
-            position: 'absolute',
-            right: 12,
-            top: 12,
-            color: 'text.secondary',
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
         <DialogTitle>
-          <Typography gutterBottom sx={{ fontSize: '1.4rem', fontWeight: 700 }}>
-            Search stocks
-          </Typography>
-          <TextField
-            name="searchText"
-            fullWidth
-            autoFocus
-            value={searchText}
-            variant="outlined"
-            size="small"
-            onChange={handleSearchTextChange}
-            InputProps={{
-              // sx: {
-              //   bgcolor: 'secondaryBackground',
-              // },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
             }}
-            placeholder="Seacrh share by code or company name"
-          />
+          >
+            <SearchIcon color="primary" sx={{ fontSize: '1.5rem' }} />
+            <InputBase
+              name="searchText"
+              fullWidth
+              autoFocus
+              value={searchText}
+              onChange={handleSearchTextChange}
+              sx={{ mx: 2, fontSize: '1.1rem' }}
+              placeholder="Seacrh share by code or company name"
+            />
+            <IconButton onClick={handleSearchDialogClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
         </DialogTitle>
-        <DialogContent>
-          <Box sx={{ height: '380px' }}>
+        <DialogContent dividers>
+          <Box sx={{ height: '450px' }}>
             <Box>
               {searchResult.map((item: any) => (
                 <Box
@@ -687,11 +687,12 @@ export default function Header(props: any) {
                 >
                   <Paper
                     sx={{
-                      my: 1.5,
+                      mb: 1.5,
                       px: 3,
                       py: 1,
+                      borderRadius: 2,
                       ':hover': {
-                        bgcolor: 'secondaryPaperBackground',
+                        bgcolor: 'secondaryBackground',
                       },
                     }}
                     elevation={0}
@@ -813,7 +814,6 @@ export default function Header(props: any) {
               {searchResult.length === 0 && (
                 <Box
                   sx={{
-                    height: '350px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
