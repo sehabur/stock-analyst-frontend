@@ -81,9 +81,9 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-export function generateStaticParams() {
-  return [{ tradingCode: 'BSRMSTEEL' }, { tradingCode: 'AFTABAUTO' }];
-}
+// export function generateStaticParams() {
+//   return [{ tradingCode: 'BSRMSTEEL' }, { tradingCode: 'AFTABAUTO' }];
+// }
 
 export default async function StockDetails({
   params: { tradingCode },
