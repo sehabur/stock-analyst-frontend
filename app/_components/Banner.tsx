@@ -2,6 +2,7 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { blueGrey, grey } from '@mui/material/colors';
 import { themeColorActions } from '_store';
+import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -71,6 +72,17 @@ export default function Banner() {
         >
           Create account
         </Button>
+        <Typography sx={{ fontSize: '.9rem', mt: 6 }}>
+          Charts are powered by{' '}
+          <Typography
+            component={Link}
+            href="https://www.tradingview.com/"
+            target="_blank"
+            sx={{ color: 'primary.main' }}
+          >
+            TradingView
+          </Typography>
+        </Typography>
       </Box>
     </Box>
   );
