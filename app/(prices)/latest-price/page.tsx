@@ -17,7 +17,7 @@ export default async function Page() {
     <Box component="main" sx={{ bgcolor: 'background.default' }}>
       <Box
         sx={{
-          maxWidth: { xs: '100vw', sm: '1280px' },
+          maxWidth: { xs: '100vw', sm: '1290px' },
           mx: 'auto',
           py: 2,
           px: 2,

@@ -64,6 +64,7 @@ export const lightTheme = createTheme({
     secondaryPaperBackground: '#f0f0f0',
     chartGridColor: '#eeeeee',
     overviewHeader: '#e0e0e0',
+    stipedTableEvenRow: '#fafafa',
   },
   ...defaultSettings,
 });
@@ -78,6 +79,7 @@ export const darkTheme = createTheme({
     secondaryPaperBackground: '#212121',
     chartGridColor: '#494949',
     overviewHeader: '#212121',
+    stipedTableEvenRow: '#212121',
   },
   ...defaultSettings,
 });

@@ -8,14 +8,56 @@ import {
 import React from 'react';
 import Link from 'next/link';
 import { sectorList } from '@/data/dse';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbar,
+  gridClasses,
+} from '@mui/x-data-grid';
 import styles from './Pricetable.module.css';
+
+import { alpha, styled } from '@mui/material/styles';
+
+const ODD_OPACITY = 0.2;
+
+const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.stipedTableEvenRow,
+    // '&:hover, &.Mui-hovered': {
+    //   backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+    //   '@media (hover: none)': {
+    //     backgroundColor: 'transparent',
+    //   },
+    // },
+    // '&.Mui-selected': {
+    //   backgroundColor: alpha(
+    //     theme.palette.primary.main,
+    //     ODD_OPACITY + theme.palette.action.selectedOpacity
+    //   ),
+    //   '&:hover, &.Mui-hovered': {
+    //     backgroundColor: alpha(
+    //       theme.palette.primary.main,
+    //       ODD_OPACITY +
+    //         theme.palette.action.selectedOpacity +
+    //         theme.palette.action.hoverOpacity
+    //     ),
+    //     // Reset on touch devices, it doesn't add specificity
+    //     '@media (hover: none)': {
+    //       backgroundColor: alpha(
+    //         theme.palette.primary.main,
+    //         ODD_OPACITY + theme.palette.action.selectedOpacity
+    //       ),
+    //     },
+    //   },
+    // },
+  },
+}));
 
 const columns: GridColDef[] = [
   {
     field: 'tradingCode',
     headerName: 'TRADING CODE',
-    width: 130,
+    width: 150,
     align: 'left',
     headerAlign: 'left',
     renderCell: (params) => {
@@ -28,13 +70,18 @@ const columns: GridColDef[] = [
   {
     field: 'category',
     headerName: 'CATEGORY',
-    align: 'center',
-    headerAlign: 'center',
+    align: 'left',
+    headerAlign: 'left',
     width: 90,
   },
   { field: 'ltp', headerName: 'LTP', align: 'right', headerAlign: 'right' },
   { field: 'ycp', headerName: 'OPEN', align: 'right', headerAlign: 'right' },
-  { field: 'high', headerName: 'HIGH', align: 'right', headerAlign: 'right' },
+  {
+    field: 'high',
+    headerName: 'HIGH',
+    align: 'right',
+    headerAlign: 'right',
+  },
   { field: 'low', headerName: 'LOW', align: 'right', headerAlign: 'right' },
   { field: 'close', headerName: 'CLOSE', align: 'right', headerAlign: 'right' },
   {
@@ -157,28 +204,56 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
         ))}
       </TextField>
 
-      <DataGrid
-        rows={shares}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[10, 25, 50, 100]}
-        sx={{
-          // border: 'none',
-          '.MuiDataGrid-columnHeader': {
-            color: 'text.secondary',
-            fontSize: '.8rem',
-            textAlign: 'right',
-          },
-          '.MuiDataGrid-cell': {
-            fontWeight: 500,
-            fontFamily: "'Nunito Sans', sans-serif",
-          },
-        }}
-      />
+      <Box sx={{ height: '80vh' }}>
+        <StripedDataGrid
+          rows={shares}
+          columns={columns}
+          autoPageSize={true}
+          initialState={{
+            // pagination: {
+            //   paginationModel: { page: 0, pageSize: 10 },
+            // },
+            columns: {
+              columnVisibilityModel: {
+                // low: false,
+                open: true,
+              },
+            },
+            filter: {
+              filterModel: {
+                items: [],
+                quickFilterExcludeHiddenColumns: true,
+              },
+            },
+          }}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+          }
+          rowHeight={40}
+          slots={{
+            toolbar: GridToolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+          // pageSizeOptions={[10, 25, 50, 100]}
+          sx={{
+            border: 'none',
+            '.MuiDataGrid-columnHeader': {
+              color: 'text.primary',
+              fontSize: '.8rem',
+              textAlign: 'right',
+            },
+            '.MuiDataGrid-cell': {
+              fontWeight: 500,
+              // fontSize: '.9rem',
+              fontFamily: "'Nunito Sans', sans-serif",
+            },
+          }}
+        />
+      </Box>
 
       {/* <Paper sx={{ width: '100%', overflow: 'hidden' }} variant="outlined">
         <Box
