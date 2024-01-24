@@ -23,6 +23,7 @@ import {
   CardContent,
   Slider,
   styled,
+  Divider,
 } from '@mui/material';
 import { DateTime } from 'luxon';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -46,6 +47,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import Link from 'next/link';
 import { fundamentalsTooltip } from '@/data/info';
 import FundamentalInfoCard from '@/components/cards/FundamentalInfoCard';
+import YearlyStackedColumnChart from '@/components/charts/YearlyStackedColumnChart';
 
 const Heading = styled(Typography)({
   fontSize: '1.1rem',
@@ -79,7 +81,7 @@ const Heading = styled(Typography)({
 // };
 
 const formatYearlyData = (data: any, divideFactor = 1) => {
-  data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
+  data.sort((a: { year: any }, b: { year: any }) => a.year - b.year);
 
   let datapoint = [];
   let categories = [];
@@ -89,35 +91,56 @@ const formatYearlyData = (data: any, divideFactor = 1) => {
     categories.push(item.year);
   }
 
-  // const lastYearData = datapoint[datapoint.length - 2];
-  // const thisYearData = datapoint[datapoint.length - 1];
-
-  // const percentChange = ((thisYearData - lastYearData) / lastYearData) * 100;
-
-  // const changeText =
-  //   percentChange === 0
-  //     ? 'No change since last year'
-  //     : percentChange.toFixed(2) +
-  //       '% ' +
-  //       (percentChange > 0 ? 'incr over' : 'decr from') +
-  //       ' last year';
-
-  // const changeTextColor =
-  //   percentChange === 0
-  //     ? 'primary.main'
-  //     : percentChange < 0
-  //     ? 'error.main'
-  //     : 'success.main';
-
   return {
-    // current: thisYearData,
-    // changeText,
-    // changeTextColor,
     categories,
     dataSeries: [
       {
         name: 'Value',
         data: datapoint,
+      },
+    ],
+  };
+};
+
+const formatYearlyDividendData = (initdata: any, yieldData: any) => {
+  const data = initdata
+    .sort((a: { year: any }, b: { year: any }) => a.year - b.year)
+    .slice(-10);
+
+  let cashDatapoint = [];
+  let stockDatapoint = [];
+  let yieldDatapoint = [];
+  let categories = [];
+
+  for (let item of data) {
+    cashDatapoint.push(Number(item.cash.toFixed(1)));
+    stockDatapoint.push(Number(item.stock.toFixed(1)));
+
+    const yeild = yieldData.find(
+      (yieldItem: any) => yieldItem.year === item.year
+    );
+    yieldDatapoint.push(yeild ? yeild.value : null);
+
+    categories.push(item.year);
+  }
+
+  return {
+    categories,
+    dataSeries: [
+      {
+        name: 'Cash Dividend',
+        type: 'column',
+        data: cashDatapoint,
+      },
+      {
+        name: 'Stock Dividend',
+        type: 'column',
+        data: stockDatapoint,
+      },
+      {
+        name: 'Dividend Yield',
+        type: 'line',
+        data: yieldDatapoint,
       },
     ],
   };
@@ -402,112 +425,6 @@ const formatShareholdingData = (data: any) => {
   };
 };
 
-const formatDividendData = (cashDiv: any, divYield: any) => {
-  cashDiv.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
-  divYield.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
-
-  let cashDivSeries = [];
-  let divYieldSeries: any = [];
-  let categories = [];
-
-  for (let item of cashDiv) {
-    cashDivSeries.push(item.value);
-    categories.push(item.year);
-  }
-
-  categories.map((category: any) => {
-    const yieldVal = divYield.find((item: any) => item.year === category);
-    divYieldSeries.push(yieldVal?.value || null);
-  });
-
-  return {
-    categories,
-    dataSeries: [
-      {
-        name: 'Cash dividend (%)',
-        type: 'column',
-        data: cashDivSeries,
-      },
-      {
-        name: 'Dividend yield (%)',
-        type: 'line',
-        data: divYieldSeries,
-      },
-    ],
-  };
-};
-
-const formatProfitData = (profitMargin: any, profit: any, revenue: any) => {
-  profitMargin.sort(
-    (a: { year: number }, b: { year: number }) => a.year - b.year
-  );
-  profit.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
-  // revenue.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
-
-  let profitMarginDataSeries = [];
-  let profitDataSeries: any = [];
-  // let revenueDataSeries: any = [];
-  let categories = [];
-
-  for (let item of profitMargin) {
-    profitMarginDataSeries.push(item.value);
-    categories.push(item.year);
-  }
-
-  categories.map((category: any) => {
-    const profitVal = profit.find((item: any) => item.year === category);
-    const revenueVal = revenue.find((item: any) => item.year === category);
-    profitDataSeries.push((profitVal?.value / 10).toFixed(3) || null);
-    // revenueDataSeries.push((revenueVal?.value / 10000000).toFixed(3) || null);
-  });
-
-  const lastYearData =
-    profitMarginDataSeries[profitMarginDataSeries.length - 2];
-  const thisYearData =
-    profitMarginDataSeries[profitMarginDataSeries.length - 1];
-
-  const percentChange = ((thisYearData - lastYearData) / lastYearData) * 100;
-
-  const changeText =
-    percentChange === 0
-      ? 'No change since last year'
-      : percentChange.toFixed(2) +
-        '% ' +
-        (percentChange > 0 ? 'increased over' : 'decreased from') +
-        ' last year';
-
-  const changeTextColor =
-    percentChange === 0
-      ? 'primary.main'
-      : percentChange < 0
-      ? 'error.main'
-      : 'success.main';
-
-  return {
-    current: thisYearData,
-    changeText,
-    changeTextColor,
-    categories,
-    dataSeries: [
-      // {
-      //   name: 'Revenue (Cr)',
-      //   type: 'column',
-      //   data: revenueDataSeries,
-      // },
-      {
-        name: 'Net income (crore)',
-        type: 'column',
-        data: profitDataSeries,
-      },
-      {
-        name: 'Profit margin',
-        type: 'line',
-        data: profitMarginDataSeries,
-      },
-    ],
-  };
-};
-
 export default function Financials({ data }: any) {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogContent, setDialogContent] = useState('');
@@ -528,11 +445,6 @@ export default function Financials({ data }: any) {
     setDialogContent(type);
   };
 
-  // const pe = formatPeData(data.peRatio, data.sectorPeRatio);
-  // const priceToBookValueRatio = formatPeData(
-  //   data.priceToBookValueRatio,
-  //   data.sectorPbvRatio
-  // );
   const epsYearly = formatYearlyData(data.epsYearly);
   const navYearly = formatYearlyData(data.navYearly);
   const roe = formatYearlyData(data.roe);
@@ -549,7 +461,11 @@ export default function Financials({ data }: any) {
   const divPayoutRatio = formatYearlyData(
     data.screener.dividendPayoutRatio.data
   );
-  const dividendYield = formatYearlyData(data.dividendYield);
+
+  const dividend = formatYearlyDividendData(
+    data.screener.dividend.data,
+    data.dividendYield
+  );
 
   const epsQuarterly = formatQuarterlyEpsData(data.epsQuaterly, data.yearEnd);
   const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
@@ -557,13 +473,8 @@ export default function Financials({ data }: any) {
     data.nocfpsQuaterly,
     data.yearEnd
   );
-  // const shareholdings = formatShareholdingData(data.shareHoldingPercentage);
 
-  // const cashdividend = formatDividendData(
-  //   data.cashDividend,
-  //   data.dividendYield
-  // );
-  // const bonusdividend = formatYearlyData(data.cashDividend);
+  const shareholdings = formatShareholdingData(data.shareHoldingPercentage);
 
   return (
     <Box sx={{ bgcolor: 'financePageBgcolor' }}>
@@ -1235,7 +1146,7 @@ export default function Financials({ data }: any) {
                   </Box>
                   <Box>
                     <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={dividendYield} />
+                    <YearlyStackedColumnChart data={dividend} />
                   </Box>
                 </Box>
               </DialogContent>
@@ -1442,7 +1353,6 @@ export default function Financials({ data }: any) {
               </DialogContent>
             </>
           )}
-
           {dialogContent === 'pcf' && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
@@ -1547,6 +1457,39 @@ export default function Financials({ data }: any) {
               </DialogContent>
             </>
           )}
+          {dialogContent === 'shareholdings' && (
+            <>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+                Shareholding percentage history of {data.tradingCode}
+              </DialogTitle>
+              <DialogContent dividers>
+                <Box sx={{ maxWidth: '600px', mx: 'auto', pb: 2, pt: 1 }}>
+                  <Box sx={{ my: 2 }}>
+                    <Typography
+                      sx={{
+                        fontSize: '1.1rem',
+                        fontWeight: 500,
+                        ml: 2,
+                      }}
+                    >
+                      Shareholding percentage history
+                    </Typography>
+                    <MultipleLineChart
+                      data={shareholdings.series}
+                      categories={shareholdings.categories}
+                      lineColors={[
+                        '#4dd0e1',
+                        '#b388ff',
+                        '#448aff',
+                        '#42bda8',
+                        '#f57f17',
+                      ]}
+                    />
+                  </Box>
+                </Box>
+              </DialogContent>
+            </>
+          )}
           <IconButton
             aria-label="close"
             onClick={handleDialogClose}
@@ -1560,17 +1503,18 @@ export default function Financials({ data }: any) {
           </IconButton>
         </Dialog>
 
-        <Typography
+        {/* <Typography
           sx={{
             color: 'text.primary',
-            fontSize: '1.6rem',
+            fontSize: '1.5rem',
             fontWeight: 500,
             mt: 2,
             mb: 4,
+            ml: 0.5,
           }}
         >
           Fundamentals
-        </Typography>
+        </Typography> */}
 
         <Grid
           container
@@ -1578,6 +1522,7 @@ export default function Financials({ data }: any) {
           justifyContent="flex-start"
           rowSpacing={{ xs: 3, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 4 }}
+          sx={{ pt: 4 }}
         >
           <Grid item xs={6} sm={3}>
             <FinancialCard
@@ -1771,43 +1716,151 @@ export default function Financials({ data }: any) {
             />
           </Grid>
 
-          {/* 
-          
-          
-        
-          
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                bgcolor: theme.palette.background.default,
+                borderRadius: 1,
+                pb: 4,
+              }}
+            >
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: '1.2rem',
+                  fontWeight: 700,
+                  px: 2,
+                  py: 1.5,
+                }}
+              >
+                Share holdings
+              </Typography>
+              <Divider light />
+              <Grid container sx={{ mt: 3, px: 2 }}>
+                <Grid item xs={12} sm={7}>
+                  <Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart
+                        data={shareholdings.current.values}
+                        colors={shareholdings.current.colors}
+                        labels={shareholdings.current.labels}
+                        height={280}
+                        width={500}
+                        donutSize="65%"
+                      />
+                    </Box>
+                  </Box>
+                </Grid>
 
+                <Grid item xs={12} sm={5} sx={{ mt: 4 }}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1.5}
+                    sx={{ my: 2 }}
+                  >
+                    <SquareRoundedIcon
+                      sx={{ color: '#4dd0e1', fontSize: '1rem' }}
+                    />
+                    <Typography
+                      sx={{
+                        fontSize: '1rem',
+                        color: shareholdings.changeText[0].color,
+                      }}
+                    >
+                      {shareholdings.changeText[0].text}
+                    </Typography>
+                  </Stack>
 
-          
-          <Grid item xs={6} sm={2.4}>
-            <FinancialCard
-              titleShort="Total Assets (Crore)"
-              title="Total Assets (Crore)"
-              data={totalAsset}
-              dialogtype="totalAsset"
-              handleItemClick={handleItemClick}
-            />
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1.5}
+                    sx={{ my: 2 }}
+                  >
+                    <SquareRoundedIcon
+                      sx={{ color: '#b388ff', fontSize: '1rem' }}
+                    />
+                    <Typography
+                      sx={{
+                        fontSize: '1rem',
+                        color: shareholdings.changeText[1].color,
+                      }}
+                    >
+                      {shareholdings.changeText[1].text}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={1.5}
+                    sx={{ my: 2 }}
+                  >
+                    <SquareRoundedIcon
+                      sx={{ color: '#448aff', fontSize: '1rem' }}
+                    />
+                    <Typography
+                      sx={{
+                        fontSize: '1rem',
+                        color: shareholdings.changeText[2].color,
+                      }}
+                    >
+                      {shareholdings.changeText[2].text}
+                    </Typography>
+                  </Stack>
+
+                  <Button
+                    onClick={() => handleItemClick('shareholdings')}
+                    variant="outlined"
+                    sx={{ borderRadius: 8, px: 4, mt: 1 }}
+                    color="warning"
+                  >
+                    View change history
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <FinancialCard
-              titleShort="Total Liabilities (Crore)"
-              title="Total Liabilities (Crore)"
-              data={totalLiabilities}
-              dialogtype="totalLiabilities"
-              handleItemClick={handleItemClick}
-            />
+
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                bgcolor: theme.palette.background.default,
+                borderRadius: 1,
+              }}
+            >
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: '1.2rem',
+                  fontWeight: 700,
+                  px: 2,
+                  py: 1.5,
+                }}
+              >
+                Dividends
+              </Typography>
+              <Divider light />
+              <Box sx={{ px: { xs: 2, sm: 12 }, pt: 3 }}>
+                <Typography
+                  color="text.primary"
+                  gutterBottom
+                  sx={{ fontSize: '1rem', fontWeight: 700, my: 0, py: 0 }}
+                >
+                  Overview
+                </Typography>
+                <Typography>{data.screener.dividendYield.overview}</Typography>
+                <Typography
+                  color="text.primary"
+                  sx={{ fontSize: '1rem', fontWeight: 700, my: 0, mt: 3 }}
+                >
+                  History
+                </Typography>
+                <YearlyStackedColumnChart data={dividend} />
+              </Box>
+              <Box></Box>
+            </Box>
           </Grid>
-         
-          <Grid item xs={6} sm={2.4}>
-            <FinancialCard
-              titleShort="Profit (Crore)"
-              title="Profit (Crore)"
-              data={profit}
-              dialogtype="profit"
-              handleItemClick={handleItemClick}
-            />
-          </Grid>
-          */}
 
           {/* <Grid item xs={6} sm={3}>
             <Box sx={{ p: 2 }}>
@@ -1876,98 +1929,7 @@ export default function Financials({ data }: any) {
             </Box>
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography
-              color="text.primary"
-              sx={{ fontSize: '1.2rem', fontWeight: 700, ml: 2, my: 4 }}
-            >
-              Share holdings
-            </Typography>
-
-            <Grid container>
-              <Grid item xs={12} sm={7}>
-                <Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <PieChart
-                      data={shareholdings.current.values}
-                      colors={shareholdings.current.colors}
-                      labels={shareholdings.current.labels}
-                      height={280}
-                      width={500}
-                      donutSize="65%"
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-
-              <Grid item xs={12} sm={5} sx={{ mt: 4 }}>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1.5}
-                  sx={{ my: 2 }}
-                >
-                  <SquareRoundedIcon
-                    sx={{ color: '#4dd0e1', fontSize: '1rem' }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: '1rem',
-                      color: shareholdings.changeText[0].color,
-                    }}
-                  >
-                    {shareholdings.changeText[0].text}
-                  </Typography>
-                </Stack>
-
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1.5}
-                  sx={{ my: 2 }}
-                >
-                  <SquareRoundedIcon
-                    sx={{ color: '#b388ff', fontSize: '1rem' }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: '1rem',
-                      color: shareholdings.changeText[1].color,
-                    }}
-                  >
-                    {shareholdings.changeText[1].text}
-                  </Typography>
-                </Stack>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1.5}
-                  sx={{ my: 2 }}
-                >
-                  <SquareRoundedIcon
-                    sx={{ color: '#448aff', fontSize: '1rem' }}
-                  />
-                  <Typography
-                    sx={{
-                      fontSize: '1rem',
-                      color: shareholdings.changeText[2].color,
-                    }}
-                  >
-                    {shareholdings.changeText[2].text}
-                  </Typography>
-                </Stack>
-
-                <Button
-                  onClick={() => handleItemClick('shareholdings')}
-                  variant="outlined"
-                  sx={{ borderRadius: 8, px: 4, mt: 1 }}
-                  color="warning"
-                >
-                  View change history
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
+          
           <Grid item xs={12} sm={12}>
             <Box>
               <Typography

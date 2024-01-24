@@ -50,25 +50,14 @@ export default function FinancialCard(props: any) {
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
+      // backgroundColor: '#f5f5f9',
+      // color: 'rgba(0, 0, 0, 0.87)',
+      // border: '1px solid #dadde9',
       maxWidth: 500,
       fontSize: 14,
-      border: '1px solid #dadde9',
       padding: '12px',
     },
   }));
-
-  // const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
-  //   <Tooltip {...props} classes={{ popper: className }} />
-  // ))(({ theme }) => ({
-  //   [`& .${tooltipClasses.tooltip}`]: {
-  //     // backgroundColor: theme.palette.common.white,
-  //     // color: 'rgba(0, 0, 0, 0.87)',
-  //     // boxShadow: theme.shadows[1],
-  //     // fontSize: 11,
-  //   },
-  // }));
 
   return (
     <>
@@ -92,11 +81,12 @@ export default function FinancialCard(props: any) {
             sx={{ bgcolor: 'financeCardTitlecolor', px: 2, py: 1.2 }}
           >
             <Typography
-              component={Button}
-              disableRipple
+              // component={Button}
+              // disableRipple
               onClick={() => handleItemClick(dialogtype)}
               color="primary.main"
               sx={{
+                textAlign: 'left',
                 fontSize: '.92rem',
                 fontWeight: 700,
                 p: 0,
@@ -104,6 +94,7 @@ export default function FinancialCard(props: any) {
                 ':hover': {
                   bgcolor: 'transparent',
                   textDecoration: 'underline',
+                  cursor: 'pointer',
                 },
               }}
             >

@@ -45,7 +45,7 @@ export default function TabView(props: any) {
       component: <Overview stock={stock} />,
     },
     {
-      title: 'Financials',
+      title: 'Fundamentals',
       component: <Financials data={stock.fundamentals} />,
     },
     {

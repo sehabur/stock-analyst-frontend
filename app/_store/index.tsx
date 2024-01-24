@@ -1,12 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
 
-import themeColorSlice from './themeColorSlice';
+import themeColorSlice from './themeColorSlice'
+import latestPriceSlice from './latestPriceSlice'
 
 const store = configureStore({
   reducer: {
     themeColor: themeColorSlice.reducer,
-  },
-});
-export const themeColorActions = themeColorSlice.actions;
+    latestPrice: latestPriceSlice.reducer
+  }
+})
 
-export default store;
+export const themeColorActions = themeColorSlice.actions
+export const latestPriceActions = latestPriceSlice.actions
+
+export default store

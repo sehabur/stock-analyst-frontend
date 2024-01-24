@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 import { grey, blueGrey } from '@mui/material/colors';
+import darkScrollbar from '@mui/material/darkScrollbar';
 
 const palleteColors = {
   primary: {
@@ -51,6 +52,11 @@ const defaultSettings = {
         },
       },
     },
+    MuiCssBaseline: {
+      styleOverrides: (themeParam) => ({
+        body: themeParam.palette.mode === 'dark' ? darkScrollbar() : null,
+      }),
+    },
   },
 };
 
@@ -61,10 +67,11 @@ export const lightTheme = createTheme({
     secondaryBackground: '#f5f7fa',
     financePageBgcolor: '#f0f3f54d',
     financeCardTitlecolor: '#f0f3f5',
-    secondaryPaperBackground: '#f0f0f0',
+    // secondaryPaperBackground: '#f0f0f0',
     chartGridColor: '#eeeeee',
     overviewHeader: '#e0e0e0',
     stipedTableEvenRow: '#fafafa',
+    appbarBorderBottom: '#e0e0e0',
   },
   ...defaultSettings,
 });
@@ -76,10 +83,11 @@ export const darkTheme = createTheme({
     secondaryBackground: '#151515',
     financePageBgcolor: '#17171780',
     financeCardTitlecolor: '#212121',
-    secondaryPaperBackground: '#212121',
+    // secondaryPaperBackground: '#212121',
     chartGridColor: '#494949',
     overviewHeader: '#212121',
     stipedTableEvenRow: '#212121',
+    appbarBorderBottom: '#424242',
   },
   ...defaultSettings,
 });
