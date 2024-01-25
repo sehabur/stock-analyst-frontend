@@ -1,8 +1,6 @@
 export async function makeApiRequest (path: string) {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/prices/${path}`
-    )
+    const response = await fetch(`/api/${path}`)
     return response.json()
   } catch (error: any) {
     throw new Error(`Request error: ${error.status}`)

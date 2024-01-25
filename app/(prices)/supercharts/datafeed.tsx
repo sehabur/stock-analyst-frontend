@@ -7,7 +7,7 @@ const configurationData = {
 }
 
 async function getAllSymbols () {
-  const data = await makeApiRequest('getSymbolTvchart')
+  const data = await makeApiRequest('tv-symbols')
   let allSymbols: any[] = []
 
   for (const exchange of configurationData.exchanges) {
@@ -153,7 +153,7 @@ const getData = {
       .join('&')
 
     try {
-      const data = await makeApiRequest(`getBarsTvchart?${query}`)
+      const data = await makeApiRequest(`tv-bars?${query}`)
       if (
         (data.Response && data.Response === 'Error') ||
         data.Data.length === 0

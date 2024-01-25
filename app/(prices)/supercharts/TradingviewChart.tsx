@@ -1,6 +1,6 @@
 'use client'
 import Datafeed from './datafeed'
-import TradingView from '../../_library/charting_library/charting_library.standalone.js'
+import { TradingView } from '../../_library/charting_library/charting_library.standalone'
 import { useEffect } from 'react'
 import { Box, useTheme } from '@mui/material'
 
