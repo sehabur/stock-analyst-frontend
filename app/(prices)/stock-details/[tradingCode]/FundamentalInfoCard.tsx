@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Box,
   Grid,
@@ -19,23 +19,23 @@ import {
   Card,
   CardActionArea,
   CardContent,
-} from '@mui/material';
+} from "@mui/material";
 
-import Link from 'next/link';
-import InfoIcon from '@mui/icons-material/Info';
+import Link from "next/link";
+import InfoIcon from "@mui/icons-material/Info";
 
 export default function FundamentalInfoCard(props: any) {
-  const { text } = props;
+  const { text, href } = props;
 
   const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <>
       <Card
         elevation={0}
         sx={{
-          bgcolor: 'secondaryBackground',
+          bgcolor: "financeInfoCard",
           mx: { xs: 0, sm: 2 },
           mb: 2,
         }}
@@ -45,18 +45,18 @@ export default function FundamentalInfoCard(props: any) {
             {matchesSmUp && <InfoIcon color="info" />}
             <Typography>
               {text}
-              <Typography
+              {/* <Typography
                 component={Link}
                 target="_blank"
-                href="#"
+                href={href}
                 sx={{
-                  color: 'primary.main',
-                  textDecoration: 'underline',
+                  color: "primary.main",
+                  textDecoration: "underline",
                   ml: 1,
                 }}
               >
                 Learn more
-              </Typography>
+              </Typography> */}
             </Typography>
           </Stack>
         </CardContent>

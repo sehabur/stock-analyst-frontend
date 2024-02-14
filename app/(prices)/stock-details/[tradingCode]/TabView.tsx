@@ -1,5 +1,5 @@
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 import {
   Box,
   Grid,
@@ -10,12 +10,12 @@ import {
   Tabs,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import Overview from './Overview';
-import Financials from './Fiancials';
-import MarketDepth from './MarketDepth';
-import BlockTransections from './BlockTransections';
-import News from './News';
+} from "@mui/material";
+import Overview from "./Overview";
+import Financials from "./Fiancials";
+import MarketDepth from "./MarketDepth";
+import BlockTransections from "./BlockTransections";
+import News from "./News";
 
 const TabPanel = (props: any) => {
   const { children, value, index, ...other } = props;
@@ -37,31 +37,31 @@ export default function TabView(props: any) {
   const { stock, news, blocktr } = props;
 
   const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const tabItems = [
     {
-      title: 'Overview',
+      title: "Overview",
       component: <Overview stock={stock} />,
     },
     {
-      title: 'Fundamentals',
+      title: "Fundamentals",
       component: <Financials data={stock.fundamentals} />,
     },
     {
-      title: 'Market depth',
+      title: "Market depth",
       component: <MarketDepth />,
     },
     {
-      title: matchesSmUp ? 'Block transections' : 'Block tr',
+      title: matchesSmUp ? "Block transections" : "Block tr",
       component: <BlockTransections blocktr={blocktr} />,
     },
     {
-      title: 'News',
+      title: "News",
       component: <News news={news} />,
     },
     {
-      title: 'Technicals',
+      title: "Technicals",
       component: <News />,
     },
   ];
@@ -74,7 +74,7 @@ export default function TabView(props: any) {
 
   return (
     <Box>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
           // variant="scrollable"
@@ -88,9 +88,9 @@ export default function TabView(props: any) {
               key={index}
               label={item.title}
               sx={{
-                textTransform: 'none',
-                fontSize: '1rem',
-                color: 'text.primary',
+                textTransform: "none",
+                fontSize: "1rem",
+                color: "text.primary",
                 px: 1,
                 mx: { xs: 0, sm: 3 },
               }}

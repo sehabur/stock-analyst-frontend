@@ -11,11 +11,13 @@ async function getData () {
   return res.json()
 }
 
-export default async function Page () {
+export default async function Page (props: any) {
+  const { symbol } = props.searchParams
+
   const data = await getData()
   return (
     <Box component='main' sx={{ bgcolor: 'background.default' }}>
-      <TradingviewChart />
+      <TradingviewChart symbol={symbol} />
     </Box>
   )
 }

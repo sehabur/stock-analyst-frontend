@@ -1,26 +1,31 @@
-'use client';
-import AreaChart from '@/components/charts/AreaChart';
-import CandlestickVolumeChart from '@/components/charts/CandlestickVolumeChart';
+"use client";
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 import {
   Box,
   Grid,
   Typography,
   useTheme,
   useMediaQuery,
-  Link,
   Paper,
   Card,
   CardActionArea,
   CardContent,
   Slider,
   Divider,
-} from '@mui/material';
-import { DateTime } from 'luxon';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import React from 'react';
-import { grey } from '@mui/material/colors';
-import OverviewCard from '@/components/cards/OverviewCard';
+  Button,
+} from "@mui/material";
+import { DateTime } from "luxon";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import React from "react";
+import { grey } from "@mui/material/colors";
+import OverviewCard from "@/components/cards/OverviewCard";
+import Link from "next/link";
+
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 const formatCandleChartData = (data: any) => {
   let candle = [];
@@ -42,10 +47,10 @@ const formatCandleChartData = (data: any) => {
       value: item.volume,
       color:
         data[i].volume > data[i - 1]?.volume
-          ? '#67cab9'
+          ? "#67cab9"
           : data[i].volume < data[i - 1]?.volume
-          ? '#fb998e'
-          : '#4481ff',
+          ? "#fb998e"
+          : "#4481ff",
     };
   }
   return {
@@ -58,8 +63,8 @@ const calcPercentChange = (current: any, previous: any) => {
   const stockchanged = current === 0 ? false : true;
   const change = stockchanged ? ((current - previous) / previous) * 100 : 0;
   return {
-    text: (change === 0 ? change : change.toFixed(2)) + '%',
-    color: change === 0 ? '#2962ff' : change < 0 ? '#f45e6a' : '#00A25B',
+    text: (change === 0 ? change : change.toFixed(2)) + "%",
+    color: change === 0 ? "#2962ff" : change < 0 ? "#f45e6a" : "#00A25B",
   };
 };
 
@@ -75,18 +80,18 @@ const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
 };
 
 export default function Overview({ stock }: any) {
-  const [alignment, setAlignment] = React.useState('minute');
+  const [alignment, setAlignment] = React.useState("minute");
 
   const theme = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartColor =
     stock.latest.change === 0
-      ? '#2962ff'
+      ? "#2962ff"
       : stock.latest.change < 0
-      ? '#f45e6a'
-      : '#00A25B';
+      ? "#f45e6a"
+      : "#00A25B";
 
   const minuteChartData: any = stock.minute
     // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
@@ -116,20 +121,25 @@ export default function Overview({ stock }: any) {
   };
 
   return (
-    <Box sx={{ maxWidth: '1250px', mx: 'auto', py: { xs: 2, sm: 4 }, px: 2 }}>
-      <Typography
-        variant="h2"
+    <Box sx={{ maxWidth: "1250px", mx: "auto", py: { xs: 2, sm: 4 }, px: 2 }}>
+      <Button
+        component={Link}
+        href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
+        target="_blank"
+        color="primary"
+        endIcon={<ArrowForwardIosRoundedIcon />}
         sx={{
-          fontSize: '1.4rem',
+          fontSize: "1.5  rem",
           fontWeight: 700,
-          my: 2,
-          color: 'text.primary',
+          ":hover": {
+            bgcolor: "transparent",
+            textDecoration: "underline",
+          },
         }}
       >
         {stock.fundamentals.tradingCode} Chart
-      </Typography>
-
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      </Button>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <ToggleButtonGroup
           size="small"
           value={alignment}
@@ -137,28 +147,27 @@ export default function Overview({ stock }: any) {
           exclusive
           onChange={handleAlignment}
           sx={{
-            '& .MuiToggleButtonGroup-grouped': {
+            "& .MuiToggleButtonGroup-grouped": {
               px: { xs: 1.5, sm: 2.5 },
             },
           }}
         >
           <ToggleButton value="minute">
-            {matchesSmDown ? 'Minute' : 'Minute chart'}
+            {matchesSmDown ? "Minute" : "Minute chart"}
           </ToggleButton>
           <ToggleButton value="daily">
-            {matchesSmDown ? 'Daily' : 'Daily chart'}
+            {matchesSmDown ? "Daily" : "Daily chart"}
           </ToggleButton>
           <ToggleButton value="weekly">
-            {matchesSmDown ? 'Weekly' : 'Weekly chart'}
+            {matchesSmDown ? "Weekly" : "Weekly chart"}
           </ToggleButton>
           <ToggleButton value="monthly">
-            {matchesSmDown ? 'Monthly' : 'Monthly chart'}
+            {matchesSmDown ? "Monthly" : "Monthly chart"}
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
-
       <Box sx={{ mb: 4 }}>
-        {alignment === 'minute' && (
+        {alignment === "minute" && (
           <Box sx={{ mt: 4 }}>
             <AreaChart
               data={minuteChartData}
@@ -169,7 +178,7 @@ export default function Overview({ stock }: any) {
             />
           </Box>
         )}
-        {alignment === 'daily' && (
+        {alignment === "daily" && (
           <Box>
             <CandlestickVolumeChart
               candledata={dailyCandleData.candle}
@@ -177,7 +186,7 @@ export default function Overview({ stock }: any) {
             />
           </Box>
         )}
-        {alignment === 'weekly' && (
+        {alignment === "weekly" && (
           <Box>
             <CandlestickVolumeChart
               candledata={weeklyCandleData.candle}
@@ -185,7 +194,7 @@ export default function Overview({ stock }: any) {
             />
           </Box>
         )}
-        {alignment === 'monthly' && (
+        {alignment === "monthly" && (
           <Box>
             <CandlestickVolumeChart
               candledata={monthlyCandleData.candle}
@@ -196,17 +205,17 @@ export default function Overview({ stock }: any) {
 
         <Box
           sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
             my: 6,
           }}
         >
-          <Box sx={{ mx: { xs: 1, sm: 4 }, textAlign: 'center' }}>
+          <Box sx={{ mx: { xs: 1, sm: 4 }, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: '1.1rem',
-                color: 'text.primary',
+                fontSize: "1.1rem",
+                color: "text.primary",
                 fontWeight: 500,
               }}
             >
@@ -214,7 +223,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
                 fontWeight: 700,
                 color: percentChangeData.today.color,
               }}
@@ -222,11 +231,11 @@ export default function Overview({ stock }: any) {
               {percentChangeData.today.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: 'center' }}>
+          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: '1.1rem',
-                color: 'text.primary',
+                fontSize: "1.1rem",
+                color: "text.primary",
                 fontWeight: 500,
               }}
             >
@@ -234,7 +243,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
                 fontWeight: 700,
                 color: percentChangeData.oneWeek.color,
               }}
@@ -242,11 +251,11 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneWeek.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: 'center' }}>
+          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: '1.1rem',
-                color: 'text.primary',
+                fontSize: "1.1rem",
+                color: "text.primary",
                 fontWeight: 500,
               }}
             >
@@ -254,7 +263,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
                 fontWeight: 700,
                 color: percentChangeData.oneMonth.color,
               }}
@@ -262,11 +271,11 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneMonth.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: 'center' }}>
+          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: '1.1rem',
-                color: 'text.primary',
+                fontSize: "1.1rem",
+                color: "text.primary",
                 fontWeight: 500,
               }}
             >
@@ -274,7 +283,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
                 fontWeight: 700,
                 color: percentChangeData.sixMonth.color,
               }}
@@ -282,11 +291,11 @@ export default function Overview({ stock }: any) {
               {percentChangeData.sixMonth.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: 'center' }}>
+          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
             <Typography
               sx={{
-                fontSize: '1.1rem',
-                color: 'text.primary',
+                fontSize: "1.1rem",
+                color: "text.primary",
                 fontWeight: 500,
               }}
             >
@@ -294,7 +303,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: '1.2rem',
+                fontSize: "1.2rem",
                 fontWeight: 700,
                 color: percentChangeData.oneYear.color,
               }}

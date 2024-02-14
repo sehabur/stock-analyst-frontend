@@ -13,7 +13,8 @@ declare var window: MyWindow
 
 const tvWidget: any = TradingView
 
-export default function TradingviewChart () {
+export default function TradingviewChart (props: any) {
+  const { symbol } = props
   const theme: any = useTheme()
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function TradingviewChart () {
       datafeed: Datafeed,
       library_path: '/charting_library/',
       autosize: true,
-      symbol: 'FUWANGFOOD',
+      symbol: symbol,
       interval: '1D',
       timezone: 'Asia/Dhaka',
       theme: theme.palette.mode,

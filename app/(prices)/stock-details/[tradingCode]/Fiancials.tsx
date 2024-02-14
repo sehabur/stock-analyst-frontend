@@ -1,6 +1,6 @@
-'use client';
-import AreaChart from '@/components/charts/AreaChart';
-import CandlestickVolumeChart from '@/components/charts/CandlestickVolumeChart';
+"use client";
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 import {
   Box,
   Grid,
@@ -24,65 +24,36 @@ import {
   Slider,
   styled,
   Divider,
-} from '@mui/material';
-import { DateTime } from 'luxon';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import React, { useState } from 'react';
-import { grey } from '@mui/material/colors';
+} from "@mui/material";
+import { DateTime } from "luxon";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import React, { useState } from "react";
+import { grey } from "@mui/material/colors";
 
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import YearlyColumnChart from '@/components/charts/YearlyColumnChart';
-import QuarterlyColumnChart from '@/components/charts/QuarterlyColumnChart';
-import CloseIcon from '@mui/icons-material/Close';
-import PieChart from '@/components/charts/PieChart';
-import LineColumnChart from '@/components/charts/LineColumnChart';
-import { yearEndMap } from '@/data/dse';
-import LineChart from '@/components/charts/ShareholdingBarChart';
-import ShareholdingBarChart from '@/components/charts/ShareholdingBarChart';
-import SquareRoundedIcon from '@mui/icons-material/SquareRounded';
-import MultipleLineChart from '@/components/charts/MultipleLineChart';
-import FinancialCard from '@/components/cards/FinancialCard';
-import InfoIcon from '@mui/icons-material/Info';
-import Link from 'next/link';
-import { fundamentalsTooltip } from '@/data/info';
-import FundamentalInfoCard from '@/components/cards/FundamentalInfoCard';
-import YearlyStackedColumnChart from '@/components/charts/YearlyStackedColumnChart';
-
-const Heading = styled(Typography)({
-  fontSize: '1.1rem',
-  fontWeight: 700,
-  marginLeft: '16px',
-});
-
-// const formatPeData = (value: number, sectorRatio: any) => {
-//   const changeText =
-//     value === sectorRatio.median
-//       ? 'Lies at median of sector '
-//       : value > sectorRatio.median
-//       ? 'Above median value of sector'
-//       : 'Below than median value of sector';
-
-//   const changeTextColor =
-//     value === sectorRatio.median
-//       ? 'primary.main'
-//       : value > sectorRatio.median
-//       ? 'error.main'
-//       : 'success.main';
-
-//   return {
-//     current: value,
-//     changeText,
-//     changeTextColor,
-//     position: sectorRatio.position,
-//     totalshares: sectorRatio.items,
-//     sectorRatio,
-//   };
-// };
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import YearlyColumnChart from "@/components/charts/YearlyColumnChart";
+import QuarterlyColumnChart from "@/components/charts/QuarterlyColumnChart";
+import CloseIcon from "@mui/icons-material/Close";
+import PieChart from "@/components/charts/PieChart";
+import LineColumnChart from "@/components/charts/LineColumnChart";
+import { yearEndMap } from "@/data/dse";
+import LineChart from "@/components/charts/ShareholdingBarChart";
+import ShareholdingBarChart from "@/components/charts/ShareholdingBarChart";
+import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
+import MultipleLineChart from "@/components/charts/MultipleLineChart";
+import FinancialCard from "@/components/cards/FinancialCard";
+import InfoIcon from "@mui/icons-material/Info";
+import Link from "next/link";
+import { fundamentalsTooltip } from "@/data/info";
+import FundamentalInfoCard from "(prices)/stock-details/[tradingCode]/FundamentalInfoCard";
+import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
+import FundamentalsDialogContent from "./FundamentalsDialogContent";
 
 const formatYearlyData = (data: any, divideFactor = 1) => {
-  data.sort((a: { year: any }, b: { year: any }) => a.year - b.year);
+  if (data.length < 1) return;
 
+  data.sort((a: { year: any }, b: { year: any }) => a.year - b.year);
   let datapoint = [];
   let categories = [];
 
@@ -95,7 +66,7 @@ const formatYearlyData = (data: any, divideFactor = 1) => {
     categories,
     dataSeries: [
       {
-        name: 'Value',
+        name: "Value",
         data: datapoint,
       },
     ],
@@ -103,6 +74,8 @@ const formatYearlyData = (data: any, divideFactor = 1) => {
 };
 
 const formatYearlyDividendData = (initdata: any, yieldData: any) => {
+  if (initdata.length < 1 || yieldData.length < 1) return;
+
   const data = initdata
     .sort((a: { year: any }, b: { year: any }) => a.year - b.year)
     .slice(-10);
@@ -128,18 +101,18 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
     categories,
     dataSeries: [
       {
-        name: 'Cash Dividend',
-        type: 'column',
+        name: "Cash Dividend",
+        type: "column",
         data: cashDatapoint,
       },
       {
-        name: 'Stock Dividend',
-        type: 'column',
+        name: "Stock Dividend",
+        type: "column",
         data: stockDatapoint,
       },
       {
-        name: 'Dividend Yield',
-        type: 'line',
+        name: "Dividend Yield",
+        type: "line",
         data: yieldDatapoint,
       },
     ],
@@ -157,7 +130,7 @@ const quarterMonthsGetter = (
 
   console.log(yearEndData, yearEnd);
 
-  if (yearEnd === '31-Dec') {
+  if (yearEnd === "31-Dec") {
     currentYearValue = currentYear;
     lastYearValue = lastYear;
   } else {
@@ -173,6 +146,8 @@ const quarterMonthsGetter = (
 };
 
 const formatQuarterlyData = (data: any, yearEnd: string) => {
+  if (data.length < 2) return;
+
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
 
   const lastYearData = data[data.length - 2];
@@ -205,45 +180,7 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
     thisYearData?.q4 || null,
   ];
 
-  // let currentValue, lastValue;
-  // if (thisYearData?.q4) {
-  //   currentValue = thisYearData.q4;
-  //   lastValue = thisYearData.q3;
-  // } else if (thisYearData?.q3) {
-  //   currentValue = thisYearData.q3;
-  //   lastValue = thisYearData.q2;
-  // } else if (thisYearData?.q2) {
-  //   currentValue = thisYearData.q2;
-  //   lastValue = thisYearData.q1;
-  // } else if (thisYearData?.q1) {
-  //   currentValue = thisYearData.q1;
-  //   lastValue = lastYearData.q4;
-  // } else {
-  //   currentValue = 0;
-  //   lastValue = 0;
-  // }
-
-  // const percentChange = ((currentValue - lastValue) / lastValue) * 100;
-
-  // const changeText =
-  //   percentChange === 0
-  //     ? 'No change since last quarter'
-  //     : percentChange.toFixed(2) +
-  //       '% ' +
-  //       (percentChange > 0 ? 'increased over' : 'decreased from') +
-  //       ' last quarter';
-
-  // const changeTextColor =
-  //   percentChange === 0
-  //     ? 'primary.main'
-  //     : percentChange < 0
-  //     ? 'error.main'
-  //     : 'success.main';
-
   return {
-    // current: currentValue,
-    // changeText,
-    // changeTextColor,
     categories,
     dataSeries: [
       {
@@ -259,6 +196,7 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
 };
 
 const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
+  if (data.length < 2) return;
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
 
   const thisYearData = data[data.length - 1];
@@ -282,43 +220,6 @@ const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
     lastYearData?.q3 || null,
     lastYearData?.q4 || null,
   ];
-
-  // let currentValue, lastValue;
-
-  // if (thisYearData.q4) {
-  //   currentValue = thisYearData.q4;
-  //   lastValue = thisYearData.q3;
-  //   lastValue = thisYearData.q3;
-  // } else if (thisYearData.q3) {
-  //   currentValue = thisYearData.q3;
-  //   lastValue = thisYearData.q2;
-  // } else if (thisYearData.q2) {
-  //   currentValue = thisYearData.q2;
-  //   lastValue = thisYearData.q1;
-  // } else if (thisYearData.q1) {
-  //   currentValue = thisYearData.q1;
-  //   lastValue = lastYearData.q4 ? lastYearData.q4 : lastYearData.q3;
-  // } else {
-  //   currentValue = 0;
-  //   lastValue = 0;
-  // }
-
-  // const percentChange = ((currentValue - lastValue) / lastValue) * 100;
-
-  // const changeText =
-  //   percentChange === 0
-  //     ? 'No change since last quarter'
-  //     : percentChange.toFixed(2) +
-  //       '% ' +
-  //       (percentChange > 0 ? 'increased over' : 'decreased from') +
-  //       ' last quarter';
-
-  // const changeTextColor =
-  //   percentChange === 0
-  //     ? 'primary.main'
-  //     : percentChange < 0
-  //     ? 'error.main'
-  //     : 'success.main';
 
   return {
     // current: epsCurrent,
@@ -345,23 +246,25 @@ const formatShareholdingData = (data: any) => {
     const secondLastItem = series[len - 2];
     const change = ((lastItem - secondLastItem) * 100) / secondLastItem;
 
-    let changeText = '';
-    let changeTextColor = '';
+    let changeText = "";
+    let changeTextColor = "";
 
     if (lastItem > secondLastItem) {
       changeText = `${name} shareholding increased by ${change.toFixed(2)}%`;
-      changeTextColor = 'success.main';
+      changeTextColor = "success.main";
     } else if (lastItem < secondLastItem) {
       changeText = `${name} shareholding decreased by ${Math.abs(
         change
       ).toFixed(2)}%`;
-      changeTextColor = 'error.main';
+      changeTextColor = "error.main";
     } else {
       changeText = `${name} shareholding remains same`;
-      changeTextColor = 'primary.main';
+      changeTextColor = "primary.main";
     }
     return { text: changeText, color: changeTextColor };
   };
+
+  if (data.length < 1) return;
 
   let director: any = [];
   let govt: any = [];
@@ -390,34 +293,35 @@ const formatShareholdingData = (data: any) => {
         currentData.govt,
         currentData.foreign,
       ],
-      labels: ['Director', 'Institute', 'Public', 'Government', 'Foreign'],
-      colors: ['#4dd0e1', '#b388ff', '#448aff', '#42bda8', '#f57f17'],
+      date: currentData.date,
+      labels: ["Director", "Institute", "Public", "Government", "Foreign"],
+      colors: ["#4dd0e1", "#b388ff", "#448aff", "#42bda8", "#f57f17"],
     },
     changeText: [
-      createChangeText(director, 'Director'),
-      createChangeText(institute, 'Institute'),
-      createChangeText(publicShare, 'Public'),
+      createChangeText(director, "Director"),
+      createChangeText(institute, "Institute"),
+      createChangeText(publicShare, "Public"),
     ],
     series: [
       {
-        name: 'Director',
+        name: "Director",
         data: director,
       },
       {
-        name: 'Institute',
+        name: "Institute",
         data: institute,
       },
       {
-        name: 'Public',
+        name: "Public",
         data: publicShare,
       },
       {
-        name: 'Government',
+        name: "Government",
         data: govt,
       },
 
       {
-        name: 'Foreign',
+        name: "Foreign",
         data: foreign,
       },
     ],
@@ -427,10 +331,10 @@ const formatShareholdingData = (data: any) => {
 
 export default function Financials({ data }: any) {
   const [openDialog, setOpenDialog] = useState(false);
-  const [dialogContent, setDialogContent] = useState('');
+  const [dialogContent, setDialogContent] = useState("");
 
   const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const handleDialogOpen = () => {
     setOpenDialog(true);
@@ -449,6 +353,7 @@ export default function Financials({ data }: any) {
   const navYearly = formatYearlyData(data.navYearly);
   const roe = formatYearlyData(data.roe);
   const roce = formatYearlyData(data.roce);
+  const roa = formatYearlyData(data.roa);
   const de = formatYearlyData(data.de);
   const currentRatio = formatYearlyData(data.currentRatio);
   const netIncome = formatYearlyData(data.netIncome, 10000000);
@@ -458,7 +363,7 @@ export default function Financials({ data }: any) {
   const revenue = formatYearlyData(data.revenue, 10000000);
   const operatingProfit = formatYearlyData(data.operatingProfit, 10000000);
   const totalAsset = formatYearlyData(data.totalAsset, 10000000);
-  const divPayoutRatio = formatYearlyData(
+  const dividendPayoutRatio = formatYearlyData(
     data.screener.dividendPayoutRatio.data
   );
 
@@ -466,7 +371,6 @@ export default function Financials({ data }: any) {
     data.screener.dividend.data,
     data.dividendYield
   );
-
   const epsQuarterly = formatQuarterlyEpsData(data.epsQuaterly, data.yearEnd);
   const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
   const nocfpsQuarterly = formatQuarterlyData(
@@ -474,11 +378,13 @@ export default function Financials({ data }: any) {
     data.yearEnd
   );
 
-  const shareholdings = formatShareholdingData(data.shareHoldingPercentage);
+  const shareholdings: any = formatShareholdingData(
+    data.shareHoldingPercentage
+  );
 
   return (
-    <Box sx={{ bgcolor: 'financePageBgcolor' }}>
-      <Box sx={{ maxWidth: '1250px', mx: 'auto', py: 2, px: 2 }}>
+    <Box sx={{ bgcolor: "financePageBgcolor" }}>
+      <Box sx={{ maxWidth: "1250px", mx: "auto", py: 2, px: 2 }}>
         <Dialog
           open={openDialog}
           onClose={handleDialogClose}
@@ -486,179 +392,83 @@ export default function Financials({ data }: any) {
           maxWidth="md"
           fullScreen={!matchesSmUp}
         >
-          {dialogContent === 'nav' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
-                Net Asset Value (NAV) of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.nav?.definition}
-                  />
-                  <Box sx={{ mx: 2 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.navQuarterly.overview}
-                    </Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 700,
-                      ml: 2,
-                      mt: 4,
-                    }}
-                  >
-                    Quarterly
-                  </Typography>
-                  <Box>
-                    <QuarterlyColumnChart data={navQuarterly} />
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 700,
-                      ml: 2,
-                    }}
-                  >
-                    Yearly
-                  </Typography>
-                  <Box>
-                    <YearlyColumnChart data={navYearly} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
+          {dialogContent === "nav" && (
+            <FundamentalsDialogContent
+              title={`Net Asset Value (NAV) of ${data.tradingCode}`}
+              overview
+              quarterly
+              yearly
+              overviewText={data.screener.navQuarterly?.overview}
+              quarterlyData={navQuarterly}
+              yearlyData={navYearly}
+              info
+              infoText={fundamentalsTooltip.nav.definition}
+              infoLink={fundamentalsTooltip.nav.link}
+            />
           )}
-          {dialogContent === 'eps' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Earning per share (EPS) of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.eps?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.navQuarterly.overview}
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Heading>Quarterly</Heading>
-                    <QuarterlyColumnChart data={epsQuarterly} />
-                  </Box>
-
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={epsYearly} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
+          {dialogContent === "eps" && (
+            <FundamentalsDialogContent
+              title={`Earning per share (EPS) of ${data.tradingCode}`}
+              overview
+              quarterly
+              yearly
+              overviewText={data.screener.epsQuarterly?.overview}
+              quarterlyData={epsQuarterly}
+              yearlyData={epsYearly}
+              info
+              infoText={fundamentalsTooltip.eps.definition}
+              infoLink={fundamentalsTooltip.eps.link}
+            />
           )}
-          {dialogContent === 'roe' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Return on equity (ROE) of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.roe?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.roe.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={roe} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
+          {dialogContent === "roa" && (
+            <FundamentalsDialogContent
+              title={`Return on assets (ROA) of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.roa?.overview}
+              yearlyData={roa}
+              info
+              infoText={fundamentalsTooltip.roa.definition}
+              infoLink={fundamentalsTooltip.roa.link}
+            />
           )}
-          {dialogContent === 'roce' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Return on capital employed (ROCE) of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.roce?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.roce.overview}
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={roce} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
+          {dialogContent === "roe" && (
+            <FundamentalsDialogContent
+              title={`Return on equity (ROE) of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.roe?.overview}
+              yearlyData={roe}
+              info
+              infoText={fundamentalsTooltip.roe.definition}
+              infoLink={fundamentalsTooltip.roe.link}
+            />
           )}
-          {dialogContent === 'pe' && (
+          {/* {dialogContent === 'roce' && (
+            <FundamentalsDialogContent
+              title={`Return on capital employed (ROCE) of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.roce?.overview}
+              yearlyData={roce}
+              info
+              infoText={fundamentalsTooltip.roce.definition}
+              infoLink={fundamentalsTooltip.roce.link}
+            />
+          )} */}
+          {dialogContent === "de" && (
+            <FundamentalsDialogContent
+              title={`Debt-to-Equity (D/E) ratio of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.de?.overview}
+              yearlyData={de}
+              info
+              infoText={fundamentalsTooltip.de.definition}
+              infoLink={fundamentalsTooltip.de.link}
+            />
+          )}
+          {dialogContent === "pe" && (
             <>
               <DialogTitle>
                 Price-to-EPS (P/E) Ratio of {data.tradingCode}
@@ -666,21 +476,18 @@ export default function Financials({ data }: any) {
 
               <DialogContent dividers>
                 <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.pe?.definition}
-                  />
                   <Typography
                     sx={{
-                      fontSize: '1.2rem',
+                      fontSize: "1.2rem",
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
                       mx: 10,
-                      textAlign: 'center',
+                      textAlign: "center",
                       color: data.pe.color,
                     }}
                   >
-                    {data.pe.overview}
+                    {data.pe?.overview}
                   </Typography>
                   <Paper
                     variant="outlined"
@@ -698,7 +505,7 @@ export default function Financials({ data }: any) {
                     >
                       <Typography
                         color="error"
-                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                        sx={{ fontSize: "1rem", fontWeight: 700 }}
                       >
                         Lowest P/E of sector
                       </Typography>
@@ -724,31 +531,31 @@ export default function Financials({ data }: any) {
                         sx={{
                           color: data.pe.color,
                           height: 10,
-                          '& .MuiSlider-thumb': {
+                          "& .MuiSlider-thumb": {
                             height: 28,
                             width: 28,
-                            bgcolor: '#fff',
-                            border: '6px solid currentcolor',
+                            bgcolor: "#fff",
+                            border: "6px solid currentcolor",
                           },
-                          '& .MuiSlider-mark': {
+                          "& .MuiSlider-mark": {
                             opacity: 0,
                           },
-                          '& .MuiSlider-valueLabel': {
+                          "& .MuiSlider-valueLabel": {
                             fontSize: 18,
                             px: 1.5,
                             py: 1,
                             borderRadius: 1,
                             opacity: 0.9,
                           },
-                          '& .MuiSlider-track': {
-                            color: 'transparent',
+                          "& .MuiSlider-track": {
+                            color: "transparent",
                           },
                         }}
                       />
                       <Typography
                         sx={{
-                          fontSize: '1rem',
-                          color: 'success.main',
+                          fontSize: "1rem",
+                          color: "success.main",
                           fontWeight: 700,
                         }}
                       >
@@ -756,71 +563,36 @@ export default function Financials({ data }: any) {
                       </Typography>
                     </Stack>
                   </Paper>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'de' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Debt-to-Equity (D/E) ratio of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.de?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.de.overview}
-                    </Typography>
-                  </Box>
-
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={de} />
+                  <Box sx={{ mt: 6 }}>
+                    <FundamentalInfoCard
+                      text={fundamentalsTooltip.pe.definition}
+                      href={fundamentalsTooltip.pe.link}
+                    />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-
-          {dialogContent === 'pbv' && (
+          {dialogContent === "pbv" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
                 Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
               </DialogTitle>
 
               <DialogContent dividers>
                 <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.pbv?.definition}
-                  />
                   <Typography
                     sx={{
-                      fontSize: '1.2rem',
+                      fontSize: "1.2rem",
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
                       mx: 10,
-                      textAlign: 'center',
+                      textAlign: "center",
                       color: data.pbv.color,
                     }}
                   >
-                    {data.pbv.overview}
+                    {data.pbv?.overview}
                   </Typography>
                   <Paper
                     variant="outlined"
@@ -838,7 +610,7 @@ export default function Financials({ data }: any) {
                     >
                       <Typography
                         color="error"
-                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                        sx={{ fontSize: "1rem", fontWeight: 700 }}
                       >
                         Lowest P/Bv of sector
                       </Typography>
@@ -865,32 +637,32 @@ export default function Financials({ data }: any) {
                         sx={{
                           color: data.pbv.color,
                           height: 10,
-                          '& .MuiSlider-thumb': {
+                          "& .MuiSlider-thumb": {
                             height: 28,
                             width: 28,
-                            bgcolor: '#fff',
-                            border: '6px solid currentcolor',
+                            bgcolor: "#fff",
+                            border: "6px solid currentcolor",
                           },
-                          '& .MuiSlider-mark': {
+                          "& .MuiSlider-mark": {
                             opacity: 0,
                           },
-                          '& .MuiSlider-valueLabel': {
+                          "& .MuiSlider-valueLabel": {
                             fontSize: 18,
                             px: 1.5,
                             py: 1,
                             borderRadius: 1,
                             opacity: 0.9,
                           },
-                          '& .MuiSlider-track': {
-                            color: 'transparent',
+                          "& .MuiSlider-track": {
+                            color: "transparent",
                           },
                         }}
                       />
 
                       <Typography
                         sx={{
-                          fontSize: '1rem',
-                          color: 'success.main',
+                          fontSize: "1rem",
+                          color: "success.main",
                           fontWeight: 700,
                         }}
                       >
@@ -898,33 +670,36 @@ export default function Financials({ data }: any) {
                       </Typography>
                     </Stack>
                   </Paper>
+                  <Box sx={{ mt: 6 }}>
+                    <FundamentalInfoCard
+                      text={fundamentalsTooltip.pbv.definition}
+                      href={fundamentalsTooltip.pbv.link}
+                    />
+                  </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'ps' && (
+          {dialogContent === "ps" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
                 Price-to-Sales (P/S) Ratio of {data.tradingCode}
               </DialogTitle>
 
               <DialogContent dividers>
                 <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.pe?.definition}
-                  />
                   <Typography
                     sx={{
-                      fontSize: '1.2rem',
+                      fontSize: "1.2rem",
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
                       mx: 10,
-                      textAlign: 'center',
+                      textAlign: "center",
                       color: data.screener.ps.color,
                     }}
                   >
-                    {data.screener.ps.overview}
+                    {data.screener.ps?.overview}
                   </Typography>
                   <Paper
                     variant="outlined"
@@ -942,7 +717,7 @@ export default function Financials({ data }: any) {
                     >
                       <Typography
                         color="error"
-                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                        sx={{ fontSize: "1rem", fontWeight: 700 }}
                       >
                         Lowest P/S of sector
                       </Typography>
@@ -969,32 +744,31 @@ export default function Financials({ data }: any) {
                         sx={{
                           color: data.screener.ps.color,
                           height: 10,
-                          '& .MuiSlider-thumb': {
+                          "& .MuiSlider-thumb": {
                             height: 28,
                             width: 28,
-                            bgcolor: '#fff',
-                            border: '6px solid currentcolor',
+                            bgcolor: "#fff",
+                            border: "6px solid currentcolor",
                           },
-                          '& .MuiSlider-mark': {
+                          "& .MuiSlider-mark": {
                             opacity: 0,
                           },
-                          '& .MuiSlider-valueLabel': {
+                          "& .MuiSlider-valueLabel": {
                             fontSize: 18,
                             px: 1.5,
                             py: 1,
                             borderRadius: 1,
                             opacity: 0.9,
                           },
-                          '& .MuiSlider-track': {
-                            color: 'transparent',
+                          "& .MuiSlider-track": {
+                            color: "transparent",
                           },
                         }}
                       />
-
                       <Typography
                         sx={{
-                          fontSize: '1rem',
-                          color: 'success.main',
+                          fontSize: "1rem",
+                          color: "success.main",
                           fontWeight: 700,
                         }}
                       >
@@ -1002,380 +776,36 @@ export default function Financials({ data }: any) {
                       </Typography>
                     </Stack>
                   </Paper>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-
-          {dialogContent === 'profitMargin' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Profit Margin of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.profitMargin?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.profitMargin.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={profitMargin} />
+                  <Box sx={{ mt: 6 }}>
+                    <FundamentalInfoCard
+                      text={fundamentalsTooltip.ps.definition}
+                      href={fundamentalsTooltip.ps.link}
+                    />
                   </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-
-          {dialogContent === 'currentRatio' && (
+          {dialogContent === "pcf" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Current Ratio of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.currentRatio?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.currentRatio.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={currentRatio} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'netIncomeRatio' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Net Income Ratio of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.netIncomeRatio?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.netIncomeRatio.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={netIncomeRatio} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'dividendYield' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Dividend Yield of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.dividendYield?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.dividendYield.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyStackedColumnChart data={dividend} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'revenue' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Revenue of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.revenue?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.revenue.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={revenue} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'netIncome' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Net Income of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.netIncome?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.netIncome.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={netIncome} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'totalAsset' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Total Asset of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.totalAsset?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.totalAsset.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={totalAsset} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'operatingProfit' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
-                Operating Profit of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', py: 2 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.operatingProfit?.definition}
-                  />
-                  <Box sx={{ mx: 2, mb: 4 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.operatingProfit.overview}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Heading>Yearly</Heading>
-                    <YearlyColumnChart data={operatingProfit} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'nocfps' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
-                NOCFPS of {data.tradingCode}
-              </DialogTitle>
-              <DialogContent dividers>
-                <Box sx={{ maxWidth: '700px', mx: 'auto', pb: 2, pt: 1 }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.nocfps?.definition}
-                  />
-                  <Box sx={{ mx: 2 }}>
-                    <Typography
-                      gutterBottom
-                      sx={{
-                        fontSize: '1.1rem',
-                        fontWeight: 700,
-                      }}
-                    >
-                      Overview
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data.screener.nocfpsQuarterly.overview}
-                    </Typography>
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 700,
-                      ml: 2,
-                      mt: 4,
-                    }}
-                  >
-                    Quarterly
-                  </Typography>
-                  <Box>
-                    <QuarterlyColumnChart data={nocfpsQuarterly} />
-                  </Box>
-                  <Typography
-                    sx={{
-                      fontSize: '1.1rem',
-                      fontWeight: 700,
-                      ml: 2,
-                    }}
-                  >
-                    Yearly
-                  </Typography>
-                  <Box>
-                    <YearlyColumnChart data={nocfpsYearly} />
-                  </Box>
-                </Box>
-              </DialogContent>
-            </>
-          )}
-          {dialogContent === 'pcf' && (
-            <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
                 Price-to-Cashflow (P/Cf) Ratio of {data.tradingCode}
               </DialogTitle>
 
               <DialogContent dividers>
                 <Box sx={{ mt: 2, mb: 6, mx: { xs: 0, sm: 12 } }}>
-                  <FundamentalInfoCard
-                    text={fundamentalsTooltip.pcf?.definition}
-                  />
                   <Typography
                     sx={{
-                      fontSize: '1.2rem',
+                      fontSize: "1.2rem",
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
                       mx: 10,
-                      textAlign: 'center',
+                      textAlign: "center",
                       color: data.pcf.color,
                     }}
                   >
-                    {data.pcf.overview}
+                    {data.pcf?.overview}
                   </Typography>
                   <Paper
                     variant="outlined"
@@ -1393,7 +823,7 @@ export default function Financials({ data }: any) {
                     >
                       <Typography
                         color="error"
-                        sx={{ fontSize: '1rem', fontWeight: 700 }}
+                        sx={{ fontSize: "1rem", fontWeight: 700 }}
                       >
                         Lowest P/Cf of sector
                       </Typography>
@@ -1420,32 +850,32 @@ export default function Financials({ data }: any) {
                         sx={{
                           color: data.pcf.color,
                           height: 10,
-                          '& .MuiSlider-thumb': {
+                          "& .MuiSlider-thumb": {
                             height: 28,
                             width: 28,
-                            bgcolor: '#fff',
-                            border: '6px solid currentcolor',
+                            bgcolor: "#fff",
+                            border: "6px solid currentcolor",
                           },
-                          '& .MuiSlider-mark': {
+                          "& .MuiSlider-mark": {
                             opacity: 0,
                           },
-                          '& .MuiSlider-valueLabel': {
+                          "& .MuiSlider-valueLabel": {
                             fontSize: 18,
                             px: 1.5,
                             py: 1,
                             borderRadius: 1,
                             opacity: 0.9,
                           },
-                          '& .MuiSlider-track': {
-                            color: 'transparent',
+                          "& .MuiSlider-track": {
+                            color: "transparent",
                           },
                         }}
                       />
 
                       <Typography
                         sx={{
-                          fontSize: '1rem',
-                          color: 'success.main',
+                          fontSize: "1rem",
+                          color: "success.main",
                           fontWeight: 700,
                         }}
                       >
@@ -1453,21 +883,149 @@ export default function Financials({ data }: any) {
                       </Typography>
                     </Stack>
                   </Paper>
+                  <Box sx={{ mt: 6 }}>
+                    <FundamentalInfoCard
+                      text={fundamentalsTooltip.pcf.definition}
+                      href={fundamentalsTooltip.pcf.link}
+                    />
+                  </Box>
                 </Box>
               </DialogContent>
             </>
           )}
-          {dialogContent === 'shareholdings' && (
+          {dialogContent === "dividendPayoutRatio" && (
+            <FundamentalsDialogContent
+              title={`Dividend Payout Ratio of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.dividendPayoutRatio?.overview}
+              yearlyData={dividendPayoutRatio}
+              info
+              infoText={fundamentalsTooltip.dividendPayoutRatio.definition}
+              infoLink={fundamentalsTooltip.dividendPayoutRatio.link}
+            />
+          )}
+          {dialogContent === "profitMargin" && (
+            <FundamentalsDialogContent
+              title={`Profit Margin of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.profitMargin?.overview}
+              yearlyData={profitMargin}
+              info
+              infoText={fundamentalsTooltip.profitMargin.definition}
+              infoLink={fundamentalsTooltip.profitMargin.link}
+            />
+          )}
+          {dialogContent === "currentRatio" && (
+            <FundamentalsDialogContent
+              title={`Current Ratio of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.currentRatio?.overview}
+              yearlyData={currentRatio}
+              info
+              infoText={fundamentalsTooltip.currentRatio.definition}
+              infoLink={fundamentalsTooltip.currentRatio.link}
+            />
+          )}
+          {dialogContent === "netIncomeRatio" && (
+            <FundamentalsDialogContent
+              title={`Net Income Ratio of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.netIncomeRatio?.overview}
+              yearlyData={netIncomeRatio}
+              info
+              infoText={fundamentalsTooltip.netIncomeRatio.definition}
+              infoLink={fundamentalsTooltip.netIncomeRatio.link}
+            />
+          )}
+          {dialogContent === "dividendYield" && (
+            <FundamentalsDialogContent
+              title={` Dividend Yield of ${data.tradingCode}`}
+              overview
+              yearlyStacked
+              overviewText={data.screener.dividendYield?.overview}
+              yearlyStackedData={dividend}
+              info
+              infoText={fundamentalsTooltip.dividendYield.definition}
+              infoLink={fundamentalsTooltip.dividendYield.link}
+            />
+          )}
+          {dialogContent === "netIncome" && (
+            <FundamentalsDialogContent
+              title={`Revenue of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.netIncome?.overview}
+              yearlyData={netIncome}
+              info
+              infoText={fundamentalsTooltip.netIncome.definition}
+              infoLink={fundamentalsTooltip.netIncome.link}
+            />
+          )}
+          {dialogContent === "revenue" && (
+            <FundamentalsDialogContent
+              title={`Net Income of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.revenue?.overview}
+              yearlyData={revenue}
+              info
+              infoText={fundamentalsTooltip.revenue.definition}
+              infoLink={fundamentalsTooltip.revenue.link}
+            />
+          )}
+          {dialogContent === "totalAsset" && (
+            <FundamentalsDialogContent
+              title={`Total Asset of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.totalAsset?.overview}
+              yearlyData={totalAsset}
+              info
+              infoText={fundamentalsTooltip.totalAsset.definition}
+              infoLink={fundamentalsTooltip.totalAsset.link}
+            />
+          )}
+          {dialogContent === "operatingProfit" && (
+            <FundamentalsDialogContent
+              title={`Operating Profit of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.operatingProfit?.overview}
+              yearlyData={operatingProfit}
+              info
+              infoText={fundamentalsTooltip.operatingProfit.definition}
+              infoLink={fundamentalsTooltip.operatingProfit.link}
+            />
+          )}
+          {dialogContent === "nocfps" && (
+            <FundamentalsDialogContent
+              title={`NOCFPS of ${data.tradingCode}`}
+              overview
+              quarterly
+              yearly
+              overviewText={data.screener.nocfpsQuarterly?.overview}
+              quarterlyData={nocfpsQuarterly}
+              yearlyData={nocfpsYearly}
+              info
+              infoText={fundamentalsTooltip.nocfps.definition}
+              infoLink={fundamentalsTooltip.nocfps.link}
+            />
+          )}
+          {dialogContent === "shareholdings" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: '1.4rem' }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
                 Shareholding percentage history of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>
-                <Box sx={{ maxWidth: '600px', mx: 'auto', pb: 2, pt: 1 }}>
+                <Box sx={{ maxWidth: "600px", mx: "auto", pb: 2, pt: 1 }}>
                   <Box sx={{ my: 2 }}>
                     <Typography
                       sx={{
-                        fontSize: '1.1rem',
+                        fontSize: "1.1rem",
                         fontWeight: 500,
                         ml: 2,
                       }}
@@ -1478,11 +1036,11 @@ export default function Financials({ data }: any) {
                       data={shareholdings.series}
                       categories={shareholdings.categories}
                       lineColors={[
-                        '#4dd0e1',
-                        '#b388ff',
-                        '#448aff',
-                        '#42bda8',
-                        '#f57f17',
+                        "#4dd0e1",
+                        "#b388ff",
+                        "#448aff",
+                        "#42bda8",
+                        "#f57f17",
                       ]}
                     />
                   </Box>
@@ -1494,12 +1052,12 @@ export default function Financials({ data }: any) {
             aria-label="close"
             onClick={handleDialogClose}
             sx={{
-              position: 'absolute',
+              position: "absolute",
               right: 12,
               top: 12,
             }}
           >
-            <CloseIcon sx={{ fontSize: '1.6rem' }} />
+            <CloseIcon sx={{ fontSize: "1.6rem" }} />
           </IconButton>
         </Dialog>
 
@@ -1555,15 +1113,26 @@ export default function Financials({ data }: any) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <FinancialCard
-              titleShort="ROCE"
-              title="Return of Capital Employed"
+              titleShort="ROA"
+              title="Return of Assets (ROA)"
               unit="%"
               divideFactor={0.01}
-              data={data.screener.roce}
-              dialogtype="roce"
+              data={data.screener.roa}
+              dialogtype="roa"
               handleItemClick={handleItemClick}
             />
           </Grid>
+          {/* <Grid item xs={6} sm={3}>
+            <FinancialCard
+              titleShort='ROCE'
+              title='Return of Capital Employed'
+              unit='%'
+              divideFactor={0.01}
+              data={data.screener.roce}
+              dialogtype='roce'
+              handleItemClick={handleItemClick}
+            />
+          </Grid> */}
           <Grid item xs={6} sm={3}>
             <FinancialCard
               titleShort="P/E Ratio"
@@ -1577,8 +1146,8 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="D/E Ratio"
               title="Debt-to-Equity (D/E) Ratio"
-              unit="%"
-              divideFactor={0.01}
+              // unit="%"
+              // divideFactor={0.01}
               data={data.screener.de}
               dialogtype="de"
               handleItemClick={handleItemClick}
@@ -1642,8 +1211,8 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="Profit Margin"
               title="Profit Margin"
-              // unit="%"
-              // divideFactor={0.01}
+              unit="%"
+              divideFactor={0.01}
               data={data.screener.profitMargin}
               dialogtype="profitMargin"
               handleItemClick={handleItemClick}
@@ -1666,7 +1235,7 @@ export default function Financials({ data }: any) {
               titleShort="Dividend Payout Ratio"
               title="Dividend Payout Ratio"
               data={data.screener.dividendPayoutRatio}
-              dialogtype="divPayoutRatio"
+              dialogtype="dividendPayoutRatio"
               handleItemClick={handleItemClick}
             />
           </Grid>
@@ -1727,7 +1296,7 @@ export default function Financials({ data }: any) {
               <Typography
                 color="text.primary"
                 sx={{
-                  fontSize: '1.2rem',
+                  fontSize: "1.2rem",
                   fontWeight: 700,
                   px: 2,
                   py: 1.5,
@@ -1739,7 +1308,7 @@ export default function Financials({ data }: any) {
               <Grid container sx={{ mt: 3, px: 2 }}>
                 <Grid item xs={12} sm={7}>
                   <Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
                       <PieChart
                         data={shareholdings.current.values}
                         colors={shareholdings.current.colors}
@@ -1753,6 +1322,20 @@ export default function Financials({ data }: any) {
                 </Grid>
 
                 <Grid item xs={12} sm={5} sx={{ mt: 4 }}>
+                  <Box
+                    sx={{
+                      // bgcolor: "secondaryBackground",
+                      display: "inline-block",
+                      // px: 3,
+                      // py: 0.8,
+                      // borderRadius: 1,
+                      // mb: 0.8,
+                    }}
+                  >
+                    <Typography color="text.primary">
+                      As of {shareholdings.current.date} :
+                    </Typography>
+                  </Box>
                   <Stack
                     direction="row"
                     alignItems="center"
@@ -1760,11 +1343,11 @@ export default function Financials({ data }: any) {
                     sx={{ my: 2 }}
                   >
                     <SquareRoundedIcon
-                      sx={{ color: '#4dd0e1', fontSize: '1rem' }}
+                      sx={{ color: "#4dd0e1", fontSize: "1rem" }}
                     />
                     <Typography
                       sx={{
-                        fontSize: '1rem',
+                        fontSize: "1rem",
                         color: shareholdings.changeText[0].color,
                       }}
                     >
@@ -1779,11 +1362,11 @@ export default function Financials({ data }: any) {
                     sx={{ my: 2 }}
                   >
                     <SquareRoundedIcon
-                      sx={{ color: '#b388ff', fontSize: '1rem' }}
+                      sx={{ color: "#b388ff", fontSize: "1rem" }}
                     />
                     <Typography
                       sx={{
-                        fontSize: '1rem',
+                        fontSize: "1rem",
                         color: shareholdings.changeText[1].color,
                       }}
                     >
@@ -1797,11 +1380,11 @@ export default function Financials({ data }: any) {
                     sx={{ my: 2 }}
                   >
                     <SquareRoundedIcon
-                      sx={{ color: '#448aff', fontSize: '1rem' }}
+                      sx={{ color: "#448aff", fontSize: "1rem" }}
                     />
                     <Typography
                       sx={{
-                        fontSize: '1rem',
+                        fontSize: "1rem",
                         color: shareholdings.changeText[2].color,
                       }}
                     >
@@ -1810,7 +1393,7 @@ export default function Financials({ data }: any) {
                   </Stack>
 
                   <Button
-                    onClick={() => handleItemClick('shareholdings')}
+                    onClick={() => handleItemClick("shareholdings")}
                     variant="outlined"
                     sx={{ borderRadius: 8, px: 4, mt: 1 }}
                     color="warning"
@@ -1832,7 +1415,7 @@ export default function Financials({ data }: any) {
               <Typography
                 color="text.primary"
                 sx={{
-                  fontSize: '1.2rem',
+                  fontSize: "1.2rem",
                   fontWeight: 700,
                   px: 2,
                   py: 1.5,
@@ -1845,14 +1428,14 @@ export default function Financials({ data }: any) {
                 <Typography
                   color="text.primary"
                   gutterBottom
-                  sx={{ fontSize: '1rem', fontWeight: 700, my: 0, py: 0 }}
+                  sx={{ fontSize: "1rem", fontWeight: 700, my: 0, py: 0 }}
                 >
                   Overview
                 </Typography>
-                <Typography>{data.screener.dividendYield.overview}</Typography>
+                <Typography>{data.screener.dividendYield?.overview}</Typography>
                 <Typography
                   color="text.primary"
-                  sx={{ fontSize: '1rem', fontWeight: 700, my: 0, mt: 3 }}
+                  sx={{ fontSize: "1rem", fontWeight: 700, my: 0, mt: 3 }}
                 >
                   History
                 </Typography>

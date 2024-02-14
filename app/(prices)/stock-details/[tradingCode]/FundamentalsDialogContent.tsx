@@ -1,0 +1,134 @@
+"use client";
+import {
+  Box,
+  Grid,
+  Typography,
+  Stack,
+  Tab,
+  Tabs,
+  useTheme,
+  useMediaQuery,
+  Paper,
+  Button,
+  Modal,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+  Chip,
+  Card,
+  CardActionArea,
+  CardContent,
+} from "@mui/material";
+
+import { fundamentalsTooltip } from "@/data/info";
+import FundamentalInfoCard from "./FundamentalInfoCard";
+import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
+import QuarterlyColumnChart from "@/components/charts/QuarterlyColumnChart";
+import YearlyColumnChart from "@/components/charts/YearlyColumnChart";
+
+export default function FundamentalsDialogContent(props: any) {
+  const {
+    title,
+    overview,
+    quarterly,
+    yearly,
+    yearlyStacked,
+    overviewText,
+    quarterlyData,
+    yearlyData,
+    yearlyStackedData,
+    info,
+    infoText,
+    infoLink,
+  } = props;
+
+  return (
+    <>
+      <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>{title}</DialogTitle>
+      <DialogContent dividers>
+        <Box sx={{ maxWidth: "700px", mx: "auto", py: 2 }}>
+          {overview && (
+            <Box sx={{ mx: 2, mb: 4 }}>
+              <Typography
+                gutterBottom
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                }}
+              >
+                Overview
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                }}
+              >
+                {overviewText}
+              </Typography>
+            </Box>
+          )}
+          {quarterly && (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  ml: 2,
+                }}
+              >
+                Quarterly
+              </Typography>
+              {quarterlyData?.length > 0 && (
+                <Box>
+                  <QuarterlyColumnChart data={quarterlyData} />
+                </Box>
+              )}
+            </>
+          )}
+          {yearly && (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  ml: 2,
+                }}
+              >
+                Yearly
+              </Typography>
+              {yearlyData?.length > 0 && (
+                <Box>
+                  <YearlyColumnChart data={yearlyData} />
+                </Box>
+              )}
+            </>
+          )}
+          {yearlyStacked && (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  ml: 2,
+                }}
+              >
+                Yearly
+              </Typography>
+              {yearlyStackedData?.length > 0 && (
+                <Box>
+                  <YearlyStackedColumnChart data={yearlyStackedData} />
+                </Box>
+              )}
+            </>
+          )}
+          {info && (
+            <Box sx={{ mt: 2 }}>
+              <FundamentalInfoCard text={infoText} href={infoLink} />
+            </Box>
+          )}
+        </Box>
+      </DialogContent>
+    </>
+  );
+}

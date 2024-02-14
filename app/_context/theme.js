@@ -35,13 +35,13 @@ const defaultSettings = {
       fontSize: '.875rem',
       fontWeight: 500,
     },
-    number: {
-      fontFamily: "'Nunito Sans', sans-serif",
-      fontSize: '.875rem',
-      fontWeight: 400,
-      lineHeight: 1.5,
-      letterSpacing: '0.00938em',
-    },
+    // number: {
+    //   fontFamily: "'Nunito Sans', sans-serif",
+    //   fontSize: '.875rem',
+    //   fontWeight: 700,
+    //   lineHeight: 1.5,
+    //   letterSpacing: '0.00938em',
+    // },
   },
   components: {
     MuiButton: {
@@ -72,6 +72,7 @@ export const lightTheme = createTheme({
     overviewHeader: '#e0e0e0',
     stipedTableEvenRow: '#fafafa',
     appbarBorderBottom: '#e0e0e0',
+    financeInfoCard: '#f5f7fa',
   },
   ...defaultSettings,
 });
@@ -88,6 +89,7 @@ export const darkTheme = createTheme({
     overviewHeader: '#212121',
     stipedTableEvenRow: '#212121',
     appbarBorderBottom: '#424242',
+    financeInfoCard: '#17171740',
   },
   ...defaultSettings,
 });

@@ -7,27 +7,19 @@ import {
   Tab,
   Tabs,
   Divider,
-  TextField,
-} from '@mui/material';
-import Main from './Main';
+  TextField
+} from '@mui/material'
+import Main from './Main'
 
-export default async function Screener() {
+export default async function Screener () {
   return (
     <Box
-      component="main"
+      component='main'
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: 'background.default'
       }}
     >
-      <Box
-        sx={{
-          maxWidth: 1350,
-          mx: 'auto',
-          px: 2,
-        }}
-      >
-        <Main />
-      </Box>
+      <Main />
     </Box>
-  );
+  )
 }

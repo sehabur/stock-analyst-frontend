@@ -1,8 +1,8 @@
-'use client';
-import React, { Component } from 'react';
-import { Box, Grid, useTheme, Typography, useMediaQuery } from '@mui/material';
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+"use client";
+import React, { Component } from "react";
+import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
@@ -11,12 +11,12 @@ export default function YearlyStackedColumnChart(props: any) {
 
   const theme: any = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartOptions: {} = {
-    colors: ['#448aff', '#4dd0e1', '#f57f17'],
+    colors: ["#448aff", "#4dd0e1", "#f57f17"],
     chart: {
-      type: 'line',
+      type: "line",
       stacked: true,
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
@@ -33,12 +33,12 @@ export default function YearlyStackedColumnChart(props: any) {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: matchesSmDown ? '50%' : '50px',
+        columnWidth: matchesSmDown ? "50%" : "50px",
         borderRadius: 2,
-        borderRadiusApplication: 'around',
-        borderRadiusWhenStacked: 'all',
+        borderRadiusApplication: "around",
+        borderRadiusWhenStacked: "all",
         dataLabels: {
-          position: 'center',
+          position: "center",
         },
       },
     },
@@ -70,10 +70,10 @@ export default function YearlyStackedColumnChart(props: any) {
     },
     stroke: {
       show: true,
-      colors: ['transparent', 'transparent', '#f57f17'],
+      colors: ["transparent", "transparent", "#f57f17"],
     },
     tooltip: {
-      theme: 'dark',
+      theme: "dark",
     },
     grid: {
       borderColor: theme.palette.chartGridColor,
