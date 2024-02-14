@@ -43,6 +43,8 @@ export default function FundamentalsDialogContent(props: any) {
     infoLink,
   } = props;
 
+  console.log(yearlyData);
+
   return (
     <>
       <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>{title}</DialogTitle>
@@ -79,7 +81,7 @@ export default function FundamentalsDialogContent(props: any) {
               >
                 Quarterly
               </Typography>
-              {quarterlyData?.length > 0 && (
+              {quarterlyData && (
                 <Box>
                   <QuarterlyColumnChart data={quarterlyData} />
                 </Box>
@@ -97,7 +99,7 @@ export default function FundamentalsDialogContent(props: any) {
               >
                 Yearly
               </Typography>
-              {yearlyData?.length > 0 && (
+              {yearlyData && (
                 <Box>
                   <YearlyColumnChart data={yearlyData} />
                 </Box>
@@ -115,7 +117,7 @@ export default function FundamentalsDialogContent(props: any) {
               >
                 Yearly
               </Typography>
-              {yearlyStackedData?.length > 0 && (
+              {yearlyStackedData && (
                 <Box>
                   <YearlyStackedColumnChart data={yearlyStackedData} />
                 </Box>
