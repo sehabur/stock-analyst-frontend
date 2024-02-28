@@ -51,6 +51,7 @@ import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnCha
 import FundamentalsDialogContent from "./FundamentalsDialogContent";
 
 const formatYearlyData = (data: any, divideFactor = 1) => {
+  if (!data) return;
   if (data.length < 1) return;
 
   data.sort((a: { year: any }, b: { year: any }) => a.year - b.year);
@@ -74,6 +75,7 @@ const formatYearlyData = (data: any, divideFactor = 1) => {
 };
 
 const formatYearlyDividendData = (initdata: any, yieldData: any) => {
+  if (!initdata || !yieldData) return;
   if (initdata.length < 1 || yieldData.length < 1) return;
 
   const data = initdata
@@ -128,8 +130,6 @@ const quarterMonthsGetter = (
 
   let currentYearValue, lastYearValue;
 
-  console.log(yearEndData, yearEnd);
-
   if (yearEnd === "31-Dec") {
     currentYearValue = currentYear;
     lastYearValue = lastYear;
@@ -146,6 +146,7 @@ const quarterMonthsGetter = (
 };
 
 const formatQuarterlyData = (data: any, yearEnd: string) => {
+  if (!data) return;
   if (data.length < 2) return;
 
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
@@ -196,7 +197,9 @@ const formatQuarterlyData = (data: any, yearEnd: string) => {
 };
 
 const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
+  if (!data) return;
   if (data.length < 2) return;
+
   data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
 
   const thisYearData = data[data.length - 1];
@@ -264,6 +267,7 @@ const formatShareholdingData = (data: any) => {
     return { text: changeText, color: changeTextColor };
   };
 
+  if (!data) return;
   if (data.length < 1) return;
 
   let director: any = [];
