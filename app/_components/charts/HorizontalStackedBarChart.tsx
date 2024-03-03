@@ -12,8 +12,6 @@ export default function HorizontalStackedBarChart(props: any) {
 
   const { data, colors, type } = props;
 
-  console.log(data);
-
   const chartOptions: {} = {
     colors: colors || [],
     chart: {
