@@ -133,7 +133,7 @@ export default async function StockDetails({
               gutterBottom
               sx={{
                 color: "text.primary",
-                fontSize: { xs: "1.8rem", sm: "2rem" },
+                fontSize: { xs: "1.8rem", sm: "1.8rem" },
                 fontWeight: 500,
               }}
             >

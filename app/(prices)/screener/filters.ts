@@ -189,6 +189,7 @@ export const filterOptions = [
     label: "Market capital",
     desc: "Market capital",
     unit: "Crore",
+    suffix: " cr",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -215,6 +216,7 @@ export const filterOptions = [
     label: "Paid-up capital",
     desc: "Paid-up capital",
     unit: "Crore",
+    suffix: " cr",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -247,6 +249,7 @@ export const filterOptions = [
     label: "Total Shares",
     desc: "Total Shares",
     unit: "Crore",
+    suffix: " cr",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -550,6 +553,7 @@ export const filterOptions = [
     label: "Dividend Yield",
     desc: "Dividend Yield",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -573,6 +577,7 @@ export const filterOptions = [
     label: "Cash dividend",
     desc: "Cash dividend",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -593,6 +598,7 @@ export const filterOptions = [
     label: "Stock dividend",
     desc: "Stock dividend",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -613,6 +619,7 @@ export const filterOptions = [
     label: "Revenue growth 1 year",
     desc: "Revenue growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -640,6 +647,7 @@ export const filterOptions = [
     label: "Revenue growth 5 year",
     desc: "Revenue growth 5 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -667,6 +675,7 @@ export const filterOptions = [
     label: "EPS growth 1 year",
     desc: "EPS growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -694,6 +703,7 @@ export const filterOptions = [
     label: "EPS growth 5 year",
     desc: "EPS growth 5 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -721,6 +731,7 @@ export const filterOptions = [
     label: "EPS growth qtr over qtr",
     desc: "EPS growth qtr over qtr",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -748,6 +759,7 @@ export const filterOptions = [
     label: "NAV growth 1 year",
     desc: "NAV growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -775,6 +787,7 @@ export const filterOptions = [
     label: "NAV growth qtr over qtr",
     desc: "NAV growth qtr over qtr",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -802,6 +815,7 @@ export const filterOptions = [
     label: "NOCFPS growth 1 year",
     desc: "NOCFPS growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -829,6 +843,7 @@ export const filterOptions = [
     label: "NOCFPS growth qtr over qtr",
     desc: "NOCFPS growth qtr over qtr",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -856,6 +871,7 @@ export const filterOptions = [
     label: "Total asset growth 1 year",
     desc: "Total asset growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -883,6 +899,7 @@ export const filterOptions = [
     label: "Total asset growth 5 year",
     desc: "Total asset growth 5 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -910,6 +927,7 @@ export const filterOptions = [
     label: "Net income growth 1 year",
     desc: "Net income growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -937,6 +955,7 @@ export const filterOptions = [
     label: "Net income growth 5 year",
     desc: "Net income growth 5 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -964,6 +983,7 @@ export const filterOptions = [
     label: "Total liabilities growth 1 year",
     desc: "Total liabilities growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -991,6 +1011,7 @@ export const filterOptions = [
     label: "Operating profit growth 1 year",
     desc: "Operating profit growth 1 year",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1018,6 +1039,7 @@ export const filterOptions = [
     label: "Director share",
     desc: "Director shareholding (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1049,6 +1071,7 @@ export const filterOptions = [
     label: "Government share",
     desc: "Government shareholding (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1080,6 +1103,7 @@ export const filterOptions = [
     label: "Public share",
     desc: "Public shareholding (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1111,6 +1135,7 @@ export const filterOptions = [
     label: "Foreign share",
     desc: "Foreign shareholding (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1142,6 +1167,7 @@ export const filterOptions = [
     label: "Institute share",
     desc: "Institute shareholding (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1173,6 +1199,7 @@ export const filterOptions = [
     label: "Free float share",
     desc: "Free float share (%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1204,6 +1231,7 @@ export const filterOptions = [
     label: "Director share change",
     desc: "Director shareholding Change(%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [
@@ -1225,6 +1253,7 @@ export const filterOptions = [
     label: "Institute share change",
     desc: "Institute shareholding Change(%)",
     unit: "%",
+    suffix: "%",
     visible: 1,
     columnOrder: 10,
     options: [

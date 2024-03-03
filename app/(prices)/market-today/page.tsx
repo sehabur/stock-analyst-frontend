@@ -1,15 +1,15 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
-import IndexChart from './IndexChart';
-import PieApexChart from '../../_components/charts/PieChart';
-import MarketMoverChart from './MarketMoverChart';
-import AreaChart from '@/components/charts/AreaChart';
-import CandlestickChart from '@/components/charts/CandlestickChart';
-import GainerLoser from './GainerLoser';
-import { alpha } from '@mui/system';
-import HorizontalStackedBarChart from '@/components/charts/HorizontalStackedBarChart';
-import SectorStatus from './SectorStatus';
-import { grey } from '@mui/material/colors';
-import Link from 'next/link';
+import { Box, Grid, Paper, Typography } from "@mui/material";
+import IndexChart from "./IndexChart";
+import PieApexChart from "../../_components/charts/PieChart";
+import MarketMoverChart from "./MarketMoverChart";
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickChart from "@/components/charts/CandlestickChart";
+import GainerLoser from "./GainerLoser";
+import { alpha } from "@mui/system";
+import HorizontalStackedBarChart from "@/components/charts/HorizontalStackedBarChart";
+import SectorStatus from "./SectorStatus";
+import { grey } from "@mui/material/colors";
+import Link from "next/link";
 
 async function getIndexData() {
   const res = await fetch(
@@ -19,7 +19,7 @@ async function getIndexData() {
     }
   );
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
   return res.json();
 }
@@ -32,7 +32,7 @@ async function getGainerLoserData() {
     }
   );
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
   return res.json();
 }
@@ -45,7 +45,7 @@ async function getSectorData() {
     }
   );
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
   return res.json();
 }
@@ -61,48 +61,30 @@ export default async function MarketToday() {
     <Box
       component="main"
       sx={{
-        bgcolor: 'secondaryBackground',
+        // bgcolor: 'secondaryBackground',
         pt: 2,
         pb: 6,
       }}
     >
-      <Box sx={{ maxWidth: '1250px', mx: 'auto' }}>
-        <Typography sx={{ fontSize: '.9rem', mb: 1, textAlign: 'center' }}>
-          Charts are powered by{' '}
-          <Typography
-            component={Link}
-            href="https://www.tradingview.com/"
-            target="_blank"
-            sx={{ color: 'primary.main' }}
-          >
-            TradingView
-          </Typography>
-        </Typography>
+      <Box sx={{ maxWidth: "1250px", mx: "auto" }}>
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sm={7.5}>
-            <Paper
-              elevation={0}
-              variant="outlined"
-              sx={{ bgcolor: 'background.default', minHeight: '475px' }}
-            >
+            <Box sx={{ bgcolor: "background.default" }}>
               <IndexChart indexData={indexData} />
-            </Paper>
+            </Box>
           </Grid>
 
           <Grid item xs={12} sm={4.5}>
-            <Paper
-              elevation={0}
-              variant="outlined"
-              sx={{ bgcolor: 'background.default', minHeight: '475px' }}
-            >
+            <Box sx={{ bgcolor: "background.default", pl: { xs: 2, sm: 6 } }}>
               <MarketMoverChart data={indexData.latest} />
-            </Paper>
+            </Box>
           </Grid>
 
           <Grid item xs={12}>
             <Box
               sx={{
-                bgcolor: 'transparent',
+                bgcolor: "transparent",
+                my: 2,
               }}
             >
               <SectorStatus sectorData={sectorData} />
@@ -113,6 +95,19 @@ export default async function MarketToday() {
             <GainerLoser data={gainerLoserData} />
           </Grid>
         </Grid>
+      </Box>
+      <Box sx={{ my: 2 }}>
+        <Typography sx={{ fontSize: ".9rem", textAlign: "center" }}>
+          Charts are powered by{" "}
+          <Typography
+            component={Link}
+            href="https://www.tradingview.com/"
+            target="_blank"
+            sx={{ color: "primary.main" }}
+          >
+            TradingView
+          </Typography>
+        </Typography>
       </Box>
     </Box>
   );

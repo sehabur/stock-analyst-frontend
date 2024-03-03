@@ -247,7 +247,7 @@ const formatShareholdingData = (data: any) => {
     const len = series.length;
     const lastItem = series[len - 1];
     const secondLastItem = series[len - 2];
-    const change = ((lastItem - secondLastItem) * 100) / secondLastItem;
+    const change = lastItem - secondLastItem;
 
     let changeText = "";
     let changeTextColor = "";
@@ -1448,88 +1448,6 @@ export default function Financials({ data }: any) {
               <Box></Box>
             </Box>
           </Grid>
-
-          {/* <Grid item xs={6} sm={3}>
-            <Box sx={{ p: 2 }}>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Market capitalization (Crore)
-              </Typography>
-
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.4rem', fontWeight: 500 }}
-              >
-                {data.marketCap}
-              </Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} sm={3}>
-            <Box sx={{ p: 2 }}>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Total shares (Crore)
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.4rem', fontWeight: 500 }}
-              >
-                {(data.totalShares / 10000000).toFixed(3)}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box sx={{ p: 2 }}>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Face value (BDT)
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.4rem', fontWeight: 500 }}
-              >
-                {data.faceValue}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Box sx={{ p: 2 }}>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Year end
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.4rem', fontWeight: 500 }}
-              >
-                {data.yearEnd}
-              </Typography>
-            </Box>
-          </Grid>
-
-          
-          <Grid item xs={12} sm={12}>
-            <Box>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1rem', fontWeight: 700, mt: 4, mb: 2 }}
-              >
-                Dividend history
-              </Typography>
-              <Box>
-                <LineColumnChart data={cashdividend} />
-              </Box>
-            </Box>
-          </Grid> */}
         </Grid>
       </Box>
     </Box>

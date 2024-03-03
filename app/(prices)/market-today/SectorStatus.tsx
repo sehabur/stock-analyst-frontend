@@ -1,6 +1,6 @@
-import HorizontalSectorBarChart from '@/components/charts/HorizontalSectorBarChart';
-import HorizontalStackedBarChart from '@/components/charts/HorizontalStackedBarChart';
-import { Box, Chip, Grid, Paper, Stack, Typography } from '@mui/material';
+import HorizontalSectorBarChart from "@/components/charts/HorizontalSectorBarChart";
+import HorizontalStackedBarChart from "@/components/charts/HorizontalStackedBarChart";
+import { Box, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
 
 const formatSectorTrendData = (sectorData: any) => {
   let categories = [];
@@ -18,15 +18,15 @@ const formatSectorTrendData = (sectorData: any) => {
     categories,
     series: [
       {
-        name: 'Uptrend',
+        name: "Uptrend",
         data: uptrend,
       },
       {
-        name: 'Neutral',
+        name: "Neutral",
         data: neutral,
       },
       {
-        name: 'Downtrend',
+        name: "Downtrend",
         data: downtrend,
       },
     ],
@@ -59,19 +59,19 @@ const formatSectorValueData = (sectorData: any) => {
     categories,
     series: [
       {
-        name: 'A',
+        name: "A",
         data: valueCatA,
       },
       {
-        name: 'B',
+        name: "B",
         data: valueCatB,
       },
       {
-        name: 'N',
+        name: "N",
         data: valueCatN,
       },
       {
-        name: 'Z',
+        name: "Z",
         data: valueCatZ,
       },
     ],
@@ -85,22 +85,23 @@ export default function SectorStatus(props: any) {
   const formattedSectorValueData = formatSectorValueData(sectorData);
 
   return (
-    <Grid container direction="row" justifyContent="center" spacing={2}>
+    <Grid container direction="row" justifyContent="center" spacing={4}>
       <Grid item xs={12} sm={6}>
         <Paper
           elevation={0}
-          variant="outlined"
-          sx={{ bgcolor: 'background.default', px: 1, pb: 1, pt: 3 }}
+          // variant="outlined"
+          sx={{ bgcolor: "background.default", px: 1, pb: 1, pt: 3 }}
         >
           <Typography
-            color="text.primary"
-            sx={{ fontSize: '1.4rem', ml: 3, mb: 1 }}
+            color="text.secondary"
+            sx={{ fontSize: "1.4rem", mb: 2, textAlign: "center" }}
           >
-            Tops sectors by gainer
+            Tops sector by gain
           </Typography>
           <HorizontalStackedBarChart
             data={formattedSectorTrendData}
-            colors={['#24b29b', '#448aff', '#ff4081']}
+            colors={["#24b29b", "#448aff", "#ff4081"]}
+            type="gain"
           />
         </Paper>
       </Grid>
@@ -108,18 +109,19 @@ export default function SectorStatus(props: any) {
       <Grid item xs={12} sm={6}>
         <Paper
           elevation={0}
-          variant="outlined"
-          sx={{ bgcolor: 'background.default', px: 1, pb: 1, pt: 3 }}
+          // variant="outlined"
+          sx={{ bgcolor: "background.default", px: 1, pb: 1, pt: 3 }}
         >
           <Typography
-            color="text.primary"
-            sx={{ fontSize: '1.4rem', ml: 3, mb: 1 }}
+            color="text.secondary"
+            sx={{ fontSize: "1.4rem", mb: 2, textAlign: "center" }}
           >
-            Top sectors by category wise value
+            Top sector by value
           </Typography>
           <HorizontalStackedBarChart
             data={formattedSectorValueData}
-            colors={['#4dd0e1', '#b388ff', '#f57f17', '#fbc02d']}
+            colors={["#4dd0e1", "#b388ff", "#f57f17", "#fbc02d"]}
+            type="value"
           />
         </Paper>
       </Grid>

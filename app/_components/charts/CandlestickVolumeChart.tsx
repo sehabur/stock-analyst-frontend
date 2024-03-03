@@ -1,16 +1,17 @@
-'use client';
-import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
-import { useEffect, useRef } from 'react';
-import { useMediaQuery, useTheme } from '@mui/material';
-import './tooltip.css';
-import { DateTime } from 'luxon';
+"use client";
+import { createChart, ColorType, CrosshairMode } from "lightweight-charts";
+import { useEffect, useRef } from "react";
+import { useMediaQuery, useTheme } from "@mui/material";
+import "./tooltip.css";
+import { DateTime } from "luxon";
+import { grey } from "@mui/material/colors";
 
 export default function CandlestickVolumeChart(props: any) {
   const { candledata, volumedata } = props;
 
   const theme = useTheme();
 
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const chartContainerRef: { current: any } = useRef(null);
   const chart: { current: any } = useRef(null);
@@ -41,10 +42,10 @@ export default function CandlestickVolumeChart(props: any) {
       },
       crosshair: {
         horzLine: {
-          labelVisible: false,
+          labelVisible: true,
         },
         vertLine: {
-          labelVisible: false,
+          labelVisible: true,
         },
       },
       grid: {
@@ -67,12 +68,12 @@ export default function CandlestickVolumeChart(props: any) {
       // borderVisible: false,
       // wickUpColor: '#089981',
       // wickDownColor: '#f23645',
-      upColor: '#22ab94',
-      downColor: '#f7525f',
-      borderUpColor: '#22ab94',
-      borderDownColor: '#f7525f',
-      wickUpColor: '#22ab94',
-      wickDownColor: '#f7525f',
+      upColor: "#22ab94",
+      downColor: "#f7525f",
+      borderUpColor: "#22ab94",
+      borderDownColor: "#f7525f",
+      wickUpColor: "#22ab94",
+      wickDownColor: "#f7525f",
     });
 
     candleSeries.priceScale().applyOptions({
@@ -83,10 +84,16 @@ export default function CandlestickVolumeChart(props: any) {
     });
 
     const volumeSeries = chart.current.addHistogramSeries({
+      upColor: "#22ab94",
+      downColor: "#f7525f",
+      borderUpColor: "#22ab94",
+      borderDownColor: "#f7525f",
+      wickUpColor: "#22ab94",
+      wickDownColor: "#f7525f",
       priceFormat: {
-        type: 'volume',
+        type: "volume",
       },
-      priceScaleId: '',
+      priceScaleId: "",
     });
 
     volumeSeries.priceScale().applyOptions({
@@ -106,10 +113,10 @@ export default function CandlestickVolumeChart(props: any) {
     const toolTipHeight = 80;
     const toolTipMargin = 15;
 
-    tooltip.current = document.createElement('div');
+    tooltip.current = document.createElement("div");
 
-    tooltip.current.className = 'custom-tooltip-candle-volume';
-    tooltip.current.style.background = '#fafafa';
+    tooltip.current.className = "custom-tooltip-candle-volume";
+    tooltip.current.style.background = grey[900];
 
     chartContainerRef.current.appendChild(tooltip.current);
 
@@ -123,42 +130,48 @@ export default function CandlestickVolumeChart(props: any) {
         param.point.y < 0 ||
         param.point.y > chartContainerRef.current.clientHeight
       ) {
-        tooltip.current.style.display = 'none';
+        tooltip.current.style.display = "none";
       } else {
         const dateStr = DateTime.fromSeconds(param.time)
           .minus({ hours: 6 })
-          .toFormat('yyyy-MM-dd');
-        tooltip.current.style.display = 'block';
+          .toFormat("yyyy-MM-dd");
+        tooltip.current.style.display = "block";
         const candleData = param.seriesData.get(candleSeries);
         const volumeData = param.seriesData.get(volumeSeries);
-        tooltip.current.innerHTML = `<div><div style="font-size: 15px; font-weight: bold; margin-bottom: 6px; color: ${'#2962ff'}">${dateStr}</div><div style="color: ${'black'}">
-                Open: ${candleData.open}
-                </div><div style="color: ${'black'}">
-                High: ${candleData.high}
-                </div><div style="color: ${'black'}">
-                Low: ${candleData.low}
-                </div><div style="color: ${'black'}">
-                Close: ${candleData.close}
-                </div><div style="color: ${'black'}; margin-top: 6px;">
-                Volume: ${volumeData.value}
-                </div></div>`;
 
-        const y = param.point.y;
-        let left = param.point.x + toolTipMargin;
-        if (left > chartContainerRef.current.clientWidth - toolTipWidth) {
-          left = param.point.x - toolTipMargin - toolTipWidth;
-        }
+        // tooltip.current.innerHTML = `<div><div style="font-size: 15px; font-weight: bold; margin-bottom: 6px; color: ${"#2962ff"}">${dateStr}</div><div style="color: ${"black"}">
+        //         Open: ${candleData.open}
+        //         </div><div style="color: ${"black"}">
+        //         High: ${candleData.high}
+        //         </div><div style="color: ${"black"}">
+        //         Low: ${candleData.low}
+        //         </div><div style="color: ${"black"}">
+        //         Close: ${candleData.close}
+        //         </div><div style="color: ${"black"}; margin-top: 6px;">
+        //         Volume: ${volumeData.value}
+        //         </div></div>`;
 
-        let top = y + toolTipMargin;
-        if (top > chartContainerRef.current.clientHeight - toolTipHeight) {
-          top = y - toolTipHeight - toolTipMargin;
-        }
-        tooltip.current.style.left = left + 'px';
-        tooltip.current.style.top = top + 'px';
+        tooltip.current.innerHTML = `O <span style="color: ${volumeData.color}">${candleData.open}</span> H <span style="color: ${volumeData.color}">${candleData.high}</span> L <span style="color: ${volumeData.color}">${candleData.low}</span> C <span style="color: ${volumeData.color}">${candleData.close}</span> V <span style="color: ${volumeData.color}">${volumeData.value}</span>`;
+
+        // const y = param.point.y;
+        // let left = param.point.x + toolTipMargin;
+        // if (left > chartContainerRef.current.clientWidth - toolTipWidth) {
+        //   left = param.point.x - toolTipMargin - toolTipWidth;
+        // }
+
+        // let top = y + toolTipMargin;
+        // if (top > chartContainerRef.current.clientHeight - toolTipHeight) {
+        //   top = y - toolTipHeight - toolTipMargin;
+        // }
+        // tooltip.current.style.left = left + "px";
+        // tooltip.current.style.top = top + "px";
+
+        tooltip.current.style.left = "0px";
+        tooltip.current.style.top = "0px";
       }
     });
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (chart.current) {

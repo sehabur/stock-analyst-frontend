@@ -1,10 +1,10 @@
-'use client';
-import React, { useRef, useEffect } from 'react';
-import { createChart, ColorType } from 'lightweight-charts';
-import { useTheme, useMediaQuery } from '@mui/material';
-import { alpha } from '@mui/system';
-import './tooltip.css';
-import { DateTime } from 'luxon';
+"use client";
+import React, { useRef, useEffect } from "react";
+import { createChart, ColorType, CrosshairMode } from "lightweight-charts";
+import { useTheme, useMediaQuery } from "@mui/material";
+import { alpha } from "@mui/system";
+import "./tooltip.css";
+import { DateTime } from "luxon";
 
 interface AreaChartProps {
   data: { time: string; value: number }[];
@@ -26,7 +26,7 @@ export default function AreaChart(props: AreaChartProps) {
   } = props;
 
   const theme = useTheme();
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   let fitContent: Boolean;
   if (fullWidth) {
@@ -36,7 +36,7 @@ export default function AreaChart(props: AreaChartProps) {
   }
   const chartContainerRef: { current: any } = useRef(null);
   const chart: { current: any } = useRef(null);
-  const tooltip: { current: any } = useRef(null);
+  // const tooltip: { current: any } = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -78,11 +78,12 @@ export default function AreaChart(props: AreaChartProps) {
         barSpacing: chartWidthValue / data.length,
       },
       crosshair: {
+        mode: CrosshairMode.Normal,
         horzLine: {
-          labelVisible: false,
+          labelVisible: true,
         },
         vertLine: {
-          labelVisible: false,
+          labelVisible: true,
         },
       },
       grid: {
@@ -111,66 +112,66 @@ export default function AreaChart(props: AreaChartProps) {
       chart.current.timeScale().fitContent();
     }
 
-    const toolTipWidth = 80;
-    const toolTipHeight = 80;
-    const toolTipMargin = 15;
+    // const toolTipWidth = 80;
+    // const toolTipHeight = 80;
+    // const toolTipMargin = 15;
 
-    tooltip.current = document.createElement('div');
+    // tooltip.current = document.createElement("div");
 
-    tooltip.current.className = 'custom-tooltip-area-chart';
-    tooltip.current.style.background = 'white';
+    // tooltip.current.className = "custom-tooltip-area-chart";
+    // tooltip.current.style.background = "white";
 
-    chartContainerRef.current.appendChild(tooltip.current);
+    // chartContainerRef.current.appendChild(tooltip.current);
 
-    chart.current.subscribeCrosshairMove((param: any) => {
-      // console.log(param);
-      if (
-        param.point === undefined ||
-        !param.time ||
-        param.point.x < 0 ||
-        param.point.x > chartContainerRef.current.clientWidth ||
-        param.point.y < 0 ||
-        param.point.y > chartContainerRef.current.clientHeight
-      ) {
-        tooltip.current.style.display = 'none';
-      } else {
-        const dateStr = DateTime.fromSeconds(param.time)
-          .minus({ hours: 6 })
-          .toFormat('yyyy-MM-dd HH:mm');
+    // chart.current.subscribeCrosshairMove((param: any) => {
+    //   // console.log(param);
+    //   if (
+    //     param.point === undefined ||
+    //     !param.time ||
+    //     param.point.x < 0 ||
+    //     param.point.x > chartContainerRef.current.clientWidth ||
+    //     param.point.y < 0 ||
+    //     param.point.y > chartContainerRef.current.clientHeight
+    //   ) {
+    //     tooltip.current.style.display = "none";
+    //   } else {
+    //     const dateStr = DateTime.fromSeconds(param.time)
+    //       .minus({ hours: 6 })
+    //       .toFormat("yyyy-MM-dd HH:mm");
 
-        tooltip.current.style.display = 'block';
-        const data = param.seriesData.get(series);
-        const price = data.value !== undefined ? data.value : data.close;
-        tooltip.current.innerHTML = `<div><div style="color: #2962FF">${tooltipTitle}</div><div style="font-size: 20px; margin: 4px 0px; color: ${'black'}">
-                ${Math.round(100 * price) / 100}
-                </div><div style="color: ${'black'}">
-                ${dateStr}
-                </div></div>`;
-        const y = param.point.y;
-        let left = param.point.x + toolTipMargin;
-        if (left > chartContainerRef.current.clientWidth - toolTipWidth) {
-          left = param.point.x - toolTipMargin - toolTipWidth;
-        }
+    //     tooltip.current.style.display = "block";
+    //     const data = param.seriesData.get(series);
+    //     const price = data.value !== undefined ? data.value : data.close;
+    //     tooltip.current.innerHTML = `<div><div style="color: #2962FF">${tooltipTitle}</div><div style="font-size: 20px; margin: 4px 0px; color: ${"black"}">
+    //             ${Math.round(100 * price) / 100}
+    //             </div><div style="color: ${"black"}">
+    //             ${dateStr}
+    //             </div></div>`;
+    //     const y = param.point.y;
+    //     let left = param.point.x + toolTipMargin;
+    //     if (left > chartContainerRef.current.clientWidth - toolTipWidth) {
+    //       left = param.point.x - toolTipMargin - toolTipWidth;
+    //     }
 
-        let top = y + toolTipMargin;
-        if (top > chartContainerRef.current.clientHeight - toolTipHeight) {
-          top = y - toolTipHeight - toolTipMargin;
-        }
-        tooltip.current.style.left = left + 'px';
-        tooltip.current.style.top = top + 'px';
-      }
-    });
+    //     let top = y + toolTipMargin;
+    //     if (top > chartContainerRef.current.clientHeight - toolTipHeight) {
+    //       top = y - toolTipHeight - toolTipMargin;
+    //     }
+    //     tooltip.current.style.left = left + "px";
+    //     tooltip.current.style.top = top + "px";
+    //   }
+    // });
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       if (chart.current) {
         chart?.current?.remove();
       }
-      if (tooltip?.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        chartContainerRef?.current?.removeChild(tooltip.current);
-      }
+      // if (tooltip?.current) {
+      //   // eslint-disable-next-line react-hooks/exhaustive-deps
+      //   chartContainerRef?.current?.removeChild(tooltip.current);
+      // }
     };
   }, [color, data, fullWidth, height, theme]);
 

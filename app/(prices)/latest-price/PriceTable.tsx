@@ -4,62 +4,35 @@ import {
   MenuItem,
   Typography,
   InputAdornment,
-} from '@mui/material';
-import React from 'react';
-import Link from 'next/link';
-import { sectorList } from '@/data/dse';
+} from "@mui/material";
+import React from "react";
+import Link from "next/link";
+import { sectorList } from "@/data/dse";
 import {
   DataGrid,
   GridColDef,
   GridToolbar,
   gridClasses,
-} from '@mui/x-data-grid';
-import styles from './Pricetable.module.css';
+} from "@mui/x-data-grid";
+import styles from "./Pricetable.module.css";
 
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled } from "@mui/material/styles";
 
 const ODD_OPACITY = 0.2;
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: theme.palette.stipedTableEvenRow,
-    // '&:hover, &.Mui-hovered': {
-    //   backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-    //   '@media (hover: none)': {
-    //     backgroundColor: 'transparent',
-    //   },
-    // },
-    // '&.Mui-selected': {
-    //   backgroundColor: alpha(
-    //     theme.palette.primary.main,
-    //     ODD_OPACITY + theme.palette.action.selectedOpacity
-    //   ),
-    //   '&:hover, &.Mui-hovered': {
-    //     backgroundColor: alpha(
-    //       theme.palette.primary.main,
-    //       ODD_OPACITY +
-    //         theme.palette.action.selectedOpacity +
-    //         theme.palette.action.hoverOpacity
-    //     ),
-    //     // Reset on touch devices, it doesn't add specificity
-    //     '@media (hover: none)': {
-    //       backgroundColor: alpha(
-    //         theme.palette.primary.main,
-    //         ODD_OPACITY + theme.palette.action.selectedOpacity
-    //       ),
-    //     },
-    //   },
-    // },
   },
 }));
 
 const columns: GridColDef[] = [
   {
-    field: 'tradingCode',
-    headerName: 'TRADING CODE',
+    field: "tradingCode",
+    headerName: "TRADING CODE",
     width: 150,
-    align: 'left',
-    headerAlign: 'left',
+    align: "left",
+    headerAlign: "left",
     renderCell: (params) => {
       return (
         <Link href={`/stock-details/${params.value}`}>{params.value}</Link>
@@ -68,25 +41,25 @@ const columns: GridColDef[] = [
     cellClassName: styles.tradingCodeCell,
   },
   {
-    field: 'category',
-    headerName: 'CATEGORY',
-    align: 'left',
-    headerAlign: 'left',
+    field: "category",
+    headerName: "CATEGORY",
+    align: "left",
+    headerAlign: "left",
     width: 90,
   },
-  { field: 'ltp', headerName: 'LTP', align: 'right', headerAlign: 'right' },
-  { field: 'ycp', headerName: 'OPEN', align: 'right', headerAlign: 'right' },
+  { field: "ltp", headerName: "LTP", align: "right", headerAlign: "right" },
+  { field: "ycp", headerName: "OPEN", align: "right", headerAlign: "right" },
   {
-    field: 'high',
-    headerName: 'HIGH',
-    align: 'right',
-    headerAlign: 'right',
+    field: "high",
+    headerName: "HIGH",
+    align: "right",
+    headerAlign: "right",
   },
-  { field: 'low', headerName: 'LOW', align: 'right', headerAlign: 'right' },
-  { field: 'close', headerName: 'CLOSE', align: 'right', headerAlign: 'right' },
+  { field: "low", headerName: "LOW", align: "right", headerAlign: "right" },
+  { field: "close", headerName: "CLOSE", align: "right", headerAlign: "right" },
   {
-    field: 'change',
-    headerName: 'CHANGE',
+    field: "change",
+    headerName: "CHANGE",
     cellClassName: (params: any) => {
       let cellClass;
       if (params.value < 0) {
@@ -98,14 +71,14 @@ const columns: GridColDef[] = [
       }
       return cellClass;
     },
-    align: 'right',
-    headerAlign: 'right',
+    align: "right",
+    headerAlign: "right",
   },
   {
-    field: 'percentChange',
-    headerName: 'CHANGE(%)',
-    align: 'right',
-    headerAlign: 'right',
+    field: "percentChange",
+    headerName: "CHANGE(%)",
+    align: "right",
+    headerAlign: "right",
     cellClassName: (params: any) => {
       let cellClass;
       if (params.value < 0) {
@@ -118,21 +91,21 @@ const columns: GridColDef[] = [
       return cellClass;
     },
     valueFormatter: (params) => {
-      return params.value + '%';
+      return params.value + "%";
     },
   },
-  { field: 'trade', headerName: 'TRADE', align: 'right', headerAlign: 'right' },
+  { field: "trade", headerName: "TRADE", align: "right", headerAlign: "right" },
   {
-    field: 'value',
-    headerName: 'VALUE(MN)',
-    align: 'right',
-    headerAlign: 'right',
+    field: "value",
+    headerName: "VALUE(MN)",
+    align: "right",
+    headerAlign: "right",
   },
   {
-    field: 'volume',
-    headerName: 'VOLUME',
-    align: 'right',
-    headerAlign: 'right',
+    field: "volume",
+    headerName: "VOLUME",
+    align: "right",
+    headerAlign: "right",
   },
 ];
 
@@ -147,7 +120,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
     let shareData = [];
     if (sector) {
       shareData = data.filter(
-        (share: any) => share.sector.split(' ')[0].toLowerCase() === sector
+        (share: any) => share.sector.split(" ")[0].toLowerCase() === sector
       );
     } else {
       shareData = data;
@@ -158,7 +131,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
   const [shares, setShares] = React.useState(filterInitialShares(sector));
 
   const [sectorFormInputs, setSectorFormInputs] = React.useState(
-    sector || 'all'
+    sector || "all"
   );
 
   const handleFormChange = ({
@@ -167,9 +140,9 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
     target: { value: string };
   }) => {
     let newData = [];
-    if (value !== 'all') {
+    if (value !== "all") {
       newData = data.filter(
-        (share: any) => share.sector.split(' ')[0].toLowerCase() === value
+        (share: any) => share.sector.split(" ")[0].toLowerCase() === value
       );
     } else {
       newData = data;
@@ -204,7 +177,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
         ))}
       </TextField>
 
-      <Box sx={{ height: '80vh' }}>
+      <Box sx={{ height: "80vh" }}>
         <StripedDataGrid
           rows={shares}
           columns={columns}
@@ -227,7 +200,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
             },
           }}
           getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+            params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
           rowHeight={40}
           slots={{
@@ -236,17 +209,19 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
           slotProps={{
             toolbar: {
               showQuickFilter: true,
+              printOptions: { disableToolbarButton: true },
+              csvOptions: { disableToolbarButton: true },
             },
           }}
           // pageSizeOptions={[10, 25, 50, 100]}
           sx={{
-            border: 'none',
-            '.MuiDataGrid-columnHeader': {
-              color: 'text.primary',
-              fontSize: '.8rem',
-              textAlign: 'right',
+            border: "none",
+            ".MuiDataGrid-columnHeader": {
+              color: "text.primary",
+              fontSize: ".8rem",
+              textAlign: "right",
             },
-            '.MuiDataGrid-cell': {
+            ".MuiDataGrid-cell": {
               fontWeight: 500,
               // fontSize: '.9rem',
               fontFamily: "'Nunito Sans', sans-serif",

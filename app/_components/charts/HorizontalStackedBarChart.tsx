@@ -1,23 +1,25 @@
-'use client';
-import React, { Component } from 'react';
-import { Box, Grid, useTheme, Typography, useMediaQuery } from '@mui/material';
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+"use client";
+import React, { Component } from "react";
+import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
 export default function HorizontalStackedBarChart(props: any) {
   const theme = useTheme();
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { data, colors } = props;
+  const { data, colors, type } = props;
+
+  console.log(data);
 
   const chartOptions: {} = {
     colors: colors || [],
     chart: {
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
-      type: 'bar',
+      type: "bar",
       stacked: true,
       toolbar: {
         tools: {
@@ -29,30 +31,40 @@ export default function HorizontalStackedBarChart(props: any) {
       bar: {
         horizontal: true,
         borderRadius: 2,
-        // dataLabels: {
-        //   total: {
-        //     enabled: true,
-        //     offsetX: 0,
-        //     style: {
-        //       fontSize: '14px',
-        //       color: theme.palette.text.primary,
-        //       fontWeight: 700,
-        //     },
-        //   },
-        // },
+        barHeight: "70%",
+        dataLabels: {
+          total: {
+            enabled: true,
+            formatter: (item: number) => {
+              if (type === "value") {
+                return item.toFixed(2);
+              } else {
+                return item;
+              }
+            },
+            offsetY: 7,
+            offsetX: type === "value" ? 10 : 0,
+            style: {
+              color: theme.palette.text.primary,
+            },
+          },
+        },
       },
+    },
+    dataLabels: {
+      enabled: false,
     },
     stroke: {
       width: 1,
       colors: [theme.palette.background.paper],
     },
     // title: {
-    //   text: 'Sector Status',
+    //   text: "Sector Status",
     // },
     xaxis: {
       categories: matchesSmDown
         ? data.categories.map(
-            (item: any) => item.slice(0, 18) + (item.length > 18 ? '..' : '')
+            (item: any) => item.slice(0, 18) + (item.length > 18 ? ".." : "")
           )
         : data.categories,
       labels: {
@@ -78,13 +90,31 @@ export default function HorizontalStackedBarChart(props: any) {
       },
     },
     legend: {
-      position: 'top',
+      position: "top",
       itemMargin: {
         horizontal: 15,
       },
     },
     tooltip: {
-      theme: 'dark',
+      theme: "dark",
+      y: {
+        formatter: (item: string) => {
+          if (type === "value") {
+            return item + " Crore";
+          } else {
+            return item;
+          }
+        },
+        title: {
+          formatter: (seriesName: string) => {
+            if (type === "value") {
+              return seriesName + " category:";
+            } else {
+              return seriesName + ":";
+            }
+          },
+        },
+      },
     },
   };
 
@@ -94,7 +124,7 @@ export default function HorizontalStackedBarChart(props: any) {
         options={chartOptions}
         series={data.series}
         type="bar"
-        height={660}
+        height={520}
       />
     </div>
   );

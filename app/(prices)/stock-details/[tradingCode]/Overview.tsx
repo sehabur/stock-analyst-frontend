@@ -16,16 +16,44 @@ import {
   Button,
 } from "@mui/material";
 import { DateTime } from "luxon";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import React from "react";
 import { grey } from "@mui/material/colors";
 import OverviewCard from "@/components/cards/OverviewCard";
 import Link from "next/link";
 
+import { styled } from "@mui/material/styles";
+
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup, {
+  toggleButtonGroupClasses,
+} from "@mui/material/ToggleButtonGroup";
+
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+import Stack from "@mui/material/Stack";
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  [`& .${toggleButtonGroupClasses.grouped}`]: {
+    margin: theme.spacing(0.5),
+    border: 0,
+    borderRadius: 3,
+  },
+}));
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  "&.MuiToggleButtonGroup-grouped": {
+    borderRadius: "24px !important",
+    marginRight: "16px",
+    border: `1px solid lightgrey !important`,
+    paddingLeft: "18px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
+    paddingRight: "18px",
+  },
+  // color: theme.palette.primary.m ain,
+  fontSize: ".9rem",
+  textTransform: "none",
+}));
 
 const formatCandleChartData = (data: any) => {
   let candle = [];
@@ -46,9 +74,9 @@ const formatCandleChartData = (data: any) => {
       time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
       value: item.volume,
       color:
-        data[i].volume > data[i - 1]?.volume
+        item.close > item.open
           ? "#67cab9"
-          : data[i].volume < data[i - 1]?.volume
+          : item.open > item.close
           ? "#fb998e"
           : "#4481ff",
     };
@@ -129,7 +157,7 @@ export default function Overview({ stock }: any) {
         color="primary"
         endIcon={<ArrowForwardIosRoundedIcon />}
         sx={{
-          fontSize: "1.5  rem",
+          fontSize: "1.4rem",
           fontWeight: 700,
           ":hover": {
             bgcolor: "transparent",
@@ -140,10 +168,10 @@ export default function Overview({ stock }: any) {
         {stock.fundamentals.tradingCode} Chart
       </Button>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <ToggleButtonGroup
+        <StyledToggleButtonGroup
           size="small"
           value={alignment}
-          color="primary"
+          // color="success"
           exclusive
           onChange={handleAlignment}
           sx={{
@@ -152,19 +180,19 @@ export default function Overview({ stock }: any) {
             },
           }}
         >
-          <ToggleButton value="minute">
+          <StyledToggleButton value="minute">
             {matchesSmDown ? "Minute" : "Minute chart"}
-          </ToggleButton>
-          <ToggleButton value="daily">
+          </StyledToggleButton>
+          <StyledToggleButton value="daily">
             {matchesSmDown ? "Daily" : "Daily chart"}
-          </ToggleButton>
-          <ToggleButton value="weekly">
+          </StyledToggleButton>
+          <StyledToggleButton value="weekly">
             {matchesSmDown ? "Weekly" : "Weekly chart"}
-          </ToggleButton>
-          <ToggleButton value="monthly">
+          </StyledToggleButton>
+          <StyledToggleButton value="monthly">
             {matchesSmDown ? "Monthly" : "Monthly chart"}
-          </ToggleButton>
-        </ToggleButtonGroup>
+          </StyledToggleButton>
+        </StyledToggleButtonGroup>
       </Box>
       <Box sx={{ mb: 4 }}>
         {alignment === "minute" && (
@@ -209,10 +237,16 @@ export default function Overview({ stock }: any) {
             flexWrap: "wrap",
             justifyContent: "center",
             my: 6,
+            mx: { xs: 0, sm: 6 },
+            py: 3,
+            px: 2,
+            borderRadius: 4,
+            bgcolor: "secondaryBackground",
           }}
         >
-          <Box sx={{ mx: { xs: 1, sm: 4 }, textAlign: "center" }}>
+          <Box sx={{ mx: { xs: 2, sm: 8 }, textAlign: "center" }}>
             <Typography
+              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -231,8 +265,10 @@ export default function Overview({ stock }: any) {
               {percentChangeData.today.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
+          <Divider orientation="vertical" flexItem />
+          <Box sx={{ mx: { xs: 2, sm: 8 }, textAlign: "center" }}>
             <Typography
+              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -251,8 +287,10 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneWeek.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
+          <Divider orientation="vertical" flexItem />
+          <Box sx={{ mx: { xs: 2, sm: 8 }, textAlign: "center" }}>
             <Typography
+              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -271,8 +309,10 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneMonth.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
+          <Divider orientation="vertical" flexItem />
+          <Box sx={{ mx: { xs: 2, sm: 8 }, textAlign: "center" }}>
             <Typography
+              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -291,8 +331,10 @@ export default function Overview({ stock }: any) {
               {percentChangeData.sixMonth.text}
             </Typography>
           </Box>
-          <Box sx={{ mx: { xs: 1, sm: 8 }, textAlign: "center" }}>
+          <Divider orientation="vertical" flexItem />
+          <Box sx={{ mx: { xs: 2, sm: 8 }, textAlign: "center" }}>
             <Typography
+              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -313,447 +355,493 @@ export default function Overview({ stock }: any) {
           </Box>
         </Box>
 
+        <Box sx={{ mb: 4 }}>
+          <Typography
+            color="text.primary"
+            sx={{ fontSize: "1.4rem", fontWeight: 700 }}
+          >
+            Key Stats
+          </Typography>
+        </Box>
+
         <Grid
           container
           alignItems="center"
           justifyContent="center"
-          rowSpacing={{ xs: 4, sm: 4 }}
+          rowSpacing={{ xs: 4, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 6 }}
           sx={{ mt: 2 }}
         >
           <Grid item xs={4} sm={2}>
-            <OverviewCard title="Open" data={stock.latest.ycp} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="High" data={stock.latest.high} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="Low" data={stock.latest.low} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="YCP" data={stock.latest.ycp} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="Volume" data={stock.latest.volume} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="Value (Cr)" data={stock.latest.value} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="Trade" data={stock.latest.trade} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard
-              title="Floor price"
-              data={stock.lastDay.oneYearHigh}
-            />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="52W High" data={stock.latest.volume} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard title="52W Low" data={stock.lastDay.oneYearLow} />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard
-              title="Circuit Up"
-              data={stock.fundamentals.circuitUp}
-            />
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <OverviewCard
-              title="Circuit Low"
-              data={stock.fundamentals.circuitLow}
-            />
-          </Grid>
-          {/* <Grid item xs={4} sm={2}>
-            <Box>
-              <Typography
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Open (BDT)
-              </Typography>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Open
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.latest.ycp}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                High (BDT)
+                BDT
               </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              High
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.latest.high}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Low (BDT)
+                BDT
               </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Low
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.latest.low}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                YCP (BDT)
+                BDT
               </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Volume
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
+              >
+                {stock.latest.volume}
+              </Typography>
+              {/* <Typography
+                color="text.secondary"
+                sx={{ ml: .7, fontSize: ".875rem" }}
+              >
+                BDT
+              </Typography> */}
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Value
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
+              >
+                {stock.latest.value}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Trade
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
+              >
+                {stock.latest.trade}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              YCP
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.latest.ycp}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Volume
+                BDT
               </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              52W High
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.latest.volume}
+                {stock.lastDay.oneYearHigh || "--"}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Trade
+                Crore
               </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              52W Low
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.latest.trade}
+                {stock.lastDay.oneYearLow || "--"}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Value (BDT)
+                Crore
               </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
-              >
-                {(stock.latest.value / 10).toFixed(3)} Crore
-              </Typography>
-            </Box>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
-              <Typography
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Floor price (BDT)
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
-              >
-                {stock.fundamentals.floorPrice}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
-              <Typography
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                52W High (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Circuit Up
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
-              >
-                {stock.lastDay.oneYearHigh}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
-              <Typography
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                52W Low (BDT)
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
-              >
-                {stock.lastDay.oneYearLow}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
-              <Typography
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Circuit Up (BDT)
-              </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.fundamentals.circuitUp}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Box>
               <Typography
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Circuit Low (BDT)
+                BDT
               </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Circuit Low
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
                 {stock.fundamentals.circuitLow}
               </Typography>
-            </Box>
-          </Grid> */}
-
-          {/* <Grid item xs={6} sm={2.4}>
-            <Box>
               <Typography
-                gutterBottom
                 color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                Day range (BDT)
+                BDT
               </Typography>
-              <Typography
-                color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
-              >
-                {stock.latest.high} - {stock.latest.low}
-              </Typography>
-            </Box>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Value (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Face Value
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {(stock.latest.value / 10).toFixed(3)} Crore
+                {stock.fundamentals.faceValue}
               </Typography>
-            </Box>
+            </Stack>
           </Grid>
-
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Volume
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Market Capital
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.latest.volume}
+                {(stock.fundamentals.marketCap / 10).toFixed(2)}
               </Typography>
-            </Box>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
+              </Typography>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Trade
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Paid up Capital
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.latest.trade}
+                {(stock.fundamentals.paidUpCap / 10).toFixed(2)}
               </Typography>
-            </Box>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
+              </Typography>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Open / Close price (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Total Shares
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.latest.ycp} / {stock.latest.close}
+                {(stock.fundamentals.totalShares / 10000000).toFixed(2)}
               </Typography>
-            </Box>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
+              </Typography>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Floor price (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Last AGM Date
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.fundamentals.floorPrice}
+                {stock.fundamentals.lastAgm}
               </Typography>
-            </Box>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                Circuit Up / Low (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Year End
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.fundamentals.circuitUp} / {stock.fundamentals.circuitLow}
+                {stock.fundamentals.yearEnd}
               </Typography>
-            </Box>
+            </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
-            <Box>
-              <Typography
-                gutterBottom
-                color="text.secondary"
-                sx={{ fontSize: '1rem', fontWeight: 700 }}
-              >
-                52W High / Low price (BDT)
-              </Typography>
+          <Grid item xs={4} sm={2}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Listing Year
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
               <Typography
                 color="text.primary"
-                sx={{ fontSize: '1.6rem', fontWeight: 500 }}
+                sx={{ fontSize: "1.6rem", fontWeight: 500 }}
               >
-                {stock.lastDay.oneYearHigh} / {stock.lastDay.oneYearLow}
+                {stock.fundamentals.listingYear}
               </Typography>
-            </Box>
-          </Grid>*/}
+            </Stack>
+          </Grid>
         </Grid>
 
-        {/* <Box>
+        <Box sx={{ mt: 8, mb: 4 }}>
           <Typography
-            sx={{
-              color: 'text.primary',
-              fontSize: '1.6rem',
-              fontWeight: 500,
-              mt: 6,
-              mb: 2,
-            }}
+            color="text.primary"
+            sx={{ fontSize: "1.4rem", fontWeight: 700 }}
           >
-            About the company
+            About {stock.fundamentals.companyName}
           </Typography>
+        </Box>
+
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          rowSpacing={{ xs: 4, sm: 6 }}
+          columnSpacing={{ xs: 2, sm: 6 }}
+          sx={{ mt: 2 }}
+        >
+          <Grid item xs={4} sm={4}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Sector
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography color="text.primary" sx={{ fontSize: "1.2rem" }}>
+                {stock.fundamentals.sector}
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={4}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              E-Mail
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.2rem", fontWeight: 500 }}
+              >
+                {stock.fundamentals.address.email}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={4}>
+            <Typography
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontSize: "1rem" }}
+            >
+              Website
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.2rem", fontWeight: 500 }}
+              >
+                {stock.fundamentals.address.website}
+              </Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ mt: 4 }}>
           <Typography
-            sx={{
-              color: 'text.primary',
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              my: 0.5,
-            }}
+            color="text.secondary"
+            gutterBottom
+            sx={{ fontSize: "1rem" }}
           >
-            Listing year: {stock.fundamentals.listingYear}
+            {stock.fundamentals.about}
           </Typography>
-          <Typography
-            sx={{
-              color: 'text.primary',
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              my: 0.5,
-            }}
-          >
-            Contact No: {stock.fundamentals.address.contact}
-          </Typography>
-          <Typography
-            sx={{
-              color: 'text.primary',
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              my: 0.5,
-            }}
-          >
-            E-mail: {stock.fundamentals.address.email}
-          </Typography>
-          <Typography
-            sx={{
-              color: 'text.primary',
-              fontSize: '1.1rem',
-              fontWeight: 500,
-              my: 0.5,
-            }}
-          >
-            Website:{' '}
-            <Link href={stock.fundamentals.address.website} target="_blank">
-              {stock.fundamentals.address.website}
-            </Link>
-          </Typography>
-        </Box> */}
+        </Box>
       </Box>
     </Box>
   );
