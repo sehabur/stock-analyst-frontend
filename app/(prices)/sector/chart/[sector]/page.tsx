@@ -1,46 +1,44 @@
-import { Box } from '@mui/material';
-import SectorChart from './SectorChart';
-import { sectorList } from '@/data/dse';
+import { Box } from "@mui/material";
+import SectorChart from "./SectorChart";
+import { sectorList } from "@/data/dse";
 
-async function getData(sectorTag: string) {
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/dailySectorPrice/${sectorTag}`,
-    {
-      next: { revalidate: 0 },
-    }
-  );
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return res.json();
-}
+// async function getData(sectorTag: string) {
+//   const res = await fetch(
+//     `${process.env.BACKEND_URL}/api/prices/dailySectorPrice/${sectorTag}`,
+//     {
+//       next: { revalidate: 0 },
+//     }
+//   );
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
+//   return res.json();
+// }
 
-export function generateStaticParams() {
-  return sectorList.map((item) => ({
-    sector: item.tag,
-  }));
-}
+// export function generateStaticParams() {
+//   return sectorList.map((item) => ({
+//     sector: item.tag,
+//   }));
+// }
 
 export default async function Sector(props: any) {
-  const sectorTag = props.params.sector;
-
-  const data = await getData(sectorTag);
-
-  return (
-    <Box component="main" sx={{ bgcolor: 'background.default' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          maxWidth: 1200,
-          mx: 'auto',
-          py: 2,
-        }}
-      >
-        <SectorChart data={data} />
-      </Box>
-    </Box>
-  );
+  // const sectorTag = props.params.sector;
+  // const data = await getData(sectorTag);
+  // return (
+  //   <Box component="main" sx={{ bgcolor: "background.default" }}>
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         flexDirection: "row",
+  //         flexWrap: "wrap",
+  //         justifyContent: "center",
+  //         maxWidth: 1200,
+  //         mx: "auto",
+  //         py: 2,
+  //       }}
+  //     >
+  //       <SectorChart data={data} />
+  //     </Box>
+  //   </Box>
+  // );
 }
