@@ -190,11 +190,12 @@ export default function News({ data }: any) {
             onChange={handleAlignmentChange}
             aria-label="Platform"
           >
-            {options.map((item: any) => (
+            {options.map((item: any, index: number) => (
               <StyledToggleButton
                 value={item.search}
                 sx={{ px: 2 }}
                 onClick={handleDataChange}
+                key={index}
               >
                 {item.title}
               </StyledToggleButton>
@@ -210,7 +211,7 @@ export default function News({ data }: any) {
         >
           {news.map((item: any) => (
             <Grid item xs={12} sm={4} key={item._id}>
-              <Card sx={{ minWidth: 275 }} variant="outlined">
+              <Card sx={{ minWidth: 275 }} variant="outlined" key={item._id}>
                 <CardContent sx={{ pb: 0 }}>
                   <Typography
                     gutterBottom

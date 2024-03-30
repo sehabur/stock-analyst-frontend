@@ -170,8 +170,8 @@ export default function TopFinancials(props: any) {
             onChange={handleAlignmentChange}
             aria-label="Platform"
           >
-            {options.map((item: any) => (
-              <StyledToggleButton value={item.tag} sx={{ px: 2 }}>
+            {options.map((item: any, index: number) => (
+              <StyledToggleButton value={item.tag} sx={{ px: 2 }} key={index}>
                 {item.button}
               </StyledToggleButton>
             ))}

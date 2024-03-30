@@ -137,7 +137,7 @@ export default function GainerLoser({ data }: any) {
           </StyledToggleButtonGroup>
         </Box>
         {dataFormatter(data[alignmentGainer]).map((item: any) => (
-          <GainerCard item={item} />
+          <GainerCard item={item} key={item.id} />
         ))}
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -190,7 +190,7 @@ export default function GainerLoser({ data }: any) {
           </StyledToggleButtonGroup>
         </Box>
         {dataFormatter(data[alignmentLoser]).map((item: any) => (
-          <GainerCard item={item} />
+          <GainerCard item={item} key={item.id} />
         ))}
       </Grid>
 

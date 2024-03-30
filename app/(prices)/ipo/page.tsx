@@ -96,7 +96,7 @@ export default async function Ipo() {
           }}
         >
           {data.map((item: any, index: number) => (
-            <div id={index.toString()}>
+            <div id={index.toString()} key={index}>
               <Paper
                 sx={{
                   my: 2,

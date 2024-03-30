@@ -85,6 +85,7 @@ export default function Ipo() {
             }}
             onClick={() => handleClick(index)}
             elevation={6}
+            key={index}
           >
             <Typography
               noWrap

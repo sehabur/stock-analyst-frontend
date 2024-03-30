@@ -210,11 +210,12 @@ export default function News({ data }: any) {
             onChange={handleAlignmentChange}
             aria-label="Platform"
           >
-            {options.map((item: any) => (
+            {options.map((item: any, index: number) => (
               <StyledToggleButton
                 value={item.search}
                 sx={{ px: 2 }}
                 onClick={handleDataChange}
+                key={index}
               >
                 {item.title}
               </StyledToggleButton>
@@ -223,7 +224,11 @@ export default function News({ data }: any) {
         </Box>
         <Box>
           {news.slice(0, 6).map((item: any) => (
-            <Card sx={{ minWidth: 275, my: 1 }} variant="outlined">
+            <Card
+              sx={{ minWidth: 275, my: 1 }}
+              variant="outlined"
+              key={item._id}
+            >
               <CardActionArea onClick={() => handleItemClick(item)}>
                 <CardContent sx={{ py: 1 }}>
                   <Typography noWrap sx={{ fontWeight: 700, fontSize: "1rem" }}>
