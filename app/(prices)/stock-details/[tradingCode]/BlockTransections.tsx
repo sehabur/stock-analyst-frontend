@@ -1,11 +1,11 @@
-'use client';
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+"use client";
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import {
   Box,
   Grid,
@@ -24,33 +24,57 @@ import {
   IconButton,
   Chip,
   Divider,
-} from '@mui/material';
-import { DateTime } from 'luxon';
+} from "@mui/material";
+import { DateTime } from "luxon";
+import { grey } from "@mui/material/colors";
 
 export default function BlockTransections({ blocktr }: any) {
   return (
-    <Box sx={{ maxWidth: '850px', mx: 'auto', py: 4, px: 2 }}>
-      <TableContainer component={Paper} variant="outlined">
-        <Table sx={{ minWidth: 560 }}>
+    <Box sx={{ maxWidth: "900px", mx: "auto", py: 4, px: 2 }}>
+      <TableContainer
+        component={Paper}
+        sx={{ border: "none", borderRadius: 0 }}
+        variant="outlined"
+      >
+        <Table sx={{ minWidth: 560 }} size="small">
           <TableHead>
             <TableRow
               sx={{
-                '.MuiTableCell-head': { fontSize: '1rem', fontWeight: 700 },
+                ".MuiTableCell-head": {
+                  // fontSize: "1rem",
+                  fontWeight: 700,
+                  // py: 1,
+                },
               }}
             >
-              <TableCell>Date</TableCell>
-              <TableCell align="right">Trades</TableCell>
-              <TableCell align="right">Volume</TableCell>
-              <TableCell align="right">Value(Cr)</TableCell>
-              <TableCell align="right">Max price</TableCell>
-              <TableCell align="right">Min price</TableCell>
+              <TableCell>DATE</TableCell>
+              <TableCell align="right">TRADES</TableCell>
+              <TableCell align="right">VOLUME</TableCell>
+              <TableCell align="right">VALUE (CRORE)</TableCell>
+              <TableCell align="right">MAX PRICE</TableCell>
+              <TableCell align="right">MIN PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {blocktr.map((row: any) => (
-              <TableRow key={row._id}>
-                <TableCell component="th" scope="row">
-                  {DateTime.fromISO(row.date).toFormat('dd MMM')}
+              <TableRow
+                key={row._id}
+                hover={true}
+                sx={{
+                  ".MuiTableCell": {
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                  },
+                  "&:nth-of-type(odd)": {
+                    backgroundColor: "financePageBgcolor",
+                  },
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                  },
+                }}
+              >
+                <TableCell sx={{ minWidth: 80 }}>
+                  {DateTime.fromISO(row.date).toFormat("dd MMM")}
                 </TableCell>
                 <TableCell align="right">{row.trades}</TableCell>
                 <TableCell align="right">{row.quantity}</TableCell>

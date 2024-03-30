@@ -1,24 +1,24 @@
-import { createTheme } from '@mui/material';
-import { grey, blueGrey } from '@mui/material/colors';
-import darkScrollbar from '@mui/material/darkScrollbar';
+import { createTheme } from "@mui/material";
+import { grey, blueGrey } from "@mui/material/colors";
+import darkScrollbar from "@mui/material/darkScrollbar";
 
 const palleteColors = {
   primary: {
-    main: '#2962ff',
-    light: '#5381ff',
-    dark: '#1c44b2',
-    contrastText: '#fff',
+    main: "#2962ff",
+    light: "#5381ff",
+    dark: "#1c44b2",
+    contrastText: "#fff",
   },
   error: {
-    main: '#f23645',
-    light: '#f45e6a',
-    dark: '#a92530',
-    contrastText: '#fff',
+    main: "#f23645",
+    light: "#f45e6a",
+    dark: "#a92530",
+    contrastText: "#fff",
   },
   success: {
-    main: '#00A25B',
-    light: '#33b47b',
-    dark: '#00713f',
+    main: "#00A25B",
+    light: "#33b47b",
+    dark: "#00713f",
   },
   // success: {
   //   main: '#089981',
@@ -32,7 +32,7 @@ const defaultSettings = {
   typography: {
     fontFamily: "'DM Sans', sans-serif",
     body1: {
-      fontSize: '.875rem',
+      fontSize: ".875rem",
       fontWeight: 500,
     },
     // number: {
@@ -47,14 +47,14 @@ const defaultSettings = {
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
-          fontSize: '1rem',
+          textTransform: "none",
+          fontSize: "1rem",
         },
       },
     },
     MuiCssBaseline: {
       styleOverrides: (themeParam) => ({
-        body: themeParam.palette.mode === 'dark' ? darkScrollbar() : null,
+        body: themeParam.palette.mode === "dark" ? darkScrollbar() : null,
       }),
     },
   },
@@ -62,34 +62,36 @@ const defaultSettings = {
 
 export const lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     ...palleteColors,
-    secondaryBackground: '#f5f7fa',
-    financePageBgcolor: '#f0f3f54d',
-    financeCardTitlecolor: '#f0f3f5',
+    secondaryBackground: "#f5f7fa",
+    financePageBgcolor: "#f0f3f54d",
+    financeCardTitlecolor: "#f0f3f5",
     // secondaryPaperBackground: '#f0f0f0',
-    chartGridColor: '#eeeeee',
-    overviewHeader: '#e0e0e0',
-    stipedTableEvenRow: '#fafafa',
-    appbarBorderBottom: '#e0e0e0',
-    financeInfoCard: '#f5f7fa',
+    chartGridColor: "#eeeeee",
+    overviewHeader: "#e0e0e0",
+    stipedTableEvenRow: "#fafafa",
+    appbarBorderBottom: "#e0e0e0",
+    financeInfoCard: "#f5f7fa",
+    gainerCard: "#fafafa",
   },
   ...defaultSettings,
 });
 
 export const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     ...palleteColors,
-    secondaryBackground: '#151515',
-    financePageBgcolor: '#17171780',
-    financeCardTitlecolor: '#212121',
+    secondaryBackground: "#151515",
+    financePageBgcolor: "#17171780",
+    financeCardTitlecolor: "#212121",
     // secondaryPaperBackground: '#212121',
-    chartGridColor: '#494949',
-    overviewHeader: '#212121',
-    stipedTableEvenRow: '#212121',
-    appbarBorderBottom: '#424242',
-    financeInfoCard: '#17171740',
+    chartGridColor: "#494949",
+    overviewHeader: "#212121",
+    stipedTableEvenRow: "#171717",
+    appbarBorderBottom: "#424242",
+    financeInfoCard: "#17171740",
+    gainerCard: "#171717",
   },
   ...defaultSettings,
 });

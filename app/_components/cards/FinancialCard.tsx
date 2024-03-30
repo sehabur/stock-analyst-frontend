@@ -146,7 +146,7 @@ export default function FinancialCard(props: any) {
                   color="text.primary"
                   sx={{ fontSize: "1.8rem", fontWeight: 500 }}
                 >
-                  {data ? (data.value / divideFactor).toFixed(2) : "--"}
+                  {data?.value ? (data.value / divideFactor).toFixed(2) : "--"}
                 </Typography>
                 <Typography
                   sx={{ fontSize: "1.1rem", ml: 0.5, color: "text.secondary" }}
@@ -159,13 +159,11 @@ export default function FinancialCard(props: any) {
                 label={data?.period}
                 variant="outlined"
                 size="small"
-                // color="info"
+                color="info"
                 sx={{
                   ml: { xs: 0, sm: 2 },
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  display: data ? "block" : "none",
-                  // borderRadius: 1.2,
+                  fontSize: ".9rem",
+                  display: data?.period ? "block" : "none",
                 }}
               />
             </Stack>
@@ -175,7 +173,7 @@ export default function FinancialCard(props: any) {
               disableRipple
               onClick={() => handleItemClick(dialogtype)}
               sx={{
-                color: data ? data.color : "text.secondary",
+                color: data?.color || "text.secondary",
                 fontSize: ".9rem",
                 fontWeight: 500,
                 px: 2,
@@ -183,9 +181,10 @@ export default function FinancialCard(props: any) {
                 ":hover": {
                   bgcolor: "transparent",
                 },
+                textAlign: "left",
               }}
             >
-              {data ? data.comment : "--"}
+              {data?.comment || "--"}
             </Typography>
           </Box>
         </CardContent>

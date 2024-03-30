@@ -1,5 +1,14 @@
 "use client";
-import { Box, Chip, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import * as React from "react";
 import AreaChart from "@/components/charts/AreaChart";
 import { DateTime } from "luxon";
@@ -14,9 +23,6 @@ import ToggleButtonGroup, {
 import Divider from "@mui/material/Divider";
 
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
-import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
-import TripOriginRoundedIcon from "@mui/icons-material/TripOriginRounded";
-import FiberManualRecordRoundedIcon from "@mui/icons-material/FiberManualRecordRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 
 import Tooltip from "@mui/material/Tooltip";
@@ -24,7 +30,6 @@ import IconButton from "@mui/material/IconButton";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
-    marginLeft: "24px",
     marginRight: "24px",
     border: 0,
     borderRadius: 3,
@@ -90,6 +95,9 @@ const formatChartData = (data: any) => {
 };
 
 export default function IndexChart({ indexData }: any) {
+  const theme = useTheme();
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
   const [alignment, setAlignment] = React.useState("dsex");
 
   const data = { change: 0 };
@@ -136,17 +144,15 @@ export default function IndexChart({ indexData }: any) {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: { xs: "flex-start", sm: "center" },
           alignItems: "center",
         }}
       >
         <StyledToggleButtonGroup
           size="small"
-          // color="primary"
           value={alignment}
           exclusive
           onChange={handleChange}
-          aria-label="Platform"
         >
           {dseMap.map((item) => (
             <StyledToggleButton value={item.tag} key={item.tag} sx={{ px: 2 }}>
@@ -156,39 +162,25 @@ export default function IndexChart({ indexData }: any) {
         </StyledToggleButtonGroup>
       </Box>
 
-      <Box
+      <Grid
+        container
+        spacing={0.5}
+        alignItems="center"
+        justifyContent="center"
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "space-around",
-          mt: 3,
+          // display: "flex",
+          // flexDirection: "row",
+          // flexWrap: "wrap",
+          // alignItems: "center",
+          // justifyContent: "space-around",
+          mt: { xs: 1, sm: 2 },
         }}
       >
-        <Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Typography color="text.primary" sx={{ fontSize: "1rem", ml: 0.5 }}>
-              {dseMap.find((item) => item.tag === alignment)?.title} Index
-            </Typography>
-
-            {/* <Tooltip title="Market is close now">
-              <IconButton>
-                <DoDisturbOnRoundedIcon color="error" />
-              </IconButton>
-            </Tooltip> */}
-          </Box>
-
-          <Stack direction="row" alignItems="center">
+        <Grid item xs={12} sm={6}>
+          <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
               sx={{
-                fontSize: "2.4rem",
+                fontSize: { xs: "1.8rem", sm: "2.4rem" },
                 color: textColor,
                 fontWeight: 700,
               }}
@@ -200,7 +192,7 @@ export default function IndexChart({ indexData }: any) {
               size="small"
               sx={{
                 borderRadius: 1,
-                ml: 2,
+                mx: { xs: 1, sm: 2 },
                 mt: 0.3,
                 py: 1.8,
                 fontSize: "1rem",
@@ -213,8 +205,6 @@ export default function IndexChart({ indexData }: any) {
               size="small"
               sx={{
                 borderRadius: 1,
-                mt: 0.3,
-                ml: 1,
                 py: 1.8,
                 fontSize: "1rem",
                 fontWeight: 700,
@@ -222,37 +212,51 @@ export default function IndexChart({ indexData }: any) {
               }}
             />
           </Stack>
-        </Box>
-        {/* <Divider orientation="vertical" flexItem variant="middle" /> */}
-        <Box>
-          <Typography color="text.secondary" gutterBottom>
-            Last update
-          </Typography>
-
-          <Typography color="text.primary">
-            {DateTime.fromISO(indexData.latest.time).toFormat("dd MMM, HH:mm")}
-          </Typography>
-        </Box>
-        <Tooltip
-          title={
-            indexData.isMarketOpen
-              ? "Market is open now"
-              : "Market is close now"
-          }
-        >
-          <Chip
-            label={indexData.isMarketOpen ? "Open" : "Closed"}
-            variant="outlined"
-            icon={
-              indexData.isMarketOpen ? (
-                <RadioButtonCheckedRoundedIcon color="success" />
-              ) : (
-                <DoDisturbOnRoundedIcon color="error" />
-              )
-            }
-          />
-        </Tooltip>
-      </Box>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-evenly"
+            sx={{ mt: { xs: 0.5, sm: 0 } }}
+          >
+            <Box
+              sx={{
+                display: { xs: "flex", sm: "block" },
+                alignItems: "baseline",
+              }}
+            >
+              <Typography color="text.secondary">Last update</Typography>
+              <Typography color="text.primary" sx={{ ml: { xs: 1, sm: 0 } }}>
+                {DateTime.fromISO(indexData.latest.time).toFormat(
+                  "dd MMM, HH:mm"
+                )}
+              </Typography>
+            </Box>
+            <Tooltip
+              title={
+                indexData.isMarketOpen
+                  ? "Market is open now"
+                  : "Market is close now"
+              }
+            >
+              <Chip
+                label={indexData.isMarketOpen ? "Open" : "Closed"}
+                variant="outlined"
+                size={matchesSmUp ? "medium" : "small"}
+                icon={
+                  indexData.isMarketOpen ? (
+                    <RadioButtonCheckedRoundedIcon color="success" />
+                  ) : (
+                    <DoDisturbOnRoundedIcon color="error" />
+                  )
+                }
+                sx={{ fontSize: ".9rem" }}
+              />
+            </Tooltip>
+          </Stack>
+        </Grid>
+      </Grid>
       <Box sx={{ mt: 3 }}>
         <AreaChart
           data={chartData[alignment]}
@@ -266,7 +270,6 @@ export default function IndexChart({ indexData }: any) {
       </Box>
       <Paper
         variant="outlined"
-        // elevation={4}
         sx={{
           display: "flex",
           flexWrap: "wrap",
@@ -279,14 +282,14 @@ export default function IndexChart({ indexData }: any) {
           bgcolor: "financePageBgcolor",
         }}
       >
-        <Box sx={{}}>
+        <Box>
           <Typography color="text.primary" sx={{ fontSize: ".875rem" }}>
             VOLUME
           </Typography>
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              sx={{ fontSize: "1.7rem", fontWeight: 700 }}
+              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalVolume / 10000000)?.toFixed(2)}
             </Typography>
@@ -299,14 +302,14 @@ export default function IndexChart({ indexData }: any) {
           </Stack>
         </Box>
         <Divider orientation="vertical" flexItem variant="middle" />
-        <Box sx={{}}>
+        <Box>
           <Typography color="text.primary" sx={{ fontSize: ".875rem" }}>
             VALUE
           </Typography>
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              sx={{ fontSize: "1.7rem", fontWeight: 700 }}
+              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalValue / 10)?.toFixed(2)}
             </Typography>
@@ -319,14 +322,14 @@ export default function IndexChart({ indexData }: any) {
           </Stack>
         </Box>
         <Divider orientation="vertical" flexItem variant="middle" />
-        <Box sx={{}}>
+        <Box>
           <Typography color="text.primary" sx={{ fontSize: ".875rem" }}>
             TRADE
           </Typography>
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              sx={{ fontSize: "1.7rem", fontWeight: 700 }}
+              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {indexData?.latest.totalTrade?.toFixed(0)}
             </Typography>

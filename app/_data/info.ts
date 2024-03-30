@@ -94,4 +94,9 @@ export const fundamentalsTooltip: any = {
       "Profit margin is a common measure of the degree to which a company or a particular business activity makes money. Expressed as a percentage, it represents the portion of a company’s sales revenue that it gets to keep as a profit, after subtracting all of its costs.",
     link: "#",
   },
+  reserveSurplus: {
+    definition:
+      "Reserves and surplus typically refer to the accumulated profits or retained earnings of a company over its operating history. This category on a balance sheet represents the portion of a company's net income that has been retained rather than distributed as dividends to shareholders.",
+    link: "#",
+  },
 };

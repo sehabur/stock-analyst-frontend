@@ -25,6 +25,7 @@ import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 import { styled } from "@mui/material/styles";
 
@@ -32,6 +33,8 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
+import CardActionArea from "@mui/material/CardActionArea";
+import Link from "next/link";
 
 const options: any = [
   {
@@ -55,7 +58,7 @@ const options: any = [
     search: "agm",
   },
   {
-    title: "Q FINANCIALS",
+    title: "Q",
     search: "Q[0-9]",
   },
 ];
@@ -82,7 +85,6 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 }));
 
 export default function News({ data }: any) {
-  console.log(data);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [dialogContent, setDialogContent] = useState<any>({});
@@ -170,17 +172,35 @@ export default function News({ data }: any) {
 
       <Box
         sx={{
-          maxWidth: "1250px",
-          mx: "auto",
           py: { xs: 2, sm: 4 },
+          mr: { xs: 0, sm: 4 },
         }}
       >
+        <Button
+          component={Link}
+          href="/latest-news"
+          color="primary"
+          endIcon={<ArrowForwardIosRoundedIcon />}
+          sx={{
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            mb: 1,
+            pl: 0.3,
+            ":hover": {
+              bgcolor: "transparent",
+              color: "primary.main",
+              textDecoration: "underline",
+            },
+          }}
+        >
+          Latest News
+        </Button>
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mb: 4,
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            mb: 3,
           }}
         >
           <StyledToggleButtonGroup
@@ -201,30 +221,19 @@ export default function News({ data }: any) {
             ))}
           </StyledToggleButtonGroup>
         </Box>
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="stretch"
-          spacing={3}
-        >
-          {news.map((item: any) => (
-            <Grid item xs={12} sm={4} key={item._id}>
-              <Card sx={{ minWidth: 275 }} variant="outlined">
-                <CardContent sx={{ pb: 0 }}>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    sx={{ fontWeight: 700, fontSize: "1.1rem" }}
-                  >
+        <Box>
+          {news.slice(0, 6).map((item: any) => (
+            <Card sx={{ minWidth: 275, my: 1 }} variant="outlined">
+              <CardActionArea onClick={() => handleItemClick(item)}>
+                <CardContent sx={{ py: 1 }}>
+                  <Typography noWrap sx={{ fontWeight: 700, fontSize: "1rem" }}>
                     {item.title}
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography color="text.secondary">
                     <Stack direction="row" alignItems="center">
                       <ScheduleRoundedIcon
                         color="success"
-                        sx={{ fontSize: "1.1rem", mr: 1.3 }}
+                        sx={{ fontSize: "1rem", mr: 1.3 }}
                       />
                       <ReactTimeAgo
                         date={item.date}
@@ -234,23 +243,14 @@ export default function News({ data }: any) {
                     </Stack>
                   </Typography>
                   <Typography>
-                    {item.description.slice(0, 135) +
-                      (item.description.length > 135 ? ".." : "")}
+                    {item.description.slice(0, 140) +
+                      (item.description.length > 140 ? ".." : "")}
                   </Typography>
                 </CardContent>
-                <CardActions sx={{ pt: 0, pl: 1.5 }}>
-                  <Button
-                    size="small"
-                    endIcon={<ChevronRightRoundedIcon sx={{ ml: -0.7 }} />}
-                    onClick={() => handleItemClick(item)}
-                  >
-                    Read more
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+              </CardActionArea>
+            </Card>
           ))}
-        </Grid>
+        </Box>
       </Box>
     </Box>
   );

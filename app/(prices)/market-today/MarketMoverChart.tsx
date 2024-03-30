@@ -19,7 +19,7 @@ export default function MarketMoverChart({ data }: any) {
         alignItems: "center",
         py: 4,
         px: 2,
-        mt: 8,
+        mt: { xs: 3, sm: 8 },
         bgcolor: "secondaryBackground",
         borderRadius: 5,
       }}

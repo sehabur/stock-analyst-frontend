@@ -1,5 +1,5 @@
-'use client';
-import HorizontalBarChart from '@/components/charts/HorizontalBarChart';
+"use client";
+import HorizontalBarChart from "@/components/charts/HorizontalBarChart";
 import {
   Box,
   Grid,
@@ -8,42 +8,208 @@ import {
   Paper,
   Button,
   Stack,
-} from '@mui/material';
-import Link from 'next/link';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+} from "@mui/material";
+import Link from "next/link";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import GainerCard from "@/components/cards/GainerCard";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { useState } from "react";
 
-const dataFormatter = (inputdata: any, dataPointKey: string, type: string) => {
-  const data = inputdata.slice(0, 10);
-  let dataPoints: number[] = [];
-  let categories: string[] = [];
-  for (let item of data) {
-    categories.push(item.tradingCode);
-    dataPoints.push(item[dataPointKey]);
-  }
-  return { dataPoints, categories, type };
+import { styled } from "@mui/material/styles";
+
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup, {
+  toggleButtonGroupClasses,
+} from "@mui/material/ToggleButtonGroup";
+import Divider from "@mui/material/Divider";
+
+import { grey, blueGrey } from "@mui/material/colors";
+
+// const dataFormatter = (inputdata: any, dataPointKey: string, type: string) => {
+//   const data = inputdata.slice(0, 10);
+//   let dataPoints: number[] = [];
+//   let categories: string[] = [];
+//   for (let item of data) {
+//     categories.push(item.tradingCode);
+//     dataPoints.push(item[dataPointKey]);
+//   }
+//   return { dataPoints, categories, type };
+// };
+
+const dataFormatter = (inputdata: any) => {
+  const data = inputdata.slice(0, 6);
+  return data;
 };
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  [`& .${toggleButtonGroupClasses.grouped}`]: {
+    border: 0,
+    borderRadius: 3,
+  },
+}));
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  "&.MuiToggleButtonGroup-grouped": {
+    borderRadius: "24px !important",
+    marginRight: "16px",
+    border: `1px solid lightgrey !important`,
+    paddingLeft: "20px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
+    paddingRight: "20px",
+  },
+  color: theme.palette.text.primary,
+  // fontSize: ".9rem",
+  // textTransform: "none",
+}));
 
 export default function GainerLoser({ data }: any) {
   const theme = useTheme();
 
+  const [alignmentGainer, setAlignmentGainer] = useState("gainerDaily");
+  const [alignmentLoser, setAlignmentLoser] = useState("loserDaily");
+
+  const handleGainerChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (newAlignment !== null) {
+      setAlignmentGainer(newAlignment);
+    }
+  };
+  const handleLoserChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (newAlignment !== null) {
+      setAlignmentLoser(newAlignment);
+    }
+  };
+
   return (
-    <Grid container direction="row" justifyContent="center" spacing={2}>
-      <Grid item xs={12} sm={4}>
+    <Grid container direction="row" justifyContent="center" spacing={12}>
+      <Grid item xs={12} sm={6}>
+        <Button
+          component={Link}
+          href="/gainer-loser?type=gainer&variant=1d"
+          color="primary"
+          endIcon={<ArrowForwardIosRoundedIcon />}
+          sx={{
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            ":hover": {
+              bgcolor: "transparent",
+              color: "primary.main",
+              textDecoration: "underline",
+            },
+          }}
+        >
+          Stock Gainer
+        </Button>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            mx: 0.5,
+            mt: 2,
+            mb: 3,
+          }}
+        >
+          <StyledToggleButtonGroup
+            size="small"
+            value={alignmentGainer}
+            exclusive
+            onChange={handleGainerChange}
+            aria-label="Platform"
+          >
+            <StyledToggleButton value="gainerDaily" sx={{ px: 2 }}>
+              Gainer
+            </StyledToggleButton>
+            <StyledToggleButton value="gainerTrade" sx={{ px: 2 }}>
+              Trade
+            </StyledToggleButton>
+            <StyledToggleButton value="gainerValue" sx={{ px: 2 }}>
+              Value
+            </StyledToggleButton>
+            <StyledToggleButton value="gainerVolume" sx={{ px: 2 }}>
+              Volume
+            </StyledToggleButton>
+          </StyledToggleButtonGroup>
+        </Box>
+        {dataFormatter(data[alignmentGainer]).map((item: any) => (
+          <GainerCard item={item} />
+        ))}
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Button
+          component={Link}
+          href="/gainer-loser?type=gainer&variant=1d"
+          color="primary"
+          endIcon={<ArrowForwardIosRoundedIcon />}
+          sx={{
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            ":hover": {
+              bgcolor: "transparent",
+              color: "primary.main",
+              textDecoration: "underline",
+            },
+          }}
+        >
+          Stock Loser
+        </Button>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            mx: 0.5,
+            mt: 2,
+            mb: 3,
+          }}
+        >
+          <StyledToggleButtonGroup
+            size="small"
+            value={alignmentLoser}
+            exclusive
+            onChange={handleLoserChange}
+            aria-label="Platform"
+          >
+            <StyledToggleButton value="loserDaily" sx={{ px: 2 }}>
+              Loser
+            </StyledToggleButton>
+            <StyledToggleButton value="loserTrade" sx={{ px: 2 }}>
+              Trade
+            </StyledToggleButton>
+            <StyledToggleButton value="loserValue" sx={{ px: 2 }}>
+              Value
+            </StyledToggleButton>
+            <StyledToggleButton value="loserVolume" sx={{ px: 2 }}>
+              Volume
+            </StyledToggleButton>
+          </StyledToggleButtonGroup>
+        </Box>
+        {dataFormatter(data[alignmentLoser]).map((item: any) => (
+          <GainerCard item={item} />
+        ))}
+      </Grid>
+
+      {/* <Grid item xs={12} sm={4}>
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', pl: 1, px: 2 }}
+          sx={{ bgcolor: "background.default", pl: 1, px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               Daily top gainer
@@ -61,7 +227,7 @@ export default function GainerLoser({ data }: any) {
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.success.main}
-            data={dataFormatter(data.gainerDaily, 'percentChange', 'Daily')}
+            data={dataFormatter(data.gainerDaily, "percentChange", "Daily")}
           />
         </Paper>
       </Grid>
@@ -69,18 +235,18 @@ export default function GainerLoser({ data }: any) {
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', pl: 1, px: 2 }}
+          sx={{ bgcolor: "background.default", pl: 1, px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               Yearly top gainer
@@ -100,8 +266,8 @@ export default function GainerLoser({ data }: any) {
             barColor={theme.palette.success.main}
             data={dataFormatter(
               data.gainerOneYear,
-              'oneYearPercentChange',
-              'Yearly'
+              "oneYearPercentChange",
+              "Yearly"
             )}
           />
         </Paper>
@@ -111,46 +277,41 @@ export default function GainerLoser({ data }: any) {
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', px: 2 }}
+          sx={{ bgcolor: "background.default", px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               All time top gainer
             </Typography>
           </Box>
-          {/* <HorizontalBarChart
-            textColor={theme.palette.text.primary}
-            barColor="#00A25B"
-            data={dataFormatter(data.gainerAlltime)}
-          /> */}
         </Paper>
       </Grid>
       <Grid item xs={12} sm={4}>
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', pl: 1, px: 2 }}
+          sx={{ bgcolor: "background.default", pl: 1, px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               Daily top loser
@@ -168,7 +329,7 @@ export default function GainerLoser({ data }: any) {
           <HorizontalBarChart
             textColor={theme.palette.text.primary}
             barColor={theme.palette.error.main}
-            data={dataFormatter(data.loserDaily, 'percentChange', 'Daily')}
+            data={dataFormatter(data.loserDaily, "percentChange", "Daily")}
           />
         </Paper>
       </Grid>
@@ -176,18 +337,18 @@ export default function GainerLoser({ data }: any) {
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', pl: 1, px: 2 }}
+          sx={{ bgcolor: "background.default", pl: 1, px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               Yearly top loser
@@ -206,8 +367,8 @@ export default function GainerLoser({ data }: any) {
             barColor={theme.palette.error.main}
             data={dataFormatter(
               data.loserOneYear,
-              'oneYearPercentChange',
-              'Yearly'
+              "oneYearPercentChange",
+              "Yearly"
             )}
           />
         </Paper>
@@ -216,30 +377,25 @@ export default function GainerLoser({ data }: any) {
         <Paper
           elevation={0}
           variant="outlined"
-          sx={{ bgcolor: 'background.default', pl: 1, px: 2 }}
+          sx={{ bgcolor: "background.default", pl: 1, px: 2 }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               mt: 2,
             }}
           >
             <Typography
-              sx={{ pl: 1.5, fontSize: '1.1rem', fontWeight: 700 }}
+              sx={{ pl: 1.5, fontSize: "1.1rem", fontWeight: 700 }}
               color="text.secondary"
             >
               All time top loser
             </Typography>
           </Box>
-          {/* <HorizontalBarChart
-            textColor={theme.palette.text.primary}
-            barColor={theme.palette.error.light}
-            data={dataFormatter(data.loserAlltime)}
-          /> */}
         </Paper>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

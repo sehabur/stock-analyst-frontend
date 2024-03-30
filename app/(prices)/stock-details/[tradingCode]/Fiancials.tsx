@@ -242,6 +242,29 @@ const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
   };
 };
 
+const formatReserveData = (data: any) => {
+  if (!data) return;
+  if (data.length < 1) return;
+
+  let datapoint: any = [];
+  let categories: any = [];
+
+  for (let item of data) {
+    datapoint.push((item.value / 10).toFixed(2));
+    categories.push(item.date);
+  }
+
+  return {
+    categories,
+    dataSeries: [
+      {
+        name: "Value",
+        data: datapoint,
+      },
+    ],
+  };
+};
+
 const formatShareholdingData = (data: any) => {
   const createChangeText = (series: any, name: string) => {
     const len = series.length;
@@ -385,6 +408,8 @@ export default function Financials({ data }: any) {
   const shareholdings: any = formatShareholdingData(
     data.shareHoldingPercentage
   );
+
+  const reserveSurplus = formatReserveData(data.reserveSurplus);
 
   return (
     <Box sx={{ bgcolor: "financePageBgcolor" }}>
@@ -1005,6 +1030,18 @@ export default function Financials({ data }: any) {
               infoLink={fundamentalsTooltip.operatingProfit.link}
             />
           )}
+          {dialogContent === "reserveSurplus" && (
+            <FundamentalsDialogContent
+              title={`Reserve and Surplus of ${data.tradingCode}`}
+              overview
+              yearly
+              overviewText={data.screener.reserveSurplus?.overview}
+              yearlyData={reserveSurplus}
+              info
+              infoText={fundamentalsTooltip.reserveSurplus.definition}
+              infoLink={fundamentalsTooltip.reserveSurplus.link}
+            />
+          )}
           {dialogContent === "nocfps" && (
             <FundamentalsDialogContent
               title={`NOCFPS of ${data.tradingCode}`}
@@ -1083,7 +1120,7 @@ export default function Financials({ data }: any) {
           direction="row"
           justifyContent="flex-start"
           rowSpacing={{ xs: 3, sm: 6 }}
-          columnSpacing={{ xs: 2, sm: 4 }}
+          columnSpacing={{ xs: 1, sm: 4 }}
           sx={{ pt: 4 }}
         >
           <Grid item xs={6} sm={3}>
@@ -1168,7 +1205,7 @@ export default function Financials({ data }: any) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <FinancialCard
-              titleShort="Price/Bookvalue Ratio"
+              titleShort="P/BV Ratio"
               title="Price/Bookvalue Ratio"
               data={data.pbv}
               dialogtype="pbv"
@@ -1204,7 +1241,7 @@ export default function Financials({ data }: any) {
           </Grid>
           <Grid item xs={6} sm={3}>
             <FinancialCard
-              titleShort="Price/Cashflow Ratio"
+              titleShort="P/CF Ratio"
               title="Price/Cashflow Ratio"
               data={data.pcf}
               dialogtype="pcf"
@@ -1236,7 +1273,7 @@ export default function Financials({ data }: any) {
 
           <Grid item xs={6} sm={3}>
             <FinancialCard
-              titleShort="Dividend Payout Ratio"
+              titleShort="Div Payout Ratio"
               title="Dividend Payout Ratio"
               data={data.screener.dividendPayoutRatio}
               dialogtype="dividendPayoutRatio"
@@ -1285,6 +1322,17 @@ export default function Financials({ data }: any) {
               divideFactor={10000000}
               data={data.screener.operatingProfit}
               dialogtype="operatingProfit"
+              handleItemClick={handleItemClick}
+            />
+          </Grid>
+          <Grid item xs={6} sm={3}>
+            <FinancialCard
+              titleShort="Resrv & Surpl"
+              title="Reserve & Surplus"
+              unit="Crore"
+              divideFactor={10}
+              data={data.screener.reserveSurplus}
+              dialogtype="reserveSurplus"
               handleItemClick={handleItemClick}
             />
           </Grid>

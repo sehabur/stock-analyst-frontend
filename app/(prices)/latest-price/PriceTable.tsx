@@ -216,16 +216,14 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
           // pageSizeOptions={[10, 25, 50, 100]}
           sx={{
             border: "none",
-            ".MuiDataGrid-columnHeader": {
-              color: "text.primary",
-              fontSize: ".8rem",
-              textAlign: "right",
-            },
-            ".MuiDataGrid-cell": {
-              fontWeight: 500,
-              // fontSize: '.9rem',
-              fontFamily: "'Nunito Sans', sans-serif",
-            },
+            // ".MuiDataGrid-columnHeader": {
+            //   color: "text.primary",
+            //   textAlign: "right",
+            // },
+            // ".MuiDataGrid-cell": {
+            //   fontWeight: 500,
+            //   fontFamily: "'Nunito Sans', sans-serif",
+            // },
           }}
         />
       </Box>

@@ -1,23 +1,36 @@
-import { Box } from '@mui/material'
-import TradingviewChart from './TradingviewChart'
+import { Box, Grid } from "@mui/material";
+import Gainers from "./Gainers";
+import TradingviewChart from "./TradingviewChart";
 
-async function getData () {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/prices/latestPrice`, {
-    next: { revalidate: 0 }
-  })
+async function getGainerLoserData() {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/allGainerLoser`,
+    {
+      next: { revalidate: 0 },
+    }
+  );
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error("Failed to fetch data");
   }
-  return res.json()
+  return res.json();
 }
 
-export default async function Page (props: any) {
-  const { symbol } = props.searchParams
-
-  const data = await getData()
+export default async function Page() {
+  const gainerLoserData = await getGainerLoserData();
   return (
-    <Box component='main' sx={{ bgcolor: 'background.default' }}>
-      <TradingviewChart symbol={symbol} />
+    <Box
+      component="main"
+      sx={{
+        bgcolor: "background.default",
+
+        display: "flex",
+        height: "90vh",
+      }}
+    >
+      <TradingviewChart />
+      <Box sx={{ width: 260 }}>
+        <Gainers data={gainerLoserData} />
+      </Box>
     </Box>
-  )
+  );
 }

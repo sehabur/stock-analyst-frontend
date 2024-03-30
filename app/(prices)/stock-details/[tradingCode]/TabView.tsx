@@ -74,14 +74,17 @@ export default function TabView(props: any) {
 
   return (
     <Box>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
         <Tabs
           value={value}
-          // variant="scrollable"
-          // scrollButtons="false"
-          // allowScrollButtonsMobile
+          variant="scrollable"
           onChange={handleChange}
-          sx={{ ml: { xs: 0, sm: 12 } }}
+          sx={{ mx: { xs: 1, sm: "auto" }, maxWidth: 1250 }}
         >
           {tabItems.map((item, index) => (
             <Tab
@@ -92,7 +95,7 @@ export default function TabView(props: any) {
                 fontSize: "1rem",
                 color: "text.primary",
                 px: 1,
-                mx: { xs: 0, sm: 3 },
+                mx: { xs: 0.2, sm: 2 },
               }}
             />
           ))}

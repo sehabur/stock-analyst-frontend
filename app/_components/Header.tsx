@@ -173,7 +173,6 @@ export default function Header(props: any) {
         throw new Error("Failed to fetch data");
       }
       const initdata = await res.json();
-      console.log("first");
       dispatch(latestPriceActions.setData(initdata));
     };
     getData();

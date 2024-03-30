@@ -9,11 +9,16 @@ import {
   Tabs,
   Divider,
   Button,
+  Tooltip,
 } from "@mui/material";
 import TabView from "./TabView";
 import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 import Link from "next/link";
+
+import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
+import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
+import Trades from "./Trades";
 
 const getStockDetails = async (tradingCode: string) => {
   const res = await fetch(
@@ -83,10 +88,6 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-// export function generateStaticParams() {
-//   return [{ tradingCode: 'BSRMSTEEL' }, { tradingCode: 'AFTABAUTO' }];
-// }
-
 export default async function StockDetails({
   params: { tradingCode },
 }: {
@@ -130,7 +131,6 @@ export default async function StockDetails({
           <Box>
             <Typography
               variant="h1"
-              gutterBottom
               sx={{
                 color: "text.primary",
                 fontSize: { xs: "1.8rem", sm: "1.8rem" },
@@ -140,29 +140,44 @@ export default async function StockDetails({
               {stock.fundamentals.companyName}
             </Typography>
 
-            <Stack direction="row" alignItems="center" flexWrap="wrap">
+            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               <Chip
                 label={stock.fundamentals.tradingCode}
-                // color='info'
                 variant="outlined"
                 sx={{
                   borderRadius: 1,
                   fontSize: "1rem",
-                  fontFamily: "'Barlow', sans-serif",
                   fontWeight: 500,
+                  mt: 1,
                 }}
               />
               <Chip
                 label={`Category ${stock.fundamentals.category}`}
-                sx={{ borderRadius: 1, mx: 2, fontSize: ".875rem" }}
+                sx={{
+                  borderRadius: 1,
+                  mx: { xs: 0.8, sm: 2 },
+                  fontSize: ".875rem",
+                  mt: 1,
+                }}
               />
               <Chip
                 label={stock.fundamentals.sector}
-                sx={{ borderRadius: 1, fontSize: ".875rem" }}
+                sx={{
+                  borderRadius: 1,
+                  fontSize: ".875rem",
+                  mt: 1,
+                }}
               />
-            </Stack>
+            </Box>
 
-            <Stack direction="row" alignItems="baseline" sx={{ mt: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                mt: 2,
+              }}
+            >
               <Typography
                 sx={{
                   color: "text.primary",
@@ -210,12 +225,38 @@ export default async function StockDetails({
                   : 0}
                 {"%"}
               </Typography>
-            </Stack>
+
+              <Tooltip
+                title={
+                  stock.isMarketOpen
+                    ? "Market is open now"
+                    : "Market is close now"
+                }
+              >
+                <Chip
+                  label={stock.isMarketOpen ? "Open" : "Closed"}
+                  variant="outlined"
+                  icon={
+                    stock.isMarketOpen ? (
+                      <RadioButtonCheckedRoundedIcon color="success" />
+                    ) : (
+                      <DoDisturbOnRoundedIcon color="error" />
+                    )
+                  }
+                  sx={{ fontSize: "1rem", ml: { xs: 0, sm: 3 } }}
+                />
+              </Tooltip>
+            </Box>
+
             <Typography
-              sx={{ mt: 1, color: "text.secondary", fontSize: "1rem" }}
+              sx={{ color: "text.secondary", fontSize: "1rem", mt: 1 }}
             >
               {latestPriceData.time}
             </Typography>
+            <Trades
+              data={stock.minute}
+              tradingCode={stock.fundamentals.tradingCode}
+            />
           </Box>
           <Box>
             <Button
@@ -230,7 +271,7 @@ export default async function StockDetails({
           </Box>
         </Box>
       </Box>
-      <Box sx={{ mt: 0.3 }}>
+      <Box>
         <TabView stock={stock} news={news} blocktr={blocktr} />
       </Box>
     </Box>
