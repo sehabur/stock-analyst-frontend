@@ -170,7 +170,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
         <MenuItem key="all" value="all">
           All
         </MenuItem>
-        {sectorList.map((option) => (
+        {sectorList.map((option: any) => (
           <MenuItem key={option.tag} value={option.tag}>
             {option.name}
           </MenuItem>

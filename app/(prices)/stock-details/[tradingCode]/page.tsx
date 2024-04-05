@@ -91,15 +91,15 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-export async function generateStaticParams() {
-  const symbols = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/getStocksList`
-  ).then((res) => res.json());
+// export async function generateStaticParams() {
+//   const symbols = await fetch(
+//     `${process.env.BACKEND_URL}/api/prices/getStocksList`
+//   ).then((res) => res.json());
 
-  return symbols.map((symbol: string) => ({
-    tradingCode: symbol,
-  }));
-}
+//   return symbols.map((symbol: string) => ({
+//     tradingCode: symbol,
+//   }));
+// }
 
 export default async function StockDetails({ params }: any) {
   const { tradingCode } = params;

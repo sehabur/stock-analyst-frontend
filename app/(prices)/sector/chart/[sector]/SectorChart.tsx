@@ -107,8 +107,6 @@ export default function SectorChart({ data }: any) {
     }
   };
 
-  console.log(data);
-
   const minuteChartData: any = data.minute
     // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
     .map((item: { time: string; ltp: number; ycp: number }) => {

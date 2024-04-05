@@ -60,10 +60,20 @@ const getType = (
 };
 
 const formatData = (data: any) => {
-  let rows = [];
+  let rows: any = [];
   let lastType = "";
   let totalSell = 0;
   let totalBuy = 0;
+  let lastTrade: any = {};
+
+  if (data.length < 1) {
+    return {
+      rows,
+      totalBuy,
+      totalSell,
+      lastTrade,
+    };
+  }
 
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
@@ -107,9 +117,9 @@ const formatData = (data: any) => {
       rows.push(value);
     }
   }
-  rows.sort((a, b) => b.id - a.id);
+  rows.sort((a: { id: number }, b: { id: number }) => b.id - a.id);
 
-  const lastTrade: any = rows.filter((item) => item.volume !== 0)[0];
+  lastTrade = rows.filter((item: { volume: number }) => item.volume !== 0)[0];
 
   return {
     rows,
@@ -267,11 +277,13 @@ export default function Trades(props: any) {
             mr: 1.5,
           }}
         >
-          {lastTrade.volume} shares @ {lastTrade.ltp} TK
+          {lastTrade?.volume || 0} shares @ {lastTrade?.ltp || 0} TK
         </Typography>
 
         <Chip
-          label={<ReactTimeAgo date={lastTrade.timeIso} locale="en-US" />}
+          label={
+            <ReactTimeAgo date={lastTrade?.timeIso || "--"} locale="en-US" />
+          }
           size="small"
           variant="outlined"
         ></Chip>

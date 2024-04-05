@@ -11,7 +11,6 @@ interface AreaChartProps {
   color: string;
   fullWidth?: Boolean;
   height: number;
-  // tooltipTitle: string;
   chartWidthValue: number;
 }
 

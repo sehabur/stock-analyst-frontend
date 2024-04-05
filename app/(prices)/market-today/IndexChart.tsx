@@ -262,9 +262,6 @@ export default function IndexChart({ indexData }: any) {
           data={chartData[alignment]}
           color={chartColor}
           height={280}
-          tooltipTitle={`${
-            dseMap.find((item) => item.tag === alignment)?.title
-          } Index`}
           chartWidthValue={645}
         />
       </Box>

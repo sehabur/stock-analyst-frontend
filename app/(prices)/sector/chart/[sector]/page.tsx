@@ -18,10 +18,6 @@ async function getData(sectorTag: string) {
 }
 
 export async function generateStaticParams() {
-  // const symbols = await fetch(
-  //   `${process.env.BACKEND_URL}/api/prices/getStocksList`
-  // ).then((res) => res.json());
-
   return sectorList.map((item: { tag: string }) => ({
     sector: item.tag,
   }));
