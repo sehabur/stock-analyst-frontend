@@ -1,4 +1,4 @@
-import { sectorList } from '@/data/dse';
+import { sectorList } from "@/data/dse";
 import {
   Box,
   Grid,
@@ -9,9 +9,9 @@ import {
   TextField,
   MenuItem,
   InputAdornment,
-} from '@mui/material';
-import Link from 'next/link';
-import React from 'react';
+} from "@mui/material";
+import Link from "next/link";
+import React from "react";
 
 export default function PriceCard(props: { data: Array<{}>; sector: any }) {
   const { data, sector } = props;
@@ -20,7 +20,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
     let shareData = [];
     if (sector) {
       shareData = data.filter(
-        (share: any) => share.sector.split(' ')[0].toLowerCase() === sector
+        (share: any) => share.sector.split(" ")[0].toLowerCase() === sector
       );
     } else {
       shareData = data;
@@ -31,7 +31,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
   const [shares, setShares] = React.useState(filterInitialShares(sector));
 
   const [sectorFormInputs, setSectorFormInputs] = React.useState(
-    sector || 'all'
+    sector || "all"
   );
 
   const handleFormChange = ({
@@ -40,9 +40,9 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
     target: { value: string };
   }) => {
     let newData = [];
-    if (value !== 'all') {
+    if (value !== "all") {
       newData = data.filter(
-        (share: any) => share.sector.split(' ')[0].toLowerCase() === value
+        (share: any) => share.sector.split(" ")[0].toLowerCase() === value
       );
     } else {
       newData = data;
@@ -53,7 +53,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
 
   return (
     <Box sx={{ my: 2 }}>
-      <Box sx={{ textAlign: 'right' }}>
+      <Box sx={{ textAlign: "right" }}>
         <TextField
           select
           name="sector"
@@ -85,9 +85,10 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
         >
           <Paper
             sx={{
-              my: 1.5,
-              px: 3,
-              py: 1.8,
+              my: 1.3,
+              px: 1.5,
+              py: 1.3,
+              borderRadius: 2,
             }}
             elevation={0}
             variant="outlined"
@@ -97,9 +98,9 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                 <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
                   <Typography
                     sx={{
-                      fontSize: '1rem',
+                      fontSize: "1rem",
                       fontWeight: 500,
-                      color: 'text.primary',
+                      color: "text.primary",
                       mr: 1,
                     }}
                   >
@@ -111,7 +112,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                     // color="primary"
                     variant="outlined"
                     sx={{
-                      borderRadius: '50%',
+                      borderRadius: "50%",
                       mr: 2,
                       p: 0,
                     }}
@@ -126,10 +127,10 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                         mr: 1,
                         color:
                           item.change === 0
-                            ? 'primary.main'
+                            ? "primary.main"
                             : item.change < 0
-                            ? 'error.main'
-                            : 'success.main',
+                            ? "error.main"
+                            : "success.main",
                       }}
                     />
                   )}
@@ -141,14 +142,14 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                       borderRadius: 1,
                       color:
                         item.change === 0
-                          ? 'primary.main'
+                          ? "primary.main"
                           : item.change < 0
-                          ? 'error.main'
-                          : 'success.main',
+                          ? "error.main"
+                          : "success.main",
                     }}
                   />
                 </Stack>
-                <Typography sx={{ fontSize: '.8rem' }} color="text.secondary">
+                <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
                   Vol: {item.volume} | Val: {(item.value / 10).toFixed(2)}cr |
                   Trd: {item.trade}
                 </Typography>
@@ -158,19 +159,19 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
                 <Stack alignItems="flex-end" sx={{ mr: 0.7 }}>
                   <Typography
                     sx={{
-                      fontSize: '1.4rem',
+                      fontSize: "1.4rem",
                       fontWeight: 500,
                       color:
                         item.change === 0
-                          ? 'primary.main'
+                          ? "primary.main"
                           : item.change < 0
-                          ? 'error.main'
-                          : 'success.main',
+                          ? "error.main"
+                          : "success.main",
                     }}
                   >
                     {item.ltp}
                   </Typography>
-                  <Typography sx={{ fontSize: '.7rem' }} color="text.secondary">
+                  <Typography sx={{ fontSize: ".7rem" }} color="text.secondary">
                     BDT
                   </Typography>
                 </Stack>

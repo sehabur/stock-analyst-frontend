@@ -413,7 +413,7 @@ export default function Financials({ data }: any) {
 
   return (
     <Box sx={{ bgcolor: "financePageBgcolor" }}>
-      <Box sx={{ maxWidth: "1250px", mx: "auto", py: 2, px: 2 }}>
+      <Box sx={{ maxWidth: "1250px", mx: "auto", py: { xs: 0, sm: 2 }, px: 2 }}>
         <Dialog
           open={openDialog}
           onClose={handleDialogClose}

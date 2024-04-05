@@ -91,7 +91,7 @@ export const darkTheme = createTheme({
     stipedTableEvenRow: "#171717",
     appbarBorderBottom: "#424242",
     financeInfoCard: "#17171740",
-    gainerCard: "#171717",
+    gainerCard: "#191919",
   },
   ...defaultSettings,
 });

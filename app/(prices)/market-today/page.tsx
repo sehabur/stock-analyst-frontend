@@ -6,7 +6,7 @@ import AreaChart from "@/components/charts/AreaChart";
 import CandlestickChart from "@/components/charts/CandlestickChart";
 import GainerLoser from "./GainerLoser";
 import { alpha } from "@mui/system";
-import HorizontalStackedBarChart from "@/components/charts/HorizontalStackedBarChart";
+import HorizontalStackedBarChart from "@/components/charts/HorizontalStackedBarChartValue";
 import SectorStatus from "./SectorStatus";
 import { grey } from "@mui/material/colors";
 import Link from "next/link";
@@ -81,7 +81,7 @@ const getNews = async () => {
 };
 const getTopFinancials = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/topFinancials?setlimit=15`,
+    `${process.env.BACKEND_URL}/api/prices/topFinancials?setlimit=12`,
     {
       next: { revalidate: 0 },
     }
@@ -136,7 +136,16 @@ export default async function MarketToday() {
                 pr: 2,
               }}
             >
-              <MarketMoverChart data={indexData.latest} />
+              <MarketMoverChart
+                data={indexData.latest}
+                sectorData={sectorData[0]}
+              />
+            </Box>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Box sx={{ mt: { xs: 4, sm: 4 } }}>
+              <GainerLoser data={gainerLoserData} />
             </Box>
           </Grid>
 
@@ -151,22 +160,18 @@ export default async function MarketToday() {
             </Box>
           </Grid>
 
-          <Grid item xs={12}>
-            <GainerLoser data={gainerLoserData} />
-          </Grid>
-
-          <Grid item xs={5}>
+          <Grid item xs={12} sm={5}>
             <Ipo />
           </Grid>
 
-          <Grid item xs={7}>
+          <Grid item xs={12} sm={7}>
             <BlockTr data={blockTrData} />
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <News data={newsData} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Box>
               <TopFinancials data={topFinancialsData} />
             </Box>

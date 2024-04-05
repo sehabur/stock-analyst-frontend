@@ -52,9 +52,9 @@ export default function GainerCard(props: any) {
       <Paper
         sx={{
           my: 1,
-          px: 3,
+          px: { xs: 1, sm: 3 },
           py: 1.5,
-          borderRadius: 2,
+          borderRadius: { xs: 0, sm: 2 },
           ":hover": {
             bgcolor: "financeCardTitlecolor",
           },
@@ -63,20 +63,24 @@ export default function GainerCard(props: any) {
         elevation={0}
         // variant="outlined"
       >
-        <Grid container alignItems="center" spacing={2}>
-          <Grid item xs={7}>
+        <Grid container spacing={8} alignItems="center">
+          <Grid item xs={8}>
             <Typography
-              gutterBottom
               noWrap
+              gutterBottom
               sx={{
                 fontSize: "1rem",
                 fontWeight: 500,
-                color: "text.primary",
+                color: { xs: "primary.main", sm: "text.primary" },
               }}
             >
               {item.companyName}
             </Typography>
-            <Stack direction="row" alignItems="center" sx={{ mb: 0.5 }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              sx={{ mb: 0.5, flexWrap: { xs: "wrap", sm: "nowrap" } }}
+            >
               <Chip
                 label={item.tradingCode}
                 variant="outlined"
@@ -84,81 +88,92 @@ export default function GainerCard(props: any) {
                 size="small"
                 sx={{
                   borderRadius: 1,
-                  mr: 2,
-                  fontWeight: 700,
+                  // fontWeight: 700,
+                  fontSize: ".9rem",
+                  mr: 1,
+                  mb: 0.5,
+                }}
+              />
+              <Chip
+                label={item.sector}
+                // variant="outlined"
+                // color="info"
+                size="small"
+                sx={{
+                  borderRadius: 1,
+                  mb: 0.5,
+                  // fontWeight: 700,
                   fontSize: ".9rem",
                 }}
               />
             </Stack>
+            <Typography
+              sx={{ fontSize: ".875rem", ml: 0.3 }}
+              color="text.primary"
+            >
+              Vol: {item.volume} | Val: {(item.value / 10).toFixed(2)}cr | Trd:{" "}
+              {item.trade}
+            </Typography>
           </Grid>
 
-          <Grid item xs={2.8}>
+          <Grid item xs={4} sm={4}>
             <Stack
               direction="row"
-              alignItems="baseline"
+              alignItems="center"
               justifyContent="flex-end"
-              sx={{ mr: 0.7 }}
+              spacing={{ xs: 2, sm: 3.5 }}
             >
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: "1.8rem",
-                  fontWeight: 500,
-                  // color:
-                  //   item.change === 0
-                  //     ? "primary.main"
-                  //     : item.change < 0
-                  //     ? "error.main"
-                  //     : "success.main",
-                }}
-              >
-                {item.ltp}
-              </Typography>
-              <Typography
-                sx={{ fontSize: "1rem", ml: 0.5 }}
-                color="text.secondary"
-              >
-                BDT
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={2.2}>
-            <Stack direction="column" alignItems="flex-end">
-              <Typography
-                gutterBottom
-                sx={{
-                  mr: 1,
-                  color:
-                    item.change === 0
-                      ? "primary.main"
-                      : item.change < 0
-                      ? "error.main"
-                      : "success.main",
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                }}
-              >
-                {addPlusSign(item.change)}
-              </Typography>
-
-              {item.change !== 0 && (
-                <Chip
-                  label={`${addPlusSign(item.percentChange)}%`}
-                  size="small"
+              <Stack direction="column" alignItems="flex-end" sx={{ mr: 0.7 }}>
+                <Typography
+                  color="text.primary"
                   sx={{
-                    borderRadius: 1,
-                    color: grey[50],
-                    bgcolor:
+                    fontSize: { xs: "1.5rem", sm: "1.3rem" },
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.ltp}
+                </Typography>
+                <Typography sx={{ fontSize: ".875rem" }} color="text.secondary">
+                  BDT
+                </Typography>
+              </Stack>
+              <Stack direction="column" alignItems="flex-end">
+                <Typography
+                  gutterBottom
+                  sx={{
+                    mr: 1,
+                    color:
                       item.change === 0
                         ? "primary.main"
                         : item.change < 0
                         ? "error.main"
                         : "success.main",
-                    fontWeight: 500,
+                    fontWeight: 700,
                     fontSize: ".95rem",
                   }}
-                />
-              )}
+                >
+                  {addPlusSign(item.change)}
+                </Typography>
+
+                {item.change !== 0 && (
+                  <Chip
+                    label={`${addPlusSign(item.percentChange)}%`}
+                    size="small"
+                    sx={{
+                      borderRadius: 1,
+                      color: grey[50],
+                      bgcolor:
+                        item.change === 0
+                          ? "primary.main"
+                          : item.change < 0
+                          ? "error.main"
+                          : "success.main",
+                      fontWeight: 500,
+                      fontSize: ".9rem",
+                    }}
+                  />
+                )}
+              </Stack>
             </Stack>
           </Grid>
         </Grid>

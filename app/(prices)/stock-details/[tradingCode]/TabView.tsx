@@ -50,7 +50,7 @@ export default function TabView(props: any) {
     },
     {
       title: "Market depth",
-      component: <MarketDepth />,
+      component: <MarketDepth data={stock.minute} />,
     },
     {
       title: matchesSmUp ? "Block transections" : "Block tr",

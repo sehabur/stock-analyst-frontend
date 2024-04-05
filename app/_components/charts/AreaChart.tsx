@@ -11,7 +11,7 @@ interface AreaChartProps {
   color: string;
   fullWidth?: Boolean;
   height: number;
-  tooltipTitle: string;
+  // tooltipTitle: string;
   chartWidthValue: number;
 }
 
@@ -21,7 +21,7 @@ export default function AreaChart(props: AreaChartProps) {
     color,
     fullWidth = false,
     height,
-    tooltipTitle,
+    // tooltipTitle,
     chartWidthValue,
   } = props;
 
@@ -56,7 +56,7 @@ export default function AreaChart(props: AreaChartProps) {
       rightPriceScale: {
         borderVisible: false,
         scaleMargins: {
-          top: 0.05,
+          top: 0.1,
           bottom: 0.3,
         },
       },
@@ -78,7 +78,6 @@ export default function AreaChart(props: AreaChartProps) {
         barSpacing: chartWidthValue / data.length,
       },
       crosshair: {
-        mode: CrosshairMode.Normal,
         horzLine: {
           labelVisible: true,
         },

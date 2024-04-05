@@ -144,7 +144,7 @@ export default function IndexChart({ indexData }: any) {
       <Box
         sx={{
           display: "flex",
-          justifyContent: { xs: "flex-start", sm: "center" },
+          justifyContent: "center",
           alignItems: "center",
         }}
       >

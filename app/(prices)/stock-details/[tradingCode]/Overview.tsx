@@ -64,28 +64,40 @@ const formatCandleChartData = (data: any) => {
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
 
-    candle[i] = {
-      time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
-      open: item.open,
-      high: item.high,
-      low: item.low,
-      close: item.close,
-    };
+    const open = item.open !== 0 ? item.open : item.ycp;
+    const close = item.ltp;
 
-    volume[i] = {
+    if (close === 0) {
+      candle.push({
+        time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
+        open: item.ycp,
+        high: item.ycp,
+        low: item.ycp,
+        close: item.ycp,
+        color: close > open ? "#22ab94" : open > close ? "#f7525f" : "#2962ff",
+      });
+    } else {
+      candle.push({
+        time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
+        open: open,
+        high: item.high,
+        low: item.low,
+        close: close,
+        color: close > open ? "#22ab94" : open > close ? "#f23645" : "#2962ff",
+      });
+    }
+
+    volume.push({
       time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
       value: item.volume,
       color:
-        item.close > item.open
-          ? "#67cab9"
-          : item.open > item.close
-          ? "#fb998e"
-          : "#4481ff",
-    };
+        close > open ? "#22ab94aa" : open > close ? "#f7525faa" : "#2962ffaa",
+    });
   }
+
   return {
-    candle: candle.filter((item) => item.low !== 0),
-    volume: volume.filter((item) => item.value !== 0),
+    candle,
+    volume,
   };
 };
 
@@ -109,6 +121,10 @@ const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
   };
 };
 
+function isValidDate(date: any) {
+  return !isNaN(date);
+}
+
 const agmDateCalculation = (
   agmDateInit: string,
   recordDateInit: string,
@@ -130,12 +146,14 @@ const agmDateCalculation = (
       Number(agmDateInit.substring(0, 2))
     );
 
-    if (agmDateFormatted < todayDate) {
-      agmPrefix = "Last";
-    } else {
-      agmPrefix = "Next";
+    if (isValidDate(agmDateFormatted)) {
+      if (agmDateFormatted < todayDate) {
+        agmPrefix = "Last";
+      } else {
+        agmPrefix = "Next";
+      }
+      agmDate = agmDateFormatted.toFormat("dd MMM yyyy");
     }
-    agmDate = agmDateFormatted.toFormat("dd MMM yyyy");
   }
 
   if (declarationDateInit) {
@@ -267,14 +285,13 @@ export default function Overview({ stock }: any) {
           </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ my: 4 }}>
         {alignment === "minute" && (
           <Box sx={{ mt: 4 }}>
             <AreaChart
               data={minuteChartData}
               color={chartColor}
-              height={325}
-              tooltipTitle={stock.fundamentals.tradingCode}
+              height={matchesSmDown ? 300 : 360}
               chartWidthValue={1120}
             />
           </Box>
@@ -282,6 +299,7 @@ export default function Overview({ stock }: any) {
         {alignment === "daily" && (
           <Box>
             <CandlestickVolumeChart
+              height={matchesSmDown ? 300 : 360}
               candledata={dailyCandleData.candle}
               volumedata={dailyCandleData.volume}
             />
@@ -290,6 +308,7 @@ export default function Overview({ stock }: any) {
         {alignment === "weekly" && (
           <Box>
             <CandlestickVolumeChart
+              height={matchesSmDown ? 300 : 360}
               candledata={weeklyCandleData.candle}
               volumedata={weeklyCandleData.volume}
             />
@@ -298,6 +317,7 @@ export default function Overview({ stock }: any) {
         {alignment === "monthly" && (
           <Box>
             <CandlestickVolumeChart
+              height={matchesSmDown ? 300 : 360}
               candledata={monthlyCandleData.candle}
               volumedata={monthlyCandleData.volume}
             />
@@ -308,7 +328,7 @@ export default function Overview({ stock }: any) {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "center",
+            justifyContent: { xs: "space-evenly", sm: "center" },
             my: 6,
             mx: { xs: 0, sm: 8 },
             py: { xs: 1.5, sm: 3 },
@@ -326,7 +346,6 @@ export default function Overview({ stock }: any) {
             }}
           >
             <Typography
-              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -345,7 +364,9 @@ export default function Overview({ stock }: any) {
               {percentChangeData.today.text}
             </Typography>
           </Box>
-          <Divider orientation="vertical" flexItem variant="middle" />
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
           <Box
             sx={{
               mx: { xs: 2, sm: 8 },
@@ -354,7 +375,6 @@ export default function Overview({ stock }: any) {
             }}
           >
             <Typography
-              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -373,7 +393,9 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneWeek.text}
             </Typography>
           </Box>
-          <Divider orientation="vertical" flexItem variant="middle" />
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
           <Box
             sx={{
               mx: { xs: 2, sm: 8 },
@@ -382,7 +404,6 @@ export default function Overview({ stock }: any) {
             }}
           >
             <Typography
-              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -401,7 +422,9 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneMonth.text}
             </Typography>
           </Box>
-          <Divider orientation="vertical" flexItem variant="middle" />
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
           <Box
             sx={{
               mx: { xs: 2, sm: 8 },
@@ -410,7 +433,6 @@ export default function Overview({ stock }: any) {
             }}
           >
             <Typography
-              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -429,7 +451,9 @@ export default function Overview({ stock }: any) {
               {percentChangeData.sixMonth.text}
             </Typography>
           </Box>
-          <Divider orientation="vertical" flexItem variant="middle" />
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
           <Box
             sx={{
               mx: { xs: 2, sm: 8 },
@@ -438,7 +462,6 @@ export default function Overview({ stock }: any) {
             }}
           >
             <Typography
-              gutterBottom
               sx={{
                 fontSize: "1.1rem",
                 color: "text.primary",
@@ -471,7 +494,7 @@ export default function Overview({ stock }: any) {
         <Grid
           container
           alignItems="center"
-          justifyContent="center"
+          justifyContent="space-between"
           rowSpacing={{ xs: 4, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 6 }}
           sx={{ mt: 2 }}
@@ -578,7 +601,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.value}
+                {(stock.latest.value / 10).toFixed(2)}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -602,12 +625,12 @@ export default function Overview({ stock }: any) {
               >
                 {stock.latest.trade}
               </Typography>
-              <Typography
+              {/* <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
                 Crore
-              </Typography>
+              </Typography> */}
             </Stack>
           </Grid>
           <Grid item xs={4} sm={2}>
@@ -746,20 +769,18 @@ export default function Overview({ stock }: any) {
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Market Capital
             </Typography>
-            <Stack direction="row" alignItems="baseline">
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
                 color="text.primary"
                 sx={{
                   fontSize: { xs: "1.2rem", sm: "1.5rem" },
                   fontWeight: 500,
+                  mr: 0.7,
                 }}
               >
                 {(stock.fundamentals.marketCap / 10).toFixed(2)}
               </Typography>
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
               </Typography>
             </Stack>
@@ -768,20 +789,18 @@ export default function Overview({ stock }: any) {
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Paid up Capital
             </Typography>
-            <Stack direction="row" alignItems="baseline">
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
                 color="text.primary"
                 sx={{
                   fontSize: { xs: "1.2rem", sm: "1.5rem" },
                   fontWeight: 500,
+                  mr: 0.7,
                 }}
               >
                 {(stock.fundamentals.paidUpCap / 10).toFixed(2)}
               </Typography>
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
               </Typography>
             </Stack>
@@ -790,20 +809,18 @@ export default function Overview({ stock }: any) {
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Total Shares
             </Typography>
-            <Stack direction="row" alignItems="baseline">
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
                 color="text.primary"
                 sx={{
                   fontSize: { xs: "1.2rem", sm: "1.5rem" },
                   fontWeight: 500,
+                  mr: 0.7,
                 }}
               >
                 {(stock.fundamentals.totalShares / 10000000).toFixed(2)}
               </Typography>
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
               </Typography>
             </Stack>
@@ -820,12 +837,16 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.agmDate}
+                {dates.agmDate || "--"}
               </Typography>
             </Stack>
           </Grid>
           <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+            <Typography
+              noWrap
+              color="text.secondary"
+              sx={{ fontSize: ".875rem" }}
+            >
               {dates.recordPrefix} Record Date
             </Typography>
             <Stack direction="row" alignItems="baseline">
@@ -836,7 +857,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.recordDate}
+                {dates.recordDate || "--"}
               </Typography>
             </Stack>
           </Grid>
@@ -858,7 +879,7 @@ export default function Overview({ stock }: any) {
           </Grid>
         </Grid>
 
-        <Box sx={{ mt: { xs: 4, sm: 8 }, mb: { xs: 2, sm: 4 } }}>
+        <Box sx={{ mt: { xs: 6, sm: 8 }, mb: { xs: 2, sm: 4 } }}>
           <Typography
             color="text.primary"
             sx={{ fontSize: "1.5rem", fontWeight: 700 }}
@@ -871,10 +892,10 @@ export default function Overview({ stock }: any) {
           container
           alignItems="center"
           justifyContent="center"
-          rowSpacing={{ xs: 4, sm: 6 }}
+          rowSpacing={{ xs: 2, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 6 }}
         >
-          <Grid item xs={6} sm={3.5}>
+          <Grid item xs={12} sm={3.5}>
             <Typography
               color="text.secondary"
               gutterBottom
@@ -889,7 +910,7 @@ export default function Overview({ stock }: any) {
             </Stack>
           </Grid>
 
-          <Grid item xs={6} sm={2}>
+          <Grid item xs={12} sm={2}>
             <Typography
               color="text.secondary"
               gutterBottom
@@ -918,13 +939,26 @@ export default function Overview({ stock }: any) {
             </Stack>
           </Grid>
           <Grid item xs={12} sm={3.2}>
-            <Typography color="text.secondary" sx={{ fontSize: "1rem" }}>
+            <Typography
+              component={Link}
+              href="/"
+              color="text.secondary"
+              sx={{ fontSize: "1rem" }}
+            >
               Website
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
+                component={Link}
+                href={stock.fundamentals.address.website}
                 color="text.primary"
-                sx={{ fontSize: "1.2rem", fontWeight: 500 }}
+                sx={{
+                  fontSize: "1.2rem",
+                  fontWeight: 500,
+                  textDecoration: "underline",
+                  color: "primary.main",
+                }}
+                target="_blank"
               >
                 {stock.fundamentals.address.website}
               </Typography>

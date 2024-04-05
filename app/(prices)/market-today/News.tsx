@@ -50,15 +50,15 @@ const options: any = [
     search: "dividend",
   },
   {
-    title: "RECORD DATE",
-    search: "record date",
-  },
-  {
     title: "AGM",
     search: "agm",
   },
   {
-    title: "Q",
+    title: "RECORD DATE",
+    search: "record date",
+  },
+  {
+    title: "Financials",
     search: "Q[0-9]",
   },
 ];
@@ -72,12 +72,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "24px !important",
-    marginRight: "16px",
+    marginRight: "12px",
     border: `1px solid lightgrey !important`,
-    paddingLeft: "20px",
+    paddingLeft: "16px",
     paddingTop: "4px",
     paddingBottom: "4px",
-    paddingRight: "20px",
+    paddingRight: "16px",
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",
@@ -130,7 +130,7 @@ export default function News({ data }: any) {
   const handleDataChange = () => {};
 
   return (
-    <Box>
+    <Box sx={{ mx: { xs: 2, sm: 0 } }}>
       <Dialog
         onClose={handleDialogClose}
         open={openDialog}
@@ -197,10 +197,7 @@ export default function News({ data }: any) {
         </Button>
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            mb: 3,
+            mb: { xs: 1, sm: 3 },
           }}
         >
           <StyledToggleButtonGroup
@@ -209,11 +206,17 @@ export default function News({ data }: any) {
             exclusive
             onChange={handleAlignmentChange}
             aria-label="Platform"
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
           >
             {options.map((item: any, index: number) => (
               <StyledToggleButton
                 value={item.search}
-                sx={{ px: 2 }}
+                sx={{ px: 2, mb: 1 }}
                 onClick={handleDataChange}
                 key={index}
               >

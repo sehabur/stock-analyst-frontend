@@ -1,4 +1,4 @@
-export const sectorList = [
+export const sectorList: any = [
   { name: "Bank", tag: "bank" },
   { name: "Cement", tag: "cement" },
   { name: "Ceramics Sector", tag: "ceramics" },

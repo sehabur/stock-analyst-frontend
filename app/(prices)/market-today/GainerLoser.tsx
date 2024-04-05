@@ -50,12 +50,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "24px !important",
-    marginRight: "16px",
+    marginRight: "12px",
     border: `1px solid lightgrey !important`,
-    paddingLeft: "20px",
+    paddingLeft: "16px",
     paddingTop: "4px",
     paddingBottom: "4px",
-    paddingRight: "20px",
+    paddingRight: "16px",
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",
@@ -86,115 +86,121 @@ export default function GainerLoser({ data }: any) {
   };
 
   return (
-    <Grid container direction="row" justifyContent="center" spacing={12}>
-      <Grid item xs={12} sm={6}>
-        <Button
-          component={Link}
-          href="/gainer-loser?type=gainer&variant=1d"
-          color="primary"
-          endIcon={<ArrowForwardIosRoundedIcon />}
-          sx={{
-            fontSize: "1.6rem",
-            fontWeight: 700,
-            ":hover": {
-              bgcolor: "transparent",
-              color: "primary.main",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Stock Gainer
-        </Button>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            mx: 0.5,
-            mt: 2,
-            mb: 3,
-          }}
-        >
-          <StyledToggleButtonGroup
-            size="small"
-            value={alignmentGainer}
-            exclusive
-            onChange={handleGainerChange}
-            aria-label="Platform"
+    <Box sx={{ px: 1 }}>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        spacing={{ xs: 6, sm: 12 }}
+      >
+        <Grid item xs={12} sm={6}>
+          <Button
+            component={Link}
+            href="/gainer-loser?type=gainer&variant=1d"
+            color="primary"
+            endIcon={<ArrowForwardIosRoundedIcon />}
+            sx={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              ":hover": {
+                bgcolor: "transparent",
+                color: "primary.main",
+                textDecoration: "underline",
+              },
+            }}
           >
-            <StyledToggleButton value="gainerDaily" sx={{ px: 2 }}>
-              Gainer
-            </StyledToggleButton>
-            <StyledToggleButton value="gainerTrade" sx={{ px: 2 }}>
-              Trade
-            </StyledToggleButton>
-            <StyledToggleButton value="gainerValue" sx={{ px: 2 }}>
-              Value
-            </StyledToggleButton>
-            <StyledToggleButton value="gainerVolume" sx={{ px: 2 }}>
-              Volume
-            </StyledToggleButton>
-          </StyledToggleButtonGroup>
-        </Box>
-        {dataFormatter(data[alignmentGainer]).map((item: any) => (
-          <GainerCard item={item} key={item.id} />
-        ))}
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Button
-          component={Link}
-          href="/gainer-loser?type=gainer&variant=1d"
-          color="primary"
-          endIcon={<ArrowForwardIosRoundedIcon />}
-          sx={{
-            fontSize: "1.6rem",
-            fontWeight: 700,
-            ":hover": {
-              bgcolor: "transparent",
-              color: "primary.main",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Stock Loser
-        </Button>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            mx: 0.5,
-            mt: 2,
-            mb: 3,
-          }}
-        >
-          <StyledToggleButtonGroup
-            size="small"
-            value={alignmentLoser}
-            exclusive
-            onChange={handleLoserChange}
-            aria-label="Platform"
+            Stock Gainer
+          </Button>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              mt: 2,
+              mb: 3,
+            }}
           >
-            <StyledToggleButton value="loserDaily" sx={{ px: 2 }}>
-              Loser
-            </StyledToggleButton>
-            <StyledToggleButton value="loserTrade" sx={{ px: 2 }}>
-              Trade
-            </StyledToggleButton>
-            <StyledToggleButton value="loserValue" sx={{ px: 2 }}>
-              Value
-            </StyledToggleButton>
-            <StyledToggleButton value="loserVolume" sx={{ px: 2 }}>
-              Volume
-            </StyledToggleButton>
-          </StyledToggleButtonGroup>
-        </Box>
-        {dataFormatter(data[alignmentLoser]).map((item: any) => (
-          <GainerCard item={item} key={item.id} />
-        ))}
-      </Grid>
+            <StyledToggleButtonGroup
+              size="small"
+              value={alignmentGainer}
+              exclusive
+              onChange={handleGainerChange}
+              aria-label="Platform"
+              sx={{ mx: 1 }}
+            >
+              <StyledToggleButton value="gainerDaily" sx={{ px: 2 }}>
+                Gainer
+              </StyledToggleButton>
+              <StyledToggleButton value="gainerVolume" sx={{ px: 2 }}>
+                Volume
+              </StyledToggleButton>
+              <StyledToggleButton value="gainerValue" sx={{ px: 2 }}>
+                Value
+              </StyledToggleButton>
+              <StyledToggleButton value="gainerTrade" sx={{ px: 2 }}>
+                Trade
+              </StyledToggleButton>
+            </StyledToggleButtonGroup>
+          </Box>
+          {dataFormatter(data[alignmentGainer]).map((item: any) => (
+            <GainerCard item={item} key={item.id} />
+          ))}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Button
+            component={Link}
+            href="/gainer-loser?type=gainer&variant=1d"
+            color="primary"
+            endIcon={<ArrowForwardIosRoundedIcon />}
+            sx={{
+              fontSize: "1.6rem",
+              fontWeight: 700,
+              ":hover": {
+                bgcolor: "transparent",
+                color: "primary.main",
+                textDecoration: "underline",
+              },
+            }}
+          >
+            Stock Loser
+          </Button>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              mt: 2,
+              mb: 3,
+            }}
+          >
+            <StyledToggleButtonGroup
+              size="small"
+              value={alignmentLoser}
+              exclusive
+              onChange={handleLoserChange}
+              aria-label="Platform"
+              sx={{ mx: 1 }}
+            >
+              <StyledToggleButton value="loserDaily" sx={{ px: 2 }}>
+                Loser
+              </StyledToggleButton>
+              <StyledToggleButton value="loserVolume" sx={{ px: 2 }}>
+                Volume
+              </StyledToggleButton>
+              <StyledToggleButton value="loserValue" sx={{ px: 2 }}>
+                Value
+              </StyledToggleButton>
+              <StyledToggleButton value="loserTrade" sx={{ px: 2 }}>
+                Trade
+              </StyledToggleButton>
+            </StyledToggleButtonGroup>
+          </Box>
+          {dataFormatter(data[alignmentLoser]).map((item: any) => (
+            <GainerCard item={item} key={item.id} />
+          ))}
+        </Grid>
 
-      {/* <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
         <Paper
           elevation={0}
           variant="outlined"
@@ -396,6 +402,7 @@ export default function GainerLoser({ data }: any) {
           </Box>
         </Paper>
       </Grid> */}
-    </Grid>
+      </Grid>
+    </Box>
   );
 }

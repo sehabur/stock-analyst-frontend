@@ -1,8 +1,8 @@
-'use client';
-import { useTheme } from '@mui/material';
+"use client";
+import { useTheme, useMediaQuery } from "@mui/material";
 
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
@@ -17,9 +17,11 @@ export default function PieChart(props: any) {
 
   const theme = useTheme();
 
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
   const chartOptions: {} = {
     chart: {
-      type: 'donut',
+      type: "donut",
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
     },
@@ -40,7 +42,7 @@ export default function PieChart(props: any) {
         horizontal: 15,
         vertical: 2,
       },
-      position: 'bottom', // Change the legend position for smaller screens
+      position: "bottom", // Change the legend position for smaller screens
     },
     responsive: [
       {
@@ -49,9 +51,9 @@ export default function PieChart(props: any) {
           chart: {
             width: 380, // Adjust the chart width for smaller screens
           },
-          // legend: {
-          //   position: 'bottom', // Change the legend position for smaller screens
-          // },
+          legend: {
+            position: "right", // Change the legend position for smaller screens
+          },
         },
       },
     ],

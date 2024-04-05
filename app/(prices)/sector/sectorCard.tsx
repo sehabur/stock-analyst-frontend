@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Paper,
   Grid,
@@ -8,19 +8,19 @@ import {
   Chip,
   Popover,
   Box,
-} from '@mui/material';
-import Link from 'next/link';
-import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { useState } from 'react';
+} from "@mui/material";
+import Link from "next/link";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import { useState } from "react";
 // import { green, blue, red } from '@mui/material/colors';
 
 export default function SectorSummaryCard({ data }: { data: any }) {
-  const sectorTag = data.sector.split(' ')[0].toLowerCase();
+  const sectorTag = data.sector.split(" ")[0].toLowerCase();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [type, setType] = useState<any>('uptrendItems');
+  const [type, setType] = useState<any>("uptrendItems");
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -35,14 +35,14 @@ export default function SectorSummaryCard({ data }: { data: any }) {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
 
   const textColor =
     data.change === 0
-      ? 'primary.main'
+      ? "primary.main"
       : data.change < 0
-      ? 'error.main'
-      : 'success.main';
+      ? "error.main"
+      : "success.main";
 
   return (
     <>
@@ -61,30 +61,30 @@ export default function SectorSummaryCard({ data }: { data: any }) {
             <Typography
               gutterBottom
               color={textColor}
-              sx={{ fontSize: '1.15rem' }}
+              sx={{ fontSize: "1.15rem" }}
             >
               {data.sector}
             </Typography>
-            <Typography sx={{ fontWeight: 500 }}>
-              Total value: {(data.valueTotal / 10).toFixed(3)} crore
+            <Typography sx={{ fontWeight: 500, fontSize: "1rem" }}>
+              Total value: {(data.valueTotal / 10).toFixed(2)} Crore
             </Typography>
             <Stack direction="row" alignItems="center" sx={{ my: 1.2 }}>
               <Box
                 component={Button}
-                onClick={(e) => handleClick(e, 'uptrendItems')}
+                onClick={(e) => handleClick(e, "uptrendItems")}
                 sx={{
                   m: 0,
                   p: 0,
-                  ':hover': {
-                    background: 'transparent',
+                  ":hover": {
+                    background: "transparent",
                   },
                 }}
               >
                 <KeyboardDoubleArrowUpIcon
-                  sx={{ color: 'success.main', fontSize: '1.3rem' }}
+                  sx={{ color: "success.main", fontSize: "1.3rem" }}
                 />
                 <Typography
-                  sx={{ color: 'success.main', mr: 3, fontSize: '1.3rem' }}
+                  sx={{ color: "success.main", mr: 3, fontSize: "1.3rem" }}
                 >
                   {data.uptrend}
                 </Typography>
@@ -92,39 +92,39 @@ export default function SectorSummaryCard({ data }: { data: any }) {
 
               <Box
                 component={Button}
-                onClick={(e) => handleClick(e, 'neutralItems')}
+                onClick={(e) => handleClick(e, "neutralItems")}
                 sx={{
                   m: 0,
                   p: 0,
-                  ':hover': {
-                    background: 'transparent',
+                  ":hover": {
+                    background: "transparent",
                   },
                 }}
               >
                 <PauseCircleOutlineIcon
-                  sx={{ color: 'primary.main', mr: 0.5, fontSize: '1.3rem' }}
+                  sx={{ color: "primary.main", mr: 0.5, fontSize: "1.3rem" }}
                 />
                 <Typography
-                  sx={{ color: 'primary.main', mr: 1, fontSize: '1.3rem' }}
+                  sx={{ color: "primary.main", mr: 1, fontSize: "1.3rem" }}
                 >
                   {data.neutral}
                 </Typography>
               </Box>
               <Box
                 component={Button}
-                onClick={(e) => handleClick(e, 'downtrendItems')}
+                onClick={(e) => handleClick(e, "downtrendItems")}
                 sx={{
                   m: 0,
                   p: 0,
-                  ':hover': {
-                    background: 'transparent',
+                  ":hover": {
+                    background: "transparent",
                   },
                 }}
               >
                 <KeyboardDoubleArrowDownIcon
-                  sx={{ color: 'error.main', fontSize: '1.3rem' }}
+                  sx={{ color: "error.main", fontSize: "1.3rem" }}
                 />
-                <Typography sx={{ color: 'error.main', fontSize: '1.3rem' }}>
+                <Typography sx={{ color: "error.main", fontSize: "1.3rem" }}>
                   {data.downtrend}
                 </Typography>
               </Box>
@@ -134,32 +134,34 @@ export default function SectorSummaryCard({ data }: { data: any }) {
           <Grid item xs={2.8}>
             <Typography
               sx={{
-                fontSize: '1.6rem',
+                fontSize: "1.6rem",
                 color:
                   data.change == 0
-                    ? 'primary.main'
+                    ? "primary.main"
                     : data.change < 0
-                    ? 'error.main'
-                    : 'success.main',
+                    ? "error.main"
+                    : "success.main",
               }}
             >
-              {data.ltp}
+              {data.ltp.toFixed(1)}
             </Typography>
             <Chip
               label={data.change}
               size="small"
               sx={{
-                fontSize: '.9rem',
+                fontSize: ".9rem",
                 borderRadius: 1,
                 color: textColor,
+                mt: 1,
+                mr: 1,
               }}
             />
             {data.change !== 0 && (
               <Chip
-                label={data.percentChange + '%'}
+                label={data.percentChange + "%"}
                 size="small"
                 sx={{
-                  fontSize: '.9rem',
+                  fontSize: ".9rem",
                   borderRadius: 1,
                   mt: 1,
                   color: textColor,
@@ -170,11 +172,11 @@ export default function SectorSummaryCard({ data }: { data: any }) {
         </Grid>
         <Button
           component={Link}
-          href={`/sector/chart?sector=${sectorTag}`}
+          href={`/sector/chart/${sectorTag}`}
           variant="outlined"
           size="small"
           color="info"
-          sx={{ fontSize: '.9rem', mr: 2 }}
+          sx={{ fontSize: ".9rem", mr: 2 }}
         >
           See chart
         </Button>
@@ -184,7 +186,7 @@ export default function SectorSummaryCard({ data }: { data: any }) {
           variant="outlined"
           size="small"
           color="info"
-          sx={{ fontSize: '.9rem', mr: 2 }}
+          sx={{ fontSize: ".9rem", mr: 2 }}
         >
           Stock lists
         </Button>
@@ -195,8 +197,8 @@ export default function SectorSummaryCard({ data }: { data: any }) {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         disableScrollLock={true}
         sx={{ maxHeight: 550 }}
@@ -214,11 +216,11 @@ export default function SectorSummaryCard({ data }: { data: any }) {
                 size="small"
                 color="info"
                 sx={{
-                  display: 'block',
-                  fontSize: '.85rem',
-                  ':hover': {
-                    background: 'transparent',
-                    textDecoration: 'underline',
+                  display: "block",
+                  fontSize: ".85rem",
+                  ":hover": {
+                    background: "transparent",
+                    textDecoration: "underline",
                   },
                 }}
               >

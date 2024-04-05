@@ -7,7 +7,7 @@ import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 
 export default function CandlestickVolumeChart(props: any) {
-  const { candledata, volumedata } = props;
+  const { candledata, volumedata, height } = props;
 
   const theme = useTheme();
 
@@ -57,7 +57,7 @@ export default function CandlestickVolumeChart(props: any) {
         },
       },
       width: chartContainerRef.current.clientWidth,
-      height: 530,
+      height: height,
     };
 
     chart.current = createChart(chartContainerRef.current, chartOptions);
@@ -78,18 +78,12 @@ export default function CandlestickVolumeChart(props: any) {
 
     candleSeries.priceScale().applyOptions({
       scaleMargins: {
-        top: 0.08,
-        bottom: 0.35,
+        top: 0.1,
+        bottom: 0.3,
       },
     });
 
     const volumeSeries = chart.current.addHistogramSeries({
-      upColor: "#22ab94",
-      downColor: "#f7525f",
-      borderUpColor: "#22ab94",
-      borderDownColor: "#f7525f",
-      wickUpColor: "#22ab94",
-      wickDownColor: "#f7525f",
       priceFormat: {
         type: "volume",
       },
@@ -116,12 +110,14 @@ export default function CandlestickVolumeChart(props: any) {
     tooltip.current = document.createElement("div");
 
     tooltip.current.className = "custom-tooltip-candle-volume";
-    tooltip.current.style.background = grey[900];
+    // tooltip.current.style.background = grey[900];
+    tooltip.current.style.color =
+      theme.palette.mode == "light" ? grey[700] : grey[200];
 
     chartContainerRef.current.appendChild(tooltip.current);
 
     chart.current.subscribeCrosshairMove((param: any) => {
-      console.log(param);
+      // console.log(param);
       if (
         param.point === undefined ||
         !param.time ||
@@ -139,6 +135,8 @@ export default function CandlestickVolumeChart(props: any) {
         const candleData = param.seriesData.get(candleSeries);
         const volumeData = param.seriesData.get(volumeSeries);
 
+        // console.log(candleData, volumeData);
+
         // tooltip.current.innerHTML = `<div><div style="font-size: 15px; font-weight: bold; margin-bottom: 6px; color: ${"#2962ff"}">${dateStr}</div><div style="color: ${"black"}">
         //         Open: ${candleData.open}
         //         </div><div style="color: ${"black"}">
@@ -151,7 +149,7 @@ export default function CandlestickVolumeChart(props: any) {
         //         Volume: ${volumeData.value}
         //         </div></div>`;
 
-        tooltip.current.innerHTML = `O <span style="color: ${volumeData.color}">${candleData.open}</span> H <span style="color: ${volumeData.color}">${candleData.high}</span> L <span style="color: ${volumeData.color}">${candleData.low}</span> C <span style="color: ${volumeData.color}">${candleData.close}</span> V <span style="color: ${volumeData.color}">${volumeData.value}</span>`;
+        tooltip.current.innerHTML = `O<span style="color: ${candleData.color}">${candleData.open}</span> H<span style="color: ${candleData.color}">${candleData.high}</span> L<span style="color: ${candleData.color}">${candleData.low}</span> C<span style="color: ${candleData.color}">${candleData.close}</span> V<span style="color: ${candleData.color}">${volumeData.value}</span>`;
 
         // const y = param.point.y;
         // let left = param.point.x + toolTipMargin;

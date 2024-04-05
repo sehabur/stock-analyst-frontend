@@ -51,7 +51,7 @@ export default function Ipo() {
     router.push(`/ipo#${index}`);
   };
   return (
-    <Box sx={{ my: 4 }}>
+    <Box sx={{ mb: 4, mx: { xs: 2, sm: 0 } }}>
       <Button
         component={Link}
         href="/ipo"

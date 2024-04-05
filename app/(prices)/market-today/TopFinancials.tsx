@@ -55,6 +55,11 @@ const options: any = [
     tag: "nav",
   },
   {
+    header: "NOCFPS",
+    button: "NOCFPS",
+    tag: "nocfps",
+  },
+  {
     header: "Market Cap (Crore)",
     button: "Market Cap",
     tag: "marketCap",
@@ -75,9 +80,9 @@ const options: any = [
     tag: "reserve",
   },
   {
-    header: "Net Income Ratio",
-    button: "Net Income Ratio",
-    tag: "netIncomeRatio",
+    header: "Total Asset (Crore)",
+    button: "Total Asset",
+    tag: "totalAsset",
   },
   {
     header: "ROA",
@@ -100,7 +105,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "6px !important",
-    marginBottom: "8px",
+    marginBottom: "10px",
     border: `1px solid lightgrey !important`,
     paddingLeft: "12px",
     paddingTop: "4px",
@@ -114,6 +119,9 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 
 export default function TopFinancials(props: any) {
   const { data } = props;
+
+  const theme: any = useTheme();
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const [alignment, setAlignment] = useState("pe");
 
@@ -130,13 +138,12 @@ export default function TopFinancials(props: any) {
     return options.find((item: any) => item.tag === alignment).header;
   };
 
-  console.log(data);
-
   return (
     <Box
       sx={{
         py: { xs: 2, sm: 4 },
-        ml: { xs: 0, sm: 4 },
+        ml: { xs: 2, sm: 4 },
+        mr: 2,
       }}
     >
       <Box>
@@ -161,7 +168,7 @@ export default function TopFinancials(props: any) {
         </Button>
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box>
+        <Box sx={{ mt: 0.2 }}>
           <StyledToggleButtonGroup
             size="small"
             value={alignment}
@@ -182,9 +189,9 @@ export default function TopFinancials(props: any) {
             component={Paper}
             elevation={4}
             variant="outlined"
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, width: { xs: "100%", sm: 430 } }}
           >
-            <Table size="small" sx={{ width: { sm: "420px" } }}>
+            <Table size="small">
               <TableHead>
                 <TableRow
                   sx={{
@@ -200,8 +207,12 @@ export default function TopFinancials(props: any) {
                   <TableCell align="right">
                     {getColumnHead(alignment)}
                   </TableCell>
-                  <TableCell align="right">LTP</TableCell>
-                  <TableCell align="right">Ch(%)</TableCell>
+                  {matchesSmUp && (
+                    <>
+                      <TableCell align="right">LTP</TableCell>
+                      <TableCell align="right">Change(%)</TableCell>
+                    </>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -213,7 +224,6 @@ export default function TopFinancials(props: any) {
                         fontSize: "1rem",
                         fontWeight: 500,
                       },
-
                       //   "&:nth-of-type(odd)": {
                       //     backgroundColor: "financePageBgcolor",
                       //   },
@@ -233,10 +243,16 @@ export default function TopFinancials(props: any) {
                       </Typography>
                     </TableCell>
                     <TableCell align="right" sx={{ fontSize: "1rem" }}>
-                      {row.value}
+                      {alignment === "dividend"
+                        ? row.value
+                        : row.value.toFixed(2)}
                     </TableCell>
-                    <TableCell align="right">{row.ltp}</TableCell>
-                    <TableCell align="right">{row.percentChange}</TableCell>
+                    {matchesSmUp && (
+                      <>
+                        <TableCell align="right">{row.ltp}</TableCell>
+                        <TableCell align="right">{row.percentChange}</TableCell>
+                      </>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>

@@ -30,7 +30,7 @@ import { grey } from "@mui/material/colors";
 
 export default function BlockTransections({ blocktr }: any) {
   return (
-    <Box sx={{ maxWidth: "900px", mx: "auto", py: 4, px: 2 }}>
+    <Box sx={{ maxWidth: "900px", mx: "auto", py: 4, px: { xs: 0, sm: 2 } }}>
       <TableContainer
         component={Paper}
         sx={{ border: "none", borderRadius: 0 }}

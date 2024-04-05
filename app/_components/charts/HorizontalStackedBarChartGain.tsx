@@ -6,11 +6,11 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function HorizontalStackedBarChart(props: any) {
+export default function HorizontalStackedBarChartGain(props: any) {
   const theme = useTheme();
   const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { data, colors, type } = props;
+  const { data, colors } = props;
 
   const chartOptions: {} = {
     colors: colors || [],
@@ -30,23 +30,19 @@ export default function HorizontalStackedBarChart(props: any) {
         horizontal: true,
         borderRadius: 2,
         barHeight: "70%",
-        dataLabels: {
-          total: {
-            enabled: true,
-            formatter: (item: number) => {
-              if (type === "value") {
-                return item.toFixed(2);
-              } else {
-                return item;
-              }
-            },
-            offsetY: 7,
-            offsetX: type === "value" ? 10 : 0,
-            style: {
-              color: theme.palette.text.primary,
-            },
-          },
-        },
+        // dataLabels: {
+        //   total: {
+        //     enabled: true,
+        //     formatter: (item: number) => {
+        //       return item;
+        //     },
+        //     offsetY: 7,
+        //     offsetX: type === "value" ? 10 : 0,
+        //     style: {
+        //       color: theme.palette.text.primary,
+        //     },
+        //   },
+        // },
       },
     },
     dataLabels: {
@@ -56,9 +52,6 @@ export default function HorizontalStackedBarChart(props: any) {
       width: 1,
       colors: [theme.palette.background.paper],
     },
-    // title: {
-    //   text: "Sector Status",
-    // },
     xaxis: {
       categories: matchesSmDown
         ? data.categories.map(
@@ -97,19 +90,11 @@ export default function HorizontalStackedBarChart(props: any) {
       theme: "dark",
       y: {
         formatter: (item: string) => {
-          if (type === "value") {
-            return item + " Crore";
-          } else {
-            return item;
-          }
+          return item;
         },
         title: {
           formatter: (seriesName: string) => {
-            if (type === "value") {
-              return seriesName + " category:";
-            } else {
-              return seriesName + ":";
-            }
+            return seriesName + ":";
           },
         },
       },

@@ -1,7 +1,7 @@
-'use client';
-import { sectorList } from '@/data/dse';
-import AreaChart from '@/components/charts/AreaChart';
-import CandlestickVolumeChart from '@/components/charts/CandlestickVolumeChart';
+"use client";
+import { sectorList } from "@/data/dse";
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 import {
   Box,
   Grid,
@@ -9,12 +9,40 @@ import {
   useTheme,
   useMediaQuery,
   Link,
-} from '@mui/material';
-import { DateTime } from 'luxon';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import React from 'react';
-import { grey } from '@mui/material/colors';
+} from "@mui/material";
+import { DateTime } from "luxon";
+import ToggleButton from "@mui/material/ToggleButton";
+import React from "react";
+import { grey } from "@mui/material/colors";
+
+import { styled } from "@mui/material/styles";
+
+import ToggleButtonGroup, {
+  toggleButtonGroupClasses,
+} from "@mui/material/ToggleButtonGroup";
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  [`& .${toggleButtonGroupClasses.grouped}`]: {
+    marginLeft: "12px",
+    marginRight: "12px",
+    border: 0,
+    borderRadius: 3,
+  },
+}));
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  "&.MuiToggleButtonGroup-grouped": {
+    borderRadius: "24px !important",
+    marginRight: "16px",
+    border: `1px solid lightgrey !important`,
+    paddingLeft: "18px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
+    paddingRight: "18px",
+  },
+  color: theme.palette.text.primary,
+  // fontSize: ".9rem",
+  // textTransform: "none",
+}));
 
 const formatCandleChartData = (data: any) => {
   let candle = [];
@@ -23,37 +51,52 @@ const formatCandleChartData = (data: any) => {
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
 
-    candle[i] = {
-      time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
-      open: item.ycp,
-      high: item.high,
-      low: item.low,
-      close: item.close,
-    };
+    const open = item.open !== 0 ? item.open : item.ycp;
+    const close = item.ltp;
 
-    volume[i] = {
+    if (item.low === 0 || close === 0) {
+      continue;
+    }
+
+    if (close === 0) {
+      candle.push({
+        time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
+        open: item.ycp,
+        high: item.ycp,
+        low: item.ycp,
+        close: item.ycp,
+        color: close > open ? "#22ab94" : open > close ? "#f7525f" : "#2962ff",
+      });
+    } else {
+      candle.push({
+        time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
+        open: open,
+        high: item.high,
+        low: item.low,
+        close: close,
+        color: close > open ? "#22ab94" : open > close ? "#f7525f" : "#2962ff",
+      });
+    }
+
+    volume.push({
       time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
       value: item.volume,
       color:
-        data[i].volume > data[i - 1]?.volume
-          ? '#67cab9'
-          : data[i].volume < data[i - 1]?.volume
-          ? '#fb998e'
-          : '#4481ff',
-    };
+        close > open ? "#22ab94aa" : open > close ? "#f7525faa" : "#2962ffaa",
+    });
   }
   return {
-    candle: candle.filter((item) => item.low !== 0),
-    volume: volume.filter((item) => item.value !== 0),
+    candle,
+    volume,
   };
 };
 
 export default function SectorChart({ data }: any) {
-  const [alignment, setAlignment] = React.useState('daily');
+  const [alignment, setAlignment] = React.useState("daily");
 
   const theme = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleAlignment = (
     event: any,
@@ -64,27 +107,25 @@ export default function SectorChart({ data }: any) {
     }
   };
 
-  //   const minuteChartData: any = data.minute
-  //     .sort((a: any, b: any) => a.time - b.time)
-  //     // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
-  //     .map((item: { time: string; ltp: number; ycp: number }) => {
-  //       return {
-  //         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
-  //         time2: item.time,
-  //         value: item.ltp !== 0 ? item.ltp : item.ycp,
-  //       };
-  //     });
+  console.log(data);
 
-  //   console.log(minuteChartData);
+  const minuteChartData: any = data.minute
+    // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
+    .map((item: { time: string; ltp: number; ycp: number }) => {
+      return {
+        time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
+        value: item.ltp !== 0 ? item.ltp : item.ycp,
+      };
+    });
 
-  //   const latestMinuteData = data.minute[data.minute.length - 1].change;
+  const latestMinuteData = data.minute[data.minute.length - 1].change;
 
-  //   const chartColor =
-  //     latestMinuteData === 0
-  //       ? '#2962ff'
-  //       : latestMinuteData < 0
-  //       ? '#f45e6a'
-  //       : '#00A25B';
+  const chartColor =
+    latestMinuteData === 0
+      ? "#2962ff"
+      : latestMinuteData < 0
+      ? "#f45e6a"
+      : "#00A25B";
 
   const dailyCandleData = formatCandleChartData(data.daily);
   const weeklyCandleData = formatCandleChartData(data.weekly);
@@ -92,63 +133,65 @@ export default function SectorChart({ data }: any) {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-        <ToggleButtonGroup
-          // size="small"
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+        <StyledToggleButtonGroup
+          size="small"
           value={alignment}
-          color="success"
           exclusive
           onChange={handleAlignment}
           sx={{
-            '& .MuiToggleButtonGroup-grouped': {
+            "& .MuiToggleButtonGroup-grouped": {
               px: { xs: 1.5, sm: 2.5 },
             },
           }}
         >
-          <ToggleButton value="minute">
-            {matchesSmDown ? 'Minute' : 'Minute chart'}
-          </ToggleButton>
-          <ToggleButton value="daily">
-            {matchesSmDown ? 'Daily' : 'Daily chart'}
-          </ToggleButton>
-          <ToggleButton value="weekly">
-            {matchesSmDown ? 'Weekly' : 'Weekly chart'}
-          </ToggleButton>
-          <ToggleButton value="monthly">
-            {matchesSmDown ? 'Monthly' : 'Monthly chart'}
-          </ToggleButton>
-        </ToggleButtonGroup>
+          <StyledToggleButton value="minute">
+            {matchesSmDown ? "Minute" : "Minute chart"}
+          </StyledToggleButton>
+          <StyledToggleButton value="daily">
+            {matchesSmDown ? "Day" : "Daily chart"}
+          </StyledToggleButton>
+          <StyledToggleButton value="weekly">
+            {matchesSmDown ? "Week" : "Weekly chart"}
+          </StyledToggleButton>
+          <StyledToggleButton value="monthly">
+            {matchesSmDown ? "Month" : "Monthly chart"}
+          </StyledToggleButton>
+        </StyledToggleButtonGroup>
       </Box>
-      <Box sx={{ mb: 4 }}>
-        {/* {alignment === 'minute' && (
+      <Box sx={{ mt: 4, mb: 4 }}>
+        {alignment === "minute" && (
           <Box>
             <AreaChart
               data={minuteChartData}
               color={chartColor}
-              fullWidth={true}
-              height={420}
+              height={325}
+              chartWidthValue={1120}
             />
           </Box>
-        )} */}
-        {alignment === 'daily' && (
+        )}
+        {alignment === "daily" && (
           <Box>
             <CandlestickVolumeChart
+              height={350}
               candledata={dailyCandleData.candle}
               volumedata={dailyCandleData.volume}
             />
           </Box>
         )}
-        {alignment === 'weekly' && (
+        {alignment === "weekly" && (
           <Box>
             <CandlestickVolumeChart
+              height={350}
               candledata={weeklyCandleData.candle}
               volumedata={weeklyCandleData.volume}
             />
           </Box>
         )}
-        {alignment === 'monthly' && (
+        {alignment === "monthly" && (
           <Box>
             <CandlestickVolumeChart
+              height={350}
               candledata={monthlyCandleData.candle}
               volumedata={monthlyCandleData.volume}
             />

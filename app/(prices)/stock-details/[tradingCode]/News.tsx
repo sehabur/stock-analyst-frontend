@@ -15,15 +15,15 @@ import {
   DialogContent,
   IconButton,
   Chip,
-} from '@mui/material';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import ReactTimeAgo from 'react-time-ago';
-import ScheduleRoundedIcon from '@mui/icons-material/ScheduleRounded';
-import { useState } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+} from "@mui/material";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import ReactTimeAgo from "react-time-ago";
+import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
+import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
 // interface NewsData {
 //   title: string;
@@ -50,29 +50,34 @@ export default function News({ news }: any) {
   };
 
   return (
-    <Box sx={{ bgcolor: 'secondaryBackground' }}>
+    <Box sx={{ bgcolor: "secondaryBackground" }}>
       <Dialog
         onClose={handleDialogClose}
         open={openDialog}
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle sx={{ fontWeight: 700, fontSize: '1.5rem' }}>
+        <DialogTitle
+          sx={{
+            fontWeight: { xs: 700, sm: 500 },
+            fontSize: { xs: "1.2rem", sm: "1.4rem" },
+          }}
+        >
           {dialogContent?.title}
         </DialogTitle>
         <DialogContent dividers>
           <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
             <ScheduleRoundedIcon
               color="success"
-              sx={{ fontSize: '1.2rem', mr: 1.3 }}
+              sx={{ fontSize: "1.2rem", mr: 1.3 }}
             />
             <ReactTimeAgo
               date={dialogContent?.date}
               locale="en-US"
-              style={{ fontSize: '1rem', color: '#089981' }}
+              style={{ fontSize: "1rem", color: "#089981" }}
             />
           </Stack>
-          <Typography sx={{ fontSize: '1rem', pb: 2 }}>
+          <Typography sx={{ fontSize: "1rem", pb: 2 }}>
             {dialogContent?.description}
           </Typography>
         </DialogContent>
@@ -81,7 +86,7 @@ export default function News({ news }: any) {
           aria-label="close"
           onClick={handleDialogClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 4,
             top: 4,
           }}
@@ -92,8 +97,8 @@ export default function News({ news }: any) {
 
       <Box
         sx={{
-          maxWidth: '1250px',
-          mx: 'auto',
+          maxWidth: "1250px",
+          mx: "auto",
           py: { xs: 2, sm: 4 },
           px: 2,
         }}
@@ -103,7 +108,7 @@ export default function News({ news }: any) {
           direction="row"
           justifyContent="flex-start"
           alignItems="stretch"
-          spacing={3}
+          spacing={{ xs: 1.5, sm: 3 }}
         >
           {news.map((item: any) => (
             <Grid item xs={12} sm={4} key={item._id}>
@@ -113,7 +118,10 @@ export default function News({ news }: any) {
                     gutterBottom
                     variant="h5"
                     component="div"
-                    sx={{ fontWeight: 500, fontSize: '1.4rem' }}
+                    sx={{
+                      fontWeight: { xs: 700, sm: 500 },
+                      fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                    }}
                   >
                     {item.title}
                   </Typography>
@@ -121,18 +129,18 @@ export default function News({ news }: any) {
                     <Stack direction="row" alignItems="center">
                       <ScheduleRoundedIcon
                         color="success"
-                        sx={{ fontSize: '1.2rem', mr: 1.3 }}
+                        sx={{ fontSize: "1.2rem", mr: 1.3 }}
                       />
                       <ReactTimeAgo
                         date={item.date}
                         locale="en-US"
-                        style={{ fontSize: '1rem', color: '#089981' }}
+                        style={{ fontSize: "1rem", color: "#089981" }}
                       />
                     </Stack>
                   </Typography>
-                  <Typography sx={{ fontSize: '.9rem' }}>
+                  <Typography sx={{ fontSize: ".9rem" }}>
                     {item.description.slice(0, 135) +
-                      (item.description.length > 135 ? '..' : '')}
+                      (item.description.length > 135 ? ".." : "")}
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ pt: 0, pl: 1.5 }}>

@@ -144,7 +144,10 @@ export default function FinancialCard(props: any) {
               <Stack direction="row" alignItems="baseline">
                 <Typography
                   color="text.primary"
-                  sx={{ fontSize: "1.8rem", fontWeight: 500 }}
+                  sx={{
+                    fontSize: { xs: "1.4rem", sm: "1.6rem" },
+                    fontWeight: 500,
+                  }}
                 >
                   {data?.value ? (data.value / divideFactor).toFixed(2) : "--"}
                 </Typography>

@@ -111,8 +111,6 @@ const formatData = (data: any) => {
 
   const lastTrade: any = rows.filter((item) => item.volume !== 0)[0];
 
-  console.log(lastTrade);
-
   return {
     rows,
     totalBuy,
@@ -129,8 +127,6 @@ export default function Trades(props: any) {
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const { rows, totalBuy, totalSell, lastTrade } = formatData(data);
-
-  console.log(rows);
 
   const handleClick = () => {
     handleDialogOpen();
@@ -189,7 +185,7 @@ export default function Trades(props: any) {
               component={Paper}
               elevation={0}
               variant="outlined"
-              sx={{ borderRadius: 1, maxHeight: { xs: 600, sm: 500 } }}
+              sx={{ borderRadius: 1, maxHeight: { xs: 500, sm: 450 } }}
             >
               <Table size="small" stickyHeader>
                 <TableHead>
@@ -247,7 +243,7 @@ export default function Trades(props: any) {
       </Dialog>
       <Alert
         sx={{
-          maxWidth: "400px",
+          // maxWidth: "400px",
           ":hover": {
             cursor: "pointer",
           },
@@ -265,14 +261,19 @@ export default function Trades(props: any) {
           </IconButton>
         }
       >
-        {lastTrade.volume} shares @ {lastTrade.ltp} TK
+        <Typography
+          sx={{
+            display: "inline",
+            mr: 1.5,
+          }}
+        >
+          {lastTrade.volume} shares @ {lastTrade.ltp} TK
+        </Typography>
+
         <Chip
           label={<ReactTimeAgo date={lastTrade.timeIso} locale="en-US" />}
           size="small"
           variant="outlined"
-          sx={{
-            ml: 1.5,
-          }}
         ></Chip>
       </Alert>
     </Box>

@@ -1,5 +1,5 @@
-import HorizontalSectorBarChart from "@/components/charts/HorizontalSectorBarChart";
-import HorizontalStackedBarChart from "@/components/charts/HorizontalStackedBarChart";
+import HorizontalStackedBarChartValue from "@/components/charts/HorizontalStackedBarChartValue";
+import HorizontalStackedBarChartGain from "@/components/charts/HorizontalStackedBarChartGain";
 import { Box, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
 
 const formatSectorTrendData = (sectorData: any) => {
@@ -96,12 +96,11 @@ export default function SectorStatus(props: any) {
             color="text.secondary"
             sx={{ fontSize: "1.4rem", mb: 2, textAlign: "center" }}
           >
-            Tops sector by gain
+            Top sector by gain
           </Typography>
-          <HorizontalStackedBarChart
+          <HorizontalStackedBarChartGain
             data={formattedSectorTrendData}
             colors={["#24b29b", "#448aff", "#ff4081"]}
-            type="gain"
           />
         </Paper>
       </Grid>
@@ -118,10 +117,9 @@ export default function SectorStatus(props: any) {
           >
             Top sector by value
           </Typography>
-          <HorizontalStackedBarChart
+          <HorizontalStackedBarChartValue
             data={formattedSectorValueData}
             colors={["#4dd0e1", "#b388ff", "#f57f17", "#fbc02d"]}
-            type="value"
           />
         </Paper>
       </Grid>

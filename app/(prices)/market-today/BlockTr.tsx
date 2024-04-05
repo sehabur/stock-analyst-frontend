@@ -51,123 +51,126 @@ export default function BlockTr({ data }: any) {
     setPage(0);
   };
   return (
-    <Box component="main" sx={{ bgcolor: "background.default" }}>
-      <Box
-        sx={{
-          maxWidth: { sm: "1280px" },
-          mx: "auto",
-          py: 2,
-        }}
+    <Box
+      sx={{
+        mx: { xs: 2, sm: 0 },
+        my: { xs: 4, sm: 0 },
+      }}
+    >
+      <TableContainer
+        component={Paper}
+        elevation={4}
+        variant="outlined"
+        sx={{ borderRadius: 4 }}
       >
-        <TableContainer
-          component={Paper}
-          elevation={4}
-          variant="outlined"
-          sx={{ borderRadius: 4 }}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mx: 1,
+            mt: 1,
+          }}
         >
-          <Box
+          <Button
+            component={Link}
+            href="/block-tr"
+            color="primary"
+            endIcon={<ArrowForwardIosRoundedIcon />}
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mx: 1,
-              mt: 1,
+              fontSize: { xs: "1.3rem", sm: "1.5rem" },
+              fontWeight: 700,
+
+              ":hover": {
+                bgcolor: "transparent",
+                textDecoration: "underline",
+              },
             }}
           >
-            <Button
-              component={Link}
-              href="/block-tr"
-              color="primary"
-              endIcon={<ArrowForwardIosRoundedIcon />}
-              sx={{
-                fontSize: "1.5rem",
-                fontWeight: 700,
+            Block Transections
+          </Button>
+          <Chip
+            label={DateTime.fromISO(data[0].date).toFormat("dd MMMM, yyyy")}
+            sx={{
+              mr: 2,
+              px: 1,
+              fontSize: { xs: ".9rem", sm: "1.1rem" },
+              mb: { xs: 2, sm: 0 },
+            }}
+          />
+        </Box>
 
-                ":hover": {
-                  bgcolor: "transparent",
-                  textDecoration: "underline",
+        <Table size="small">
+          <TableHead>
+            <TableRow
+              sx={{
+                ".MuiTableCell-head": {
+                  // fontSize: "1rem",
+                  fontWeight: 700,
+                  color: "text.secondary",
                 },
               }}
             >
-              Block Transections
-            </Button>
-            <Chip
-              label={DateTime.fromISO(data[0].date).toFormat("dd MMMM, yyyy")}
-              sx={{ mr: 2, px: 1, fontSize: "1.1rem" }}
-            />
-          </Box>
-
-          <Table size="small">
-            <TableHead>
-              <TableRow
-                sx={{
-                  ".MuiTableCell-head": {
-                    // fontSize: "1rem",
-                    fontWeight: 700,
-                    color: "text.secondary",
-                  },
-                }}
-              >
-                <TableCell>TRADING CODE</TableCell>
-                <TableCell align="right">TRADE</TableCell>
-                <TableCell align="right">VOLUME</TableCell>
-                <TableCell align="right">VALUE (CRORE)</TableCell>
-                <TableCell align="right">MAX PRICE</TableCell>
-                <TableCell align="right">MIN PRICE</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: any) => (
-                  <TableRow
-                    hover={true}
-                    sx={{
-                      ".MuiTableCell": {
-                        fontSize: "1rem",
-                        fontWeight: 700,
-                      },
-                      "&:nth-of-type(odd)": {
-                        backgroundColor: "financePageBgcolor",
-                      },
-                    }}
-                    key={row._id}
-                  >
-                    {/* <TableCell component="th" scope="row">
+              <TableCell>TRADING CODE</TableCell>
+              <TableCell align="right">TRADE</TableCell>
+              <TableCell align="right">VOLUME</TableCell>
+              <TableCell align="right">VALUE (CRORE)</TableCell>
+              <TableCell align="right">MAX PRICE</TableCell>
+              <TableCell align="right">MIN PRICE</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row: any) => (
+                <TableRow
+                  hover={true}
+                  sx={{
+                    ".MuiTableCell": {
+                      fontSize: "1rem",
+                      fontWeight: 700,
+                    },
+                    "&:nth-of-type(odd)": {
+                      backgroundColor: "financePageBgcolor",
+                    },
+                  }}
+                  key={row._id}
+                >
+                  {/* <TableCell component="th" scope="row">
                         {DateTime.fromISO(row.date).toFormat("dd MMM")}
                       </TableCell> */}
-                    <TableCell align="left">
-                      <Typography
-                        component={Link}
-                        href={`/stock-details/${row.tradingCode}`}
-                        sx={{
-                          color: "primary.main",
-                          ":hover": { textDecoration: "underline" },
-                        }}
-                      >
-                        {row.tradingCode}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">{row.trades}</TableCell>
-                    <TableCell align="right">{row.quantity}</TableCell>
-                    <TableCell align="right">{row.value}</TableCell>
-                    <TableCell align="right">{row.maxPrice}</TableCell>
-                    <TableCell align="right">{row.minPrice}</TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 50, 100]}
-            component="div"
-            count={data.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </TableContainer>
-      </Box>
+                  <TableCell align="left">
+                    <Typography
+                      component={Link}
+                      href={`/stock-details/${row.tradingCode}`}
+                      sx={{
+                        color: "primary.main",
+                        ":hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      {row.tradingCode}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">{row.trades}</TableCell>
+                  <TableCell align="right">{row.quantity}</TableCell>
+                  <TableCell align="right">{row.value}</TableCell>
+                  <TableCell align="right">{row.maxPrice}</TableCell>
+                  <TableCell align="right">{row.minPrice}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </TableContainer>
     </Box>
   );
 }

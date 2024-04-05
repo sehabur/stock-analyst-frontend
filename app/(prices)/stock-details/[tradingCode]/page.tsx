@@ -73,7 +73,10 @@ const addPlusSign = (value: number) => {
 
 const getLatestPrice = (latest: any) => {
   let price, time;
-  if (latest.ltp !== 0) {
+  if (latest.close !== 0) {
+    price = latest.close;
+    time = DateTime.fromISO(latest.time).toFormat("dd MMM, HH:mm");
+  } else if (latest.ltp !== 0) {
     price = latest.ltp;
     time = DateTime.fromISO(latest.time).toFormat("dd MMM, HH:mm");
   } else {
@@ -88,11 +91,19 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-export default async function StockDetails({
-  params: { tradingCode },
-}: {
-  params: { tradingCode: string };
-}) {
+export async function generateStaticParams() {
+  const symbols = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/getStocksList`
+  ).then((res) => res.json());
+
+  return symbols.map((symbol: string) => ({
+    tradingCode: symbol,
+  }));
+}
+
+export default async function StockDetails({ params }: any) {
+  const { tradingCode } = params;
+
   const [stock, news, blocktr] = await Promise.all([
     getStockDetails(tradingCode),
     getNews(tradingCode),
@@ -115,7 +126,7 @@ export default async function StockDetails({
         bgcolor: "background.default",
       }}
     >
-      <Box sx={{ py: 4 }}>
+      <Box sx={{ py: { xs: 2, sm: 4 } }}>
         <Box
           sx={{
             maxWidth: 1250,
@@ -133,7 +144,7 @@ export default async function StockDetails({
               variant="h1"
               sx={{
                 color: "text.primary",
-                fontSize: { xs: "1.8rem", sm: "1.8rem" },
+                fontSize: { xs: "1.5rem", sm: "1.8rem" },
                 fontWeight: 500,
               }}
             >
@@ -205,8 +216,7 @@ export default async function StockDetails({
                   fontSize: { xs: "1.3rem", sm: "1.5rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
-                  ml: 2,
-                  mr: 2,
+                  mx: 2,
                 }}
               >
                 {addPlusSign(stock.latest.change)}
@@ -236,6 +246,7 @@ export default async function StockDetails({
                 <Chip
                   label={stock.isMarketOpen ? "Open" : "Closed"}
                   variant="outlined"
+                  size="small"
                   icon={
                     stock.isMarketOpen ? (
                       <RadioButtonCheckedRoundedIcon color="success" />
@@ -243,13 +254,17 @@ export default async function StockDetails({
                       <DoDisturbOnRoundedIcon color="error" />
                     )
                   }
-                  sx={{ fontSize: "1rem", ml: { xs: 0, sm: 3 } }}
+                  sx={{ fontSize: ".875rem", ml: { xs: 0, sm: 3 }, px: 0.3 }}
                 />
               </Tooltip>
             </Box>
 
             <Typography
-              sx={{ color: "text.secondary", fontSize: "1rem", mt: 1 }}
+              sx={{
+                color: "text.secondary",
+                fontSize: "1rem",
+                mt: { xs: 0.8, sm: 0 },
+              }}
             >
               {latestPriceData.time}
             </Typography>

@@ -174,7 +174,7 @@ const variantMap = [
     type: "gainer",
     variant: "trade",
     title: "Trade",
-    titleSmall: "Trade",
+    titleSmall: "TRD",
     pageTitle: "Top shares by trade",
     pageSubtitle: "Stocks with highest trade today",
     datafield: "gainerTrade",
@@ -185,7 +185,7 @@ const variantMap = [
     type: "loser",
     variant: "trade",
     title: "Trade",
-    titleSmall: "Trade",
+    titleSmall: "Trd",
     pageTitle: "Down shares by trade",
     pageSubtitle: "Stocks with lowest trade today",
     datafield: "loserTrade",
@@ -196,7 +196,7 @@ const variantMap = [
     type: "gainer",
     variant: "volume",
     title: "Volume",
-    titleSmall: "Volume",
+    titleSmall: "Vol",
     pageTitle: "Top shares by volume",
     pageSubtitle: "Stocks with highest volume today",
     datafield: "gainerVolume",
@@ -207,7 +207,7 @@ const variantMap = [
     type: "loser",
     variant: "volume",
     title: "Volume",
-    titleSmall: "Volume",
+    titleSmall: "Vol",
     pageTitle: "Down shares by volume",
     pageSubtitle: "Stocks with lowest volume today",
     datafield: "loserVolume",
@@ -218,7 +218,7 @@ const variantMap = [
     type: "gainer",
     variant: "value",
     title: "Value",
-    titleSmall: "Value",
+    titleSmall: "Val",
     pageTitle: "Top shares by value",
     pageSubtitle: "Stocks with highest value today",
     datafield: "gainerValue",
@@ -229,7 +229,7 @@ const variantMap = [
     type: "loser",
     variant: "value",
     title: "Value",
-    titleSmall: "Value",
+    titleSmall: "Val",
     pageTitle: "Down shares by value",
     pageSubtitle: "Stocks with lowest value today",
     datafield: "loserValue",
@@ -256,6 +256,79 @@ export default function Dashboard({ data }: any) {
     (item) => item.type === typeAlignment && item.variant === variantAlignment
   );
 
+  const mobileColumns: GridColDef[] = [
+    {
+      field: "tradingCode",
+      headerName: "CODE",
+      width: 120,
+      align: "left",
+      headerAlign: "left",
+      disableColumnMenu: true,
+      renderCell: (params) => {
+        return (
+          <Link href={`/stock-details/${params.value}`}>{params.value}</Link>
+        );
+      },
+      cellClassName: styles.tradingCodeCell,
+    },
+    {
+      field: "percentChange",
+      headerName: "CH(%)",
+      align: "right",
+      headerAlign: "right",
+      disableColumnMenu: true,
+      width: 100,
+      cellClassName: (params: any) => {
+        let cellClass;
+        if (params.value < 0) {
+          cellClass = styles.downTrend;
+        } else if (params.value > 0) {
+          cellClass = styles.upTrend;
+        } else {
+          cellClass = styles.neutral;
+        }
+        return cellClass;
+      },
+      valueFormatter: (params) => {
+        return params.value + "%";
+      },
+    },
+    {
+      field: selectedData.datafieldName,
+      headerName: selectedData.columnTitle,
+      align: "right",
+      headerAlign: "right",
+      disableColumnMenu: true,
+      width: 110,
+      cellClassName: (params: any) => {
+        let cellClass;
+        if (params.value < 0) {
+          cellClass = styles.downTrend;
+        } else if (params.value > 0) {
+          cellClass = styles.upTrend;
+        } else {
+          cellClass = styles.neutral;
+        }
+        if (["value", "trade", "volume"].includes(variantAlignment)) {
+          cellClass = "";
+        }
+        return cellClass;
+      },
+      valueFormatter: (params) => {
+        let format;
+        if (["value", "trade", "volume"].includes(variantAlignment)) {
+          if (variantAlignment === "value") {
+            format = params.value * 1000000;
+          } else {
+            format = params.value;
+          }
+        } else {
+          format = params.value + "%";
+        }
+        return format;
+      },
+    },
+  ];
   const columns: GridColDef[] = [
     {
       field: "tradingCode",
@@ -366,7 +439,7 @@ export default function Dashboard({ data }: any) {
   };
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: { xs: 2, sm: 2 } }}>
       <Box
         sx={{
           display: "flex",
@@ -430,36 +503,48 @@ export default function Dashboard({ data }: any) {
         }}
       >
         <Typography
-          sx={{ fontSize: "1.4rem" }}
+          sx={{ fontSize: { xs: "1.3rem", sm: "1.4rem" } }}
           color="text.primary"
           gutterBottom
         >
           {selectedData.pageTitle}
         </Typography>
-        <Typography sx={{ fontSize: "1rem" }} color="text.secondary">
+        <Typography
+          sx={{ fontSize: "1rem", textAlign: "center" }}
+          color="text.secondary"
+        >
           {selectedData.pageSubtitle}
         </Typography>
       </Box>
-
-      <DataGrid
-        rows={data[selectedData.datafield]}
-        columns={columns}
-        hideFooter={true}
-        columnVisibilityModel={{
-          [selectedData.datafieldName]: selectedData.datafieldName
-            ? true
-            : false,
-        }}
-        sx={{
-          ".MuiDataGrid-columnHeader": {
-            color: "text.secondary",
-          },
-          border: "none",
-          width: selectedData.datafieldName ? 950 : 780,
-          mx: "auto",
-          mb: 6,
-        }}
-      />
+      <Box sx={{ width: "100%" }}>
+        <DataGrid
+          rows={data[selectedData.datafield]}
+          columns={matchesSmUp ? columns : mobileColumns}
+          hideFooter={true}
+          columnVisibilityModel={{
+            [selectedData.datafieldName]: selectedData.datafieldName
+              ? true
+              : false,
+          }}
+          sx={{
+            ".MuiDataGrid-columnHeader": {
+              color: "text.secondary",
+            },
+            border: "none",
+            width: matchesSmUp
+              ? selectedData.datafieldName
+                ? 950
+                : 780
+              : selectedData.datafieldName
+              ? "90vw"
+              : "65vw",
+            mx: "auto",
+            mb: 6,
+            fontSize: ".9rem",
+            fontWeight: 500,
+          }}
+        />
+      </Box>
     </Box>
   );
 }
