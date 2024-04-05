@@ -69,7 +69,7 @@ export default function PriceCard(props: { data: Array<{}>; sector: any }) {
           <MenuItem key="all" value="all">
             All Sectors
           </MenuItem>
-          {sectorList.map((option) => (
+          {sectorList.map((option: any) => (
             <MenuItem key={option.tag} value={option.tag}>
               {option.name}
             </MenuItem>
