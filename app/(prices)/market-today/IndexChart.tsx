@@ -35,17 +35,27 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     borderRadius: 3,
   },
 }));
-const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+const StyledToggleButton = styled(ToggleButton)(({ theme }: any) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "24px !important",
     marginRight: "16px",
-    border: `1px solid lightgrey !important`,
+    // border: `1px solid lightgrey !important`,
     paddingLeft: "20px",
     paddingTop: "4px",
     paddingBottom: "4px",
     paddingRight: "20px",
+    "&.Mui-selected": {
+      // color: grey[50],
+      // backgroundColor: theme.palette.primary.main,
+      color: grey[50],
+      backgroundColor: theme.palette.toggleButtonBgColor,
+      // color: theme.palette.background.default,
+      // backgroundColor: theme.palette.text.secondary,
+    },
   },
-  // color: theme.palette.primary.main,
+  color: theme.palette.text.primary,
+  backgroundColor: theme.palette.financeCardTitlecolor,
+  // backgroundColor: theme.palette.financeCardTitlecolor,
   fontSize: ".9rem",
   textTransform: "none",
 }));

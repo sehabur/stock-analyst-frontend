@@ -47,31 +47,35 @@ const addPlusSign = (value: number) => {
 
 export default function GainerCard(props: any) {
   const { item } = props;
+
+  const theme = useTheme();
+
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>
       <Paper
         sx={{
           my: 1,
-          px: { xs: 1, sm: 3 },
+          px: { xs: 2, sm: 3 },
           py: 1.5,
-          borderRadius: { xs: 0, sm: 2 },
+          borderRadius: { xs: 0, sm: 1 },
           ":hover": {
             bgcolor: "financeCardTitlecolor",
           },
-          bgcolor: "gainerCard",
+          bgcolor: { xs: "gainerCardMobileView", sm: "gainerCard" },
         }}
         elevation={0}
         // variant="outlined"
       >
         <Grid container spacing={8} alignItems="center">
-          <Grid item xs={8}>
+          <Grid item xs={7.5} sm={8}>
             <Typography
               noWrap
               gutterBottom
               sx={{
                 fontSize: "1rem",
                 fontWeight: 500,
-                color: { xs: "primary.main", sm: "text.primary" },
+                color: { xs: "primary.main", sm: "primary.main" },
               }}
             >
               {item.companyName}
@@ -107,33 +111,42 @@ export default function GainerCard(props: any) {
                 }}
               />
             </Stack>
+
             <Typography
               sx={{ fontSize: ".875rem", ml: 0.3 }}
-              color="text.primary"
+              color="text.secondary"
             >
-              Vol: {item.volume} | Val: {(item.value / 10).toFixed(2)}cr | Trd:{" "}
-              {item.trade}
+              {matchesSmUp
+                ? ` Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(
+                    2
+                  )}cr | Trd: ${item.trade}`
+                : `Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(
+                    2
+                  )}cr`}
             </Typography>
           </Grid>
 
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={4.5} sm={4}>
             <Stack
               direction="row"
               alignItems="center"
               justifyContent="flex-end"
-              spacing={{ xs: 2, sm: 3.5 }}
+              spacing={{ xs: 2.5, sm: 4 }}
             >
               <Stack direction="column" alignItems="flex-end" sx={{ mr: 0.7 }}>
                 <Typography
                   color="text.primary"
                   sx={{
-                    fontSize: { xs: "1.5rem", sm: "1.3rem" },
+                    fontSize: { xs: "1.4rem", sm: "1.4rem" },
                     fontWeight: 500,
                   }}
                 >
-                  {item.ltp}
+                  {item.ltp.toFixed(1)}
                 </Typography>
-                <Typography sx={{ fontSize: ".875rem" }} color="text.secondary">
+                <Typography
+                  sx={{ fontSize: ".875rem", mt: -0.5 }}
+                  color="text.secondary"
+                >
                   BDT
                 </Typography>
               </Stack>
@@ -149,7 +162,7 @@ export default function GainerCard(props: any) {
                         ? "error.main"
                         : "success.main",
                     fontWeight: 700,
-                    fontSize: ".95rem",
+                    fontSize: ".9rem",
                   }}
                 >
                   {addPlusSign(item.change)}
@@ -161,14 +174,14 @@ export default function GainerCard(props: any) {
                     size="small"
                     sx={{
                       borderRadius: 1,
-                      color: grey[50],
-                      bgcolor:
+                      // color: grey[50],
+                      color:
                         item.change === 0
                           ? "primary.main"
                           : item.change < 0
                           ? "error.main"
                           : "success.main",
-                      fontWeight: 500,
+                      fontWeight: 700,
                       fontSize: ".9rem",
                     }}
                   />

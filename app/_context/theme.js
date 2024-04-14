@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material";
 import { grey, blueGrey } from "@mui/material/colors";
 import darkScrollbar from "@mui/material/darkScrollbar";
 
-const palleteColors = {
+const lightPalleteColors = {
   primary: {
     main: "#2962ff",
     light: "#5381ff",
@@ -19,13 +19,28 @@ const palleteColors = {
     main: "#00A25B",
     light: "#33b47b",
     dark: "#00713f",
+    contrastText: "#fff",
   },
-  // success: {
-  //   main: '#089981',
-  //   light: '#39ad9a',
-  //   dark: '#056b5a',
-  //   contrastText: '#fff',
-  // }, // trading view
+};
+const darkPalleteColors = {
+  primary: {
+    main: "#5381ff",
+    light: "#759aff",
+    dark: "#3a5ab2",
+    contrastText: "#fff",
+  },
+  error: {
+    main: "#f23645",
+    light: "#f45e6a",
+    dark: "#a92530",
+    contrastText: "#fff",
+  },
+  success: {
+    main: "#00A25B",
+    light: "#33b47b",
+    dark: "#00713f",
+    contrastText: "#fff",
+  },
 };
 
 const defaultSettings = {
@@ -35,13 +50,6 @@ const defaultSettings = {
       fontSize: ".875rem",
       fontWeight: 500,
     },
-    // number: {
-    //   fontFamily: "'Nunito Sans', sans-serif",
-    //   fontSize: '.875rem',
-    //   fontWeight: 700,
-    //   lineHeight: 1.5,
-    //   letterSpacing: '0.00938em',
-    // },
   },
   components: {
     MuiButton: {
@@ -63,7 +71,7 @@ const defaultSettings = {
 export const lightTheme = createTheme({
   palette: {
     mode: "light",
-    ...palleteColors,
+    ...lightPalleteColors,
     secondaryBackground: "#f5f7fa",
     financePageBgcolor: "#f0f3f54d",
     financeCardTitlecolor: "#f0f3f5",
@@ -74,6 +82,9 @@ export const lightTheme = createTheme({
     appbarBorderBottom: "#e0e0e0",
     financeInfoCard: "#f5f7fa",
     gainerCard: "#fafafa",
+    gainerCardMobileView: "#f7f7f7",
+    searchCardColor: "#fff",
+    toggleButtonBgColor: "#0288d1",
   },
   ...defaultSettings,
 });
@@ -81,7 +92,7 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     mode: "dark",
-    ...palleteColors,
+    ...darkPalleteColors,
     secondaryBackground: "#151515",
     financePageBgcolor: "#17171780",
     financeCardTitlecolor: "#212121",
@@ -92,6 +103,9 @@ export const darkTheme = createTheme({
     appbarBorderBottom: "#424242",
     financeInfoCard: "#17171740",
     gainerCard: "#191919",
+    gainerCardMobileView: "#191919",
+    searchCardColor: "#212121",
+    toggleButtonBgColor: "#01579b",
   },
   ...defaultSettings,
 });

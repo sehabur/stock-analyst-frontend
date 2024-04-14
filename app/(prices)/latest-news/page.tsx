@@ -31,7 +31,7 @@ export default async function LatestNews() {
           color="text.secondary"
           gutterBottom
           sx={{
-            fontSize: "1.7rem",
+            fontSize: { xs: "1.5rem", sm: "1.7rem" },
             fontWeight: 500,
             textAlign: "center",
             mt: 2,

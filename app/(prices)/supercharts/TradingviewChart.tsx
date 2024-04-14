@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import Datafeed from "./datafeed";
 import { TradingView } from "../../_library/charting_library/charting_library.standalone";
 import { useEffect } from "react";
@@ -6,12 +7,15 @@ import { Box, useTheme } from "@mui/material";
 
 import { useSearchParams } from "next/navigation";
 
+import { useSelector } from "react-redux";
+import ToastMessage from "@/components/shared/ToastMessage";
+
 interface MyWindow extends Window {
   myFunction(): void;
   tvWidget: any;
 }
 
-declare var window: MyWindow;
+declare const window: MyWindow;
 
 const tvWidget: any = TradingView;
 
@@ -21,6 +25,16 @@ export default function TradingviewChart() {
   const searchParams = useSearchParams();
 
   const symbol = searchParams.get("symbol");
+
+  const auth = useSelector((state: any) => state.auth);
+
+  const [toastMessage, setToastMessage] = React.useState("");
+
+  const [toastOpen, setToastOpen] = React.useState(false);
+
+  const handleToastColse = () => {
+    setToastOpen(false);
+  };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -33,6 +47,7 @@ export default function TradingviewChart() {
       container: "tv_chart_container",
       datafeed: Datafeed,
       library_path: "/charting_library/",
+      // fullscreen: true,
       autosize: true,
       symbol: symbol,
       interval: "1D",
@@ -44,16 +59,229 @@ export default function TradingviewChart() {
         backgroundColor: theme.palette.background.default,
         foregroundColor: theme.palette.primary.main,
       },
-      enabled_features: ["study_templates", "chart_template_storage"],
-      // overrides: {
-      //   'paneProperties.background': '#fff',
-      //   'paneProperties.backgroundType': 'solid'
-      // }
-      comparison: {
-        compareButton: {
-          enabled: false, // Enable the compare button
-          text: "Add Comparison", // Custom text for the compare button
-          // You can also customize other properties of the compare button, such as styles
+      enabled_features: ["study_templates"],
+      debug: true,
+      save_load_adapter: {
+        // Charts //
+        getAllCharts: async function () {
+          console.log("getAllCharts");
+          try {
+            const res = await fetch(`/api/chart?getType=all`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+              },
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+              return data;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access chart layout");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        removeChart: async function (chartId: any) {
+          console.log("removeChart");
+          try {
+            const res = await fetch(`/api/chart?id=${chartId}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+              },
+            });
+            const data = await res.json();
+            if (res.ok) {
+              return data;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access chart layout");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        saveChart: async function (chartData: { id: string }) {
+          console.log("saveChart");
+          try {
+            const res = await fetch(`/api/chart`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+              },
+              body: JSON.stringify(chartData),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              console.log("Saved successfully");
+              return data;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access chart layout");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        getChartContent: async function (chartId: any) {
+          console.log("getChartContent");
+          try {
+            const res = await fetch(
+              `/api/chart?getType=content&id=${chartId}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${auth?.token}`,
+                },
+              }
+            );
+
+            const { content } = await res.json();
+            if (res.ok) {
+              console.log(content);
+              return content;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access chart layout");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        // Study Template //
+
+        removeStudyTemplate: async function (studyTemplateData: { name: any }) {
+          console.log("removeStudyTemplate");
+          try {
+            const res = await fetch(
+              `/api/study-template?name=${studyTemplateData.name}`,
+              {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${auth?.token}`,
+                },
+              }
+            );
+            const data = await res.json();
+            if (res.ok) {
+              return data;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access study templates");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        getStudyTemplateContent: async function (studyTemplateData: {
+          name: any;
+        }) {
+          console.log("getStudyTemplateContent");
+          try {
+            const res = await fetch(
+              `/api/study-template?getType=content&name=${studyTemplateData.name}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${auth?.token}`,
+                },
+              }
+            );
+
+            const { content } = await res.json();
+            if (res.ok) {
+              return content;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access study templates");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        saveStudyTemplate: async function (studyTemplateData: {}) {
+          console.log("saveStudyTemplate");
+          try {
+            const res = await fetch(`/api/study-template`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+              },
+              body: JSON.stringify(studyTemplateData),
+            });
+            const data = await res.json();
+            if (res.ok) {
+              console.log("Saved successfully");
+              return data;
+            } else {
+              if (res.status === 401) {
+                setToastMessage("Please signin to access study templates");
+                setToastOpen(true);
+              }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        },
+
+        getAllStudyTemplates: async function () {
+          console.log("getAllStudyTemplates");
+          try {
+            const res = await fetch(`/api/study-template?getType=all`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth?.token}`,
+              },
+            });
+            const data = await res.json();
+            if (res.ok) {
+              return data;
+            } else {
+              // if (res.status === 401) {
+              //   setToastMessage("Please signin to access study templates");
+              //   setToastOpen(true);
+              // }
+              return null;
+            }
+          } catch (error) {
+            console.error(error);
+          }
         },
       },
     }));
@@ -73,12 +301,17 @@ export default function TradingviewChart() {
       id="tv_chart_container"
       sx={{
         width: "100%",
-        // maxWidth: { xs: '100vw', sm: '1290px' },
         height: "100%",
-        mx: "auto",
         py: 2,
         px: 2,
       }}
-    ></Box>
+    >
+      <ToastMessage
+        open={toastOpen}
+        onClose={handleToastColse}
+        severity="warning"
+        message={toastMessage}
+      />
+    </Box>
   );
 }

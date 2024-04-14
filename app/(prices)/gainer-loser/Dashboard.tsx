@@ -10,7 +10,9 @@ import {
 } from "@mui/material";
 import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButtonGroup, {
+  toggleButtonGroupClasses,
+} from "@mui/material/ToggleButtonGroup";
 import AreaChart from "@/components/charts/AreaChart";
 import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
@@ -18,6 +20,8 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import styles from "./Dashboard.module.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+
+import { styled } from "@mui/material/styles";
 
 const variantMap = [
   {
@@ -161,6 +165,204 @@ const variantMap = [
     datafieldName: "fiveYearPercentChange",
     columnTitle: "5 YEAR CHANGE(%)",
   },
+  {
+    type: "value",
+    variant: "1d",
+    title: "Day",
+    titleSmall: "1D",
+    pageTitle: "Daily top values",
+    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    datafield: "valueDaily",
+    datafieldName: null,
+    columnTitle: null,
+  },
+  {
+    type: "value",
+    variant: "1w",
+    title: "Week",
+    titleSmall: "1W",
+    pageTitle: "Weekly top values",
+    pageSubtitle: "Stocks with a price gain against one week before data",
+    datafield: "valueOneWeek",
+    datafieldName: "oneWeekPercentChange",
+    columnTitle: "WEEK CHANGE(%)",
+  },
+  {
+    type: "value",
+    variant: "1m",
+    title: "Month",
+    titleSmall: "1M",
+    pageTitle: "Monthly top values",
+    pageSubtitle: "Stocks with a price gain against one month before data",
+    datafield: "valueOneMonth",
+    datafieldName: "oneMonthPercentChange",
+    columnTitle: "MONTH CHANGE(%)",
+  },
+  {
+    type: "value",
+    variant: "6m",
+    title: "6 Months",
+    titleSmall: "6M",
+    pageTitle: "6 Month top values",
+    pageSubtitle: "Stocks with a price gain against fix month before data",
+    datafield: "valueSixMonth",
+    datafieldName: "sixMonthPercentChange",
+    columnTitle: "6 MONTH CHANGE(%)",
+  },
+  {
+    type: "value",
+    variant: "1y",
+    title: "Year",
+    titleSmall: "1Y",
+    pageTitle: "Yearly top values",
+    pageSubtitle: "Stocks with a price gain against one year before data",
+    datafield: "valueOneYear",
+    datafieldName: "oneYearPercentChange",
+    columnTitle: "YEAR CHANGE(%)",
+  },
+  {
+    type: "value",
+    variant: "5y",
+    title: "5 Years",
+    titleSmall: "5Y",
+    pageTitle: "5 Year top values",
+    pageSubtitle: "Stocks with a price gain against five year before data",
+    datafield: "valueFiveYear",
+    datafieldName: "fiveYearPercentChange",
+    columnTitle: "5 YEAR CHANGE(%)",
+  },
+  {
+    type: "volume",
+    variant: "1d",
+    title: "Day",
+    titleSmall: "1D",
+    pageTitle: "Daily top volumes",
+    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    datafield: "volumeDaily",
+    datafieldName: null,
+    columnTitle: null,
+  },
+  {
+    type: "volume",
+    variant: "1w",
+    title: "Week",
+    titleSmall: "1W",
+    pageTitle: "Weekly top volumes",
+    pageSubtitle: "Stocks with a price gain against one week before data",
+    datafield: "volumeOneWeek",
+    datafieldName: "oneWeekPercentChange",
+    columnTitle: "WEEK CHANGE(%)",
+  },
+  {
+    type: "volume",
+    variant: "1m",
+    title: "Month",
+    titleSmall: "1M",
+    pageTitle: "Monthly top volumes",
+    pageSubtitle: "Stocks with a price gain against one month before data",
+    datafield: "volumeOneMonth",
+    datafieldName: "oneMonthPercentChange",
+    columnTitle: "MONTH CHANGE(%)",
+  },
+  {
+    type: "volume",
+    variant: "6m",
+    title: "6 Months",
+    titleSmall: "6M",
+    pageTitle: "6 Month top volumes",
+    pageSubtitle: "Stocks with a price gain against fix month before data",
+    datafield: "volumeSixMonth",
+    datafieldName: "sixMonthPercentChange",
+    columnTitle: "6 MONTH CHANGE(%)",
+  },
+  {
+    type: "volume",
+    variant: "1y",
+    title: "Year",
+    titleSmall: "1Y",
+    pageTitle: "Yearly top volumes",
+    pageSubtitle: "Stocks with a price gain against one year before data",
+    datafield: "volumeOneYear",
+    datafieldName: "oneYearPercentChange",
+    columnTitle: "YEAR CHANGE(%)",
+  },
+  {
+    type: "volume",
+    variant: "5y",
+    title: "5 Years",
+    titleSmall: "5Y",
+    pageTitle: "5 Year top volumes",
+    pageSubtitle: "Stocks with a price gain against five year before data",
+    datafield: "volumeFiveYear",
+    datafieldName: "fiveYearPercentChange",
+    columnTitle: "5 YEAR CHANGE(%)",
+  },
+  {
+    type: "trade",
+    variant: "1d",
+    title: "Day",
+    titleSmall: "1D",
+    pageTitle: "Daily top trades",
+    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    datafield: "tradeDaily",
+    datafieldName: null,
+    columnTitle: null,
+  },
+  {
+    type: "trade",
+    variant: "1w",
+    title: "Week",
+    titleSmall: "1W",
+    pageTitle: "Weekly top trades",
+    pageSubtitle: "Stocks with a price gain against one week before data",
+    datafield: "tradeOneWeek",
+    datafieldName: "oneWeekPercentChange",
+    columnTitle: "WEEK CHANGE(%)",
+  },
+  {
+    type: "trade",
+    variant: "1m",
+    title: "Month",
+    titleSmall: "1M",
+    pageTitle: "Monthly top trades",
+    pageSubtitle: "Stocks with a price gain against one month before data",
+    datafield: "tradeOneMonth",
+    datafieldName: "oneMonthPercentChange",
+    columnTitle: "MONTH CHANGE(%)",
+  },
+  {
+    type: "trade",
+    variant: "6m",
+    title: "6 Months",
+    titleSmall: "6M",
+    pageTitle: "6 Month top trades",
+    pageSubtitle: "Stocks with a price gain against fix month before data",
+    datafield: "tradeSixMonth",
+    datafieldName: "sixMonthPercentChange",
+    columnTitle: "6 MONTH CHANGE(%)",
+  },
+  {
+    type: "trade",
+    variant: "1y",
+    title: "Year",
+    titleSmall: "1Y",
+    pageTitle: "Yearly top trades",
+    pageSubtitle: "Stocks with a price gain against one year before data",
+    datafield: "tradeOneYear",
+    datafieldName: "oneYearPercentChange",
+    columnTitle: "YEAR CHANGE(%)",
+  },
+  {
+    type: "trade",
+    variant: "5y",
+    title: "5 Years",
+    titleSmall: "5Y",
+    pageTitle: "5 Year top trades",
+    pageSubtitle: "Stocks with a price gain against five year before data",
+    datafield: "tradeFiveYear",
+    datafieldName: "fiveYearPercentChange",
+    columnTitle: "5 YEAR CHANGE(%)",
+  },
   // {
   //   type: "loser",
   //   variant: "alltime",
@@ -170,73 +372,96 @@ const variantMap = [
   //   datafieldName: null,
   //   columnTitle: null,
   // },
-  {
-    type: "gainer",
-    variant: "trade",
-    title: "Trade",
-    titleSmall: "TRD",
-    pageTitle: "Top shares by trade",
-    pageSubtitle: "Stocks with highest trade today",
-    datafield: "gainerTrade",
-    datafieldName: "trade",
-    columnTitle: "TRADE",
-  },
-  {
-    type: "loser",
-    variant: "trade",
-    title: "Trade",
-    titleSmall: "Trd",
-    pageTitle: "Down shares by trade",
-    pageSubtitle: "Stocks with lowest trade today",
-    datafield: "loserTrade",
-    datafieldName: "trade",
-    columnTitle: "TRADE",
-  },
-  {
-    type: "gainer",
-    variant: "volume",
-    title: "Volume",
-    titleSmall: "Vol",
-    pageTitle: "Top shares by volume",
-    pageSubtitle: "Stocks with highest volume today",
-    datafield: "gainerVolume",
-    datafieldName: "volume",
-    columnTitle: "VOLUME",
-  },
-  {
-    type: "loser",
-    variant: "volume",
-    title: "Volume",
-    titleSmall: "Vol",
-    pageTitle: "Down shares by volume",
-    pageSubtitle: "Stocks with lowest volume today",
-    datafield: "loserVolume",
-    datafieldName: "volume",
-    columnTitle: "VOLUME",
-  },
-  {
-    type: "gainer",
-    variant: "value",
-    title: "Value",
-    titleSmall: "Val",
-    pageTitle: "Top shares by value",
-    pageSubtitle: "Stocks with highest value today",
-    datafield: "gainerValue",
-    datafieldName: "value",
-    columnTitle: "VALUE (BDT)",
-  },
-  {
-    type: "loser",
-    variant: "value",
-    title: "Value",
-    titleSmall: "Val",
-    pageTitle: "Down shares by value",
-    pageSubtitle: "Stocks with lowest value today",
-    datafield: "loserValue",
-    datafieldName: "value",
-    columnTitle: "VALUE (BDT)",
-  },
+  // {
+  //   type: "gainer",
+  //   variant: "trade",
+  //   title: "Trade",
+  //   titleSmall: "TRD",
+  //   pageTitle: "Top shares by trade",
+  //   pageSubtitle: "Stocks with highest trade today",
+  //   datafield: "gainerTrade",
+  //   datafieldName: "trade",
+  //   columnTitle: "TRADE",
+  // },
+  // {
+  //   type: "loser",
+  //   variant: "trade",
+  //   title: "Trade",
+  //   titleSmall: "Trd",
+  //   pageTitle: "Down shares by trade",
+  //   pageSubtitle: "Stocks with lowest trade today",
+  //   datafield: "loserTrade",
+  //   datafieldName: "trade",
+  //   columnTitle: "TRADE",
+  // },
+  // {
+  //   type: "gainer",
+  //   variant: "volume",
+  //   title: "Volume",
+  //   titleSmall: "Vol",
+  //   pageTitle: "Top shares by volume",
+  //   pageSubtitle: "Stocks with highest volume today",
+  //   datafield: "gainerVolume",
+  //   datafieldName: "volume",
+  //   columnTitle: "VOLUME",
+  // },
+  // {
+  //   type: "loser",
+  //   variant: "volume",
+  //   title: "Volume",
+  //   titleSmall: "Vol",
+  //   pageTitle: "Down shares by volume",
+  //   pageSubtitle: "Stocks with lowest volume today",
+  //   datafield: "loserVolume",
+  //   datafieldName: "volume",
+  //   columnTitle: "VOLUME",
+  // },
+  // {
+  //   type: "gainer",
+  //   variant: "value",
+  //   title: "Value",
+  //   titleSmall: "Val",
+  //   pageTitle: "Top shares by value",
+  //   pageSubtitle: "Stocks with highest value today",
+  //   datafield: "gainerValue",
+  //   datafieldName: "value",
+  //   columnTitle: "VALUE (BDT)",
+  // },
+  // {
+  //   type: "loser",
+  //   variant: "value",
+  //   title: "Value",
+  //   titleSmall: "Val",
+  //   pageTitle: "Down shares by value",
+  //   pageSubtitle: "Stocks with lowest value today",
+  //   datafield: "loserValue",
+  //   datafieldName: "value",
+  //   columnTitle: "VALUE (BDT)",
+  // },
 ];
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  [`& .${toggleButtonGroupClasses.grouped}`]: {
+    border: 0,
+    borderRadius: 3,
+  },
+}));
+const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+  "&.MuiToggleButtonGroup-grouped": {
+    borderRadius: "5px !important",
+    marginRight: "12px",
+    border: `1px solid #2962ff !important`,
+    paddingLeft: "12px",
+    paddingTop: "4px",
+    paddingBottom: "4px",
+    paddingRight: "12px",
+    "&.Mui-selected": {
+      color: grey[50],
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+  color: theme.palette.primary.main,
+}));
 
 export default function Dashboard({ data }: any) {
   const searchParams = useSearchParams();
@@ -338,7 +563,16 @@ export default function Dashboard({ data }: any) {
       headerAlign: "left",
       renderCell: (params) => {
         return (
-          <Link href={`/stock-details/${params.value}`}>{params.value}</Link>
+          <Typography
+            component={Link}
+            href={`/stock-details/${params.value}`}
+            sx={{
+              color: "primary.main",
+              ":hover": { textDecoration: "underline" },
+            }}
+          >
+            {params.value}
+          </Typography>
         );
       },
       cellClassName: styles.tradingCodeCell,
@@ -455,11 +689,20 @@ export default function Dashboard({ data }: any) {
           onChange={handleTypeAlignmentChange}
           aria-label="Platform"
         >
-          <ToggleButton value="gainer" sx={{ px: 4 }}>
+          <ToggleButton value="gainer" sx={{ px: { xs: 1.4, sm: 4 } }}>
             Gainer
           </ToggleButton>
-          <ToggleButton value="loser" sx={{ px: 4 }}>
-            Looser
+          <ToggleButton value="loser" sx={{ px: { xs: 1.4, sm: 4 } }}>
+            Loser
+          </ToggleButton>
+          <ToggleButton value="volume" sx={{ px: { xs: 1.4, sm: 4 } }}>
+            Volume
+          </ToggleButton>
+          <ToggleButton value="value" sx={{ px: { xs: 1.4, sm: 4 } }}>
+            Value
+          </ToggleButton>
+          <ToggleButton value="trade" sx={{ px: { xs: 1.4, sm: 4 } }}>
+            Trade
           </ToggleButton>
         </ToggleButtonGroup>
       </Box>
@@ -472,9 +715,9 @@ export default function Dashboard({ data }: any) {
           mb: 2,
         }}
       >
-        <ToggleButtonGroup
+        <StyledToggleButtonGroup
           size="small"
-          color="primary"
+          // color="primary"
           value={variantAlignment}
           exclusive
           onChange={handleVariantAlignmentChange}
@@ -483,15 +726,15 @@ export default function Dashboard({ data }: any) {
           {variantMap
             .filter((item) => item.type === "gainer")
             .map((item) => (
-              <ToggleButton
+              <StyledToggleButton
                 value={item.variant}
                 key={item.variant}
                 sx={{ px: { xs: 1.5, sm: 2.5 } }}
               >
                 {matchesSmUp ? item.title : item.titleSmall}
-              </ToggleButton>
+              </StyledToggleButton>
             ))}
-        </ToggleButtonGroup>
+        </StyledToggleButtonGroup>
       </Box>
       <Box
         sx={{

@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material';
-import BlockTransection from './BlockTransection';
+import { Box, Typography } from "@mui/material";
+import BlockTransection from "./BlockTransection";
 
 const getBlockTr = async () => {
   const res = await fetch(
@@ -9,7 +9,7 @@ const getBlockTr = async () => {
     }
   );
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
   return res.json();
 };
@@ -17,13 +17,12 @@ const getBlockTr = async () => {
 export default async function BlockTr() {
   const data = await getBlockTr();
   return (
-    <Box component="main" sx={{ bgcolor: 'background.default' }}>
+    <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
         sx={{
-          maxWidth: { sm: '1280px' },
-          mx: 'auto',
+          maxWidth: { sm: "1280px" },
+          mx: "auto",
           py: 2,
-          px: 2,
         }}
       >
         <Typography
@@ -31,9 +30,9 @@ export default async function BlockTr() {
           color="text.secondary"
           gutterBottom
           sx={{
-            fontSize: '1.8rem',
+            fontSize: "1.8rem",
             fontWeight: 500,
-            textAlign: 'center',
+            textAlign: "center",
             mt: 2,
           }}
         >

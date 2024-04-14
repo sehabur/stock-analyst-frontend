@@ -22,13 +22,20 @@ export default async function Page() {
       component="main"
       sx={{
         bgcolor: "background.default",
-
         display: "flex",
-        height: "90vh",
+        flexDirection: { xs: "column", sm: "row" },
       }}
     >
-      <TradingviewChart />
-      <Box sx={{ width: 260 }}>
+      <Box sx={{ height: { xs: 600, sm: "90vh" }, width: "100%" }}>
+        <TradingviewChart />
+      </Box>
+      <Box
+        sx={{
+          width: { xs: "90vw", sm: 260 },
+          mx: "auto",
+          py: { xs: 2, sm: 0 },
+        }}
+      >
         <Gainers data={gainerLoserData} />
       </Box>
     </Box>

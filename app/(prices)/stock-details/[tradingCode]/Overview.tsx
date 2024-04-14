@@ -91,7 +91,7 @@ const formatCandleChartData = (data: any) => {
       time: DateTime.fromISO(item.date).plus({ hours: 6 }).toUnixInteger(),
       value: item.volume,
       color:
-        close > open ? "#22ab94aa" : open > close ? "#f7525faa" : "#2962ffaa",
+        close > open ? "#22ab9488" : open > close ? "#f7525f88" : "#2962ff88",
     });
   }
 

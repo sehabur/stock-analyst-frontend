@@ -13,6 +13,11 @@
   border-radius: 2px;
 }
 
+span {
+  margin-left: 2px;
+  margin-right: 4px;
+}
+
 .custom-tooltip-candle-volume {
   position: absolute;
   display: none;

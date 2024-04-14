@@ -18,7 +18,8 @@ import Link from "next/link";
 
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
-import Trades from "./Trades";
+import Trades from "./_component/Trades";
+import FavoriteButton from "./_component/FavoriteButton";
 
 const getStockDetails = async (tradingCode: string) => {
   const res = await fetch(
@@ -273,12 +274,13 @@ export default async function StockDetails({ params }: any) {
               tradingCode={stock.fundamentals.tradingCode}
             />
           </Box>
-          <Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <FavoriteButton tradingCode={stock.fundamentals.tradingCode} />
             <Button
               component={Link}
               href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
               target="_blank"
-              sx={{ borderRadius: 2, mt: 0.2 }}
+              sx={{ borderRadius: 2, mt: 0.2, py: 1 }}
               variant="outlined"
             >
               See on Supercharts

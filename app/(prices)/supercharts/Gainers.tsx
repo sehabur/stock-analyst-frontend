@@ -32,6 +32,8 @@ import AccordionActions from "@mui/material/AccordionActions";
 // import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import KeyboardArrowDownRoundedIcon from "@mui/icons-material/KeyboardArrowDownRounded";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -56,7 +58,7 @@ const Accordion = styled((props: AccordionProps) => (
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.8rem" }} />}
+    expandIcon={<KeyboardArrowDownRoundedIcon sx={{ fontSize: "1.3rem" }} />}
     {...props}
   />
 ))(({ theme }) => ({
@@ -65,13 +67,10 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
       ? "rgba(255, 255, 255, .05)"
       : "rgba(0, 0, 0, .03)",
   flexDirection: "row-reverse",
-  //   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-  //     transform: "rotate(180deg)",
-  //   },
   "& .MuiAccordionSummary-content": {
     margin: theme.spacing(1),
   },
-  fontSize: "1rem",
+  fontSize: ".9rem",
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
@@ -118,13 +117,7 @@ export default function Gainers(props: any) {
           <TableContainer component={Paper} elevation={0}>
             <Table size="small">
               <TableHead>
-                <TableRow
-                  sx={{
-                    ".MuiTableCell-head": {
-                      fontWeight: 700,
-                    },
-                  }}
-                >
+                <TableRow>
                   <TableCell align="left">SYMBOL</TableCell>
                   <TableCell align="right">LTP</TableCell>
                   <TableCell align="right">CH(%)</TableCell>
@@ -137,7 +130,7 @@ export default function Gainers(props: any) {
                     hover={true}
                     sx={{
                       "&:nth-of-type(odd)": {
-                        backgroundColor: "financePageBgcolor",
+                        backgroundColor: "gainerCard",
                       },
                       "&:last-child td, &:last-child th": {
                         border: 0,
@@ -191,7 +184,7 @@ export default function Gainers(props: any) {
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
-                      fontWeight: 700,
+                      fontWeight: 500,
                     },
                   }}
                 >
@@ -259,7 +252,7 @@ export default function Gainers(props: any) {
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
-                      fontWeight: 700,
+                      fontWeight: 500,
                     },
                   }}
                 >
@@ -327,7 +320,7 @@ export default function Gainers(props: any) {
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
-                      fontWeight: 700,
+                      fontWeight: 500,
                     },
                   }}
                 >
@@ -395,7 +388,7 @@ export default function Gainers(props: any) {
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
-                      fontWeight: 700,
+                      fontWeight: 500,
                     },
                   }}
                 >

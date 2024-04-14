@@ -111,6 +111,10 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     paddingTop: "4px",
     paddingBottom: "4px",
     paddingRight: "12px",
+    "&.Mui-selected": {
+      color: theme.palette.background.default,
+      backgroundColor: theme.palette.text.secondary,
+    },
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",

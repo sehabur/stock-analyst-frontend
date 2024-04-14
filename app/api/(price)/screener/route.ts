@@ -1,10 +1,11 @@
-export async function POST(request: Request) {
+import { NextResponse, NextRequest } from "next/server";
+
+export async function POST(request: NextRequest) {
   const body: any = new Response(request.body);
 
   const reqBody = await body.json();
 
   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/screener`, {
-    next: { revalidate: 0 },
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,5 +19,5 @@ export async function POST(request: Request) {
 
   const data = await res.json();
 
-  return Response.json(data);
+  return NextResponse.json(data);
 }

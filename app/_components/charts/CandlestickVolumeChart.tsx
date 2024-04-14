@@ -79,7 +79,7 @@ export default function CandlestickVolumeChart(props: any) {
     candleSeries.priceScale().applyOptions({
       scaleMargins: {
         top: 0.1,
-        bottom: 0.3,
+        bottom: 0.25,
       },
     });
 
@@ -149,7 +149,7 @@ export default function CandlestickVolumeChart(props: any) {
         //         Volume: ${volumeData.value}
         //         </div></div>`;
 
-        tooltip.current.innerHTML = `O<span style="color: ${candleData.color}">${candleData.open}</span> H<span style="color: ${candleData.color}">${candleData.high}</span> L<span style="color: ${candleData.color}">${candleData.low}</span> C<span style="color: ${candleData.color}">${candleData.close}</span> V<span style="color: ${candleData.color}">${volumeData.value}</span>`;
+        tooltip.current.innerHTML = `O<span style="color: ${candleData.color}">${candleData.open}</span> H<span style="color: ${candleData.color}">${candleData.high}</span> L<span style="color: ${candleData.color}">${candleData.low}</span> C<span style="color: ${candleData.color}">${candleData.close}</span> Vol<span style="color: ${candleData.color}">${volumeData.value}</span>`;
 
         // const y = param.point.y;
         // let left = param.point.x + toolTipMargin;

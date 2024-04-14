@@ -32,7 +32,11 @@ import Link from "next/link";
 export default function BlockTransection({ data }: any) {
   return (
     <Box
-      sx={{ maxWidth: "1020px", mx: "auto", py: 4, px: 2, overflow: "hidden" }}
+      sx={{
+        maxWidth: "1020px",
+        mx: "auto",
+        py: 4,
+      }}
     >
       <TableContainer
         component={Paper}
@@ -44,16 +48,17 @@ export default function BlockTransection({ data }: any) {
             <TableRow
               sx={{
                 ".MuiTableCell-head": {
-                  fontSize: "1.1rem",
+                  fontSize: "1rem",
                   fontWeight: 700,
+                  pb: 1,
                 },
               }}
             >
               <TableCell>Date</TableCell>
               <TableCell>Trading Code</TableCell>
-              <TableCell align="right">Trades</TableCell>
               <TableCell align="right">Volume</TableCell>
-              <TableCell align="right">Value(Crore)</TableCell>
+              <TableCell align="right">Value (Crore)</TableCell>
+              <TableCell align="right">Trades</TableCell>
               <TableCell align="right">Max Price</TableCell>
               <TableCell align="right">Min Price</TableCell>
             </TableRow>
@@ -73,7 +78,7 @@ export default function BlockTransection({ data }: any) {
                   },
                 }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="th" scope="row" sx={{ minWidth: 80 }}>
                   {DateTime.fromISO(row.date).toFormat("dd MMM")}
                 </TableCell>
                 <TableCell align="left">
@@ -88,9 +93,9 @@ export default function BlockTransection({ data }: any) {
                     {row.tradingCode}
                   </Typography>
                 </TableCell>
-                <TableCell align="right">{row.trades}</TableCell>
                 <TableCell align="right">{row.quantity}</TableCell>
                 <TableCell align="right">{row.value}</TableCell>
+                <TableCell align="right">{row.trades}</TableCell>
                 <TableCell align="right">{row.maxPrice}</TableCell>
                 <TableCell align="right">{row.minPrice}</TableCell>
               </TableRow>

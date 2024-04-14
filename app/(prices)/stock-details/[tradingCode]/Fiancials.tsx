@@ -46,9 +46,9 @@ import FinancialCard from "@/components/cards/FinancialCard";
 import InfoIcon from "@mui/icons-material/Info";
 import Link from "next/link";
 import { fundamentalsTooltip } from "@/data/info";
-import FundamentalInfoCard from "(prices)/stock-details/[tradingCode]/FundamentalInfoCard";
+import FundamentalInfoCard from "./_component/FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
-import FundamentalsDialogContent from "./FundamentalsDialogContent";
+import FundamentalsDialogContent from "./_component/FundamentalsDialogContent";
 
 const formatYearlyData = (data: any, divideFactor = 1) => {
   if (!data) return;
@@ -1484,7 +1484,9 @@ export default function Financials({ data }: any) {
                 >
                   Overview
                 </Typography>
-                <Typography>{data.screener.dividendYield?.overview}</Typography>
+                <Typography color="text.primary">
+                  {data.screener.dividendYield?.overview}
+                </Typography>
                 <Typography
                   color="text.primary"
                   sx={{ fontSize: "1rem", fontWeight: 700, my: 0, mt: 3 }}

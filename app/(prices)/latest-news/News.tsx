@@ -47,15 +47,15 @@ const options: any = [
     search: "dividend",
   },
   {
-    title: "RECORD DATE",
-    search: "record date",
-  },
-  {
     title: "AGM",
     search: "agm",
   },
   {
-    title: "Q FINANCIALS",
+    title: "RECORD DATE",
+    search: "record date",
+  },
+  {
+    title: "FINANCIALS",
     search: "Q[0-9]",
   },
 ];
@@ -82,7 +82,6 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 }));
 
 export default function News({ data }: any) {
-  console.log(data);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [dialogContent, setDialogContent] = useState<any>({});
@@ -180,7 +179,7 @@ export default function News({ data }: any) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            mb: 4,
+            mb: { xs: 2, sm: 4 },
           }}
         >
           <StyledToggleButtonGroup
@@ -189,11 +188,17 @@ export default function News({ data }: any) {
             exclusive
             onChange={handleAlignmentChange}
             aria-label="Platform"
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
           >
             {options.map((item: any, index: number) => (
               <StyledToggleButton
                 value={item.search}
-                sx={{ px: 2 }}
+                sx={{ px: 2, mb: 1 }}
                 onClick={handleDataChange}
                 key={index}
               >
