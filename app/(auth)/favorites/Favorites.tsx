@@ -195,8 +195,8 @@ export default function Favorites() {
         </Button>
       </Box>
       <Box>
-        {favStockCard?.map((stock: any) => (
-          <Box sx={{ my: { xs: 1, sm: 1.7 } }}>
+        {favStockCard?.map((stock: any, index: number) => (
+          <Box sx={{ my: { xs: 1, sm: 1.7 } }} key={index}>
             <FavoriteStocksCard data={stock} />
           </Box>
         ))}
