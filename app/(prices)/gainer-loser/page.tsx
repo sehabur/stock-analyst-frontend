@@ -1,6 +1,6 @@
-import SingleBarChart from '@/components/charts/HorizontalBarChart';
-import { Grid, Box } from '@mui/material';
-import Dashboard from './Dashboard';
+import SingleBarChart from "@/components/charts/HorizontalBarChart";
+import { Grid, Box } from "@mui/material";
+import Dashboard from "./Dashboard";
 
 async function getData() {
   const res = await fetch(
@@ -10,21 +10,19 @@ async function getData() {
     }
   );
   if (!res.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
   return res.json();
 }
 
 export default async function GainerLooser() {
-  // const { type, variant } = props.searchParams;
-
   const data = await getData();
 
   return (
     <Box
       component="main"
       sx={{
-        bgcolor: 'background.default',
+        bgcolor: "background.default",
       }}
     >
       <Dashboard data={data} />

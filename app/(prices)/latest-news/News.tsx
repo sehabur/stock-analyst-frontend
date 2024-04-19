@@ -212,7 +212,7 @@ export default function News({ data }: any) {
           direction="row"
           justifyContent="flex-start"
           alignItems="stretch"
-          spacing={3}
+          spacing={{ xs: 1.5, sm: 2.5 }}
         >
           {news.map((item: any) => (
             <Grid item xs={12} sm={4} key={item._id}>

@@ -511,7 +511,7 @@ export default function Financials({ data }: any) {
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
-                      mx: 10,
+                      mx: { xs: 3, sm: 10 },
                       textAlign: "center",
                       color: data.pe.color,
                     }}
@@ -616,7 +616,7 @@ export default function Financials({ data }: any) {
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
-                      mx: 10,
+                      mx: { xs: 3, sm: 10 },
                       textAlign: "center",
                       color: data.pbv.color,
                     }}
@@ -723,7 +723,7 @@ export default function Financials({ data }: any) {
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
-                      mx: 10,
+                      mx: { xs: 3, sm: 10 },
                       textAlign: "center",
                       color: data.screener.ps.color,
                     }}
@@ -829,7 +829,7 @@ export default function Financials({ data }: any) {
                       fontWeight: 700,
                       mt: 4,
                       mb: 6,
-                      mx: 10,
+                      mx: { xs: 3, sm: 10 },
                       textAlign: "center",
                       color: data.pcf.color,
                     }}

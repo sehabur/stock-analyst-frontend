@@ -1,0 +1,13 @@
+.sector-value-chart-title {
+  background: #212121;
+  padding: 6px 12px;
+}
+.sector-value-chart {
+  background-color: rgba(33, 33, 33, 0.02);
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+}
+.sector-value-chart-content {
+  padding: 8px 12px;
+  opacity: 0.95;
+}

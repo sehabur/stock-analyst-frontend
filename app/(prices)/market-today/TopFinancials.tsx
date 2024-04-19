@@ -172,7 +172,7 @@ export default function TopFinancials(props: any) {
         </Button>
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ mt: 0.2 }}>
+        <Box sx={{ mt: 0.2, minWidth: 125 }}>
           <StyledToggleButtonGroup
             size="small"
             value={alignment}

@@ -68,6 +68,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/navigation";
 
 import ToastMessage from "@/components/shared/ToastMessage";
+import SearchStockCard from "./cards/SearchStockCard";
 
 const TransitionSlide = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -97,6 +98,8 @@ export default function Header(props: any) {
   const themeColor = useSelector((state: any) => state.themeColor);
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const latestPrice = useSelector((state: any) => state.latestPrice);
 
@@ -307,7 +310,14 @@ export default function Header(props: any) {
   const loggedInUserMenu = (
     <>
       <Typography
-        sx={{ px: 2, pt: 2, pb: 1.5, fontSize: "1rem", textAlign: "center" }}
+        sx={{
+          pl: 3,
+          pr: 2,
+          pt: 2,
+          pb: 1.5,
+          fontSize: "1rem",
+          textAlign: "left",
+        }}
         color="text.secondary"
       >
         Hello, {auth?.name}
@@ -727,7 +737,7 @@ export default function Header(props: any) {
               justifyContent: "center",
             }}
           >
-            {!matchesSmUp && (
+            {matchesSmDown && (
               <IconButton
                 aria-label="delete"
                 sx={{
@@ -766,19 +776,25 @@ export default function Header(props: any) {
               aria-label="delete"
               sx={{
                 borderRadius: 3,
-                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                border: {
+                  xs: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                  sm: `1.2px solid ${alpha(theme.palette.warning.main, 0.2)}`,
+                },
                 padding: { xs: 0.5, sm: 0.8 },
-                bgcolor: alpha(theme.palette.primary.main, 0.03),
+                bgcolor: {
+                  xs: alpha(theme.palette.primary.main, 0.03),
+                  sm: alpha(theme.palette.warning.main, 0.03),
+                },
                 mx: { xs: 0.8, sm: 1 },
               }}
               aria-owns={openUser ? "user-mouse-over-popover" : undefined}
               aria-haspopup="true"
               onClick={handleUserPopoverOpen}
             >
-              <PersonOutlineRoundedIcon color="primary" />
+              <PersonOutlineRoundedIcon color="warning" />
             </IconButton>
 
-            {!matchesSmUp && (
+            {matchesSmDown && (
               <>
                 <IconButton
                   aria-label="delete"
@@ -803,34 +819,6 @@ export default function Header(props: any) {
                 </IconButton>
               </>
             )}
-
-            {/* {matchesSmUp && (
-              <>
-                <Avatar>
-                  <PersonOutlineRoundedIcon />
-                </Avatar>
-                <Button
-                  aria-owns={openUser ? "user-mouse-over-popover" : undefined}
-                  aria-haspopup="true"
-                  onClick={handleUserPopoverOpen}
-                  endIcon={<ExpandMoreRoundedIcon />}
-                  variant="outlined"
-                  color="primary"
-                  // size="small"
-                  sx={{
-                    ".MuiButton-endIcon": {
-                      ml: 0,
-                    },
-                    borderRadius: 3,
-                    px: 2.2,
-                    ml: 1.5,
-                    bgcolor: alpha(theme.palette.primary.main, 0.03),
-                  }}
-                >
-                  Sign in
-                </Button>
-              </>
-            )} */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -972,7 +960,7 @@ export default function Header(props: any) {
         open={openSearchDialog}
         onClose={handleSearchDialogClose}
         fullWidth
-        fullScreen={!matchesSmUp}
+        fullScreen={matchesSmDown}
         disableScrollLock={true}
         TransitionComponent={matchesSmUp ? TransitionFade : TransitionSlide}
         sx={{ "& .MuiDialog-paper": { borderRadius: 3 } }}
@@ -999,160 +987,17 @@ export default function Header(props: any) {
             </IconButton>
           </Box>
         </DialogTitle>
-        <DialogContent dividers sx={{ px: { xs: 1.5, sm: 4 } }}>
+        <DialogContent dividers sx={{ px: { xs: 2, sm: 4 } }}>
           <Box sx={{ height: "450px" }}>
             <Box>
               {searchResult.map((item: any) => (
-                <Box
-                  component={Link}
-                  href={`/stock-details/${item.tradingCode}`}
-                  key={item.tradingCode}
-                  onClick={handleSearchDialogClose}
-                >
-                  <Paper
-                    sx={{
-                      mb: { xs: 1, sm: 1.5 },
-                      px: { xs: 1.5, sm: 3 },
-                      py: 1,
-                      borderRadius: 2,
-                      ":hover": {
-                        bgcolor: "secondaryBackground",
-                      },
-                      bgcolor: "searchCardColor",
-                    }}
-                    elevation={0}
-                    variant="outlined"
+                <Box key={item.tradingCode} onClick={handleSearchDialogClose}>
+                  <Box
+                    component={Link}
+                    href={`/stock-details/${item.tradingCode}`}
                   >
-                    <Grid container alignItems="center" spacing={3}>
-                      <Grid item xs={8} sm={9.3}>
-                        <Typography
-                          gutterBottom
-                          noWrap
-                          sx={{
-                            fontSize: "1rem",
-                            fontWeight: 700,
-                            color: "primary.main",
-                          }}
-                        >
-                          {item.tradingCode}
-                        </Typography>
-                        {/* <Typography
-                          gutterBottom
-                          noWrap
-                          sx={{
-                            fontSize: "1rem",
-                            fontWeight: 500,
-                            color: "text.primary",
-                          }}
-                        >
-                          {item.companyName}
-                        </Typography> */}
-                        {/* <Stack
-                          direction="row"
-                          alignItems="center"
-                          sx={{ mb: 0.5 }}
-                        >
-                          <Chip
-                            label={item.tradingCode}
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            sx={{
-                              borderRadius: 1,
-                              fontWeight: 700,
-                              mr: { xs: 0.5, sm: 2 },
-                            }}
-                          />
-                          <Chip
-                            label={item.category}
-                            size="small"
-                            sx={{
-                              mr: { xs: 0.5, sm: 1 },
-                            }}
-                          />
-                          <Chip
-                            label={
-                              matchesSmUp
-                                ? item.sector
-                                : item.sector.substring(0, 12) +
-                                  (item.sector.length > 12 ? ".." : "")
-                            }
-                            variant="outlined"
-                            size="small"
-                            sx={{ px: 0.5 }}
-                          />
-                        </Stack> */}
-                        <Typography color="text.secondary">
-                          Vol: {item.volume} | Val:{" "}
-                          {(item.value / 10).toFixed(2)}
-                          cr | Trd: {item.trade}
-                        </Typography>
-                      </Grid>
-
-                      <Grid item xs={4} sm={2.7}>
-                        <Stack
-                          direction="row"
-                          alignItems="baseline"
-                          sx={{ mr: 0.7 }}
-                        >
-                          <Typography
-                            sx={{
-                              fontSize: { xs: "1.3rem", sm: "1.5rem" },
-                              fontWeight: 500,
-                              color:
-                                item.change === 0
-                                  ? "primary.main"
-                                  : item.change < 0
-                                  ? "error.main"
-                                  : "success.main",
-                            }}
-                          >
-                            {item.ltp}
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: ".85rem", ml: 0.5 }}
-                            color="text.secondary"
-                          >
-                            BDT
-                          </Typography>
-                        </Stack>
-                        <Stack direction="row" alignItems="center">
-                          <Chip
-                            label={item.change}
-                            size="small"
-                            sx={{
-                              borderRadius: 1,
-                              mr: 1,
-                              color:
-                                item.change === 0
-                                  ? "primary.main"
-                                  : item.change < 0
-                                  ? "error.main"
-                                  : "success.main",
-                              fontWeight: 500,
-                            }}
-                          />
-
-                          {item.change !== 0 && (
-                            <Chip
-                              label={`${item.percentChange}%`}
-                              size="small"
-                              sx={{
-                                borderRadius: 1,
-                                color:
-                                  item.change === 0
-                                    ? "primary.main"
-                                    : item.change < 0
-                                    ? "error.main"
-                                    : "success.main",
-                                fontWeight: 500,
-                              }}
-                            />
-                          )}
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Paper>
+                    <SearchStockCard data={item} />
+                  </Box>
                 </Box>
               ))}
               {searchResult.length === 0 && (

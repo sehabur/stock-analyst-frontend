@@ -44,7 +44,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against one week before data",
     datafield: "gainerOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE(%)",
+    columnTitle: "WEEK CHANGE (%)",
   },
   {
     type: "gainer",
@@ -55,7 +55,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against one month before data",
     datafield: "gainerOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE(%)",
+    columnTitle: "MONTH CHANGE (%)",
   },
   {
     type: "gainer",
@@ -66,7 +66,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against fix month before data",
     datafield: "gainerSixMonth",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE(%)",
+    columnTitle: "6 MONTH CHANGE",
   },
   {
     type: "gainer",
@@ -77,7 +77,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against one year before data",
     datafield: "gainerOneYear",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE(%)",
+    columnTitle: "YEAR CHANGE",
   },
   {
     type: "gainer",
@@ -88,7 +88,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against five year before data",
     datafield: "gainerFiveYear",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE(%)",
+    columnTitle: "5 YEAR CHANGE",
   },
   // {
   //   type: "gainer",
@@ -119,7 +119,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price lose against one week before data",
     datafield: "loserOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE(%)",
+    columnTitle: "WEEK CHANGE",
   },
   {
     type: "loser",
@@ -130,7 +130,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price lose against one month before data",
     datafield: "loserOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE(%)",
+    columnTitle: "MONTH CHANGE",
   },
   {
     type: "loser",
@@ -141,7 +141,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price lose against fix month before data",
     datafield: "loserSixMonth",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE(%)",
+    columnTitle: "6 MONTH CHANGE",
   },
   {
     type: "loser",
@@ -152,7 +152,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price lose against one year before data",
     datafield: "loserOneYear",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE(%)",
+    columnTitle: "YEAR CHANGE",
   },
   {
     type: "loser",
@@ -163,7 +163,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price lose against five year before data",
     datafield: "loserFiveYear",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE(%)",
+    columnTitle: "5 YEAR CHANGE",
   },
   {
     type: "value",
@@ -171,10 +171,10 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top values",
-    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    pageSubtitle: "Stocks with a value gain against the previous day's value",
     datafield: "valueDaily",
     datafieldName: null,
-    columnTitle: null,
+    columnTitle: "VALUE (MN)",
   },
   {
     type: "value",
@@ -182,10 +182,10 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top values",
-    pageSubtitle: "Stocks with a price gain against one week before data",
+    pageSubtitle: "Stocks with a value gain against one week before value",
     datafield: "valueOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE(%)",
+    columnTitle: "WEEK CHANGE",
   },
   {
     type: "value",
@@ -193,10 +193,10 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top values",
-    pageSubtitle: "Stocks with a price gain against one month before data",
+    pageSubtitle: "Stocks with a value gain against one month before value",
     datafield: "valueOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE(%)",
+    columnTitle: "MONTH CHANGE",
   },
   {
     type: "value",
@@ -204,10 +204,10 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top values",
-    pageSubtitle: "Stocks with a price gain against fix month before data",
+    pageSubtitle: "Stocks with a value gain against fix month before value",
     datafield: "valueSixMonth",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE(%)",
+    columnTitle: "6 MONTH CHANGE",
   },
   {
     type: "value",
@@ -215,10 +215,10 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top values",
-    pageSubtitle: "Stocks with a price gain against one year before data",
+    pageSubtitle: "Stocks with a value gain against one year before value",
     datafield: "valueOneYear",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE(%)",
+    columnTitle: "YEAR CHANGE",
   },
   {
     type: "value",
@@ -226,10 +226,10 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top values",
-    pageSubtitle: "Stocks with a price gain against five year before data",
+    pageSubtitle: "Stocks with a value gain against five year before value",
     datafield: "valueFiveYear",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE(%)",
+    columnTitle: "5 YEAR CHANGE",
   },
   {
     type: "volume",
@@ -237,10 +237,10 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top volumes",
-    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    pageSubtitle: "Stocks with a volume gain against the previous day's volume",
     datafield: "volumeDaily",
     datafieldName: null,
-    columnTitle: null,
+    columnTitle: "VOLUME",
   },
   {
     type: "volume",
@@ -248,10 +248,10 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top volumes",
-    pageSubtitle: "Stocks with a price gain against one week before data",
+    pageSubtitle: "Stocks with a volume gain against one week before data",
     datafield: "volumeOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE(%)",
+    columnTitle: "WEEK CHANGE",
   },
   {
     type: "volume",
@@ -259,10 +259,10 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top volumes",
-    pageSubtitle: "Stocks with a price gain against one month before data",
+    pageSubtitle: "Stocks with a volume gain against one month before volume",
     datafield: "volumeOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE(%)",
+    columnTitle: "MONTH CHANGE",
   },
   {
     type: "volume",
@@ -270,10 +270,10 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top volumes",
-    pageSubtitle: "Stocks with a price gain against fix month before data",
+    pageSubtitle: "Stocks with a volume gain against fix month before volume",
     datafield: "volumeSixMonth",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE(%)",
+    columnTitle: "6 MONTH CHANGE",
   },
   {
     type: "volume",
@@ -281,10 +281,10 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top volumes",
-    pageSubtitle: "Stocks with a price gain against one year before data",
+    pageSubtitle: "Stocks with a volume gain against one year before volume",
     datafield: "volumeOneYear",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE(%)",
+    columnTitle: "YEAR CHANGE",
   },
   {
     type: "volume",
@@ -292,10 +292,10 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top volumes",
-    pageSubtitle: "Stocks with a price gain against five year before data",
+    pageSubtitle: "Stocks with a volume gain against five year before volume",
     datafield: "volumeFiveYear",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE(%)",
+    columnTitle: "5 YEAR CHANGE",
   },
   {
     type: "trade",
@@ -303,10 +303,10 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top trades",
-    pageSubtitle: "Stocks with a price gain against the previous day's close",
+    pageSubtitle: "Stocks with a trade gain against the previous day's trade",
     datafield: "tradeDaily",
     datafieldName: null,
-    columnTitle: null,
+    columnTitle: "TRADE",
   },
   {
     type: "trade",
@@ -314,10 +314,10 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top trades",
-    pageSubtitle: "Stocks with a price gain against one week before data",
+    pageSubtitle: "Stocks with a trade gain against one week before trade",
     datafield: "tradeOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE(%)",
+    columnTitle: "WEEK CHANGE",
   },
   {
     type: "trade",
@@ -325,10 +325,10 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top trades",
-    pageSubtitle: "Stocks with a price gain against one month before data",
+    pageSubtitle: "Stocks with a trade gain against one month before trade",
     datafield: "tradeOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE(%)",
+    columnTitle: "MONTH CHANGE",
   },
   {
     type: "trade",
@@ -336,10 +336,10 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top trades",
-    pageSubtitle: "Stocks with a price gain against fix month before data",
+    pageSubtitle: "Stocks with a trade gain against fix month before trade",
     datafield: "tradeSixMonth",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE(%)",
+    columnTitle: "6 MONTH CHANGE",
   },
   {
     type: "trade",
@@ -347,10 +347,10 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top trades",
-    pageSubtitle: "Stocks with a price gain against one year before data",
+    pageSubtitle: "Stocks with a trade gain against one year before trade",
     datafield: "tradeOneYear",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE(%)",
+    columnTitle: "YEAR CHANGE",
   },
   {
     type: "trade",
@@ -358,10 +358,10 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top trades",
-    pageSubtitle: "Stocks with a price gain against five year before data",
+    pageSubtitle: "Stocks with a trade gain against five year before trade",
     datafield: "tradeFiveYear",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE(%)",
+    columnTitle: "5 YEAR CHANGE",
   },
   // {
   //   type: "loser",
@@ -481,6 +481,14 @@ export default function Dashboard({ data }: any) {
     (item) => item.type === typeAlignment && item.variant === variantAlignment
   );
 
+  console.log(selectedData, typeAlignment);
+
+  function getHeaderName(data: any) {
+    return data.find(
+      (item: any) => item.type === selectedData.type && item.variant === "1d"
+    ).columnTitle;
+  }
+
   const mobileColumns: GridColDef[] = [
     {
       field: "tradingCode",
@@ -517,6 +525,13 @@ export default function Dashboard({ data }: any) {
       valueFormatter: (params) => {
         return params.value + "%";
       },
+    },
+    {
+      field: selectedData.type,
+      headerName: getHeaderName(variantMap),
+      align: "right",
+      headerAlign: "right",
+      width: 110,
     },
     {
       field: selectedData.datafieldName,
@@ -599,8 +614,15 @@ export default function Dashboard({ data }: any) {
       width: 110,
     },
     {
+      field: selectedData.type,
+      headerName: getHeaderName(variantMap),
+      align: "left",
+      headerAlign: "left",
+      width: 110,
+    },
+    {
       field: "percentChange",
-      headerName: "DAY CHANGE(%)",
+      headerName: "DAY CHANGE",
       align: "left",
       headerAlign: "left",
       width: 150,
@@ -768,16 +790,30 @@ export default function Dashboard({ data }: any) {
             [selectedData.datafieldName]: selectedData.datafieldName
               ? true
               : false,
+            percentChange:
+              ["value", "trade", "volume"].includes(selectedData.type) &&
+              selectedData.variant !== "1d"
+                ? false
+                : true,
+            [selectedData.type]: ["value", "trade", "volume"].includes(
+              selectedData.type
+            ),
           }}
           sx={{
             ".MuiDataGrid-columnHeader": {
               color: "text.secondary",
+              fontSize: { xs: ".8rem", sm: ".9rem" },
+            },
+            "& .MuiDataGrid-columnHeaderTitle": {
+              overflow: "visible",
+              lineHeight: "1.43rem",
+              whiteSpace: "normal",
             },
             border: "none",
             width: matchesSmUp
               ? selectedData.datafieldName
                 ? 950
-                : 780
+                : 880
               : selectedData.datafieldName
               ? "90vw"
               : "65vw",

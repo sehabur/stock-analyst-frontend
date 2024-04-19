@@ -30,7 +30,7 @@ async function getIndexData() {
 
 async function getGainerLoserData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/allGainerLoser`,
+    `${process.env.BACKEND_URL}/api/prices/allGainerLoser?limit=10`,
     {
       next: { revalidate: 0 },
     }
@@ -108,8 +108,6 @@ export default async function MarketToday() {
     getNews(),
     getTopFinancials(),
   ]);
-
-  console.log(topFinancialsData);
 
   return (
     <Box

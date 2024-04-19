@@ -1,5 +1,5 @@
 "use client";
-import React, { Component } from "react";
+import React from "react";
 import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {

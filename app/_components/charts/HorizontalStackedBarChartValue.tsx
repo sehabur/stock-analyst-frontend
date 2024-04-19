@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/system";
 
-import "./tooltip.css";
+import "./SectorValueTooltip.css";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,

@@ -13,11 +13,6 @@
   border-radius: 2px;
 }
 
-span {
-  margin-left: 2px;
-  margin-right: 4px;
-}
-
 .custom-tooltip-candle-volume {
   position: absolute;
   display: none;
@@ -36,44 +31,3 @@ span {
 .chart-container {
   position: relative;
 }
-
-.chart-label-x {
-  border-style: solid;
-  border: 5px solid red;
-  background: blue;
-  color: yellow;
-  background-color: "#f00";
-}
-
-.sector-value-chart-title {
-  background: #212121;
-  padding: 6px 12px;
-}
-.sector-value-chart {
-  background-color: rgba(33, 33, 33, 0.02);
-  font-family: "DM Sans", sans-serif;
-  font-size: 12px;
-}
-.sector-value-chart-content {
-  /* background: #616161; */
-  padding: 8px 12px;
-  opacity: 0.95;
-}
-
-/* .apexcharts-tooltip {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  font-family: Arial, sans-serif;
-}
-
-.apexcharts-tooltip span {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.apexcharts-tooltip span:first-child {
-  font-weight: bold;
-  font-size: 1.2em;
-} */

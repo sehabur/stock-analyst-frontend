@@ -21,6 +21,15 @@ export default function Banner() {
 
   return (
     <Box
+    // sx={(theme) => ({
+    //   width: "100%",
+    //   backgroundImage:
+    //     theme.palette.mode === "light"
+    //       ? "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)"
+    //       : "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)",
+    //   backgroundImage: `radial-gradient(${theme.palette.background.default}, ${secondColor})`,
+    //   backgroundRepeat: "no-repeat",
+    // })}
     // sx={{
     //   backgroundImage: `linear-gradient(${theme.palette.background.default}, ${secondColor})`,
     //   height: { xs: "300px", sm: "600px" },
@@ -36,10 +45,11 @@ export default function Banner() {
     >
       <Box
         sx={{
-          maxWidth: { xs: "100vw", sm: 800 },
+          maxWidth: { xs: "100vw", sm: 700 },
           mx: "auto",
           textAlign: "center",
-          py: { xs: 6, sm: 8 },
+          pt: { xs: 3, sm: 6 },
+          pb: { xs: 0, sm: 3 },
           px: 2,
         }}
       >
@@ -47,51 +57,62 @@ export default function Banner() {
           component="div"
           sx={{
             fontFamily: "'Raleway', sans-serif",
-            fontSize: { xs: "2.5rem", sm: "4.2rem" },
+            fontSize: { xs: "2.4rem", sm: "3.8rem" },
             fontWeight: 700,
-            lineHeight: 1.2,
+            lineHeight: 0.9,
           }}
           color="text.primary"
         >
-          Know your stock first, then trade
+          Know your{" "}
+          <Typography
+            component="span"
+            color="primary.main"
+            sx={{ fontSize: "inherit", fontWeight: "inherit" }}
+          >
+            stock
+          </Typography>{" "}
+          first, then trade
         </Typography>
         <Typography
           component="div"
           sx={{
-            fontFamily: "'Barlow', sans-serif",
-            fontSize: { xs: "1.2rem", sm: "1.6rem" },
+            // fontFamily: "'Barlow', sans-serif",
+            fontSize: { xs: "1.1rem", sm: "1.2rem" },
             mt: 3,
-            mb: { xs: 5, sm: 7 },
+            mb: { xs: 3, sm: 4 },
           }}
           color="text.secondary"
         >
           Get finacial data and prepared analytics and for shares helping you
           find the perfect trade. Suitable for investors with all skill levels
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            fontSize: { xs: "1.1rem", sm: "1.3rem" },
-            borderRadius: 6,
-            px: { xs: 4, sm: 5 },
-            py: 1,
-            mr: { xs: 2, sm: 4 },
-          }}
-        >
-          Sign in
-        </Button>
-        <Button
-          variant="contained"
-          color="success"
-          sx={{
-            fontSize: { xs: "1.1rem", sm: "1.3rem" },
-            borderRadius: 6,
-            py: 1,
-            px: { xs: 4, sm: 5 },
-          }}
-        >
-          Create account
-        </Button>
+        <Box>
+          <Button
+            variant="outlined"
+            color="warning"
+            sx={{
+              fontSize: { xs: "1rem", sm: "1rem" },
+              // borderRadius: 2,
+              px: { xs: 3, sm: 4 },
+              py: 1,
+              mr: { xs: 2, sm: 4 },
+            }}
+          >
+            Sign in
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{
+              fontSize: { xs: "1rem", sm: "1rem" },
+              // borderRadius: 2,
+              py: 1,
+              px: { xs: 3, sm: 5 },
+            }}
+          >
+            Create account
+          </Button>
+        </Box>
         {/* <Typography sx={{ fontSize: ".9rem", mt: 6 }}>
           Charts are powered by{" "}
           <Typography

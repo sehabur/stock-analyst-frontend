@@ -174,7 +174,6 @@ export default function GainerCard(props: any) {
                     size="small"
                     sx={{
                       borderRadius: 1,
-                      // color: grey[50],
                       color:
                         item.change === 0
                           ? "primary.main"
