@@ -97,6 +97,8 @@ export default function Banner() {
               py: 1,
               mr: { xs: 2, sm: 4 },
             }}
+            component={Link}
+            href="/signin"
           >
             Sign in
           </Button>
@@ -109,6 +111,8 @@ export default function Banner() {
               py: 1,
               px: { xs: 3, sm: 5 },
             }}
+            component={Link}
+            href="/signup"
           >
             Create account
           </Button>

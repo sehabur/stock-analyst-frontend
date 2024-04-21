@@ -603,7 +603,7 @@ export default function Header(props: any) {
       <Divider light />
       <Button
         component={Link}
-        href="/supercharts"
+        href="/supercharts?symbol=GP"
         startIcon={<AddchartOutlinedIcon color="info" />}
         sx={{
           py: 1,

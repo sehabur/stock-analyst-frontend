@@ -124,7 +124,7 @@ export default function Gainers(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.gainerDaily.slice(0, 10).map((row: any) => (
+                {data?.gainerDaily?.slice(0, 10).map((row: any) => (
                   <TableRow
                     key={row.id}
                     hover={true}
@@ -194,7 +194,7 @@ export default function Gainers(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.loserDaily.slice(0, 10).map((row: any) => (
+                {data?.loserDaily?.slice(0, 10).map((row: any) => (
                   <TableRow
                     key={row.id}
                     hover={true}
@@ -262,7 +262,7 @@ export default function Gainers(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.gainerVolume.slice(0, 10).map((row: any) => (
+                {data?.gainerVolume?.slice(0, 10).map((row: any) => (
                   <TableRow
                     key={row.id}
                     hover={true}
@@ -330,7 +330,7 @@ export default function Gainers(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.gainerValue.slice(0, 10).map((row: any) => (
+                {data?.gainerValue?.slice(0, 10).map((row: any) => (
                   <TableRow
                     key={row.id}
                     hover={true}
@@ -398,7 +398,7 @@ export default function Gainers(props: any) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.gainerTrade.slice(0, 10).map((row: any) => (
+                {data?.gainerTrade?.slice(0, 10).map((row: any) => (
                   <TableRow
                     key={row.id}
                     hover={true}

@@ -481,8 +481,6 @@ export default function Dashboard({ data }: any) {
     (item) => item.type === typeAlignment && item.variant === variantAlignment
   );
 
-  console.log(selectedData, typeAlignment);
-
   function getHeaderName(data: any) {
     return data.find(
       (item: any) => item.type === selectedData.type && item.variant === "1d"
