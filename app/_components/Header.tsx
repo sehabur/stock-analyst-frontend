@@ -264,13 +264,13 @@ export default function Header(props: any) {
   }, []);
 
   const userMenu = (
-    <>
+    <Box sx={{ pt: 0.8 }}>
       <Button
         component={Link}
         href="/signin"
         startIcon={<LoginIcon color="primary" />}
         sx={{
-          py: 1,
+          py: 1.2,
           px: 3,
           textAlign: "left",
           color: "text.primary",
@@ -302,9 +302,7 @@ export default function Header(props: any) {
       >
         Create account
       </Button>
-      {/* <Divider light />
-      <DarkThemeButton /> */}
-    </>
+    </Box>
   );
 
   const loggedInUserMenu = (
@@ -320,7 +318,7 @@ export default function Header(props: any) {
         }}
         color="text.secondary"
       >
-        Hello, {auth?.name}
+        Hi, {auth?.name || "Signed in user"}
       </Typography>
       <Divider light />
       <Button

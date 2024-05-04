@@ -29,7 +29,7 @@ export default function SearchStockCard(props: any) {
           sx={{
             mb: { xs: 1, sm: 1.5 },
             px: { xs: 2, sm: 4 },
-            py: 1,
+            py: 1.5,
             borderRadius: 1.5,
             ":hover": {
               bgcolor: "secondaryBackground",

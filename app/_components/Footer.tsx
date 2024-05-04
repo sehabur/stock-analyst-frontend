@@ -157,7 +157,7 @@ export default function Footer() {
             >
               Legal
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="/terms">
               Terms
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
@@ -182,7 +182,7 @@ export default function Footer() {
             <Typography display="inline" sx={{ mx: 0.5, opacity: 0.5 }}>
               &nbsp;•&nbsp;
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="/terms">
               Terms of Service
             </Link>
             <Copyright />

@@ -41,6 +41,16 @@ async function getGainerLoserData() {
   return res.json();
 }
 
+async function getIpo() {
+  const res = await fetch(`${process.env.BACKEND_URL}/api/prices/ipo`, {
+    next: { revalidate: 0 },
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 async function getSectorData() {
   const res = await fetch(
     `${process.env.BACKEND_URL}/api/prices/sectorWiseLatestPrice`,
@@ -100,6 +110,7 @@ export default async function MarketToday() {
     blockTrData,
     newsData,
     topFinancialsData,
+    ipo,
   ] = await Promise.all([
     getIndexData(),
     getGainerLoserData(),
@@ -107,6 +118,7 @@ export default async function MarketToday() {
     getBlockTr(),
     getNews(),
     getTopFinancials(),
+    getIpo(),
   ]);
 
   return (
@@ -158,14 +170,6 @@ export default async function MarketToday() {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sm={5}>
-            <Ipo />
-          </Grid>
-
-          <Grid item xs={12} sm={7}>
-            <BlockTr data={blockTrData} />
-          </Grid>
-
           <Grid item xs={12} sm={6}>
             <News data={newsData} />
           </Grid>
@@ -174,10 +178,21 @@ export default async function MarketToday() {
               <TopFinancials data={topFinancialsData} />
             </Box>
           </Grid>
+
+          <Grid item xs={12} sm={5}>
+            <Ipo data={ipo} />
+          </Grid>
+
+          <Grid item xs={12} sm={7}>
+            <BlockTr data={blockTrData} />
+          </Grid>
         </Grid>
       </Box>
       <Box sx={{ mt: 6, mb: 2 }}>
-        <Typography sx={{ fontSize: ".9rem", textAlign: "center" }}>
+        <Typography
+          sx={{ fontSize: ".9rem", textAlign: "center" }}
+          color="text.secondary"
+        >
           Charts are powered by{" "}
           <Typography
             component={Link}

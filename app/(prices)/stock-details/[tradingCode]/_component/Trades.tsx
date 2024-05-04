@@ -119,7 +119,11 @@ const formatData = (data: any) => {
   }
   rows.sort((a: { id: number }, b: { id: number }) => b.id - a.id);
 
-  lastTrade = rows.filter((item: { volume: number }) => item.volume !== 0)[0];
+  const lastTradeItems = rows.filter(
+    (item: { volume: number }) => item.volume !== 0
+  );
+
+  lastTrade = lastTradeItems.length > 0 ? lastTradeItems[0] : {};
 
   return {
     rows,
@@ -280,13 +284,13 @@ export default function Trades(props: any) {
           {lastTrade?.volume || 0} shares @ {lastTrade?.ltp || 0} TK
         </Typography>
 
-        <Chip
-          label={
-            <ReactTimeAgo date={lastTrade?.timeIso || "--"} locale="en-US" />
-          }
-          size="small"
-          variant="outlined"
-        ></Chip>
+        {lastTrade?.timeIso && (
+          <Chip
+            label={<ReactTimeAgo date={lastTrade?.timeIso} locale="en-US" />}
+            size="small"
+            variant="outlined"
+          />
+        )}
       </Alert>
     </Box>
   );

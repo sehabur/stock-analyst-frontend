@@ -22,8 +22,9 @@ import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineR
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 
 import Link from "next/link";
+import { DateTime } from "luxon";
 
-const getIpos = async () => {
+async function getIpo() {
   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/ipo`, {
     next: { revalidate: 0 },
   });
@@ -31,39 +32,11 @@ const getIpos = async () => {
     throw new Error("Failed to fetch data");
   }
   return res.json();
-};
+}
 
-const data: any = [
-  {
-    _id: 1,
-    companyName: "Asiatic Laboratories Limited",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-  {
-    _id: 2,
-    companyName: "Asiatic Laboratories Limited",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-  {
-    _id: 3,
-    companyName: "Asiatic Laboratories Limited Limited  Limited ",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-];
-export default async function Ipo() {
-  // const data = await getIpos();
+export default async function Ipo({}) {
+  const data = await getIpo();
+
   return (
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
@@ -128,7 +101,9 @@ export default async function Ipo() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="Subscription starts from"
-                      secondary={`${item.subscriptionStart}`}
+                      secondary={`${DateTime.fromISO(
+                        item.subscriptionStart
+                      ).toFormat("dd MMM, yyyy")}`}
                     />
                   </ListItem>
                   <ListItem sx={{ pt: 0 }}>
@@ -139,7 +114,9 @@ export default async function Ipo() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="Subscription ends at"
-                      secondary={`${item.subscriptionEnd} BDT`}
+                      secondary={`${DateTime.fromISO(
+                        item.subscriptionEnd
+                      ).toFormat("dd MMM, yyyy")}`}
                     />
                   </ListItem>
                   <ListItem sx={{ pt: 0 }}>
@@ -161,7 +138,9 @@ export default async function Ipo() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="Cut-off date for investment"
-                      secondary={`${item.investmentCutoffDate} BDT`}
+                      secondary={`${DateTime.fromISO(
+                        item.investmentCutoffDate
+                      ).toFormat("dd MMM, yyyy")}`}
                     />
                   </ListItem>
                   <ListItem sx={{ pt: 0 }}>

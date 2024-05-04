@@ -18,6 +18,8 @@ import Link from "next/link";
 
 import Alert from "@mui/material/Alert";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
+import { Stack } from "@mui/system";
 
 export default function SignUpComp() {
   const [formData, setFormData] = React.useState({
@@ -59,11 +61,20 @@ export default function SignUpComp() {
         setErrorMessage("");
         setSuccessMessage("Account creation successful");
       } else {
-        setErrorMessage(data.message || "Error occured");
+        let errorMsg = "";
+
+        if (data?.errors?.length > 0) {
+          errorMsg = data?.errors[0].msg;
+        } else if (data?.message) {
+          errorMsg = data.message;
+        } else {
+          errorMsg = "Something went wrong. Please try again";
+        }
+        setErrorMessage(errorMsg);
         setSuccessMessage("");
       }
     } catch (error) {
-      setErrorMessage("Error occured");
+      setErrorMessage("Something went wrong. Please try again");
       setSuccessMessage("");
     }
   };
@@ -89,7 +100,8 @@ export default function SignUpComp() {
               }}
             >
               Sign in
-            </Typography>
+            </Typography>{" "}
+            now
           </Alert>
         )}
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
@@ -99,7 +111,7 @@ export default function SignUpComp() {
           <Grid item xs={12}>
             <TextField
               name="name"
-              required
+              // required
               fullWidth
               id="name"
               label="User Name"
@@ -114,12 +126,31 @@ export default function SignUpComp() {
               id="phone"
               label="Phone number"
               name="phone"
+              type="number"
               onChange={handleInputChange}
+              placeholder="Example: 01712345678"
+              inputProps={{
+                minlength: 11,
+              }}
+              helperText={
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <InfoRoundedIcon sx={{ fontSize: "1.2rem" }} />
+                  <Typography>Please write 11 digit number</Typography>
+                </Stack>
+              }
+              sx={{
+                ".MuiFormHelperText-root": {
+                  color: "info.main",
+                  fontSize: ".875rem",
+                  mt: 1,
+                  mb: 0.5,
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              required
+              // required
               fullWidth
               id="email"
               label="Email Address"
@@ -148,6 +179,9 @@ export default function SignUpComp() {
                     </IconButton>
                   </InputAdornment>
                 ),
+              }}
+              inputProps={{
+                minlength: 6,
               }}
             />
           </Grid>

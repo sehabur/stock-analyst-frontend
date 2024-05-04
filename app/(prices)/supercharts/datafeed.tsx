@@ -3,17 +3,22 @@ import { makeApiRequest, generateSymbol, parseFullSymbol } from "./helpers";
 const configurationData = {
   supported_resolutions: [
     "1",
+    "3",
+    "5",
     "15",
     "30",
     "60",
+    "120",
+    "180",
     "1D",
+    "2D",
+    "3D",
     "1W",
+    "2W",
     "1M",
     "3M",
     "6M",
     "12M",
-    "36M",
-    "60M",
   ],
   currency_codes: [{ id: "BDT", code: "BDT", description: "Taka" }],
   exchanges: [{ value: "DSE", name: "DSE", desc: "Dhaka Stock Exchange" }],
@@ -196,7 +201,7 @@ const getData = {
         : "day",
       fromTime: from,
       toTime: to,
-      // limit: 2000,
+      limit: 5000,
     };
     const query = Object.keys(urlParameters)
       .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
@@ -212,22 +217,20 @@ const getData = {
         onHistoryCallback([], { noData: true });
         return;
       }
+
       let bars: any[] = [];
 
       if (urlParameters.resolutionType === "intraday") {
         for (let i = 0; i < data.Data.length; i++) {
           const tempData = data.Data[i];
-          if (tempData.close !== 0) {
+          if (tempData.ltp !== 0) {
             bars[i] = {
               time: tempData.time,
-              low: i > 0 ? bars[i - 1].close : tempData.close,
-              high: tempData.close,
-              open: i > 0 ? bars[i - 1].close : tempData.close,
-              close: tempData.close,
-              volume:
-                i > 0
-                  ? data.Data[i].volume - data.Data[i - 1].volume
-                  : tempData.volume,
+              low: i > 0 ? bars[i - 1].close : tempData.ltp,
+              high: tempData.ltp,
+              open: i > 0 ? bars[i - 1].close : tempData.ltp,
+              close: tempData.ltp,
+              volume: tempData.volume,
             };
           } else {
             bars[i] = {
@@ -236,10 +239,7 @@ const getData = {
               high: tempData.ycp,
               open: tempData.ycp,
               close: tempData.ycp,
-              volume:
-                i > 0
-                  ? data.Data[i].volume - data.Data[i - 1].volume
-                  : tempData.volume,
+              volume: tempData.volume,
             };
           }
         }
@@ -248,37 +248,23 @@ const getData = {
           (bar: {
             time: number;
             close: number;
-            low: any;
-            high: any;
-            open: any;
-            volume: any;
+            low: number;
+            high: number;
+            open: number;
+            volume: number;
           }) => {
             if (bar.time >= fromMs && bar.time < toMs) {
-              if (bar.close !== 0) {
-                bars = [
-                  ...bars,
-                  {
-                    time: bar.time,
-                    low: bar.low,
-                    high: bar.high,
-                    open: bar.open,
-                    close: bar.close,
-                    volume: bar.volume,
-                  },
-                ];
-              } else {
-                bars = [
-                  ...bars,
-                  {
-                    time: bar.time,
-                    low: bar.open,
-                    high: bar.open,
-                    open: bar.open,
-                    close: bar.open,
-                    volume: bar.volume,
-                  },
-                ];
-              }
+              bars = [
+                ...bars,
+                {
+                  time: bar.time,
+                  low: bar.low,
+                  high: bar.high,
+                  open: bar.open,
+                  close: bar.close,
+                  volume: bar.volume,
+                },
+              ];
             }
           }
         );

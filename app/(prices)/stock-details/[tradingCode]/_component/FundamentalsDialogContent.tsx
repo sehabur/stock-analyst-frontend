@@ -26,6 +26,7 @@ import FundamentalInfoCard from "./FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
 import QuarterlyColumnChart from "@/components/charts/QuarterlyColumnChart";
 import YearlyColumnChart from "@/components/charts/YearlyColumnChart";
+import LineColumnChart from "@/components/charts/LineColumnChart";
 
 export default function FundamentalsDialogContent(props: any) {
   const {
@@ -34,10 +35,12 @@ export default function FundamentalsDialogContent(props: any) {
     quarterly,
     yearly,
     yearlyStacked,
+    yearlyLineColumn,
     overviewText,
     quarterlyData,
     yearlyData,
     yearlyStackedData,
+    yearlyLineColumnData,
     info,
     infoText,
     infoLink,
@@ -66,7 +69,7 @@ export default function FundamentalsDialogContent(props: any) {
                   fontWeight: 500,
                 }}
               >
-                {overviewText}
+                {overviewText || "No data available"}
               </Typography>
             </Box>
           )}
@@ -120,6 +123,24 @@ export default function FundamentalsDialogContent(props: any) {
               {yearlyStackedData && (
                 <Box>
                   <YearlyStackedColumnChart data={yearlyStackedData} />
+                </Box>
+              )}
+            </>
+          )}
+          {yearlyLineColumn && (
+            <>
+              <Typography
+                sx={{
+                  fontSize: "1.1rem",
+                  fontWeight: 700,
+                  ml: 2,
+                }}
+              >
+                Yearly
+              </Typography>
+              {yearlyLineColumnData && (
+                <Box>
+                  <LineColumnChart data={yearlyLineColumnData} />
                 </Box>
               )}
             </>

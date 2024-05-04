@@ -1,8 +1,8 @@
-'use client';
-import React, { Component } from 'react';
-import { Box, Grid, useTheme, Typography, useMediaQuery } from '@mui/material';
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+"use client";
+import React, { Component } from "react";
+import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
@@ -11,12 +11,12 @@ export default function YearlyColumnChart(props: any) {
 
   const theme: any = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartOptions: {} = {
-    colors: ['#448aff'],
+    colors: ["#448aff"],
     chart: {
-      type: 'bar',
+      type: "bar",
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
       toolbar: {
@@ -28,11 +28,11 @@ export default function YearlyColumnChart(props: any) {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: matchesSmDown ? '50%' : '50px',
+        columnWidth: matchesSmDown ? "50%" : "50px",
         borderRadius: 4,
-        borderRadiusApplication: 'end',
+        borderRadiusApplication: "end",
         dataLabels: {
-          position: 'top',
+          position: "top",
         },
       },
     },
@@ -44,7 +44,7 @@ export default function YearlyColumnChart(props: any) {
       offsetY: -23,
     },
     xaxis: {
-      categories: data.categories,
+      categories: data?.categories,
       axisBorder: {
         show: false,
       },
@@ -65,7 +65,7 @@ export default function YearlyColumnChart(props: any) {
     //   customLegendItems: ['Total values in crore'],
     // },
     tooltip: {
-      theme: 'dark',
+      theme: "dark",
     },
     grid: {
       borderColor: theme.palette.chartGridColor,
@@ -76,7 +76,7 @@ export default function YearlyColumnChart(props: any) {
     <div id="chart">
       <ReactApexChart
         options={chartOptions}
-        series={data.dataSeries}
+        series={data?.dataSeries}
         type="bar"
         height={250}
       />

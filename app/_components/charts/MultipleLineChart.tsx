@@ -1,8 +1,8 @@
-'use client';
-import React, { Component } from 'react';
-import { Box, Grid, useTheme, Typography, useMediaQuery } from '@mui/material';
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+"use client";
+import React, { Component } from "react";
+import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
@@ -11,7 +11,7 @@ export default function MultipleLineChart(props: any) {
 
   const theme: any = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartOptions: {} = {
     colors: lineColors,
@@ -33,7 +33,7 @@ export default function MultipleLineChart(props: any) {
       enabled: false,
     },
     xaxis: {
-      tickPlacement: 'between',
+      tickPlacement: "between",
       categories: categories,
       axisBorder: {
         show: false,
@@ -53,9 +53,9 @@ export default function MultipleLineChart(props: any) {
       show: true,
     },
     tooltip: {
-      theme: 'dark',
+      theme: "dark",
       y: {
-        formatter: (value: any) => value + '%',
+        formatter: (value: any) => value + "%",
       },
     },
     grid: {

@@ -19,7 +19,7 @@ export default function FavoriteButton({ tradingCode }: any) {
 
   const auth = useSelector((state: any) => state.auth);
 
-  const checkFav = auth?.favorites.includes(tradingCode);
+  const checkFav = auth?.favorites?.includes(tradingCode);
 
   const [isFavorite, setIsFavorite] = React.useState(checkFav);
 

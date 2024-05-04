@@ -230,7 +230,7 @@ export default function News({ data }: any) {
           </StyledToggleButtonGroup>
         </Box>
         <Box>
-          {news.slice(0, 6).map((item: any) => (
+          {news.slice(0, 4).map((item: any) => (
             <Card
               sx={{ minWidth: 275, my: 1 }}
               variant="outlined"

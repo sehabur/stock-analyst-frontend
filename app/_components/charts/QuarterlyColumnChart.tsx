@@ -1,21 +1,22 @@
-'use client';
-import React, { Component } from 'react';
-import dynamic from 'next/dynamic';
-const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+"use client";
+import React, { Component } from "react";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
-import { Box, Grid, useTheme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, useTheme, Typography, useMediaQuery } from "@mui/material";
 
 export default function QuarterlyColumnChart(props: any) {
   const { data } = props;
+
   const theme: any = useTheme();
 
-  const matchesSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartOptions: {} = {
-    colors: ['#448aff', '#42bda8'],
+    colors: ["#448aff", "#42bda8"],
     chart: {
-      type: 'bar',
+      type: "bar",
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
       toolbar: {
@@ -27,11 +28,11 @@ export default function QuarterlyColumnChart(props: any) {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: matchesSmDown ? '60%' : '50px',
+        columnWidth: matchesSmDown ? "60%" : "50px",
         borderRadius: 4,
-        borderRadiusApplication: 'end',
+        borderRadiusApplication: "end",
         dataLabels: {
-          position: 'top',
+          position: "top",
         },
       },
     },
@@ -43,7 +44,7 @@ export default function QuarterlyColumnChart(props: any) {
       offsetY: -23,
     },
     xaxis: {
-      categories: data.categories,
+      categories: data?.categories,
       axisBorder: {
         show: false,
       },
@@ -61,10 +62,10 @@ export default function QuarterlyColumnChart(props: any) {
     stroke: {
       show: true,
       width: matchesSmDown ? 3 : 8,
-      colors: ['transparent'],
+      colors: ["transparent"],
     },
     tooltip: {
-      theme: 'dark',
+      theme: "dark",
     },
     grid: {
       borderColor: theme.palette.chartGridColor,
@@ -81,7 +82,7 @@ export default function QuarterlyColumnChart(props: any) {
     <div id="chart">
       <ReactApexChart
         options={chartOptions}
-        series={data.dataSeries}
+        series={data?.dataSeries}
         type="bar"
         height={280}
       />

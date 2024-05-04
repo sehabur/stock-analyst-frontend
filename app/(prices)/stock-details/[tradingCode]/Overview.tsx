@@ -511,7 +511,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.ycp}
+                {stock.latest.open}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -967,7 +967,10 @@ export default function Overview({ stock }: any) {
         </Grid>
 
         <Box sx={{ mt: 4 }}>
-          <Typography color="text.secondary" sx={{ fontSize: ".9rem" }}>
+          <Typography
+            color="text.secondary"
+            sx={{ fontSize: ".9rem", textAlign: "justify" }}
+          >
             {stock.fundamentals.about}
           </Typography>
         </Box>

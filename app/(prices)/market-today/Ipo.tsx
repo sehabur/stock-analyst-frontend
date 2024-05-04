@@ -4,6 +4,8 @@ import React from "react";
 import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import DateRangeRoundedIcon from "@mui/icons-material/DateRangeRounded";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -13,45 +15,48 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Link from "next/link";
 
 import { useRouter } from "next/navigation";
+import { DateTime } from "luxon";
 
-const data: any = [
-  {
-    _id: 1,
-    companyName: "Asiatic Laboratories Limited",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-  {
-    _id: 2,
-    companyName: "Asiatic Laboratories Limited",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-  {
-    _id: 3,
-    companyName: "Asiatic Laboratories Limited siatic Laboratories Limited",
-    subscriptionStart: "February 04, 2024",
-    subscriptionEnd: "February 08, 2024",
-    subscriptionAmount: "10,010",
-    investmentCutoffDate: "January 25, 2024",
-    minInvestment: "50,000",
-  },
-];
-export default function Ipo() {
+// const data: any = [
+//   {
+//     _id: 1,
+//     companyName: "Asiatic Laboratories Limited",
+//     subscriptionStart: "February 04, 2024",
+//     subscriptionEnd: "February 08, 2024",
+//     subscriptionAmount: "10,010",
+//     investmentCutoffDate: "January 25, 2024",
+//     minInvestment: "50,000",
+//   },
+//   {
+//     _id: 2,
+//     companyName: "Asiatic Laboratories Limited",
+//     subscriptionStart: "February 04, 2024",
+//     subscriptionEnd: "February 08, 2024",
+//     subscriptionAmount: "10,010",
+//     investmentCutoffDate: "January 25, 2024",
+//     minInvestment: "50,000",
+//   },
+//   {
+//     _id: 3,
+//     companyName: "Asiatic Laboratories Limited siatic Laboratories Limited",
+//     subscriptionStart: "February 04, 2024",
+//     subscriptionEnd: "February 08, 2024",
+//     subscriptionAmount: "10,010",
+//     investmentCutoffDate: "January 25, 2024",
+//     minInvestment: "50,000",
+//   },
+// ];
+
+export default function Ipo(props: any) {
+  const { data } = props;
+
   const router = useRouter();
 
   const handleClick = (index: number) => {
-    console.log(index);
     router.push(`/ipo#${index}`);
   };
   return (
-    <Box sx={{ mb: 4, mx: { xs: 2, sm: 0 } }}>
+    <Box sx={{ my: 4, mx: { xs: 2, sm: 0 } }}>
       <Button
         component={Link}
         href="/ipo"
@@ -74,8 +79,11 @@ export default function Ipo() {
         {data.map((item: any, index: number) => (
           <Paper
             sx={{
-              my: 2,
-              pt: 1.4,
+              mt: 2,
+              mb: { xs: 2, sm: 3 },
+              pt: { xs: 1.4, sm: 2.5 },
+              pb: { xs: 0, sm: 1.5 },
+              px: { xs: 1, sm: 2 },
               borderRadius: 2,
               ":hover": {
                 bgcolor: "secondaryBackground",
@@ -104,12 +112,14 @@ export default function Ipo() {
               <ListItem sx={{ pt: 0 }}>
                 <ListItemAvatar>
                   <Avatar>
-                    <AddCardRoundedIcon />
+                    <DateRangeRoundedIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
                   primary="Starts from"
-                  secondary={`${item.subscriptionStart}`}
+                  secondary={`${DateTime.fromISO(
+                    item.subscriptionStart
+                  ).toFormat("dd MMM, yyyy")}`}
                 />
               </ListItem>
               <ListItem sx={{ pt: 0 }}>

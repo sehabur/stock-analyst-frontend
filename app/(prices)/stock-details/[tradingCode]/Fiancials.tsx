@@ -80,7 +80,7 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
 
   const data = initdata
     .sort((a: { year: any }, b: { year: any }) => a.year - b.year)
-    .slice(-10);
+    .slice(-8);
 
   let cashDatapoint = [];
   let stockDatapoint = [];
@@ -101,23 +101,32 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
 
   return {
     categories,
-    dataSeries: [
-      {
-        name: "Cash Dividend",
-        type: "column",
-        data: cashDatapoint,
-      },
-      {
-        name: "Stock Dividend",
-        type: "column",
-        data: stockDatapoint,
-      },
-      {
-        name: "Dividend Yield",
-        type: "line",
-        data: yieldDatapoint,
-      },
-    ],
+    dataSeries: {
+      dividend: [
+        {
+          name: "Cash Dividend",
+          type: "column",
+          data: cashDatapoint,
+        },
+        {
+          name: "Stock Dividend",
+          type: "column",
+          data: stockDatapoint,
+        },
+      ],
+      yield: [
+        {
+          name: "Cash Dividend",
+          type: "column",
+          data: cashDatapoint,
+        },
+        {
+          name: "Dividend Yield",
+          type: "line",
+          data: yieldDatapoint,
+        },
+      ],
+    },
   };
 };
 
@@ -391,11 +400,11 @@ export default function Financials({ data }: any) {
   const operatingProfit = formatYearlyData(data.operatingProfit, 10000000);
   const totalAsset = formatYearlyData(data.totalAsset, 10000000);
   const dividendPayoutRatio = formatYearlyData(
-    data.screener.dividendPayoutRatio.data
+    data?.screener?.dividendPayoutRatio?.data
   );
 
   const dividend = formatYearlyDividendData(
-    data.screener.dividend.data,
+    data?.screener?.dividend?.data,
     data.dividendYield
   );
   const epsQuarterly = formatQuarterlyEpsData(data.epsQuaterly, data.yearEnd);
@@ -427,7 +436,7 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data.screener.navQuarterly?.overview}
+              overviewText={data?.screener?.navQuarterly?.overview}
               quarterlyData={navQuarterly}
               yearlyData={navYearly}
               info
@@ -441,7 +450,7 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data.screener.epsQuarterly?.overview}
+              overviewText={data?.screener?.epsQuarterly?.overview}
               quarterlyData={epsQuarterly}
               yearlyData={epsYearly}
               info
@@ -454,7 +463,7 @@ export default function Financials({ data }: any) {
               title={`Return on assets (ROA) of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.roa?.overview}
+              overviewText={data?.screener?.roa?.overview}
               yearlyData={roa}
               info
               infoText={fundamentalsTooltip.roa.definition}
@@ -466,7 +475,7 @@ export default function Financials({ data }: any) {
               title={`Return on equity (ROE) of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.roe?.overview}
+              overviewText={data?.screener?.roe?.overview}
               yearlyData={roe}
               info
               infoText={fundamentalsTooltip.roe.definition}
@@ -478,7 +487,7 @@ export default function Financials({ data }: any) {
               title={`Return on capital employed (ROCE) of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.roce?.overview}
+              overviewText={data?.screener?.roce?.overview}
               yearlyData={roce}
               info
               infoText={fundamentalsTooltip.roce.definition}
@@ -490,7 +499,7 @@ export default function Financials({ data }: any) {
               title={`Debt-to-Equity (D/E) ratio of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.de?.overview}
+              overviewText={data?.screener?.de?.overview}
               yearlyData={de}
               info
               infoText={fundamentalsTooltip.de.definition}
@@ -533,8 +542,11 @@ export default function Financials({ data }: any) {
                       alignItems="center"
                     >
                       <Typography
-                        color="error"
-                        sx={{ fontSize: "1rem", fontWeight: 700 }}
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: 700,
+                          color: "success.main",
+                        }}
                       >
                         Lowest P/E of sector
                       </Typography>
@@ -584,7 +596,7 @@ export default function Financials({ data }: any) {
                       <Typography
                         sx={{
                           fontSize: "1rem",
-                          color: "success.main",
+                          color: "error.main",
                           fontWeight: 700,
                         }}
                       >
@@ -638,8 +650,11 @@ export default function Financials({ data }: any) {
                       alignItems="center"
                     >
                       <Typography
-                        color="error"
-                        sx={{ fontSize: "1rem", fontWeight: 700 }}
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: 700,
+                          color: "success.main",
+                        }}
                       >
                         Lowest P/Bv of sector
                       </Typography>
@@ -691,7 +706,7 @@ export default function Financials({ data }: any) {
                       <Typography
                         sx={{
                           fontSize: "1rem",
-                          color: "success.main",
+                          color: "error.main",
                           fontWeight: 700,
                         }}
                       >
@@ -725,10 +740,10 @@ export default function Financials({ data }: any) {
                       mb: 6,
                       mx: { xs: 3, sm: 10 },
                       textAlign: "center",
-                      color: data.screener.ps.color,
+                      color: data?.screener?.ps.color,
                     }}
                   >
-                    {data.screener.ps?.overview}
+                    {data?.screener?.ps?.overview}
                   </Typography>
                   <Paper
                     variant="outlined"
@@ -745,33 +760,36 @@ export default function Financials({ data }: any) {
                       alignItems="center"
                     >
                       <Typography
-                        color="error"
-                        sx={{ fontSize: "1rem", fontWeight: 700 }}
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: 700,
+                          color: "success.main",
+                        }}
                       >
                         Lowest P/S of sector
                       </Typography>
 
                       <Slider
-                        value={data.screener.ps.value}
+                        value={data?.screener?.ps.value}
                         aria-label="Disabled slider"
                         valueLabelDisplay="on"
                         valueLabelFormat={() => {
-                          return `P/BV: ${data.screener.ps.value}`;
+                          return `P/BV: ${data?.screener?.ps.value}`;
                         }}
-                        min={data.screener.ps.min}
-                        max={data.screener.ps.max}
+                        min={data?.screener?.ps.min}
+                        max={data?.screener?.ps.max}
                         marks={[
                           {
-                            value: data.screener.ps.min,
-                            label: data.screener.ps.min,
+                            value: data?.screener?.ps.min,
+                            label: data?.screener?.ps.min,
                           },
                           {
-                            value: data.screener.ps.max,
-                            label: data.screener.ps.max,
+                            value: data?.screener?.ps.max,
+                            label: data?.screener?.ps.max,
                           },
                         ]}
                         sx={{
-                          color: data.screener.ps.color,
+                          color: data?.screener?.ps.color,
                           height: 10,
                           "& .MuiSlider-thumb": {
                             height: 28,
@@ -797,7 +815,7 @@ export default function Financials({ data }: any) {
                       <Typography
                         sx={{
                           fontSize: "1rem",
-                          color: "success.main",
+                          color: "error.main",
                           fontWeight: 700,
                         }}
                       >
@@ -851,8 +869,11 @@ export default function Financials({ data }: any) {
                       alignItems="center"
                     >
                       <Typography
-                        color="error"
-                        sx={{ fontSize: "1rem", fontWeight: 700 }}
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: 700,
+                          color: "success.main",
+                        }}
                       >
                         Lowest P/Cf of sector
                       </Typography>
@@ -904,7 +925,7 @@ export default function Financials({ data }: any) {
                       <Typography
                         sx={{
                           fontSize: "1rem",
-                          color: "success.main",
+                          color: "error.main",
                           fontWeight: 700,
                         }}
                       >
@@ -927,7 +948,7 @@ export default function Financials({ data }: any) {
               title={`Dividend Payout Ratio of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.dividendPayoutRatio?.overview}
+              overviewText={data?.screener?.dividendPayoutRatio?.overview}
               yearlyData={dividendPayoutRatio}
               info
               infoText={fundamentalsTooltip.dividendPayoutRatio.definition}
@@ -939,7 +960,7 @@ export default function Financials({ data }: any) {
               title={`Profit Margin of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.profitMargin?.overview}
+              overviewText={data?.screener?.profitMargin?.overview}
               yearlyData={profitMargin}
               info
               infoText={fundamentalsTooltip.profitMargin.definition}
@@ -951,7 +972,7 @@ export default function Financials({ data }: any) {
               title={`Current Ratio of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.currentRatio?.overview}
+              overviewText={data?.screener?.currentRatio?.overview}
               yearlyData={currentRatio}
               info
               infoText={fundamentalsTooltip.currentRatio.definition}
@@ -963,7 +984,7 @@ export default function Financials({ data }: any) {
               title={`Net Income Ratio of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.netIncomeRatio?.overview}
+              overviewText={data?.screener?.netIncomeRatio?.overview}
               yearlyData={netIncomeRatio}
               info
               infoText={fundamentalsTooltip.netIncomeRatio.definition}
@@ -974,9 +995,9 @@ export default function Financials({ data }: any) {
             <FundamentalsDialogContent
               title={` Dividend Yield of ${data.tradingCode}`}
               overview
-              yearlyStacked
-              overviewText={data.screener.dividendYield?.overview}
-              yearlyStackedData={dividend}
+              yearlyLineColumn
+              overviewText={data?.screener?.dividendYield?.overview}
+              yearlyLineColumnData={dividend}
               info
               infoText={fundamentalsTooltip.dividendYield.definition}
               infoLink={fundamentalsTooltip.dividendYield.link}
@@ -987,7 +1008,7 @@ export default function Financials({ data }: any) {
               title={`Revenue of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.netIncome?.overview}
+              overviewText={data?.screener?.netIncome?.overview}
               yearlyData={netIncome}
               info
               infoText={fundamentalsTooltip.netIncome.definition}
@@ -999,7 +1020,7 @@ export default function Financials({ data }: any) {
               title={`Net Income of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.revenue?.overview}
+              overviewText={data?.screener?.revenue?.overview}
               yearlyData={revenue}
               info
               infoText={fundamentalsTooltip.revenue.definition}
@@ -1011,7 +1032,7 @@ export default function Financials({ data }: any) {
               title={`Total Asset of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.totalAsset?.overview}
+              overviewText={data?.screener?.totalAsset?.overview}
               yearlyData={totalAsset}
               info
               infoText={fundamentalsTooltip.totalAsset.definition}
@@ -1023,7 +1044,7 @@ export default function Financials({ data }: any) {
               title={`Operating Profit of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.operatingProfit?.overview}
+              overviewText={data?.screener?.operatingProfit?.overview}
               yearlyData={operatingProfit}
               info
               infoText={fundamentalsTooltip.operatingProfit.definition}
@@ -1035,7 +1056,7 @@ export default function Financials({ data }: any) {
               title={`Reserve and Surplus of ${data.tradingCode}`}
               overview
               yearly
-              overviewText={data.screener.reserveSurplus?.overview}
+              overviewText={data?.screener?.reserveSurplus?.overview}
               yearlyData={reserveSurplus}
               info
               infoText={fundamentalsTooltip.reserveSurplus.definition}
@@ -1048,7 +1069,7 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data.screener.nocfpsQuarterly?.overview}
+              overviewText={data?.screener?.nocfpsQuarterly?.overview}
               quarterlyData={nocfpsQuarterly}
               yearlyData={nocfpsYearly}
               info
@@ -1064,7 +1085,7 @@ export default function Financials({ data }: any) {
               <DialogContent dividers>
                 <Box sx={{ maxWidth: "600px", mx: "auto", pb: 2, pt: 1 }}>
                   <Box sx={{ my: 2 }}>
-                    <Typography
+                    {/* <Typography
                       sx={{
                         fontSize: "1.1rem",
                         fontWeight: 500,
@@ -1083,7 +1104,67 @@ export default function Financials({ data }: any) {
                         "#42bda8",
                         "#f57f17",
                       ]}
-                    />
+                    /> */}
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Director (%)
+                      </Typography>
+                      <ShareholdingBarChart
+                        data={[shareholdings.series[0]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#448aff"]}
+                      />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Institute (%)
+                      </Typography>
+                      <ShareholdingBarChart
+                        data={[shareholdings.series[1]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#b388ff"]}
+                      />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Public (%)
+                      </Typography>
+                      <ShareholdingBarChart
+                        data={[shareholdings.series[2]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#42bda8"]}
+                      />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Government (%)
+                      </Typography>
+                      <ShareholdingBarChart
+                        data={[shareholdings.series[3]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#4dd0e1"]}
+                      />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Foreign (%)
+                      </Typography>
+                      <ShareholdingBarChart
+                        data={[shareholdings.series[4]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#f57f17"]}
+                      />
+                    </Box>
                   </Box>
                 </Box>
               </DialogContent>
@@ -1127,7 +1208,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="EPS"
               title="Earning Per Share (EPS)"
-              data={data.screener.epsQuarterly}
+              data={data?.screener?.epsQuarterly}
               dialogtype="eps"
               handleItemClick={handleItemClick}
             />
@@ -1136,7 +1217,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               title="Net Asset Value (NAV)"
               titleShort="NAV"
-              data={data.screener.navQuarterly}
+              data={data?.screener?.navQuarterly}
               dialogtype="nav"
               handleItemClick={handleItemClick}
             />
@@ -1147,7 +1228,7 @@ export default function Financials({ data }: any) {
               title="Return of Equity (ROE)"
               unit="%"
               divideFactor={0.01}
-              data={data.screener.roe}
+              data={data?.screener?.roe}
               dialogtype="roe"
               handleItemClick={handleItemClick}
             />
@@ -1158,7 +1239,7 @@ export default function Financials({ data }: any) {
               title="Return of Assets (ROA)"
               unit="%"
               divideFactor={0.01}
-              data={data.screener.roa}
+              data={data?.screener?.roa}
               dialogtype="roa"
               handleItemClick={handleItemClick}
             />
@@ -1169,7 +1250,7 @@ export default function Financials({ data }: any) {
               title='Return of Capital Employed'
               unit='%'
               divideFactor={0.01}
-              data={data.screener.roce}
+              data={data?.screener?.roce}
               dialogtype='roce'
               handleItemClick={handleItemClick}
             />
@@ -1189,7 +1270,7 @@ export default function Financials({ data }: any) {
               title="Debt-to-Equity (D/E) Ratio"
               // unit="%"
               // divideFactor={0.01}
-              data={data.screener.de}
+              data={data?.screener?.de}
               dialogtype="de"
               handleItemClick={handleItemClick}
             />
@@ -1198,7 +1279,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="P/S Ratio"
               title="Price/Sales Ratio"
-              data={data.screener.ps}
+              data={data?.screener?.ps}
               dialogtype="ps"
               handleItemClick={handleItemClick}
             />
@@ -1216,7 +1297,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="Current Ratio"
               title="Current Ratio"
-              data={data.screener.currentRatio}
+              data={data?.screener?.currentRatio}
               dialogtype="currentRatio"
               handleItemClick={handleItemClick}
             />
@@ -1225,7 +1306,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="Net Income Ratio"
               title="Net Income Ratio"
-              data={data.screener.netIncomeRatio}
+              data={data?.screener?.netIncomeRatio}
               dialogtype="netIncomeRatio"
               handleItemClick={handleItemClick}
             />
@@ -1234,7 +1315,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="NOCFPS"
               title="NOCFPS"
-              data={data.screener.nocfpsQuarterly}
+              data={data?.screener?.nocfpsQuarterly}
               dialogtype="nocfps"
               handleItemClick={handleItemClick}
             />
@@ -1254,7 +1335,7 @@ export default function Financials({ data }: any) {
               title="Profit Margin"
               unit="%"
               divideFactor={0.01}
-              data={data.screener.profitMargin}
+              data={data?.screener?.profitMargin}
               dialogtype="profitMargin"
               handleItemClick={handleItemClick}
             />
@@ -1265,7 +1346,7 @@ export default function Financials({ data }: any) {
               titleShort="Dividend Yield"
               title="Divident Yield"
               unit="%"
-              data={data.screener.dividendYield}
+              data={data?.screener?.dividendYield}
               dialogtype="dividendYield"
               handleItemClick={handleItemClick}
             />
@@ -1275,7 +1356,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="Div Payout Ratio"
               title="Dividend Payout Ratio"
-              data={data.screener.dividendPayoutRatio}
+              data={data?.screener?.dividendPayoutRatio}
               dialogtype="dividendPayoutRatio"
               handleItemClick={handleItemClick}
             />
@@ -1286,7 +1367,7 @@ export default function Financials({ data }: any) {
               title="Revenue"
               unit="Crore"
               divideFactor={10000000}
-              data={data.screener.revenue}
+              data={data?.screener?.revenue}
               dialogtype="revenue"
               handleItemClick={handleItemClick}
             />
@@ -1298,7 +1379,7 @@ export default function Financials({ data }: any) {
               title="Net Income"
               unit="Crore"
               divideFactor={10000000}
-              data={data.screener.netIncome}
+              data={data?.screener?.netIncome}
               dialogtype="netIncome"
               handleItemClick={handleItemClick}
             />
@@ -1309,7 +1390,7 @@ export default function Financials({ data }: any) {
               title="Total Assets"
               unit="Crore"
               divideFactor={10000000}
-              data={data.screener.totalAsset}
+              data={data?.screener?.totalAsset}
               dialogtype="totalAsset"
               handleItemClick={handleItemClick}
             />
@@ -1320,7 +1401,7 @@ export default function Financials({ data }: any) {
               title="Operating Profit"
               unit="Crore"
               divideFactor={10000000}
-              data={data.screener.operatingProfit}
+              data={data?.screener?.operatingProfit}
               dialogtype="operatingProfit"
               handleItemClick={handleItemClick}
             />
@@ -1331,7 +1412,7 @@ export default function Financials({ data }: any) {
               title="Reserve & Surplus"
               unit="Crore"
               divideFactor={10}
-              data={data.screener.reserveSurplus}
+              data={data?.screener?.reserveSurplus}
               dialogtype="reserveSurplus"
               handleItemClick={handleItemClick}
             />
@@ -1462,6 +1543,7 @@ export default function Financials({ data }: any) {
               sx={{
                 bgcolor: theme.palette.background.default,
                 borderRadius: 1,
+                mb: 2,
               }}
             >
               <Typography
@@ -1485,7 +1567,8 @@ export default function Financials({ data }: any) {
                   Overview
                 </Typography>
                 <Typography color="text.primary">
-                  {data.screener.dividendYield?.overview}
+                  {data?.screener?.dividendYield?.overview ||
+                    "No data available"}
                 </Typography>
                 <Typography
                   color="text.primary"
@@ -1493,9 +1576,13 @@ export default function Financials({ data }: any) {
                 >
                   History
                 </Typography>
-                <YearlyStackedColumnChart data={dividend} />
+
+                {dividend ? (
+                  <YearlyStackedColumnChart data={dividend} />
+                ) : (
+                  <Typography sx={{ pb: 2 }}>No history available</Typography>
+                )}
               </Box>
-              <Box></Box>
             </Box>
           </Grid>
         </Grid>

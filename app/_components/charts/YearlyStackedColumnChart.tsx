@@ -14,9 +14,9 @@ export default function YearlyStackedColumnChart(props: any) {
   const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
 
   const chartOptions: {} = {
-    colors: ["#448aff", "#4dd0e1", "#f57f17"],
+    colors: ["#448aff", "#4dd0e1"],
     chart: {
-      type: "line",
+      type: "column",
       stacked: true,
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
@@ -26,17 +26,17 @@ export default function YearlyStackedColumnChart(props: any) {
           download: false,
         },
       },
-    },
-    markers: {
-      size: 5,
+      zoom: {
+        enabled: false,
+      },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: matchesSmDown ? "50%" : "50px",
-        borderRadius: 2,
-        borderRadiusApplication: "around",
-        borderRadiusWhenStacked: "all",
+        columnWidth: matchesSmDown ? "75%" : "50px",
+        borderRadius: matchesSmDown ? 2 : 4,
+        borderRadiusApplication: "end",
+        borderRadiusWhenStacked: "last",
         dataLabels: {
           position: "center",
         },
@@ -53,7 +53,11 @@ export default function YearlyStackedColumnChart(props: any) {
       },
     },
     xaxis: {
-      categories: data.categories,
+      categories: data?.categories,
+      labels: {
+        rotate: -45,
+        rotateAlways: matchesSmDown ? true : false,
+      },
       axisBorder: {
         show: false,
       },
@@ -70,7 +74,7 @@ export default function YearlyStackedColumnChart(props: any) {
     },
     stroke: {
       show: true,
-      colors: ["transparent", "transparent", "#f57f17"],
+      colors: ["transparent"],
     },
     tooltip: {
       theme: "dark",
@@ -90,7 +94,7 @@ export default function YearlyStackedColumnChart(props: any) {
     <div id="chart">
       <ReactApexChart
         options={chartOptions}
-        series={data.dataSeries}
+        series={data?.dataSeries?.dividend}
         type="line"
         height={350}
       />

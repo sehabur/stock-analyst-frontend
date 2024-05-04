@@ -89,7 +89,21 @@ export default function SignInComp() {
       }}
     >
       <Box sx={{ width: "100%" }}>
-        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        {successMessage && (
+          <Alert severity="success">
+            {successMessage}. Go to{" "}
+            <Typography
+              component={Link}
+              href="/"
+              sx={{
+                textDecoration: "underline",
+                color: "primary.main",
+              }}
+            >
+              Homepage
+            </Typography>
+          </Alert>
+        )}
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Box>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

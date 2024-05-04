@@ -54,7 +54,7 @@ export default function BlockTr({ data }: any) {
     <Box
       sx={{
         mx: { xs: 2, sm: 0 },
-        my: { xs: 4, sm: 0 },
+        my: { xs: 4, sm: 4 },
       }}
     >
       <TableContainer
