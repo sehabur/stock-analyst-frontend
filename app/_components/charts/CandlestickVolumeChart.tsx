@@ -183,7 +183,7 @@ export default function CandlestickVolumeChart(props: any) {
         chartContainerRef?.current?.removeChild(tooltip.current);
       }
     };
-  }, [candledata, theme, volumedata]);
+  }, [candledata, theme, volumedata, height, matchesSmUp]);
 
   return <div ref={chartContainerRef} className="chart-container" />;
 }

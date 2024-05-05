@@ -245,23 +245,25 @@ export default function Header(props: any) {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      await getData();
+    const interval = setInterval(() => {
+      getData();
     }, 60000);
 
     return () => {
       clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     const authDataFromStorage: any = localStorage.getItem("userInfo");
     const data = JSON.parse(authDataFromStorage);
     data && dispatch(authActions.login(data));
-  }, []);
+  }, [dispatch]);
 
   const userMenu = (
     <Box sx={{ pt: 0.8 }}>

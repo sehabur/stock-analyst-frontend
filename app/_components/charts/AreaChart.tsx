@@ -45,6 +45,8 @@ export default function AreaChart(props: AreaChartProps) {
     };
 
     chart.current = createChart(chartContainerRef.current, {
+      height,
+      width: chartContainerRef.current.clientWidth,
       layout: {
         background: {
           type: ColorType.Solid,
@@ -92,8 +94,6 @@ export default function AreaChart(props: AreaChartProps) {
           visible: false,
         },
       },
-      width: chartContainerRef.current.clientWidth,
-      height,
     });
 
     const series = chart.current.addAreaSeries({
@@ -101,6 +101,7 @@ export default function AreaChart(props: AreaChartProps) {
       topColor: alpha(color, 0.5),
       bottomColor: alpha(color, 0),
       lineWidth: 2,
+      lineType: 2,
       priceLineVisible: false,
     });
 

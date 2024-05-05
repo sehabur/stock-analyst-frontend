@@ -293,7 +293,7 @@ export default function TradingviewChart() {
     // })
 
     return () => script.remove();
-  }, [symbol]);
+  }, [symbol, auth?.token, theme?.palette]);
 
   return (
     <Box

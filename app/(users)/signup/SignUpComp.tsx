@@ -20,6 +20,7 @@ import Alert from "@mui/material/Alert";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import { Stack } from "@mui/system";
+import Spinner from "@/components/shared/Spinner";
 
 export default function SignUpComp() {
   const [formData, setFormData] = React.useState({
@@ -28,6 +29,8 @@ export default function SignUpComp() {
     phone: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [successMessage, setSuccessMessage] = React.useState("");
 
@@ -45,6 +48,7 @@ export default function SignUpComp() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     try {
       const res = await fetch(`/api/signup`, {
@@ -73,9 +77,11 @@ export default function SignUpComp() {
         setErrorMessage(errorMsg);
         setSuccessMessage("");
       }
+      setIsLoading(false);
     } catch (error) {
       setErrorMessage("Something went wrong. Please try again");
       setSuccessMessage("");
+      setIsLoading(false);
     }
   };
 
@@ -87,6 +93,7 @@ export default function SignUpComp() {
         alignItems: "center",
       }}
     >
+      {isLoading && <Spinner />}
       <Box sx={{ width: "100%" }}>
         {successMessage && (
           <Alert severity="success">

@@ -185,6 +185,11 @@ export default function Footer() {
             <Link color="text.secondary" variant="body2" href="/terms">
               Terms of Service
             </Link>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Link color="text.secondary" variant="body2" href="/aboutus">
+                About us
+              </Link>
+            </Box>
             <Copyright />
           </div>
           <Stack

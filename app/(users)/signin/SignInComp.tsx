@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "_store";
+import Spinner from "@/components/shared/Spinner";
 
 export default function SignInComp() {
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ export default function SignInComp() {
     password: "",
     // keepMeLoggedin: false,
   });
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [successMessage, setSuccessMessage] = React.useState("");
 
@@ -51,6 +54,7 @@ export default function SignInComp() {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     event.preventDefault();
     try {
       const res = await fetch(`/api/signin`, {
@@ -74,9 +78,11 @@ export default function SignInComp() {
         setErrorMessage(data.message || "Error occured");
         setSuccessMessage("");
       }
+      setIsLoading(false);
     } catch (error) {
       setErrorMessage("Error occured");
       setSuccessMessage("");
+      setIsLoading(false);
     }
   };
 
@@ -88,6 +94,7 @@ export default function SignInComp() {
         alignItems: "center",
       }}
     >
+      {isLoading && <Spinner />}
       <Box sx={{ width: "100%" }}>
         {successMessage && (
           <Alert severity="success">

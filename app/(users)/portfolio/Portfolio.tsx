@@ -67,6 +67,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   return (

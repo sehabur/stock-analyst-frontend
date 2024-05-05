@@ -136,13 +136,13 @@ export default function GainerLoser({ data }: any) {
                 <StyledToggleButton value="gainerDaily" sx={{ px: 2 }}>
                   Gainer
                 </StyledToggleButton>
-                <StyledToggleButton value="gainerVolume" sx={{ px: 2 }}>
+                <StyledToggleButton value="VolumeDaily" sx={{ px: 2 }}>
                   Volume
                 </StyledToggleButton>
-                <StyledToggleButton value="gainerValue" sx={{ px: 2 }}>
+                <StyledToggleButton value="ValueDaily" sx={{ px: 2 }}>
                   Value
                 </StyledToggleButton>
-                <StyledToggleButton value="gainerTrade" sx={{ px: 2 }}>
+                <StyledToggleButton value="TradeDaily" sx={{ px: 2 }}>
                   Trade
                 </StyledToggleButton>
               </StyledToggleButtonGroup>

@@ -86,10 +86,13 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
   let stockDatapoint = [];
   let yieldDatapoint = [];
   let categories = [];
+  let totalDividends = [];
 
   for (let item of data) {
     cashDatapoint.push(Number(item.cash.toFixed(1)));
     stockDatapoint.push(Number(item.stock.toFixed(1)));
+
+    totalDividends.push(item.cash + item.stock);
 
     const yeild = yieldData.find(
       (yieldItem: any) => yieldItem.year === item.year
@@ -99,8 +102,13 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
     categories.push(item.year);
   }
 
+  totalDividends.sort((a, b) => b - a);
+
+  console.log(totalDividends);
+
   return {
     categories,
+    maxYscale: totalDividends[0],
     dataSeries: {
       dividend: [
         {
@@ -508,7 +516,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pe" && (
             <>
-              <DialogTitle>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
                 Price-to-EPS (P/E) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -616,7 +624,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pbv" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
                 Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -726,7 +734,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "ps" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
                 Price-to-Sales (P/S) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -835,7 +843,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pcf" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
                 Price-to-Cashflow (P/Cf) Ratio of {data.tradingCode}
               </DialogTitle>
 

@@ -16,7 +16,6 @@ export default function YearlyStackedColumnChart(props: any) {
   const chartOptions: {} = {
     colors: ["#448aff", "#4dd0e1"],
     chart: {
-      type: "column",
       stacked: true,
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
@@ -34,9 +33,9 @@ export default function YearlyStackedColumnChart(props: any) {
       bar: {
         horizontal: false,
         columnWidth: matchesSmDown ? "75%" : "50px",
-        borderRadius: matchesSmDown ? 2 : 4,
-        borderRadiusApplication: "end",
-        borderRadiusWhenStacked: "last",
+        borderRadius: 2,
+        borderRadiusApplication: "around",
+        borderRadiusWhenStacked: "all",
         dataLabels: {
           position: "center",
         },
@@ -71,10 +70,7 @@ export default function YearlyStackedColumnChart(props: any) {
           return Number.isInteger(value) ? value : value?.toFixed(2);
         },
       },
-    },
-    stroke: {
-      show: true,
-      colors: ["transparent"],
+      max: data.maxYscale,
     },
     tooltip: {
       theme: "dark",
@@ -95,7 +91,7 @@ export default function YearlyStackedColumnChart(props: any) {
       <ReactApexChart
         options={chartOptions}
         series={data?.dataSeries?.dividend}
-        type="line"
+        type="bar"
         height={350}
       />
     </div>

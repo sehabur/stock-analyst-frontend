@@ -50,7 +50,7 @@ export default function FundamentalsDialogContent(props: any) {
 
   return (
     <>
-      <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>{title}</DialogTitle>
+      <DialogTitle sx={{ fontWeight: 700, pr: 8 }}>{title}</DialogTitle>
       <DialogContent dividers>
         <Box sx={{ maxWidth: "700px", mx: "auto", py: 2 }}>
           {overview && (
