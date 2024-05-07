@@ -74,10 +74,6 @@ const addPlusSign = (value: number) => {
 
 const getLatestPrice = (latest: any) => {
   let price, time;
-  // if (latest.close !== 0) {
-  //   price = latest.close;
-  //   time = DateTime.fromISO(latest.time).toFormat("dd MMM, HH:mm");
-  // }
   if (latest.isNullDataAtDse === "YES") {
     price = latest.ycp;
     time = DateTime.fromISO(latest.date)
@@ -85,7 +81,9 @@ const getLatestPrice = (latest: any) => {
       .toFormat("dd MMM, 14:30");
   } else {
     price = latest.ltp;
-    time = DateTime.fromISO(latest.time).toFormat("dd MMM, HH:mm");
+    time = DateTime.fromISO(latest.time)
+      .plus({ hours: 6 })
+      .toFormat("dd MMM, HH:mm");
   }
   return {
     price,
