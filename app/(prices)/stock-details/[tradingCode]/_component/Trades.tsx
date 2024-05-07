@@ -257,7 +257,6 @@ export default function Trades(props: any) {
       </Dialog>
       <Alert
         sx={{
-          // maxWidth: "400px",
           ":hover": {
             cursor: "pointer",
           },

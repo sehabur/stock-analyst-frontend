@@ -48,6 +48,7 @@ export default function MultipleLineChart(props: any) {
           return Number.isInteger(value) ? value : value.toFixed(2);
         },
       },
+      forceNiceScale: true,
     },
     stroke: {
       show: true,

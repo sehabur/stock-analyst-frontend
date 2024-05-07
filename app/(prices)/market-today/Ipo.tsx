@@ -17,36 +17,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { DateTime } from "luxon";
 
-// const data: any = [
-//   {
-//     _id: 1,
-//     companyName: "Asiatic Laboratories Limited",
-//     subscriptionStart: "February 04, 2024",
-//     subscriptionEnd: "February 08, 2024",
-//     subscriptionAmount: "10,010",
-//     investmentCutoffDate: "January 25, 2024",
-//     minInvestment: "50,000",
-//   },
-//   {
-//     _id: 2,
-//     companyName: "Asiatic Laboratories Limited",
-//     subscriptionStart: "February 04, 2024",
-//     subscriptionEnd: "February 08, 2024",
-//     subscriptionAmount: "10,010",
-//     investmentCutoffDate: "January 25, 2024",
-//     minInvestment: "50,000",
-//   },
-//   {
-//     _id: 3,
-//     companyName: "Asiatic Laboratories Limited siatic Laboratories Limited",
-//     subscriptionStart: "February 04, 2024",
-//     subscriptionEnd: "February 08, 2024",
-//     subscriptionAmount: "10,010",
-//     investmentCutoffDate: "January 25, 2024",
-//     minInvestment: "50,000",
-//   },
-// ];
-
 export default function Ipo(props: any) {
   const { data } = props;
 
@@ -55,6 +25,7 @@ export default function Ipo(props: any) {
   const handleClick = (index: number) => {
     router.push(`/ipo#${index}`);
   };
+
   return (
     <Box sx={{ my: 4, mx: { xs: 2, sm: 0 } }}>
       <Button
@@ -76,86 +47,68 @@ export default function Ipo(props: any) {
       </Button>
 
       <Box>
-        {data.map((item: any, index: number) => (
-          <Paper
-            sx={{
-              mt: 2,
-              mb: { xs: 2, sm: 3 },
-              pt: { xs: 1.4, sm: 2.5 },
-              pb: { xs: 0, sm: 1.5 },
-              px: { xs: 1, sm: 2 },
-              borderRadius: 2,
-              ":hover": {
-                bgcolor: "secondaryBackground",
-                cursor: "pointer",
-              },
-              maxWidth: 420,
-            }}
-            onClick={() => handleClick(index)}
-            elevation={6}
-            key={index}
-          >
-            <Typography
-              noWrap
-              sx={{ color: "text.primary", fontSize: "1.1rem", mx: 2 }}
-            >
-              {item.companyName}
-            </Typography>
-
-            <Box
+        {data
+          .filter((item: any) => new Date(item.subscriptionEnd) >= new Date())
+          .map((item: any, index: number) => (
+            <Paper
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                mt: 2,
+                mb: { xs: 2, sm: 3 },
+                pt: { xs: 1.4, sm: 2.5 },
+                pb: { xs: 0, sm: 1.5 },
+                px: { xs: 1, sm: 2 },
+                borderRadius: 2,
+                ":hover": {
+                  bgcolor: "secondaryBackground",
+                  cursor: "pointer",
+                },
+                maxWidth: 420,
               }}
+              onClick={() => handleClick(index)}
+              elevation={6}
+              key={index}
             >
-              <ListItem sx={{ pt: 0 }}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <DateRangeRoundedIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Starts from"
-                  secondary={`${DateTime.fromISO(
-                    item.subscriptionStart
-                  ).toFormat("dd MMM, yyyy")}`}
-                />
-              </ListItem>
-              <ListItem sx={{ pt: 0 }}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <AddCardRoundedIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Amount"
-                  secondary={`${item.subscriptionAmount} BDT`}
-                />
-              </ListItem>
+              <Typography
+                noWrap
+                sx={{ color: "text.primary", fontSize: "1.1rem", mx: 2 }}
+              >
+                {item.companyName}
+              </Typography>
 
-              {/* <Stack direction="row" alignItems="center" spacing={1}>
-                <AddCardRoundedIcon
-                  color="warning"
-                  sx={{ fontSize: "1.2rem" }}
-                />
-                <Typography color="text.secondary" sx={{ fontSize: "1rem" }}>
-                  Subscription amount: {item.subscriptionAmount} BDT
-                </Typography>
-              </Stack>
-
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <EventNoteRoundedIcon
-                  color="success"
-                  sx={{ fontSize: "1.2rem" }}
-                />
-                <Typography color="text.secondary" sx={{ fontSize: "1rem" }}>
-                  Starts from {item.subscriptionStart}{" "}
-                </Typography>
-              </Stack> */}
-            </Box>
-          </Paper>
-        ))}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ListItem sx={{ pt: 0 }}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <DateRangeRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Starts from"
+                    secondary={`${DateTime.fromISO(
+                      item.subscriptionStart
+                    ).toFormat("dd MMM, yyyy")}`}
+                  />
+                </ListItem>
+                <ListItem sx={{ pt: 0 }}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <AddCardRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Amount"
+                    secondary={`${item.subscriptionAmount} BDT`}
+                  />
+                </ListItem>
+              </Box>
+            </Paper>
+          ))}
         {data.length < 1 && (
           <Paper
             elevation={0}
@@ -164,7 +117,7 @@ export default function Ipo(props: any) {
               py: 2,
               px: 2,
               bgcolor: "secondaryBackground",
-              width: 400,
+              maxWidth: 350,
             }}
           >
             <Typography> There is no upcoming IPO to display.</Typography>

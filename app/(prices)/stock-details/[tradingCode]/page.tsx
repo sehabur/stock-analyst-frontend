@@ -244,6 +244,8 @@ export default async function StockDetails({ params }: any) {
                     ? "Market is open now"
                     : "Market is close now"
                 }
+                enterTouchDelay={10}
+                arrow
               >
                 <Chip
                   label={stock.isMarketOpen ? "Open" : "Closed"}
@@ -275,7 +277,7 @@ export default async function StockDetails({ params }: any) {
               tradingCode={stock.fundamentals.tradingCode}
             />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", mt: 0.8 }}>
             <FavoriteButton tradingCode={stock.fundamentals.tradingCode} />
             <Button
               component={Link}

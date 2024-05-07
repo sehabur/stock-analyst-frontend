@@ -71,7 +71,7 @@ export default function Portfolio() {
   }, [auth]);
 
   return (
-    <Box sx={{ mx: 4 }}>
+    <Box>
       {isLoading && <Spinner />}
       <Box>
         <Button
@@ -94,7 +94,7 @@ export default function Portfolio() {
       >
         {portfolio?.map((item: any) => (
           <Paper
-            sx={{ width: 380, py: 2, my: 2, mx: 2, borderRadius: 2 }}
+            sx={{ width: 380, py: 2, my: 2, borderRadius: 2 }}
             elevation={6}
             key={item._id}
           >
@@ -221,6 +221,19 @@ export default function Portfolio() {
             </Box>
           </Paper>
         ))}
+        {portfolio?.length < 1 && (
+          <Box
+            sx={{
+              bgcolor: "secondaryBackground",
+              mt: 8,
+              py: 2,
+              px: 4,
+              borderRadius: 2,
+            }}
+          >
+            <Typography>No portfolio to show</Typography>
+          </Box>
+        )}
       </Box>
       <Box sx={{ mt: 2, maxWidth: 400, mx: "auto" }}>
         {successMessage && <Alert severity="success">{successMessage}</Alert>}

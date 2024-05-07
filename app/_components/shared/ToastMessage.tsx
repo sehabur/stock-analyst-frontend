@@ -12,7 +12,7 @@ export default function ToastMessage({
     <Snackbar
       open={open}
       onClose={onClose}
-      autoHideDuration={6000}
+      autoHideDuration={5000}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",

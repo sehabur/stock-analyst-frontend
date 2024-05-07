@@ -437,6 +437,7 @@ export default function Financials({ data }: any) {
           fullWidth
           maxWidth="md"
           fullScreen={!matchesSmUp}
+          disableScrollLock={true}
         >
           {dialogContent === "nav" && (
             <FundamentalsDialogContent
@@ -1190,20 +1191,6 @@ export default function Financials({ data }: any) {
             <CloseIcon sx={{ fontSize: "1.6rem" }} />
           </IconButton>
         </Dialog>
-
-        {/* <Typography
-          sx={{
-            color: 'text.primary',
-            fontSize: '1.5rem',
-            fontWeight: 500,
-            mt: 2,
-            mb: 4,
-            ml: 0.5,
-          }}
-        >
-          Fundamentals
-        </Typography> */}
-
         <Grid
           container
           direction="row"

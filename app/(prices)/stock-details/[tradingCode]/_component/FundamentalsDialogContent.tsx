@@ -46,8 +46,6 @@ export default function FundamentalsDialogContent(props: any) {
     infoLink,
   } = props;
 
-  console.log(yearlyData);
-
   return (
     <>
       <DialogTitle sx={{ fontWeight: 700, pr: 12 }}>{title}</DialogTitle>

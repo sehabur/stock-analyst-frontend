@@ -422,7 +422,16 @@ export default function Dashboard({ data }: any) {
       disableColumnMenu: true,
       renderCell: (params) => {
         return (
-          <Link href={`/stock-details/${params.value}`}>{params.value}</Link>
+          <Typography
+            component={Link}
+            href={`/stock-details/${params.value}`}
+            sx={{
+              color: "primary.main",
+              ":hover": { textDecoration: "underline" },
+            }}
+          >
+            {params.value}
+          </Typography>
         );
       },
       cellClassName: styles.tradingCodeCell,

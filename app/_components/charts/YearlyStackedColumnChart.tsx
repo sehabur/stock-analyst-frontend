@@ -70,6 +70,8 @@ export default function YearlyStackedColumnChart(props: any) {
           return Number.isInteger(value) ? value : value?.toFixed(2);
         },
       },
+      forceNiceScale: true,
+      min: 0,
       max: data.maxYscale,
     },
     tooltip: {

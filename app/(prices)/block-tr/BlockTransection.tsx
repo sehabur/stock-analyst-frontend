@@ -78,7 +78,7 @@ export default function BlockTransection({ data }: any) {
                   },
                 }}
               >
-                <TableCell component="th" scope="row" sx={{ minWidth: 80 }}>
+                <TableCell component="th" scope="row" sx={{ minWidth: 90 }}>
                   {DateTime.fromISO(row.date).toFormat("dd MMM")}
                 </TableCell>
                 <TableCell align="left">

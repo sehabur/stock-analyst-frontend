@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { MenuItem, Alert } from "@mui/material";
 import Spinner from "@/components/shared/Spinner";
+import ToastMessage from "@/components/shared/ToastMessage";
 
 export default function Trade(props: any) {
   const { portfolio, comm } = props;
@@ -33,14 +34,21 @@ export default function Trade(props: any) {
 
   const [searchText, setSearchText] = useState("");
 
-  const [successMessage, setSuccessMessage] = React.useState("");
+  const [message, setMessage] = React.useState({
+    text: "",
+    severity: "",
+  });
 
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [toastMessageOpen, setToastMessageOpen] = React.useState(false);
 
   const auth = useSelector((state: any) => state.auth);
 
   const [searchResultFallbackText, setSearchResultFallbackText] =
     useState("Loading data..");
+
+  const handleToastColse = (event: any) => {
+    setToastMessageOpen(false);
+  };
 
   const handleSearchTextChange = (event: any) => {
     setSearchText(event.target.value);
@@ -75,8 +83,10 @@ export default function Trade(props: any) {
 
   function handleDialogClose() {
     setDialogOpen(false);
-    setErrorMessage("");
-    setSuccessMessage("");
+    setMessage({
+      text: "",
+      severity: "",
+    });
   }
 
   function handleInputChange(e: any) {
@@ -100,17 +110,27 @@ export default function Trade(props: any) {
       });
       const data = await res.json();
       if (res.ok) {
-        setErrorMessage("");
-        setSuccessMessage("Request execution successful");
+        setMessage({
+          text: "Request execution successful",
+          severity: "success",
+        });
       } else {
-        setErrorMessage(data.message || "Something went wrong");
-        setSuccessMessage("");
+        setMessage({
+          text: data.message || "Something went wrong",
+          severity: "error",
+        });
       }
+      setDialogOpen(false);
       setIsLoading(false);
+      setToastMessageOpen(true);
     } catch (error) {
-      setErrorMessage("Something went wrong");
-      setSuccessMessage("");
+      setMessage({
+        text: "Something went wrong",
+        severity: "error",
+      });
       setIsLoading(false);
+      setIsLoading(false);
+      setToastMessageOpen(true);
     }
   };
 
@@ -244,12 +264,6 @@ export default function Trade(props: any) {
                 </TextField>
               </Grid>
             </Grid>
-            <Box sx={{ mt: 2 }}>
-              {successMessage && (
-                <Alert severity="success">{successMessage}</Alert>
-              )}
-              {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-            </Box>
           </DialogContent>
           <DialogActions sx={{ my: 1, mr: 3 }}>
             <Button
@@ -265,6 +279,12 @@ export default function Trade(props: any) {
           </DialogActions>
         </Box>
       </Dialog>
+      <ToastMessage
+        open={toastMessageOpen}
+        onClose={handleToastColse}
+        severity={message.severity}
+        message={message.text}
+      />
     </Box>
   );
 }

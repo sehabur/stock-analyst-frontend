@@ -73,7 +73,7 @@ export default function BlockTransections({ blocktr }: any) {
                   },
                 }}
               >
-                <TableCell sx={{ minWidth: 80 }}>
+                <TableCell sx={{ minWidth: 90 }}>
                   {DateTime.fromISO(row.date).toFormat("dd MMM")}
                 </TableCell>
                 <TableCell align="right">{row.trades}</TableCell>

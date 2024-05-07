@@ -54,6 +54,7 @@ export default function FinancialCard(props: any) {
       // color: 'rgba(0, 0, 0, 0.87)',
       // border: '1px solid #dadde9',
       maxWidth: 500,
+      marginLeft: 2,
       fontSize: 14,
       padding: "12px",
     },
@@ -103,6 +104,8 @@ export default function FinancialCard(props: any) {
             <CustomTooltip
               placement="top"
               title={fundamentalsTooltip[dialogtype]?.definition}
+              enterTouchDelay={10}
+              leaveTouchDelay={3000}
             >
               <IconButton
                 disableRipple

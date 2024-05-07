@@ -25,6 +25,7 @@ export default function Page() {
         sx={{
           maxWidth: { sm: "1280px" },
           mx: "auto",
+          px: 2,
           pt: 6,
           display: "flex",
           flexDirection: "column",
