@@ -516,7 +516,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pe" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
                 Price-to-EPS (P/E) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -624,7 +624,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pbv" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
                 Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -734,7 +734,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "ps" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
                 Price-to-Sales (P/S) Ratio of {data.tradingCode}
               </DialogTitle>
 
@@ -843,7 +843,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "pcf" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 8 }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
                 Price-to-Cashflow (P/Cf) Ratio of {data.tradingCode}
               </DialogTitle>
 

@@ -35,8 +35,9 @@ export default function Footer() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: { xs: 4, sm: 8 },
-          py: { xs: 8, sm: 6 },
+          gap: { xs: 4, sm: 4 },
+          pt: { xs: 3, sm: 5 },
+          pb: { xs: 4, sm: 5 },
           textAlign: { sm: "center", md: "left" },
         }}
       >
@@ -52,7 +53,6 @@ export default function Footer() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              gap: 2,
               minWidth: { xs: "100%", sm: "60%" },
             }}
           >
@@ -60,7 +60,7 @@ export default function Footer() {
               <SitemarkIcon />
               <Typography
                 fontWeight={700}
-                sx={{ mt: 3, mb: 1, fontSize: "1.1rem" }}
+                sx={{ mt: 2, mb: 1, fontSize: "1.1rem" }}
                 color="text.primary"
               >
                 Contact us
@@ -71,31 +71,6 @@ export default function Footer() {
               <Typography color="text.primary">
                 Email: support@stocksupporter.com
               </Typography>
-              {/* <Stack direction="row" spacing={1} useFlexGap>
-              <InputLabel htmlFor="email-newsletter" sx={visuallyHidden}>
-                Email
-              </InputLabel>
-              <TextField
-                id="email-newsletter"
-                hiddenLabel
-                size="small"
-                variant="outlined"
-                fullWidth
-                aria-label="Enter your email address"
-                placeholder="Your email address"
-                inputProps={{
-                  autocomplete: "off",
-                  ariaLabel: "Enter your email address",
-                }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ flexShrink: 0 }}
-              >
-                Subscribe
-              </Button>
-            </Stack> */}
             </Box>
           </Box>
           <Box
@@ -139,7 +114,7 @@ export default function Footer() {
             >
               Company
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
+            <Link color="text.secondary" variant="body2" href="/aboutus">
               About us
             </Link>
           </Box>
@@ -147,7 +122,6 @@ export default function Footer() {
             sx={{
               display: { xs: "none", sm: "flex" },
               flexDirection: "column",
-              gap: 1,
             }}
           >
             <Typography
@@ -169,7 +143,7 @@ export default function Footer() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            pt: { xs: 4, sm: 4 },
+            pt: { xs: 3, sm: 4 },
             width: "100%",
             borderTop: "1px solid",
             borderColor: "divider",
@@ -185,7 +159,7 @@ export default function Footer() {
             <Link color="text.secondary" variant="body2" href="/terms">
               Terms of Service
             </Link>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Box sx={{ display: { xs: "block", sm: "none" }, mt: 0.8 }}>
               <Link color="text.secondary" variant="body2" href="/aboutus">
                 About us
               </Link>

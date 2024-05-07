@@ -25,12 +25,22 @@ export default async function Terms() {
           Terms of services
         </Typography>
 
-        <Box sx={{ bgcolor: "grey.50", py: 3, px: 2, mx: 2, my: 2 }}>
+        <Box
+          sx={{
+            bgcolor: "gainerCardMobileView",
+            color: "text.primary",
+            py: 3,
+            px: 2,
+            mx: 2,
+            my: 2,
+            borderRadius: 2,
+          }}
+        >
           <Typography
             sx={{
               whiteSpace: "pre-wrap",
               fontSize: "1rem",
-              textAlign: "justify",
+              textAlign: { xs: "left", sm: "justify" },
             }}
           >
             {terms}

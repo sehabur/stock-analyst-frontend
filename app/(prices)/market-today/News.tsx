@@ -248,7 +248,7 @@ export default function News({ data }: any) {
                         sx={{ fontSize: "1rem", mr: 1.3 }}
                       />
                       <ReactTimeAgo
-                        date={item.date}
+                        date={item.time || item.date}
                         locale="en-US"
                         style={{ color: "#089981" }}
                       />

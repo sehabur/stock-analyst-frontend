@@ -44,7 +44,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against one week before data",
     datafield: "gainerOneWeek",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE (%)",
+    columnTitle: "WEEK CHANGE",
   },
   {
     type: "gainer",
@@ -55,7 +55,7 @@ const variantMap = [
     pageSubtitle: "Stocks with a price gain against one month before data",
     datafield: "gainerOneMonth",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE (%)",
+    columnTitle: "MONTH CHANGE",
   },
   {
     type: "gainer",
@@ -363,81 +363,6 @@ const variantMap = [
     datafieldName: "fiveYearPercentChange",
     columnTitle: "5 YEAR CHANGE",
   },
-  // {
-  //   type: "loser",
-  //   variant: "alltime",
-  //   title: "All time",
-  //   titleSmall: "Alltime",
-  //   datafield: "gainerAllTime",
-  //   datafieldName: null,
-  //   columnTitle: null,
-  // },
-  // {
-  //   type: "gainer",
-  //   variant: "trade",
-  //   title: "Trade",
-  //   titleSmall: "TRD",
-  //   pageTitle: "Top shares by trade",
-  //   pageSubtitle: "Stocks with highest trade today",
-  //   datafield: "gainerTrade",
-  //   datafieldName: "trade",
-  //   columnTitle: "TRADE",
-  // },
-  // {
-  //   type: "loser",
-  //   variant: "trade",
-  //   title: "Trade",
-  //   titleSmall: "Trd",
-  //   pageTitle: "Down shares by trade",
-  //   pageSubtitle: "Stocks with lowest trade today",
-  //   datafield: "loserTrade",
-  //   datafieldName: "trade",
-  //   columnTitle: "TRADE",
-  // },
-  // {
-  //   type: "gainer",
-  //   variant: "volume",
-  //   title: "Volume",
-  //   titleSmall: "Vol",
-  //   pageTitle: "Top shares by volume",
-  //   pageSubtitle: "Stocks with highest volume today",
-  //   datafield: "gainerVolume",
-  //   datafieldName: "volume",
-  //   columnTitle: "VOLUME",
-  // },
-  // {
-  //   type: "loser",
-  //   variant: "volume",
-  //   title: "Volume",
-  //   titleSmall: "Vol",
-  //   pageTitle: "Down shares by volume",
-  //   pageSubtitle: "Stocks with lowest volume today",
-  //   datafield: "loserVolume",
-  //   datafieldName: "volume",
-  //   columnTitle: "VOLUME",
-  // },
-  // {
-  //   type: "gainer",
-  //   variant: "value",
-  //   title: "Value",
-  //   titleSmall: "Val",
-  //   pageTitle: "Top shares by value",
-  //   pageSubtitle: "Stocks with highest value today",
-  //   datafield: "gainerValue",
-  //   datafieldName: "value",
-  //   columnTitle: "VALUE (BDT)",
-  // },
-  // {
-  //   type: "loser",
-  //   variant: "value",
-  //   title: "Value",
-  //   titleSmall: "Val",
-  //   pageTitle: "Down shares by value",
-  //   pageSubtitle: "Stocks with lowest value today",
-  //   datafield: "loserValue",
-  //   datafieldName: "value",
-  //   columnTitle: "VALUE (BDT)",
-  // },
 ];
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -490,8 +415,8 @@ export default function Dashboard({ data }: any) {
   const mobileColumns: GridColDef[] = [
     {
       field: "tradingCode",
-      headerName: "CODE",
-      width: 120,
+      headerName: "TRADING CODE",
+      width: 130,
       align: "left",
       headerAlign: "left",
       disableColumnMenu: true,
@@ -503,10 +428,26 @@ export default function Dashboard({ data }: any) {
       cellClassName: styles.tradingCodeCell,
     },
     {
+      field: "ltp",
+      headerName: "LTP (BDT)",
+      align: "left",
+      headerAlign: "left",
+      width: 100,
+      disableColumnMenu: true,
+    },
+    {
+      field: selectedData.type,
+      headerName: getHeaderName(variantMap),
+      align: "left",
+      headerAlign: "left",
+      width: 110,
+      disableColumnMenu: true,
+    },
+    {
       field: "percentChange",
-      headerName: "CH(%)",
-      align: "right",
-      headerAlign: "right",
+      headerName: "DAY CHANGE",
+      align: "left",
+      headerAlign: "left",
       disableColumnMenu: true,
       width: 100,
       cellClassName: (params: any) => {
@@ -524,18 +465,12 @@ export default function Dashboard({ data }: any) {
         return params.value + "%";
       },
     },
-    {
-      field: selectedData.type,
-      headerName: getHeaderName(variantMap),
-      align: "right",
-      headerAlign: "right",
-      width: 110,
-    },
+
     {
       field: selectedData.datafieldName,
       headerName: selectedData.columnTitle,
-      align: "right",
-      headerAlign: "right",
+      align: "left",
+      headerAlign: "left",
       disableColumnMenu: true,
       width: 110,
       cellClassName: (params: any) => {
@@ -567,6 +502,7 @@ export default function Dashboard({ data }: any) {
       },
     },
   ];
+
   const columns: GridColDef[] = [
     {
       field: "tradingCode",
@@ -789,10 +725,15 @@ export default function Dashboard({ data }: any) {
               ? true
               : false,
             percentChange:
-              ["value", "trade", "volume"].includes(selectedData.type) &&
-              selectedData.variant !== "1d"
+              matchesSmUp &&
+              !["volume", "value", "trade"].includes(selectedData.type)
+                ? true
+                : selectedData.variant !== "1d"
                 ? false
                 : true,
+            ltp: ["volume", "value", "trade"].includes(selectedData.type)
+              ? false
+              : true,
             [selectedData.type]: ["value", "trade", "volume"].includes(
               selectedData.type
             ),
@@ -812,9 +753,7 @@ export default function Dashboard({ data }: any) {
               ? selectedData.datafieldName
                 ? 950
                 : 880
-              : selectedData.datafieldName
-              ? "90vw"
-              : "65vw",
+              : "90vw",
             mx: "auto",
             mb: 6,
             fontSize: ".9rem",

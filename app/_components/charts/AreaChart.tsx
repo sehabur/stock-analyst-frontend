@@ -172,7 +172,7 @@ export default function AreaChart(props: AreaChartProps) {
       //   chartContainerRef?.current?.removeChild(tooltip.current);
       // }
     };
-  }, [color, data, fullWidth, height, theme]);
+  }, [color, data, fullWidth, height, theme, chartWidthValue, fitContent]);
 
   return <div ref={chartContainerRef} className="chart-container"></div>;
 }

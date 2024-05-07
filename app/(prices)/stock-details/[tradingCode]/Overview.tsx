@@ -493,7 +493,7 @@ export default function Overview({ stock }: any) {
 
         <Grid
           container
-          alignItems="center"
+          alignItems="flex-start"
           justifyContent="space-between"
           rowSpacing={{ xs: 4, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 6 }}
@@ -969,7 +969,7 @@ export default function Overview({ stock }: any) {
         <Box sx={{ mt: 4 }}>
           <Typography
             color="text.secondary"
-            sx={{ fontSize: ".9rem", textAlign: "justify" }}
+            sx={{ fontSize: ".9rem", textAlign: { xs: "left", sm: "justify" } }}
           >
             {stock.fundamentals.about}
           </Typography>

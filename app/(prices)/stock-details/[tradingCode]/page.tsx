@@ -281,7 +281,7 @@ export default async function StockDetails({ params }: any) {
               component={Link}
               href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
               target="_blank"
-              sx={{ borderRadius: 2, mt: 0.2, py: 1 }}
+              sx={{ borderRadius: 2, py: 1.05 }}
               variant="contained"
             >
               See on Supercharts

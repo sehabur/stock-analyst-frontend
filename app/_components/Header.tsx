@@ -701,7 +701,7 @@ export default function Header(props: any) {
               </Button>
               <Button
                 component={Link}
-                href="/supercharts"
+                href="/supercharts?symbol=GP"
                 sx={{
                   color: "text.primary",
                   px: 2,
