@@ -116,17 +116,6 @@ export default function Ipo(props: any) {
                 <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
                   <ListItemAvatar>
                     <Avatar>
-                      <AddCardRoundedIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Min amount"
-                    secondary={`${item.minSubscriptionAmount} BDT`}
-                  />
-                </ListItem>
-                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
-                  <ListItemAvatar>
-                    <Avatar>
                       <DoDisturbAltRoundedIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -140,11 +129,22 @@ export default function Ipo(props: any) {
                 <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
                   <ListItemAvatar>
                     <Avatar>
+                      <AddCardRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Min amount"
+                    secondary={`${item.minSubscriptionAmount} BDT`}
+                  />
+                </ListItem>
+                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
+                  <ListItemAvatar>
+                    <Avatar>
                       <AccountBalanceRoundedIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary="Min investment"
+                    primary="Min invest"
                     secondary={`${item.minInvestmentRB} BDT`}
                   />
                 </ListItem>
@@ -152,6 +152,7 @@ export default function Ipo(props: any) {
               <Box sx={{ textAlign: "left", ml: 1 }}>
                 <Button
                   variant="text"
+                  disableRipple
                   endIcon={<KeyboardArrowRightOutlinedIcon />}
                   sx={{
                     ":hover": {
