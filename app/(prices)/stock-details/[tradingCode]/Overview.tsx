@@ -743,7 +743,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4} sm={2}>
+          {/* <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Face Value
             </Typography>
@@ -762,6 +762,38 @@ export default function Overview({ stock }: any) {
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
                 BDT
+              </Typography>
+            </Stack>
+          </Grid> */}
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Year End
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.yearEnd}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Beta (1 Year)
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.technicals.beta}
               </Typography>
             </Stack>
           </Grid>
@@ -858,22 +890,6 @@ export default function Overview({ stock }: any) {
                 }}
               >
                 {dates.recordDate || "--"}
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Year End
-            </Typography>
-            <Stack direction="row" alignItems="baseline">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
-                  fontWeight: 500,
-                }}
-              >
-                {stock.fundamentals.yearEnd}
               </Typography>
             </Stack>
           </Grid>

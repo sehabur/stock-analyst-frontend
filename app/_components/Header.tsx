@@ -1,16 +1,9 @@
 "use client";
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Divider,
-  FormControlLabel,
-  Grid,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
   Popover,
   Switch,
   Toolbar,
@@ -20,11 +13,6 @@ import {
   IconButton,
   Dialog,
   DialogContent,
-  TextField,
-  InputAdornment,
-  Stack,
-  Chip,
-  Paper,
   DialogTitle,
   InputBase,
   Fade,
@@ -63,6 +51,9 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import DataSaverOffRoundedIcon from "@mui/icons-material/DataSaverOffRounded";
+import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
+import BatchPredictionRoundedIcon from "@mui/icons-material/BatchPredictionRounded";
 
 import { TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/navigation";
@@ -140,6 +131,7 @@ export default function Header(props: any) {
   };
 
   const handleSignOut = () => {
+    handleUserPopoverClose();
     dispatch(authActions.logout());
     localStorage.removeItem("userInfo");
     setLogoutSuccess(true);
@@ -214,8 +206,9 @@ export default function Header(props: any) {
 
   const getData = async () => {
     const res = await fetch(`/api/latest-price`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
     });
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -271,6 +264,7 @@ export default function Header(props: any) {
         component={Link}
         href="/signin"
         startIcon={<LoginIcon color="primary" />}
+        onClick={handleUserPopoverClose}
         sx={{
           py: 1.2,
           px: 3,
@@ -289,6 +283,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/signup"
+        onClick={handleUserPopoverClose}
         startIcon={<AddCircleOutlineIcon color="primary" />}
         sx={{
           py: 1,
@@ -326,7 +321,8 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/favorites"
-        startIcon={<FavoriteBorderRoundedIcon color="info" />}
+        onClick={handleUserPopoverClose}
+        startIcon={<FavoriteBorderRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -345,7 +341,8 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/alerts"
-        startIcon={<BusinessCenterOutlinedIcon color="info" />}
+        onClick={handleUserPopoverClose}
+        startIcon={<BusinessCenterOutlinedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -364,7 +361,8 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/portfolio"
-        startIcon={<NotificationsNoneRoundedIcon color="info" />}
+        onClick={handleUserPopoverClose}
+        startIcon={<NotificationsNoneRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -382,7 +380,7 @@ export default function Header(props: any) {
       <Divider light />
       <Button
         onClick={handleSignOut}
-        startIcon={<LogoutOutlinedIcon color="info" />}
+        startIcon={<LogoutOutlinedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -404,8 +402,8 @@ export default function Header(props: any) {
     <>
       <Button
         component={Link}
-        href="/latest-price"
-        startIcon={<ListOutlinedIcon color="info" />}
+        href="/index-mover"
+        startIcon={<TrendingUpRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -418,13 +416,32 @@ export default function Header(props: any) {
         }}
         disableRipple
       >
-        All shares
+        Index movers
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/beta"
+        startIcon={<DataSaverOffRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Beta
       </Button>
       <Divider light />
       <Button
         component={Link}
         href="/block-tr"
-        startIcon={<HexagonRoundedIcon color="info" />}
+        startIcon={<BatchPredictionRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -442,7 +459,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/latest-news"
-        startIcon={<NewspaperRoundedIcon color="info" />}
+        startIcon={<NewspaperRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -457,28 +474,10 @@ export default function Header(props: any) {
         News
       </Button>
       <Divider light />
-      {/* <Button
-        component={Link}
-        href="/"
-        startIcon={<ScatterPlotRoundedIcon color="info" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Sector wise shares
-      </Button>
-      <Divider light /> */}
       <Button
         component={Link}
         href="/ipo"
-        startIcon={<UpcomingRoundedIcon color="info" />}
+        startIcon={<UpcomingRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -500,7 +499,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/market-today"
-        startIcon={<InsightsRoundedIcon color="info" />}
+        startIcon={<InsightsRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -519,7 +518,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/gainer-loser?type=gainer&variant=1d"
-        startIcon={<WhatshotRoundedIcon color="info" />}
+        startIcon={<WhatshotRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -537,7 +536,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/latest-price"
-        startIcon={<CandlestickChartRoundedIcon color="info" />}
+        startIcon={<CandlestickChartRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -556,7 +555,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/sector"
-        startIcon={<DonutSmallRoundedIcon color="info" />}
+        startIcon={<DonutSmallRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -585,7 +584,7 @@ export default function Header(props: any) {
       <Button
         component={Link}
         href="/screener"
-        startIcon={<FilterAltOutlinedIcon color="info" />}
+        startIcon={<FilterAltOutlinedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -603,8 +602,8 @@ export default function Header(props: any) {
       <Divider light />
       <Button
         component={Link}
-        href="/supercharts?symbol=GP"
-        startIcon={<AddchartOutlinedIcon color="info" />}
+        href="/supercharts?symbol=00DSEX"
+        startIcon={<AddchartOutlinedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -701,7 +700,7 @@ export default function Header(props: any) {
               </Button>
               <Button
                 component={Link}
-                href="/supercharts?symbol=GP"
+                href="/supercharts?symbol=00DSEX"
                 sx={{
                   color: "text.primary",
                   px: 2,

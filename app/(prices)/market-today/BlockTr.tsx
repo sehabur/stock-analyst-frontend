@@ -81,7 +81,7 @@ export default function BlockTr({ data }: any) {
             sx={{
               fontSize: { xs: "1.3rem", sm: "1.5rem" },
               fontWeight: 700,
-
+              my: 0.5,
               ":hover": {
                 bgcolor: "transparent",
                 textDecoration: "underline",
@@ -95,7 +95,7 @@ export default function BlockTr({ data }: any) {
             sx={{
               mr: 2,
               px: 1,
-              fontSize: { xs: ".9rem", sm: "1.1rem" },
+              fontSize: { xs: ".9rem", sm: "1rem" },
               mb: { xs: 2, sm: 0 },
             }}
           />
@@ -107,7 +107,7 @@ export default function BlockTr({ data }: any) {
               sx={{
                 ".MuiTableCell-head": {
                   // fontSize: "1rem",
-                  fontWeight: 700,
+                  fontWeight: 500,
                   color: "text.secondary",
                 },
               }}

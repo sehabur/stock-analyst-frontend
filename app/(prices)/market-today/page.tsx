@@ -14,6 +14,8 @@ import BlockTr from "./BlockTr";
 import News from "./News";
 import TopFinancials from "./TopFinancials";
 import Ipo from "./Ipo";
+import Beta from "./Beta";
+import IndexMover from "./IndexMover";
 
 async function getIndexData() {
   const res = await fetch(
@@ -102,6 +104,32 @@ const getTopFinancials = async () => {
   return res.json();
 };
 
+async function getBeta() {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/allStockBeta?type=top&count=8`,
+    {
+      next: { revalidate: 0 },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+async function getIndexMover() {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/indexMover?type=top&count=8`,
+    {
+      next: { revalidate: 0 },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
 export default async function MarketToday() {
   const [
     indexData,
@@ -111,6 +139,8 @@ export default async function MarketToday() {
     newsData,
     topFinancialsData,
     ipo,
+    beta,
+    indexMover,
   ] = await Promise.all([
     getIndexData(),
     getGainerLoserData(),
@@ -119,6 +149,8 @@ export default async function MarketToday() {
     getNews(),
     getTopFinancials(),
     getIpo(),
+    getBeta(),
+    getIndexMover(),
   ]);
 
   return (
@@ -126,8 +158,7 @@ export default async function MarketToday() {
       component="main"
       sx={{
         bgcolor: "background.default",
-        pt: 2,
-        pb: 6,
+        py: 2,
       }}
     >
       <Box sx={{ maxWidth: "1250px", mx: "auto" }}>
@@ -179,6 +210,13 @@ export default async function MarketToday() {
             </Box>
           </Grid>
 
+          <Grid item xs={12} sm={6}>
+            <IndexMover data={indexMover} />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Beta data={beta} />
+          </Grid>
+
           <Grid item xs={12} sm={5}>
             <Ipo data={ipo} />
           </Grid>
@@ -188,7 +226,7 @@ export default async function MarketToday() {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ mt: 6, mb: 2 }}>
+      <Box sx={{ mt: 6, mb: 1 }}>
         <Typography
           sx={{ fontSize: ".9rem", textAlign: "center" }}
           color="text.secondary"

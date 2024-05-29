@@ -6,6 +6,7 @@ export async function GET(request: NextRequest) {
   const params = [
     "exchange",
     "symbol",
+    "symbolType",
     "resolutionType",
     "fromTime",
     "toTime",
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
   const res = await fetch(
     `${process.env.BACKEND_URL}/api/prices/getBarsTvchart?${query}`,
     {
-      next: { revalidate: 0 },
+      cache: "no-store",
     }
   );
 

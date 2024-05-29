@@ -228,6 +228,7 @@ export default async function StockDetails({ params }: any) {
                   fontSize: { xs: "1.3rem", sm: "1.5rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
+                  mr: 3,
                 }}
               >
                 {stock.latest.change !== 0
@@ -256,7 +257,7 @@ export default async function StockDetails({ params }: any) {
                       <DoDisturbOnRoundedIcon color="error" />
                     )
                   }
-                  sx={{ fontSize: ".875rem", ml: { xs: 0, sm: 3 }, px: 0.3 }}
+                  sx={{ fontSize: ".875rem", px: 0.3 }}
                 />
               </Tooltip>
             </Box>
@@ -290,7 +291,12 @@ export default async function StockDetails({ params }: any) {
         </Box>
       </Box>
       <Box>
-        <TabView stock={stock} news={news} blocktr={blocktr} />
+        <TabView
+          stock={stock}
+          news={news}
+          blocktr={blocktr}
+          tradingCode={tradingCode}
+        />
       </Box>
     </Box>
   );

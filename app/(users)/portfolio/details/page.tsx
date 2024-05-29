@@ -17,11 +17,11 @@ import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
-import Trade from "./Trade";
+import View from "./View";
 import Link from "next/link";
 
 export default function Page({ searchParams }: any) {
-  const { portfolio, comm } = searchParams;
+  const { id } = searchParams;
 
   return (
     <Box
@@ -34,9 +34,7 @@ export default function Page({ searchParams }: any) {
           mx: "auto",
           pt: 3,
           px: 2,
-          // display: "flex",
-          // flexDirection: "column",
-          // alignItems: "center",
+          pb: 6,
         }}
       >
         <Box>
@@ -65,17 +63,17 @@ export default function Page({ searchParams }: any) {
             color="text.secondary"
             gutterBottom
             sx={{
-              fontSize: "1.6rem",
+              fontSize: "1.5rem",
               fontWeight: 500,
               mt: 2,
               mb: 3,
             }}
           >
-            Buy/Sell shares
+            Portfolio details
           </Typography>
         </Box>
         <Box sx={{ minWidth: { xs: "90vw", sm: 450 } }}>
-          <Trade portfolio={portfolio} comm={comm} />
+          <View id={id} />
         </Box>
       </Box>
     </Box>

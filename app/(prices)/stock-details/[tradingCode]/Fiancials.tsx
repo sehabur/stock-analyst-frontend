@@ -6,23 +6,15 @@ import {
   Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
   useTheme,
   useMediaQuery,
   Paper,
   Button,
-  Modal,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
-  Chip,
-  Card,
-  CardActionArea,
-  CardContent,
   Slider,
-  styled,
   Divider,
 } from "@mui/material";
 import { DateTime } from "luxon";
@@ -31,20 +23,12 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import React, { useState } from "react";
 import { grey } from "@mui/material/colors";
 
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import YearlyColumnChart from "@/components/charts/YearlyColumnChart";
-import QuarterlyColumnChart from "@/components/charts/QuarterlyColumnChart";
 import CloseIcon from "@mui/icons-material/Close";
 import PieChart from "@/components/charts/PieChart";
-import LineColumnChart from "@/components/charts/LineColumnChart";
 import { yearEndMap } from "@/data/dse";
-import LineChart from "@/components/charts/ShareholdingBarChart";
 import ShareholdingBarChart from "@/components/charts/ShareholdingBarChart";
 import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
-import MultipleLineChart from "@/components/charts/MultipleLineChart";
 import FinancialCard from "@/components/cards/FinancialCard";
-import InfoIcon from "@mui/icons-material/Info";
-import Link from "next/link";
 import { fundamentalsTooltip } from "@/data/info";
 import FundamentalInfoCard from "./_component/FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
@@ -560,24 +544,23 @@ export default function Financials({ data }: any) {
                         Lowest P/E of sector
                       </Typography>
                       <Slider
-                        value={data.pe.value}
-                        aria-label="Disabled slider"
+                        value={data.pe.position}
                         valueLabelDisplay="on"
                         valueLabelFormat={() => {
                           return `P/E: ${data.pe.value}`;
                         }}
                         min={data.pe.min}
                         max={data.pe.max}
-                        marks={[
-                          {
-                            value: data.pe.min,
-                            label: data.pe.min,
-                          },
-                          {
-                            value: data.pe.max,
-                            label: data.pe.max,
-                          },
-                        ]}
+                        // marks={[
+                        //   {
+                        //     value: data.pe.min,
+                        //     label: data.pe.min,
+                        //   },
+                        //   {
+                        //     value: data.pe.max,
+                        //     label: data.pe.max,
+                        //   },
+                        // ]}
                         sx={{
                           color: data.pe.color,
                           height: 10,
@@ -626,7 +609,7 @@ export default function Financials({ data }: any) {
           {dialogContent === "pbv" && (
             <>
               <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
-                Price-to-Bookvalue (P/BV) Ratio of {data.tradingCode}
+                Price-to-Bookvalue (P/Bv) Ratio of {data.tradingCode}
               </DialogTitle>
 
               <DialogContent dividers>
@@ -669,24 +652,23 @@ export default function Financials({ data }: any) {
                       </Typography>
 
                       <Slider
-                        value={data.pbv.value}
-                        aria-label="Disabled slider"
+                        value={data.pbv.position}
                         valueLabelDisplay="on"
                         valueLabelFormat={() => {
-                          return `P/BV: ${data.pbv.value}`;
+                          return `P/Bv: ${data.pbv.value}`;
                         }}
                         min={data.pbv.min}
                         max={data.pbv.max}
-                        marks={[
-                          {
-                            value: data.pbv.min,
-                            label: data.pbv.min,
-                          },
-                          {
-                            value: data.pbv.max,
-                            label: data.pbv.max,
-                          },
-                        ]}
+                        // marks={[
+                        //   {
+                        //     value: data.pbv.min,
+                        //     label: data.pbv.min,
+                        //   },
+                        //   {
+                        //     value: data.pbv.max,
+                        //     label: data.pbv.max,
+                        //   },
+                        // ]}
                         sx={{
                           color: data.pbv.color,
                           height: 10,
@@ -779,24 +761,24 @@ export default function Financials({ data }: any) {
                       </Typography>
 
                       <Slider
-                        value={data?.screener?.ps.value}
+                        value={data?.screener?.ps.position}
                         aria-label="Disabled slider"
                         valueLabelDisplay="on"
                         valueLabelFormat={() => {
-                          return `P/BV: ${data?.screener?.ps.value}`;
+                          return `P/S: ${data?.screener?.ps.value}`;
                         }}
                         min={data?.screener?.ps.min}
                         max={data?.screener?.ps.max}
-                        marks={[
-                          {
-                            value: data?.screener?.ps.min,
-                            label: data?.screener?.ps.min,
-                          },
-                          {
-                            value: data?.screener?.ps.max,
-                            label: data?.screener?.ps.max,
-                          },
-                        ]}
+                        // marks={[
+                        //   {
+                        //     value: data?.screener?.ps.min,
+                        //     label: data?.screener?.ps.min,
+                        //   },
+                        //   {
+                        //     value: data?.screener?.ps.max,
+                        //     label: data?.screener?.ps.max,
+                        //   },
+                        // ]}
                         sx={{
                           color: data?.screener?.ps.color,
                           height: 10,
@@ -888,24 +870,24 @@ export default function Financials({ data }: any) {
                       </Typography>
 
                       <Slider
-                        value={data.pcf.value}
+                        value={data.pcf.position}
                         aria-label="Disabled slider"
                         valueLabelDisplay="on"
                         valueLabelFormat={() => {
-                          return `P/BV: ${data.pcf.value}`;
+                          return `P/Cf: ${data.pcf.value}`;
                         }}
                         min={data.pcf.min}
                         max={data.pcf.max}
-                        marks={[
-                          {
-                            value: data.pcf.min,
-                            label: data.pcf.min,
-                          },
-                          {
-                            value: data.pcf.max,
-                            label: data.pcf.max,
-                          },
-                        ]}
+                        // marks={[
+                        //   {
+                        //     value: data.pcf.min,
+                        //     label: data.pcf.min,
+                        //   },
+                        //   {
+                        //     value: data.pcf.max,
+                        //     label: data.pcf.max,
+                        //   },
+                        // ]}
                         sx={{
                           color: data.pcf.color,
                           height: 10,
@@ -1088,7 +1070,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "shareholdings" && (
             <>
-              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem" }}>
+              <DialogTitle sx={{ fontWeight: 700, fontSize: "1.4rem", pr: 12 }}>
                 Shareholding percentage history of {data.tradingCode}
               </DialogTitle>
               <DialogContent dividers>

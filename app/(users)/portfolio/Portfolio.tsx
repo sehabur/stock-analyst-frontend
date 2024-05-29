@@ -9,6 +9,12 @@ import Divider from "@mui/material/Divider";
 import Link from "next/link";
 import Spinner from "@/components/shared/Spinner";
 
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState<any>();
 
@@ -18,7 +24,20 @@ export default function Portfolio() {
 
   const [successMessage, setSuccessMessage] = React.useState("");
 
+  const [deleteItemId, setDeleteItemId] = React.useState("");
+
   const [errorMessage, setErrorMessage] = React.useState("");
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickDelete = (id: string) => {
+    setDeleteItemId(id);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   async function getData() {
     setIsLoading(true);
@@ -37,10 +56,10 @@ export default function Portfolio() {
     return setPortfolio(data);
   }
 
-  async function handlePortfolioDelete(id: string) {
+  async function handlePortfolioDelete() {
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/portfolio/item?id=${id}`, {
+      const res = await fetch(`/api/portfolio/item?id=${deleteItemId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -57,10 +76,12 @@ export default function Portfolio() {
         setErrorMessage(data.message || "Something went wrong");
         setSuccessMessage("");
       }
+      handleCloseDialog();
       setIsLoading(false);
     } catch (error) {
       setErrorMessage("Something went wrong");
       setSuccessMessage("");
+      handleCloseDialog();
       setIsLoading(false);
     }
   }
@@ -73,6 +94,37 @@ export default function Portfolio() {
   return (
     <Box>
       {isLoading && <Spinner />}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>Delete portfolio</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Do you really want to delete this portfolio? Once delete all data
+            will be lost.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ mr: 2, mb: 1.5 }}>
+          <Button
+            onClick={handleCloseDialog}
+            color="primary"
+            variant="outlined"
+            sx={{ mr: 1 }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={handlePortfolioDelete}
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Box>
         <Button
           component={Link}
@@ -94,7 +146,7 @@ export default function Portfolio() {
       >
         {portfolio?.map((item: any) => (
           <Paper
-            sx={{ width: 380, py: 2, my: 2, borderRadius: 2 }}
+            sx={{ width: 380, py: 2, my: 2, borderRadius: 2, mx: 2 }}
             elevation={6}
             key={item._id}
           >
@@ -188,13 +240,12 @@ export default function Portfolio() {
             <Box
               sx={{ display: "flex", justifyContent: "flex-end", mt: 3, mr: 2 }}
             >
-              {" "}
               <Button
                 variant="outlined"
                 size="small"
                 color="error"
                 sx={{ ml: 1.5 }}
-                onClick={() => handlePortfolioDelete(item._id)}
+                onClick={() => handleClickDelete(item._id)}
               >
                 Delete
               </Button>
@@ -204,7 +255,7 @@ export default function Portfolio() {
                 color="primary"
                 sx={{ ml: 1.5 }}
                 component={Link}
-                href={`/portfolio/${item._id}`}
+                href={`/portfolio/details?id=${item._id}`}
               >
                 View details
               </Button>

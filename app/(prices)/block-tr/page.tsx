@@ -3,7 +3,7 @@ import BlockTransection from "./BlockTransection";
 
 const getBlockTr = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/blockTr/all?limit=300`,
+    `${process.env.BACKEND_URL}/api/prices/blockTr/all?limit=250`,
     {
       next: { revalidate: 0 },
     }

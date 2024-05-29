@@ -30,9 +30,6 @@ import Tab from "@mui/material/Tab";
 import { filterOptions } from "./filters";
 import styles from "./Main.module.css";
 
-import CustomizedDividers from "@/components/buttons/ToggleButtonGroupCustom";
-import { grey } from "@mui/material/colors";
-
 const startingFields = ["category", "tradingCode", "sector"];
 
 const endingFields = [
@@ -50,8 +47,73 @@ const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
   },
 }));
 
+const initialTextFieldInput = {
+  sector: "",
+  category: "",
+  ltp: "",
+  volume: "",
+  marketCap: "",
+  paidUpCap: "",
+  totalShares: "",
+  pe: "",
+  de: "",
+  ps: "",
+  pbv: "",
+  pcf: "",
+  currentRatio: "",
+  roe: "",
+  roa: "",
+  dividendYield: "",
+  cashDividend: "",
+  stockDividend: "",
+  revenueGrowthOneYear: "",
+  revenueGrowthFiveYear: "",
+  epsGrowthOneYear: "",
+  epsGrowthFiveYear: "",
+  epsGrowthQuarter: "",
+  navGrowthOneYear: "",
+  navGrowthQuarter: "",
+  nocfpsGrowthOneYear: "",
+  nocfpsGrowthQuarter: "",
+  totalAssetGrowthOneYear: "",
+  totalAssetGrowthFiveYear: "",
+  netIncomeGrowthOneYear: "",
+  netIncomeGrowthFiveYear: "",
+  totalLiabilitiesGrowthOneYear: "",
+  operatingProfitGrowthOneYear: "",
+  directorShareHolding: "",
+  govtShareHolding: "",
+  publicShareHolding: "",
+  foreignShareHolding: "",
+  instituteShareHolding: "",
+  freeFloatShare: "",
+  directorShareHoldingChange: "",
+  instituteShareHoldingChange: "",
+  reserve: "",
+  pricePercentChange: "",
+  pricePercentChangeOneWeek: "",
+  pricePercentChangeOneMonth: "",
+  pricePercentChangeSixMonth: "",
+  pricePercentChangeOneYear: "",
+  pricePercentChangeFiveYear: "",
+  beta: "",
+  sma20: "",
+  sma50: "",
+  sma200: "",
+  ema20: "",
+  ema50: "",
+  ema200: "",
+  rsi14: "",
+  candlestick: "",
+  patterns: "",
+};
+
 export default function Main() {
   const [formInputs, setFormInputs] = useState<any>({});
+
+  const [textFieldInput, setTextFieldInput] = useState<any>(
+    initialTextFieldInput
+  );
 
   const [screenerData, setScreenerData] = useState<any>([]);
 
@@ -68,17 +130,18 @@ export default function Main() {
     unit: "",
   });
 
+  const [tabValue, setTabValue] = useState(0);
+
   const [openCustomRangeMenu, setCustomRangeMenuOpen] =
     useState<boolean>(false);
 
   const columns: GridColDef[] = [...filterOptions]
-    // .sort((a, b) => a.columnOrder - b.columnOrder)
+    .sort((a: any, b: any) => a.columnOrder - b.columnOrder)
     .map((item: any) => {
       const column: any = {
         field: item.name,
         headerName: item?.label,
         width: 120,
-        // width: Math.max(1300 / screenerDatafields.length, 120),
         align: "left",
         headerAlign: "left",
       };
@@ -99,9 +162,13 @@ export default function Main() {
 
       return column;
     });
+  const handleTabChange = (event: any, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   const handleResetFilters = () => {
     setFormInputs({});
+    setTextFieldInput(initialTextFieldInput);
   };
 
   const handleMenuItemClick = (
@@ -126,8 +193,15 @@ export default function Main() {
       if (value === "any") {
         delete formInputs[name];
         setFormInputs({ ...formInputs });
+
+        delete textFieldInput[name];
+        setTextFieldInput({ ...textFieldInput });
       } else {
         setFormInputs({
+          ...formInputs,
+          [name]: value,
+        });
+        setTextFieldInput({
           ...formInputs,
           [name]: value,
         });
@@ -149,6 +223,11 @@ export default function Main() {
     setFormInputs({
       ...formInputs,
       [name]: min + ";" + max,
+    });
+
+    setTextFieldInput({
+      ...textFieldInput,
+      [name]: "null;null",
     });
 
     setFilters((prevState: any) => {
@@ -203,12 +282,13 @@ export default function Main() {
         screenerDatafields.indexOf(item.name) === -1 ? false : true;
     }
 
+    console.log(column);
     setColumnVisibilityModel(column);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screenerDatafields]);
 
   const customFilterMenu = (
-    <div>
+    <>
       <Dialog
         disableEscapeKeyDown
         open={openCustomRangeMenu}
@@ -251,6 +331,9 @@ export default function Main() {
                     </InputAdornment>
                   ),
                 }}
+                inputProps={{
+                  step: 0.01,
+                }}
               />
               <Typography sx={{ fontSize: "1rem", mr: 2, mb: 1 }}>
                 Max Value:
@@ -266,6 +349,9 @@ export default function Main() {
                       {customRangeMenuContent.unit}
                     </InputAdornment>
                   ),
+                }}
+                inputProps={{
+                  step: 0.01,
                 }}
               />
             </Box>
@@ -290,14 +376,132 @@ export default function Main() {
           </DialogActions>
         </Box>
       </Dialog>
-    </div>
+    </>
   );
 
-  const [tabValue, setTabValue] = useState(0);
+  const technicalFilters = filters
+    .filter((item: any) => item.visible === 1 && item.placement == "technical")
+    .map((filter: any) => (
+      <Grid item xs={6} sm={1.714} key={filter.name}>
+        <TextField
+          variant="outlined"
+          select
+          label={filter.label}
+          name={filter.name}
+          fullWidth
+          size="small"
+          value={textFieldInput[filter.name]}
+          color="success"
+          focused={formInputs[filter.name]}
+        >
+          <Typography
+            sx={{
+              px: 2,
+              pb: 0.7,
+              color: "primary.main",
+            }}
+          >
+            {filter.desc}
+          </Typography>
+          <Divider />
+          <MenuItem
+            dense
+            value="any"
+            onClick={() =>
+              handleMenuItemClick(
+                "default",
+                filter.name,
+                filter.desc,
+                "any",
+                ""
+              )
+            }
+          >
+            Any
+          </MenuItem>
+          {filter.options.map((option: any) => (
+            <MenuItem
+              dense
+              key={option.value}
+              value={option.value}
+              onClick={() =>
+                handleMenuItemClick(
+                  option.type,
+                  filter.name,
+                  filter.desc,
+                  option.value,
+                  filter.unit
+                )
+              }
+            >
+              {option.text}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+    ));
 
-  const handleTabChange = (event: any, newValue: number) => {
-    setTabValue(newValue);
-  };
+  const fundamentalalFilters = filters
+    .filter((item: any) => item.visible === 1 && item.placement != "technical")
+    .map((filter: any) => (
+      <Grid item xs={6} sm={1.714} key={filter.name}>
+        <TextField
+          variant="outlined"
+          select
+          label={filter.label}
+          name={filter.name}
+          fullWidth
+          size="small"
+          value={textFieldInput[filter.name]}
+          color="success"
+          focused={formInputs[filter.name]}
+        >
+          <Typography
+            sx={{
+              px: 2,
+              pb: 0.7,
+              color: "primary.main",
+            }}
+          >
+            {filter.desc}
+          </Typography>
+          <Divider />
+          <MenuItem
+            dense
+            value="any"
+            onClick={() =>
+              handleMenuItemClick(
+                "default",
+                filter.name,
+                filter.desc,
+                "any",
+                ""
+              )
+            }
+          >
+            Any
+          </MenuItem>
+          {filter.options.map((option: any) => (
+            <MenuItem
+              dense
+              key={option.value}
+              value={option.value}
+              onClick={() =>
+                handleMenuItemClick(
+                  option.type,
+                  filter.name,
+                  filter.desc,
+                  option.value,
+                  filter.unit
+                )
+              }
+            >
+              {option.text}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+    ));
 
   return (
     <Box>
@@ -310,16 +514,19 @@ export default function Main() {
           borderBottom: 1,
           borderColor: "divider",
           px: { xs: 2, sm: 4 },
+          flexWrap: "wrap",
         }}
       >
-        <Box>
-          <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab label="Fundamental" />
-            <Tab label="Technical" />
-            <Tab label="All" />
-          </Tabs>
-        </Box>
-
+        <Tabs
+          value={tabValue}
+          onChange={handleTabChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+        >
+          <Tab label="Fundamental" sx={{ color: "primary.main" }} />
+          <Tab label="Technical" sx={{ color: "primary.main" }} />
+          <Tab label="All" sx={{ color: "primary.main" }} />
+        </Tabs>
         <Box
           sx={{
             display: "flex",
@@ -327,11 +534,11 @@ export default function Main() {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ fontSize: "1rem" }}>
-            {Object.keys(formInputs).length} filter(s) selected
+          <Typography sx={{ fontSize: "1rem", color: "text.primary" }}>
+            {Object.keys(formInputs).length} filters selected
           </Typography>
           <Button sx={{ ml: 4 }} variant="text" onClick={handleResetFilters}>
-            Reset Filters
+            Reset filters
           </Button>
         </Box>
       </Box>
@@ -340,6 +547,7 @@ export default function Main() {
         <Box
           sx={{
             bgcolor: "financePageBgcolor",
+            pt: 1,
             // borderBottom: 1,
             // borderColor: "divider",
           }}
@@ -351,78 +559,45 @@ export default function Main() {
               px: { xs: 2, sm: 4 },
               mt: 1.5,
               pb: 0.1,
-              // pt: 2
             }}
           >
-            <Grid
-              container
-              columnSpacing={{ xs: 1, sm: 1.4 }}
-              rowSpacing={1.4}
-              sx={{ mb: 2 }}
-            >
-              {filters
-                .filter((item: any) => item.visible === 1)
-                .map((filter: any) => (
-                  <Grid item xs={6} sm={1.714} key={filter.name}>
-                    <TextField
-                      variant="outlined"
-                      select
-                      label={filter.label}
-                      name={filter.name}
-                      fullWidth
-                      size="small"
-                      value={formInputs[filter?.name]}
-                    >
-                      <Typography
-                        sx={{
-                          px: 2,
-                          pb: 0.7,
-                          color: "primary.main",
-                        }}
-                      >
-                        {filter.desc}
-                      </Typography>
-                      <Divider />
-                      <MenuItem
-                        dense
-                        value="any"
-                        onClick={() =>
-                          handleMenuItemClick(
-                            "default",
-                            filter.name,
-                            filter.desc,
-                            "any",
-                            ""
-                          )
-                        }
-                      >
-                        Any
-                      </MenuItem>
-                      {filter.options.map((option: any) => (
-                        <MenuItem
-                          dense
-                          key={option.value}
-                          value={option.value}
-                          onClick={() =>
-                            handleMenuItemClick(
-                              option.type,
-                              filter.name,
-                              filter.desc,
-                              option.value,
-                              filter.unit
-                            )
-                          }
-                        >
-                          {option.text}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                ))}
-            </Grid>
+            <Box>
+              <Grid
+                container
+                columnSpacing={{ xs: 1, sm: 1.4 }}
+                rowSpacing={1.4}
+                sx={{ mb: 2, display: tabValue == 0 ? "flex" : "none" }}
+              >
+                {fundamentalalFilters}
+              </Grid>
+              <Grid
+                container
+                columnSpacing={{ xs: 1, sm: 1.4 }}
+                rowSpacing={1.4}
+                sx={{ mb: 2, display: tabValue == 1 ? "flex" : "none" }}
+              >
+                {technicalFilters}
+              </Grid>
+              <Grid
+                container
+                columnSpacing={{ xs: 1, sm: 1.4 }}
+                rowSpacing={1.4}
+                sx={{ mb: 2, display: tabValue == 2 ? "flex" : "none" }}
+              >
+                {fundamentalalFilters} {technicalFilters}
+              </Grid>
+            </Box>
           </Box>
         </Box>
-        <Box sx={{ maxWidth: 1720, mx: "auto", px: { xs: 2, sm: 4 }, my: 2 }}>
+        <Box
+          sx={{
+            maxWidth: 1720,
+            mx: "auto",
+            px: { xs: 2, sm: 4 },
+            pt: 2,
+            pb: 4,
+          }}
+        >
           <Box sx={{ height: 565 }}>
             <StripedDataGrid
               rows={screenerData}

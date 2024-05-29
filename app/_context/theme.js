@@ -21,6 +21,12 @@ const lightPalleteColors = {
     dark: "#00713f",
     contrastText: "#fff",
   },
+  secondary: {
+    main: "#00A25B",
+    light: "#33b47b",
+    dark: "#00713f",
+    contrastText: "#fff",
+  },
 };
 const darkPalleteColors = {
   primary: {
@@ -41,6 +47,18 @@ const darkPalleteColors = {
     dark: "#00713f",
     contrastText: "#fff",
   },
+  secondary: {
+    main: "#00A25B",
+    light: "#33b47b",
+    dark: "#00713f",
+    contrastText: "#fff",
+  },
+  // secondary: {
+  //   main: "#ed6c02",
+  //   light: "#ff9800",
+  //   dark: "#e65100",
+  //   contrastText: "#fff",
+  // },
 };
 
 const defaultSettings = {

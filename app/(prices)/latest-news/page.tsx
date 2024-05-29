@@ -3,7 +3,7 @@ import News from "./News";
 
 const getNews = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/news/all?limit=5000`,
+    `${process.env.BACKEND_URL}/api/prices/news/all?limit=2500`,
     {
       next: { revalidate: 0 },
     }

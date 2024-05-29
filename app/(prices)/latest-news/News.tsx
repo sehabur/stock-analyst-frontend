@@ -86,7 +86,7 @@ export default function News({ data }: any) {
 
   const [dialogContent, setDialogContent] = useState<any>({});
 
-  const [news, setNews] = useState<any>(data);
+  const [news, setNews] = useState<any>(data.slice(0, 300));
 
   const [alignment, setAlignment] = useState(" ");
 
@@ -100,13 +100,17 @@ export default function News({ data }: any) {
       let text = new RegExp(newAlignment, "i");
       // console.log(text, newAlignment);
 
-      const newData = data.filter((item: any) => {
-        const position =
-          newAlignment === "Q[0-9]"
-            ? item.title.search(text)
-            : item.description.search(text);
-        if (position !== -1) return item;
-      });
+      const newData = data
+        .filter((item: any) => {
+          const position =
+            newAlignment === "Q[0-9]"
+              ? item.title.search(text)
+              : item.description.search(text);
+          if (position !== -1) return item;
+        })
+        .slice(0, 300);
+
+      console.log(newData.length);
       setNews(newData);
     }
   };

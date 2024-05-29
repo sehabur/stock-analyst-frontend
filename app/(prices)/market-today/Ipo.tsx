@@ -1,11 +1,23 @@
 "use client";
-import { Paper, Box, Typography, Stack, Button, Avatar } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Typography,
+  Stack,
+  Button,
+  Avatar,
+  Divider,
+} from "@mui/material";
 import React from "react";
 import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import DateRangeRoundedIcon from "@mui/icons-material/DateRangeRounded";
+import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
+import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
+import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -22,8 +34,8 @@ export default function Ipo(props: any) {
 
   const router = useRouter();
 
-  const handleClick = (index: number) => {
-    router.push(`/ipo#${index}`);
+  const handleClick = (id: string) => {
+    router.push(`/ipo/details?id=${id}`);
   };
 
   return (
@@ -62,30 +74,36 @@ export default function Ipo(props: any) {
                   bgcolor: "secondaryBackground",
                   cursor: "pointer",
                 },
-                maxWidth: 420,
+                mr: { xs: 0, sm: 4 },
               }}
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(item._id)}
               elevation={6}
               key={index}
             >
               <Typography
                 noWrap
-                sx={{ color: "text.primary", fontSize: "1.1rem", mx: 2 }}
+                sx={{
+                  color: "primary.main",
+                  fontSize: "1.2rem",
+                  mx: 2,
+                  mb: 1,
+                  mt: { xs: 1, sm: 0 },
+                }}
               >
                 {item.companyName}
               </Typography>
-
               <Box
                 sx={{
                   display: "flex",
+                  flexWrap: "wrap",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                <ListItem sx={{ pt: 0 }}>
+                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
                   <ListItemAvatar>
                     <Avatar>
-                      <DateRangeRoundedIcon />
+                      <PlayCircleOutlineRoundedIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
@@ -95,17 +113,54 @@ export default function Ipo(props: any) {
                     ).toFormat("dd MMM, yyyy")}`}
                   />
                 </ListItem>
-                <ListItem sx={{ pt: 0 }}>
+                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
                   <ListItemAvatar>
                     <Avatar>
                       <AddCardRoundedIcon />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
-                    primary="Amount"
-                    secondary={`${item.subscriptionAmount} BDT`}
+                    primary="Min amount"
+                    secondary={`${item.minSubscriptionAmount} BDT`}
                   />
                 </ListItem>
+                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <DoDisturbAltRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Ends at"
+                    secondary={`${DateTime.fromISO(
+                      item.subscriptionStart
+                    ).toFormat("dd MMM, yyyy")}`}
+                  />
+                </ListItem>
+                <ListItem sx={{ pt: 0, width: { xs: 180, sm: 210 } }}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <AccountBalanceRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Min investment"
+                    secondary={`${item.minInvestmentRB} BDT`}
+                  />
+                </ListItem>
+              </Box>
+              <Box sx={{ textAlign: "left", ml: 1 }}>
+                <Button
+                  variant="text"
+                  endIcon={<KeyboardArrowRightOutlinedIcon />}
+                  sx={{
+                    ":hover": {
+                      bgcolor: "transparent",
+                    },
+                  }}
+                >
+                  See Details
+                </Button>
               </Box>
             </Paper>
           ))}

@@ -20,6 +20,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 
 import Link from "next/link";
 import { DateTime } from "luxon";
@@ -74,21 +75,22 @@ export default async function Ipo({}) {
                 (item: any) => new Date(item.subscriptionEnd) >= new Date()
               )
               .map((item: any, index: number) => (
-                <div id={index.toString()} key={index}>
-                  <Paper
-                    sx={{
-                      my: 2,
-                      mx: 2,
-                      borderRadius: 3,
-                      width: { xs: 320, sm: 350 },
-                    }}
-                    elevation={6}
-                  >
+                <Paper
+                  key={index}
+                  sx={{
+                    my: 2,
+                    mx: 2,
+                    borderRadius: 3,
+                    width: { xs: 320, sm: 350 },
+                  }}
+                  elevation={6}
+                >
+                  <Box component={Link} href={`/ipo/details?id=${item._id}`}>
                     <Typography
                       gutterBottom
                       sx={{
-                        color: "text.primary",
-                        fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                        color: "primary.main",
+                        fontSize: { xs: "1.1rem", sm: "1.2rem" },
                         mx: 2,
                         pt: 2,
                         pb: 0.6,
@@ -132,8 +134,8 @@ export default async function Ipo({}) {
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                          primary="Subscription amount"
-                          secondary={`${item.subscriptionAmount} BDT`}
+                          primary="Min subscription amount"
+                          secondary={`${item.minSubscriptionAmount} BDT`}
                         />
                       </ListItem>
                       <ListItem sx={{ pt: 0 }}>
@@ -157,12 +159,25 @@ export default async function Ipo({}) {
                         </ListItemAvatar>
                         <ListItemText
                           primary="Min investment required"
-                          secondary={`${item.minInvestment} BDT`}
+                          secondary={`${item.minInvestmentRB} BDT`}
                         />
                       </ListItem>
+                      <Box sx={{ textAlign: "right", mr: 2 }}>
+                        <Button
+                          variant="text"
+                          endIcon={<KeyboardArrowRightOutlinedIcon />}
+                          sx={{
+                            ":hover": {
+                              bgcolor: "transparent",
+                            },
+                          }}
+                        >
+                          See Details
+                        </Button>
+                      </Box>
                     </Box>
-                  </Paper>
-                </div>
+                  </Box>
+                </Paper>
               ))}
           </Box>
         </Box>
@@ -193,21 +208,22 @@ export default async function Ipo({}) {
                 (item: any) => new Date(item.subscriptionEnd) < new Date()
               )
               .map((item: any, index: number) => (
-                <div key={index}>
-                  <Paper
-                    sx={{
-                      my: 2,
-                      mx: 2,
-                      borderRadius: 3,
-                      width: { xs: 320, sm: 350 },
-                    }}
-                    elevation={6}
-                  >
+                <Paper
+                  key={index}
+                  sx={{
+                    my: 2,
+                    mx: 2,
+                    borderRadius: 3,
+                    width: { xs: 320, sm: 350 },
+                  }}
+                  elevation={6}
+                >
+                  <Box component={Link} href={`/ipo/details?id=${item._id}`}>
                     <Typography
                       gutterBottom
                       sx={{
-                        color: "text.primary",
-                        fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                        color: "primary.main",
+                        fontSize: { xs: "1.1rem", sm: "1.2rem" },
                         mx: 2,
                         pt: 2,
                         pb: 0.6,
@@ -251,8 +267,8 @@ export default async function Ipo({}) {
                           </Avatar>
                         </ListItemAvatar>
                         <ListItemText
-                          primary="Subscription amount"
-                          secondary={`${item.subscriptionAmount} BDT`}
+                          primary="Min subscription amount"
+                          secondary={`${item.minSubscriptionAmount} BDT`}
                         />
                       </ListItem>
                       <ListItem sx={{ pt: 0 }}>
@@ -276,12 +292,25 @@ export default async function Ipo({}) {
                         </ListItemAvatar>
                         <ListItemText
                           primary="Min investment required"
-                          secondary={`${item.minInvestment} BDT`}
+                          secondary={`${item.minInvestmentRB} BDT`}
                         />
                       </ListItem>
+                      <Box sx={{ textAlign: "right", mr: 2 }}>
+                        <Button
+                          variant="text"
+                          endIcon={<KeyboardArrowRightOutlinedIcon />}
+                          sx={{
+                            ":hover": {
+                              bgcolor: "transparent",
+                            },
+                          }}
+                        >
+                          See Details
+                        </Button>
+                      </Box>
                     </Box>
-                  </Paper>
-                </div>
+                  </Box>
+                </Paper>
               ))}
           </Box>
         </Box>

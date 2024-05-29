@@ -43,8 +43,7 @@ export default function Trade(props: any) {
 
   const auth = useSelector((state: any) => state.auth);
 
-  const [searchResultFallbackText, setSearchResultFallbackText] =
-    useState("Loading data..");
+  const [searchResultFallbackText, setSearchResultFallbackText] = useState("");
 
   const handleToastColse = (event: any) => {
     setToastMessageOpen(false);

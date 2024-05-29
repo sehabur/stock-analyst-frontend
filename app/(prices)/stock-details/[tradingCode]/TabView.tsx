@@ -16,6 +16,7 @@ import Financials from "./Fiancials";
 import MarketDepth from "./MarketDepth";
 import BlockTransections from "./BlockTransections";
 import News from "./News";
+import Technical from "./Technical";
 
 const TabPanel = (props: any) => {
   const { children, value, index, ...other } = props;
@@ -34,7 +35,7 @@ const TabPanel = (props: any) => {
 };
 
 export default function TabView(props: any) {
-  const { stock, news, blocktr } = props;
+  const { stock, news, blocktr, tradingCode } = props;
 
   const theme = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
@@ -62,7 +63,12 @@ export default function TabView(props: any) {
     },
     {
       title: "Technicals",
-      component: <News />,
+      component: (
+        <Technical
+          technicals={stock.fundamentals.technicals}
+          tradingCode={tradingCode}
+        />
+      ),
     },
   ];
 

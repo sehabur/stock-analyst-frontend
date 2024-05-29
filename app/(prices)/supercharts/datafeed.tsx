@@ -155,10 +155,10 @@ const getData = {
       supported_resolutions: configurationData.supported_resolutions,
       data_status: "streaming",
       has_intraday: true,
-      intraday_multipliers: ["1", "15", "30", "60"],
+      intraday_multipliers: ["1", "3", "5", "15", "30", "60", "120", "180"],
       sector: "new sector",
       session: "1;1000-1430:12345",
-      session_holidays: "20181105,20181107,20181112",
+      session_holidays: "20240501,20240522",
     };
 
     console.log("[resolveSymbol]: Symbol resolved", symbolName);
@@ -169,6 +169,7 @@ const getData = {
     symbolInfo: {
       exchange: any;
       name: any;
+      type: any;
       intraday_multipliers: string | any[];
     },
     resolution: any,
@@ -193,9 +194,12 @@ const getData = {
 
     console.log("[getBars]: Method call", symbolInfo, resolution, from, to);
 
+    console.log(symbolInfo.type);
+
     const urlParameters: any = {
       exchange: symbolInfo.exchange,
       symbol: symbolInfo.name,
+      symbolType: symbolInfo.type,
       resolutionType: symbolInfo.intraday_multipliers.includes(resolution)
         ? "intraday"
         : "day",

@@ -105,6 +105,7 @@ const formatChartData = (data: any) => {
 };
 
 export default function IndexChart({ indexData }: any) {
+  console.log(indexData.isMarketOpen);
   const theme = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
