@@ -50,7 +50,9 @@ export default function SearchStockCard(props: any) {
                     mr: 1,
                   }}
                 >
-                  {item.tradingCode}
+                  {item.tradingCode.startsWith("00")
+                    ? item.tradingCode.slice(2)
+                    : item.tradingCode}
                 </Typography>
                 {/* <Chip
                   label={item.category}
@@ -82,7 +84,7 @@ export default function SearchStockCard(props: any) {
                 )}
 
                 <Chip
-                  label={`${item.change}%`}
+                  label={`${item.percentChange}%`}
                   size="small"
                   sx={{
                     ml: { xs: 1, sm: 1.5 },
@@ -121,8 +123,9 @@ export default function SearchStockCard(props: any) {
                 >
                   {item.ltp}
                 </Typography>
+
                 <Typography sx={{ fontSize: ".75rem" }} color="text.secondary">
-                  BDT
+                  {item.tradingCode.startsWith("00") ? "Point" : "BDT"}
                 </Typography>
               </Stack>
             </Grid>

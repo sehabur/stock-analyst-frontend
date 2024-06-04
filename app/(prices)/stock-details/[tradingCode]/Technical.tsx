@@ -46,6 +46,11 @@ import Spinner from "@/components/shared/Spinner";
 import SubjectRoundedIcon from "@mui/icons-material/SubjectRounded";
 import { styled, alpha } from "@mui/material/styles";
 import { DateTime } from "luxon";
+
+function formatPatternName(text: string) {
+  return (text.charAt(0).toUpperCase() + text.slice(1)).replaceAll("_", " ");
+}
+
 export default function Technical(props: any) {
   const { technicals, tradingCode } = props;
 
@@ -163,132 +168,6 @@ export default function Technical(props: any) {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        <Grid item xs={12} sm={6}>
-          <Box sx={{ px: { xs: 2, sm: 0 } }}>
-            <CandlestickChartRoundedIcon
-              color="primary"
-              sx={{
-                fontSize: "2.4rem",
-                borderRadius: 3,
-                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                padding: 0.5,
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
-                mb: 1,
-              }}
-            />
-            <Box>
-              <Typography sx={{ fontSize: "1.3rem", color: "text.primary" }}>
-                Candlestick Pattern
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "1rem",
-                  color: "text.secondary",
-                  mb: 1.5,
-                  ml: 0.3,
-                }}
-              >
-                Last 7 days
-              </Typography>
-            </Box>
-
-            <Box sx={{ maxWidth: 350 }}>
-              {technicals?.candlestick.length > 0 ? (
-                technicals?.candlestick
-                  .sort((a: any, b: any) => {
-                    const date2: any = new Date(b.date);
-                    const date1: any = new Date(a.date);
-                    return date2 - date1;
-                  })
-                  .map((item: any) => (
-                    <>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <InsightsRoundedIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={item.value}
-                          secondary={DateTime.fromISO(item.date).toFormat(
-                            "dd MMM, yyyy"
-                          )}
-                          sx={{
-                            "& .MuiListItemText-primary": {
-                              fontSize: "1.1rem",
-                              color: "text.primary",
-                            },
-                          }}
-                        />
-                      </ListItem>
-                      <Divider light variant="middle" />
-                    </>
-                  ))
-              ) : (
-                <Box sx={{ mt: 3 }}>
-                  <Typography color="warning.main">No patterns</Typography>
-                </Box>
-              )}
-            </Box>
-          </Box>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Box sx={{ px: { xs: 2, sm: 0 } }}>
-            <SsidChartRoundedIcon
-              color="primary"
-              sx={{
-                fontSize: "2.4rem",
-                borderRadius: 3,
-                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                padding: 0.5,
-                bgcolor: alpha(theme.palette.primary.main, 0.1),
-                mb: 1,
-              }}
-            />
-            <Box>
-              <Typography sx={{ fontSize: "1.3rem", color: "text.primary" }}>
-                Chart Pattern
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "1rem",
-                  color: "text.secondary",
-                  mb: 1.5,
-                  ml: 0.3,
-                }}
-              >
-                Last 1 year
-              </Typography>
-            </Box>
-            <Box sx={{ maxWidth: 350 }}>
-              {technicals?.patterns.length > 0 ? (
-                technicals?.patterns.map((item: any) => (
-                  <>
-                    <ListItem sx={{ py: 0.8 }}>
-                      <ListItemAvatar sx={{ mt: 1 }}>
-                        <TroubleshootRoundedIcon color="success" />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={item}
-                        sx={{
-                          "& .MuiListItemText-primary": {
-                            fontSize: "1rem",
-                            color: "text.primary",
-                          },
-                        }}
-                      />
-                    </ListItem>
-                    <Divider light variant="middle" />
-                  </>
-                ))
-              ) : (
-                <Box sx={{ mt: 3 }}>
-                  <Typography color="warning.main">No patterns</Typography>
-                </Box>
-              )}
-            </Box>
-          </Box>
-        </Grid>
         <Grid item xs={12} sm={6}>
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>
             Simple Moving Averages
@@ -631,6 +510,134 @@ export default function Technical(props: any) {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ px: { xs: 2, sm: 0 } }}>
+            <CandlestickChartRoundedIcon
+              color="primary"
+              sx={{
+                fontSize: "2.2rem",
+                borderRadius: 3,
+                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                padding: 0.5,
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                mb: 1,
+              }}
+            />
+            <Box>
+              <Typography sx={{ fontSize: "1.3rem", color: "text.primary" }}>
+                Candlestick Pattern
+              </Typography>
+              <Typography
+                sx={{
+                  // fontSize: "1rem",
+                  color: "text.secondary",
+                  mb: 1.5,
+                  ml: 0.3,
+                }}
+              >
+                Last 3 days
+              </Typography>
+            </Box>
+
+            <Box sx={{ maxWidth: 350 }}>
+              {technicals?.candlestick.length > 0 ? (
+                technicals?.candlestick
+                  .sort((a: any, b: any) => {
+                    const date2: any = new Date(b.date);
+                    const date1: any = new Date(a.date);
+                    return date2 - date1;
+                  })
+                  .map((item: any) => (
+                    <>
+                      <ListItem>
+                        <ListItemAvatar>
+                          <Avatar>
+                            <InsightsRoundedIcon />
+                          </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={formatPatternName(item.value)}
+                          secondary={DateTime.fromISO(item.date).toFormat(
+                            "dd MMM, yyyy"
+                          )}
+                          sx={{
+                            "& .MuiListItemText-primary": {
+                              fontSize: "1rem",
+                              color: "text.primary",
+                            },
+                          }}
+                        />
+                      </ListItem>
+                      {technicals?.candlestick?.length > 1 && (
+                        <Divider light variant="middle" />
+                      )}
+                    </>
+                  ))
+              ) : (
+                <Box sx={{ mt: 3 }}>
+                  <Typography color="warning.main">No patterns</Typography>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ px: { xs: 2, sm: 0 } }}>
+            <SsidChartRoundedIcon
+              color="primary"
+              sx={{
+                fontSize: "2.2rem",
+                borderRadius: 3,
+                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                padding: 0.5,
+                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                mb: 1,
+              }}
+            />
+            <Box>
+              <Typography sx={{ fontSize: "1.3rem", color: "text.primary" }}>
+                Chart Pattern
+              </Typography>
+              <Typography
+                sx={{
+                  // fontSize: "1rem",
+                  color: "text.secondary",
+                  mb: 1.5,
+                  ml: 0.3,
+                }}
+              >
+                Last 1 year
+              </Typography>
+            </Box>
+            <Box sx={{ maxWidth: 350 }}>
+              {technicals?.patterns.length > 0 ? (
+                technicals?.patterns.map((item: any) => (
+                  <>
+                    <ListItem sx={{ py: 0.8 }}>
+                      <ListItemAvatar sx={{ mt: 1 }}>
+                        <TroubleshootRoundedIcon color="success" />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={formatPatternName(item)}
+                        sx={{
+                          "& .MuiListItemText-primary": {
+                            fontSize: ".9rem",
+                            color: "text.primary",
+                          },
+                        }}
+                      />
+                    </ListItem>
+                    <Divider light variant="middle" />
+                  </>
+                ))
+              ) : (
+                <Box sx={{ mt: 3 }}>
+                  <Typography color="warning.main">No patterns</Typography>
+                </Box>
+              )}
+            </Box>
+          </Box>
         </Grid>
       </Grid>
     </Box>

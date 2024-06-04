@@ -1,6 +1,6 @@
 export async function makeApiRequest(path: string) {
   try {
-    const response = await fetch(`/api/${path}`, { cache: "no-store" });
+    const response = await fetch(`/api/${path}`, { next: { revalidate: 0 } });
     return response.json();
   } catch (error: any) {
     throw new Error(`Request error: ${error.status}`);

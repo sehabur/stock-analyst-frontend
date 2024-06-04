@@ -11,21 +11,19 @@ import {
   Button,
   Tooltip,
 } from "@mui/material";
-import TabView from "./TabView";
 import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 import Link from "next/link";
 
-import { redirect } from "next/navigation";
-
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
-import Trades from "./_component/Trades";
+import Overview from "./Overview";
 import FavoriteButton from "@/components/buttons/FavoriteButton";
+import News from "./News";
 
-const getStockDetails = async (tradingCode: string) => {
+const getIndexDetails = async (tradingCode: string) => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/stock/${tradingCode}`,
+    `${process.env.BACKEND_URL}/api/prices/index/${tradingCode}`,
     {
       next: { revalidate: 0 },
     }
@@ -38,20 +36,7 @@ const getStockDetails = async (tradingCode: string) => {
 
 const getNews = async (tradingCode: string) => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/news/${tradingCode}`,
-    {
-      next: { revalidate: 0 },
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
-};
-
-const getBlocktr = async (tradingCode: string) => {
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/blockTr/${tradingCode}`,
+    `${process.env.BACKEND_URL}/api/prices/news/EXCH?limit=25`,
     {
       next: { revalidate: 0 },
     }
@@ -75,18 +60,10 @@ const addPlusSign = (value: number) => {
 };
 
 const getLatestPrice = (latest: any) => {
-  let price, time;
-  if (latest.isNullDataAtDse === "YES") {
-    price = latest.ycp;
-    time = DateTime.fromISO(latest.date)
-      .minus({ days: 1 })
-      .toFormat("dd MMM, 14:30");
-  } else {
-    price = latest.ltp;
-    time = DateTime.fromISO(latest.time)
-      .plus({ hours: 6 })
-      .toFormat("dd MMM, HH:mm");
-  }
+  const price = latest.ltp;
+  const time = DateTime.fromISO(latest.time)
+    .plus({ hours: 6 })
+    .toFormat("dd MMM, HH:mm");
   return {
     price,
     time: "Last updated on " + time,
@@ -106,10 +83,9 @@ const getLatestPrice = (latest: any) => {
 export default async function StockDetails({ params }: any) {
   const { tradingCode } = params;
 
-  const [stock, news, blocktr] = await Promise.all([
-    getStockDetails(tradingCode),
+  const [stock, news] = await Promise.all([
+    getIndexDetails(tradingCode),
     getNews(tradingCode),
-    getBlocktr(tradingCode),
   ]);
 
   const latestPriceData = getLatestPrice(stock.latest);
@@ -128,17 +104,21 @@ export default async function StockDetails({ params }: any) {
         bgcolor: "background.default",
       }}
     >
-      <Box sx={{ py: { xs: 2, sm: 4 } }}>
+      <Box sx={{ pt: { xs: 0, sm: 2 }, pb: { xs: 2, sm: 4 } }}>
         <Box
           sx={{
-            maxWidth: 1250,
+            maxWidth: 1210,
             mx: "auto",
-            px: 2,
+            px: { xs: 2, sm: 8 },
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
             alignItems: "center",
-            justifyContent: { xs: "flex-start", sm: "space-around" },
+            justifyContent: { xs: "flex-start", sm: "space-between" },
+            bgcolor: "secondaryBackground",
+            pt: { xs: 3, sm: 4 },
+            pb: { xs: 4, sm: 4 },
+            borderRadius: { xs: 0, sm: 4 },
           }}
         >
           <Box>
@@ -146,42 +126,12 @@ export default async function StockDetails({ params }: any) {
               variant="h1"
               sx={{
                 color: "text.primary",
-                fontSize: { xs: "1.5rem", sm: "1.8rem" },
+                fontSize: { xs: "1.5rem", sm: "1.6rem" },
                 fontWeight: 500,
               }}
             >
               {stock.fundamentals.companyName}
             </Typography>
-
-            <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-              <Chip
-                label={stock.fundamentals.tradingCode}
-                variant="outlined"
-                sx={{
-                  borderRadius: 1,
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  mt: 1,
-                }}
-              />
-              <Chip
-                label={`Category ${stock.fundamentals.category}`}
-                sx={{
-                  borderRadius: 1,
-                  mx: { xs: 0.8, sm: 2 },
-                  fontSize: ".875rem",
-                  mt: 1,
-                }}
-              />
-              <Chip
-                label={stock.fundamentals.sector}
-                sx={{
-                  borderRadius: 1,
-                  fontSize: ".875rem",
-                  mt: 1,
-                }}
-              />
-            </Box>
 
             <Box
               sx={{
@@ -200,16 +150,6 @@ export default async function StockDetails({ params }: any) {
                 }}
               >
                 {latestPriceData.price.toFixed(2)}
-              </Typography>
-
-              <Typography
-                sx={{
-                  color: "text.primary",
-                  fontSize: { xs: "1.1rem", sm: "1.1rem" },
-                  ml: 0.6,
-                }}
-              >
-                BDT
               </Typography>
 
               <Typography
@@ -271,10 +211,6 @@ export default async function StockDetails({ params }: any) {
             >
               {latestPriceData.time}
             </Typography>
-            <Trades
-              data={stock.minute}
-              tradingCode={stock.fundamentals.tradingCode}
-            />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", mt: 0.8 }}>
             <FavoriteButton tradingCode={stock.fundamentals.tradingCode} />
@@ -289,14 +225,12 @@ export default async function StockDetails({ params }: any) {
             </Button>
           </Box>
         </Box>
-      </Box>
-      <Box>
-        <TabView
-          stock={stock}
-          news={news}
-          blocktr={blocktr}
-          tradingCode={tradingCode}
-        />
+        <Box>
+          <Overview stock={stock} />
+        </Box>
+        <Box>
+          <News news={news} />
+        </Box>
       </Box>
     </Box>
   );

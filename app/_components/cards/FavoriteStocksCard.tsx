@@ -35,7 +35,7 @@ export default function FavoriteStocksCard(props: any) {
             pb: 1.3,
             pt: 1.8,
             borderRadius: { xs: 1.5, sm: 3 },
-            minWidth: { xs: "100%", sm: 420 },
+            minWidth: { xs: "100%", sm: 450 },
           }}
           elevation={4}
           variant={matchesSmUp ? "elevation" : "outlined"}
@@ -86,7 +86,7 @@ export default function FavoriteStocksCard(props: any) {
                 )}
 
                 <Chip
-                  label={`${item.change}%`}
+                  label={`${item.percentChange}%`}
                   size="small"
                   sx={{
                     fontSize: { xs: ".875rem", sm: "1rem" },
@@ -159,7 +159,7 @@ export default function FavoriteStocksCard(props: any) {
                   }}
                   color="text.secondary"
                 >
-                  BDT
+                  {item.tradingCode.startsWith("00") ? "" : "BDT"}
                 </Typography>
               </Stack>
             </Grid>

@@ -206,7 +206,7 @@ export default function Header(props: any) {
 
   const getData = async () => {
     const res = await fetch(`/api/latest-price`, {
-      cache: "no-store",
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) {
@@ -993,7 +993,11 @@ export default function Header(props: any) {
                 <Box key={item.tradingCode} onClick={handleSearchDialogClose}>
                   <Box
                     component={Link}
-                    href={`/stock-details/${item.tradingCode}`}
+                    href={
+                      ["00DSEX", "00DSES", "00DS30"].includes(item.tradingCode)
+                        ? `/index-details/${item.tradingCode}`
+                        : `/stock-details/${item.tradingCode}`
+                    }
                   >
                     <SearchStockCard data={item} />
                   </Box>

@@ -245,21 +245,21 @@ export default function IndexChart({ indexData }: any) {
               </Typography>
             </Box>
             <Tooltip
-              title={
-                indexData.isMarketOpen
-                  ? "Market is open now"
-                  : "Market is close now"
-              }
+              title={`Market is ${indexData.marketOpenStatus.toLowerCase()} now`}
+              enterTouchDelay={10}
+              arrow
             >
               <Chip
-                label={indexData.isMarketOpen ? "Open" : "Closed"}
+                label={indexData.marketOpenStatus}
                 variant="outlined"
                 size={matchesSmUp ? "medium" : "small"}
                 icon={
-                  indexData.isMarketOpen ? (
+                  indexData.marketOpenStatus == "Open" ? (
                     <RadioButtonCheckedRoundedIcon color="success" />
-                  ) : (
+                  ) : indexData.marketOpenStatus == "Closed" ? (
                     <DoDisturbOnRoundedIcon color="error" />
+                  ) : (
+                    <DoDisturbOnRoundedIcon color="warning" />
                   )
                 }
                 sx={{ fontSize: ".9rem" }}

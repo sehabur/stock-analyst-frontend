@@ -4,7 +4,7 @@ export async function GET(request: NextRequest) {
   const res = await fetch(
     `${process.env.BACKEND_URL}/api/prices/getSymbolTvchart`,
     {
-      cache: "no-store",
+      next: { revalidate: 0 },
     }
   );
 

@@ -38,6 +38,12 @@ export default function FavoriteButton({ tradingCode }: any) {
   };
 
   const handleFavorite = async (favorite: any) => {
+    if (!auth) {
+      setMessage("Please login to save favorites");
+      setOpenToast(true);
+      return;
+    }
+
     setIsFavorite(favorite);
 
     const type = favorite ? "add" : "remove";

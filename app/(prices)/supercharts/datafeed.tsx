@@ -156,7 +156,7 @@ const getData = {
       data_status: "streaming",
       has_intraday: true,
       intraday_multipliers: ["1", "3", "5", "15", "30", "60", "120", "180"],
-      sector: "new sector",
+      sector: "Sector",
       session: "1;1000-1430:12345",
       session_holidays: "20240501,20240522",
     };
@@ -193,8 +193,6 @@ const getData = {
     const toMs = to * 1000;
 
     console.log("[getBars]: Method call", symbolInfo, resolution, from, to);
-
-    console.log(symbolInfo.type);
 
     const urlParameters: any = {
       exchange: symbolInfo.exchange,
