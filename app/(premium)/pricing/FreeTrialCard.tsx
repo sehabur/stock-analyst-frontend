@@ -13,7 +13,7 @@ import Link from "next/link";
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
 import { useSelector } from "react-redux";
 
-export default function () {
+export default function FreeTrialCard() {
   const auth = useSelector((state: any) => state.auth);
 
   return (

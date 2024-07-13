@@ -34,7 +34,7 @@ export default function FAQ() {
     >
       <Box sx={{ width: "100%" }}>
         {faqItems.map((item: any, index: number) => (
-          <>
+          <Box key={index}>
             {index !== 0 && <Divider />}
             <Accordion
               // expanded={expanded === "panel1"}
@@ -65,7 +65,7 @@ export default function FAQ() {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-          </>
+          </Box>
         ))}
       </Box>
     </Container>

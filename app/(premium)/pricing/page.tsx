@@ -103,8 +103,8 @@ export default function Price() {
         }}
       >
         <FreeTrialCard />
-        {packages.map((item: any) => (
-          <PricingCard data={item} />
+        {packages.map((item: any, index: number) => (
+          <PricingCard data={item} key={index} />
         ))}
       </Box>
       <Box sx={{ maxWidth: 600, mx: "auto", textAlign: "center", py: 6 }}>

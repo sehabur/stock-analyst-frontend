@@ -17,11 +17,11 @@ async function getData(sectorTag: string) {
   return res.json();
 }
 
-export async function generateStaticParams() {
-  return sectorList.map((item: { tag: string }) => ({
-    sector: item.tag,
-  }));
-}
+// export async function generateStaticParams() {
+//   return sectorList.map((item: { tag: string }) => ({
+//     sector: item.tag,
+//   }));
+// }
 
 export default async function Sector({ params }: any) {
   const { sector: sectorTag } = params;
