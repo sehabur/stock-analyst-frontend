@@ -35,7 +35,7 @@ const TabPanel = (props: any) => {
 };
 
 export default function TabView(props: any) {
-  const { stock, news, blocktr, tradingCode } = props;
+  const { stock, news, blocktr, marketDepth, tradingCode } = props;
 
   const theme = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
@@ -51,7 +51,13 @@ export default function TabView(props: any) {
     },
     {
       title: "Market depth",
-      component: <MarketDepth data={stock.minute} />,
+      component: (
+        <MarketDepth
+          data={stock.minute}
+          tradingCode={tradingCode}
+          marketOpenStatus={stock.marketOpenStatus}
+        />
+      ),
     },
     {
       title: matchesSmUp ? "Block transections" : "Block tr",

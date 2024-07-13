@@ -60,7 +60,7 @@ export default function Technical(props: any) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(data);
+  // console.log(data);
 
   const {
     sma10,

@@ -124,7 +124,7 @@ export default function SearchStockCard(props: any) {
                   {item.ltp}
                 </Typography>
 
-                <Typography sx={{ fontSize: ".75rem" }} color="text.secondary">
+                <Typography sx={{ fontSize: ".85rem" }} color="text.secondary">
                   {item.tradingCode.startsWith("00") ? "Point" : "BDT"}
                 </Typography>
               </Stack>

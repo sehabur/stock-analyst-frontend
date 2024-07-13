@@ -1,10 +1,17 @@
 "use client";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Divider, Typography, useTheme } from "@mui/material";
 import { blueGrey, grey } from "@mui/material/colors";
 import { themeColorActions } from "_store";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+
+import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
+import StarsRoundedIcon from "@mui/icons-material/StarsRounded";
+
+import { alpha } from "@mui/material";
+
+import EastRoundedIcon from "@mui/icons-material/EastRounded";
 
 export default function Banner() {
   const theme = useTheme();
@@ -43,91 +50,104 @@ export default function Banner() {
     //   textAlign: "center",
     // }}
     >
+      <Divider />
       <Box
-        sx={{
-          maxWidth: { xs: "100vw", sm: 700 },
-          mx: "auto",
-          textAlign: "center",
-          pt: { xs: 3, sm: 6 },
-          pb: { xs: 0, sm: 3 },
+        sx={(theme) => ({
+          width: "100%",
+          backgroundImage:
+            theme.palette.mode === "light"
+              ? "#0000ff"
+              : `linear-gradient( ${alpha("#090E10", 0.0)}, #101010)`,
+          // backgroundImage:
+          //   theme.palette.mode === "light"
+          //     ? "linear-gradient(180deg, #ffffff, #f5f5f5)"
+          //     : `linear-gradient( ${alpha("#090E10", 0.0)}, #101010)`,
+          backgroundRepeat: "no-repeat",
+          textAlign: "left",
+          pt: { xs: 2, sm: 5 },
+          pb: { xs: 4, sm: 7 },
           px: 2,
-        }}
+        })}
       >
-        <Typography
-          component="div"
+        <Box
           sx={{
-            fontFamily: "'Raleway', sans-serif",
-            fontSize: { xs: "2.4rem", sm: "3.8rem" },
-            fontWeight: 700,
-            lineHeight: 0.9,
+            maxWidth: { xs: "100vw", sm: 800 },
+            mx: "auto",
+            textAlign: "center",
           }}
-          color="text.primary"
         >
-          Know your{" "}
           <Typography
-            component="span"
-            color="primary.main"
-            sx={{ fontSize: "inherit", fontWeight: "inherit" }}
-          >
-            stock
-          </Typography>{" "}
-          first, then trade
-        </Typography>
-        <Typography
-          component="div"
-          sx={{
-            // fontFamily: "'Barlow', sans-serif",
-            fontSize: { xs: "1.1rem", sm: "1.2rem" },
-            mt: 3,
-            mb: { xs: 3, sm: 4 },
-          }}
-          color="text.secondary"
-        >
-          Get finacial data and prepared analytics and for shares helping you
-          find the perfect trade. Suitable for investors with all skill levels
-        </Typography>
-        <Box>
-          <Button
-            variant="outlined"
-            color="warning"
+            component="div"
             sx={{
-              fontSize: { xs: "1rem", sm: "1rem" },
-              // borderRadius: 2,
-              px: { xs: 3, sm: 4 },
-              py: 1,
-              mr: { xs: 2, sm: 4 },
+              fontFamily: "'Raleway', sans-serif",
+              fontSize: { xs: "2.4rem", sm: "3.2rem" },
+              fontWeight: 700,
+              lineHeight: 0.9,
             }}
-            component={Link}
-            href="/signin"
+            color="text.primary"
           >
-            Sign in
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{
-              fontSize: { xs: "1rem", sm: "1rem" },
-              // borderRadius: 2,
-              py: 1,
-              px: { xs: 3, sm: 5 },
-            }}
-            component={Link}
-            href="/signup"
-          >
-            Create account
-          </Button>
-        </Box>
-        {/* <Typography sx={{ fontSize: ".9rem", mt: 6 }}>
-          Charts are powered by{" "}
-          <Typography
-            component={Link}
-            href="https://www.tradingview.com/"
-            target="_blank"
-            sx={{ color: "primary.main" }}
-          >
-            TradingView
+            Know your{" "}
+            <Typography
+              component="span"
+              color="primary.main"
+              sx={{ fontSize: "inherit", fontWeight: "inherit" }}
+            >
+              stock
+            </Typography>{" "}
+            first, then trade
           </Typography>
-        </Typography> */}
+          <Box>
+            <Typography
+              sx={{
+                // fontFamily: "'Barlow', sans-serif",
+                fontSize: { xs: "1.1rem", sm: "1.2rem" },
+                mt: { xs: 2, sm: 0.5 },
+                mb: { xs: 2.5, sm: 4 },
+                lineHeight: 1.5,
+              }}
+              color="text.secondary"
+            >
+              Get finacial data and prepared analytics for stocks helping you
+              find the perfect trade. Suitable for investors with all skill
+              levels.
+            </Typography>
+          </Box>
+          <Box>
+            {/* <Button
+              variant="outlined"
+              color="warning"
+              sx={{
+                fontSize: { xs: "1rem", sm: "1rem" },
+                // borderRadius: 2,
+                px: { xs: 3, sm: 4 },
+                py: 1,
+                mr: { xs: 2, sm: 4 },
+              }}
+              component={Link}
+              href="/signin"
+            >
+              Sign in
+            </Button> */}
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<StarsRoundedIcon />}
+              sx={{
+                fontSize: { xs: "1.1rem", sm: "1.1rem" },
+                // borderRadius: 2,
+                py: { xs: 1.1, sm: 1.2 },
+                px: { xs: 3, sm: 4 },
+                "& .MuiButton-startIcon": {
+                  fontSize: 50,
+                },
+              }}
+              component={Link}
+              href="/signup"
+            >
+              Try premium for free
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

@@ -1,26 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import Alert from "@mui/material/Alert";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import ZoomOutMapOutlinedIcon from "@mui/icons-material/ZoomOutMapOutlined";
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  Chip,
-  Typography,
-  Stack,
-} from "@mui/material";
-import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
 import { DateTime } from "luxon";
-import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
-import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import React, { useEffect, useState } from "react";
+
+import { Box, Paper, Chip, Typography, Stack, styled } from "@mui/material";
+import LinearProgress, {
+  linearProgressClasses,
+} from "@mui/material/LinearProgress";
+
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 
@@ -30,11 +16,20 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TablePagination from "@mui/material/TablePagination";
-import { grey } from "@mui/material/colors";
-import ReactTimeAgo from "react-time-ago";
 
 const colors = ["#00A25B", "#2962ff", "#f23645"];
+
+const StyledLinearProgress = styled(LinearProgress)(({ theme }) => ({
+  height: 10,
+  borderRadius: 4,
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: "#f23645",
+  },
+  [`& .${linearProgressClasses.bar}`]: {
+    borderRadius: 0,
+    backgroundColor: "#00A25B",
+  },
+}));
 
 const getType = (
   item: { ltp: number },
@@ -111,8 +106,6 @@ const formatData = (data: any) => {
 
   const lastTrade: any = rows.filter((item) => item.volume !== 0)[0];
 
-  console.log(lastTrade);
-
   return {
     rows,
     totalBuy,
@@ -121,32 +114,193 @@ const formatData = (data: any) => {
   };
 };
 
-export default function Trades(props: any) {
-  const { data } = props;
-  const [openDialog, setOpenDialog] = useState(false);
+export default function MarketDepth(props: any) {
+  const { data, tradingCode, marketOpenStatus } = props;
 
-  const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const [marketDepthData, setMarketDepthData] = useState<any>();
 
   const { rows, totalBuy, totalSell, lastTrade } = formatData(data);
 
-  console.log(rows);
+  const getData = async () => {
+    const res = await fetch(`/api/market-depth?code=${tradingCode}`, {
+      next: { revalidate: 0 },
+    });
 
-  const handleClick = () => {
-    handleDialogOpen();
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const initdata = await res.json();
+
+    setMarketDepthData(initdata);
   };
 
-  const handleDialogOpen = () => {
-    setOpenDialog(true);
-  };
+  console.log(marketDepthData);
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-  };
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Box sx={{ pt: 1, pb: 6 }}>
-      <Box sx={{ maxWidth: "650px", mx: "auto", py: 2 }}>
+    <Box
+      sx={{
+        pt: 4,
+        pb: 6,
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        gap: { xs: 6, sm: 12 },
+        maxWidth: "1250px",
+        mx: "auto",
+      }}
+    >
+      {marketOpenStatus !== "Closed" && (
+        <Box>
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Box sx={{ px: 1.2 }}>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  mb: 1,
+                  color: "text.primary",
+                }}
+              >
+                Buyer
+              </Typography>
+              <TableContainer
+                component={Paper}
+                elevation={8}
+                sx={{ borderRadius: 1 }}
+              >
+                <Table size="small">
+                  <TableHead>
+                    <TableRow
+                      sx={{
+                        ".MuiTableCell-head": {
+                          fontSize: ".8rem",
+                          bgcolor: "#00A25B",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      <TableCell>PRICE</TableCell>
+                      <TableCell>VOLUME</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {marketDepthData?.buy?.data.map(
+                      (item: any, index: number) => (
+                        <TableRow
+                          hover={true}
+                          sx={{
+                            backgroundColor: "#00A25B0a",
+                            ".MuiTableCell-root": {
+                              color: "#00A25B",
+                            },
+                          }}
+                          key={index}
+                        >
+                          <TableCell>{item[0]}</TableCell>
+                          <TableCell>{item[1]}</TableCell>
+                        </TableRow>
+                      )
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+            <Box sx={{ px: 1.2 }}>
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  mb: 1,
+                  color: "text.primary",
+                }}
+              >
+                Seller
+              </Typography>
+              <TableContainer
+                component={Paper}
+                elevation={8}
+                sx={{ borderRadius: 1 }}
+              >
+                <Table size="small">
+                  <TableHead>
+                    <TableRow
+                      sx={{
+                        ".MuiTableCell-head": {
+                          fontSize: ".8rem",
+                          bgcolor: "#f23645",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      <TableCell>PRICE</TableCell>
+                      <TableCell>VOLUME</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {marketDepthData?.sell?.data.map(
+                      (item: any, index: number) => (
+                        <TableRow
+                          hover={true}
+                          sx={{
+                            backgroundColor: "#f236450a",
+                            ".MuiTableCell-root": {
+                              color: "#f23645",
+                            },
+                          }}
+                          key={index}
+                        >
+                          <TableCell>{item[0]}</TableCell>
+                          <TableCell>{item[1]}</TableCell>
+                        </TableRow>
+                      )
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </Box>
+          <Box sx={{ width: "95%", mx: "auto", pt: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                pb: 1,
+              }}
+            >
+              <Box>
+                <Typography color="text.primary">Total buyer:</Typography>
+                <Typography color="text.primary">
+                  {marketDepthData?.buy?.totalVolume} @ Avg{" "}
+                  {marketDepthData?.buy?.avgPrice}
+                </Typography>
+              </Box>
+              <Box sx={{ textAlign: "right" }}>
+                <Typography color="text.primary">Total seller:</Typography>
+                <Typography color="text.primary">
+                  {marketDepthData?.sell?.totalVolume} @ Avg{" "}
+                  {marketDepthData?.sell?.avgPrice}
+                </Typography>
+              </Box>
+            </Box>
+            <StyledLinearProgress
+              variant="determinate"
+              value={marketDepthData?.buyPercent}
+              color="primary"
+            />
+          </Box>
+        </Box>
+      )}
+
+      <Box sx={{ maxWidth: { xs: 380, sm: 600 } }}>
         <Stack
           direction="row"
           spacing={{ xs: 1, sm: 3 }}

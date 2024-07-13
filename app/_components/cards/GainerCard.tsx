@@ -58,7 +58,7 @@ export default function GainerCard(props: any) {
           my: 1,
           px: { xs: 2, sm: 3 },
           py: 1.5,
-          borderRadius: { xs: 0, sm: 1 },
+          borderRadius: { xs: 0, sm: 2 },
           ":hover": {
             bgcolor: "financeCardTitlecolor",
           },

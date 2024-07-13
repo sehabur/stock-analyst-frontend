@@ -179,6 +179,23 @@ export default async function Ipo({}) {
                   </Box>
                 </Paper>
               ))}
+            {data.filter(
+              (item: any) => new Date(item.subscriptionEnd) >= new Date()
+            ).length < 1 && (
+              <Paper
+                elevation={0}
+                sx={{
+                  mt: 4,
+                  mb: 2,
+                  py: 2,
+                  px: 2,
+                  bgcolor: "secondaryBackground",
+                  maxWidth: 350,
+                }}
+              >
+                <Typography> There is no upcoming IPO to display</Typography>
+              </Paper>
+            )}
           </Box>
         </Box>
         <Box>

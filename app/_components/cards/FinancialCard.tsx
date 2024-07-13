@@ -152,7 +152,7 @@ export default function FinancialCard(props: any) {
                     fontWeight: 500,
                   }}
                 >
-                  {data?.value ? (data.value / divideFactor).toFixed(2) : "--"}
+                  {data?.value && (data.value / divideFactor).toFixed(2)}
                 </Typography>
                 <Typography
                   sx={{ fontSize: "1.1rem", ml: 0.5, color: "text.secondary" }}

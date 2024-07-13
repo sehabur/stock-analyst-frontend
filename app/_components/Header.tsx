@@ -5,7 +5,6 @@ import {
   Button,
   Divider,
   Popover,
-  Switch,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -54,12 +53,15 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DataSaverOffRoundedIcon from "@mui/icons-material/DataSaverOffRounded";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import BatchPredictionRoundedIcon from "@mui/icons-material/BatchPredictionRounded";
+import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 
 import { TransitionProps } from "@mui/material/transitions";
 import { useRouter } from "next/navigation";
 
 import ToastMessage from "@/components/shared/ToastMessage";
 import SearchStockCard from "./cards/SearchStockCard";
+
+import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 
 const TransitionSlide = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -213,6 +215,8 @@ export default function Header(props: any) {
       throw new Error("Failed to fetch data");
     }
     const initdata = await res.json();
+
+    console.log(initdata);
     dispatch(latestPriceActions.setData(initdata));
   };
 
@@ -255,7 +259,8 @@ export default function Header(props: any) {
   useEffect(() => {
     const authDataFromStorage: any = localStorage.getItem("userInfo");
     const data = JSON.parse(authDataFromStorage);
-    data && dispatch(authActions.login(data));
+
+    if (data) dispatch(authActions.login(data));
   }, [dispatch]);
 
   const userMenu = (
@@ -379,6 +384,26 @@ export default function Header(props: any) {
       </Button>
       <Divider light />
       <Button
+        component={Link}
+        href="/profile"
+        onClick={handleUserPopoverClose}
+        startIcon={<Person2OutlinedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        My account
+      </Button>
+      <Divider light />
+      <Button
         onClick={handleSignOut}
         startIcon={<LogoutOutlinedIcon color="primary" />}
         sx={{
@@ -496,7 +521,7 @@ export default function Header(props: any) {
 
   const marketsMenu = (
     <>
-      <Button
+      {/* <Button
         component={Link}
         href="/market-today"
         startIcon={<InsightsRoundedIcon color="primary" />}
@@ -514,7 +539,7 @@ export default function Header(props: any) {
       >
         Market today
       </Button>
-      <Divider light />
+      <Divider light /> */}
       <Button
         component={Link}
         href="/gainer-loser?type=gainer&variant=1d"
@@ -569,6 +594,99 @@ export default function Header(props: any) {
       >
         Sector dashboard
       </Button>
+      <Divider light />
+
+      <Button
+        component={Link}
+        href="/index-mover"
+        startIcon={<TrendingUpRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Index movers
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/beta"
+        startIcon={<DataSaverOffRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Beta
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/block-tr"
+        startIcon={<BatchPredictionRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Block transections
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/latest-news"
+        startIcon={<NewspaperRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        News
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/ipo"
+        startIcon={<UpcomingRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Upcoming IPO
+      </Button>
     </>
   );
 
@@ -618,8 +736,30 @@ export default function Header(props: any) {
       >
         Supercharts
       </Button>
-      <Divider light />
-      {stocksMenu}
+      {/* <Divider light />
+      {stocksMenu} */}
+
+      <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 3 }}>
+        Packages
+      </Typography>
+      <Button
+        component={Link}
+        href="/pricing"
+        startIcon={<WorkspacePremiumRoundedIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Premium
+      </Button>
     </>
   );
 
@@ -650,14 +790,31 @@ export default function Header(props: any) {
             mx: "auto",
           }}
         >
-          <Typography
+          {/* <Typography
             variant="h6"
             component={Link}
             href="/"
-            color="primary.main"
+            // color="primary.main"
+            sx={{ fontWeight: "bold" }}
           >
-            StockSupporter
-          </Typography>
+            Stocksupporter
+          </Typography> */}
+          <Box component={Link} href="/">
+            <img
+              src={
+                themeColor === "dark"
+                  ? "/images/logo/logo-full-dark.png"
+                  : "/images/logo/logo-full-light.png"
+              }
+              style={{
+                width: "auto",
+                marginTop: "5px",
+                height: matchesSmUp ? "40px" : "35px",
+                cursor: "pointer",
+              }}
+              alt="logo of stocksupporter"
+            />
+          </Box>
 
           {matchesSmUp && (
             <Box
@@ -710,6 +867,17 @@ export default function Header(props: any) {
                 Supercharts
               </Button>
               <Button
+                component={Link}
+                href="/pricing"
+                sx={{
+                  color: "text.primary",
+                  px: 2,
+                  borderRadius: 8,
+                }}
+              >
+                Premium
+              </Button>
+              {/* <Button
                 aria-owns={openStock ? "stocks-mouse-over-popover" : undefined}
                 aria-haspopup="true"
                 onClick={handleStockPopoverOpen}
@@ -725,10 +893,9 @@ export default function Header(props: any) {
                 }}
               >
                 Stocks
-              </Button>
+              </Button> */}
             </Box>
           )}
-
           <Box
             sx={{
               display: "flex",
@@ -829,14 +996,14 @@ export default function Header(props: any) {
           role="presentation"
           onClick={toggleDrawer(false)}
         >
-          <Box sx={{ ml: 2.8, mt: 3, mb: 2.5 }}>
+          <Box sx={{ ml: 2.4, my: 3 }}>
             <Typography
               variant="h5"
               component={Link}
               href="/"
               color="primary.main"
             >
-              Stock Supporter
+              Stocksupporter
             </Typography>
           </Box>
           {mobileViewMenu}

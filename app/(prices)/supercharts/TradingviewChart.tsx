@@ -59,7 +59,11 @@ export default function TradingviewChart() {
         backgroundColor: theme.palette.background.default,
         foregroundColor: theme.palette.primary.main,
       },
-      enabled_features: ["study_templates"],
+      enabled_features: [
+        "study_templates",
+        "side_toolbar_in_fullscreen_mode",
+        "header_in_fullscreen_mode",
+      ],
       debug: true,
       save_load_adapter: {
         // Charts //
@@ -289,11 +293,11 @@ export default function TradingviewChart() {
     // widget.onChartReady(() => {
     //   widget
     //     .activeChart()
-    //     .createStudy('Moving Average', false, false, { length: 5 })
-    // })
+    //     .createStudy("Moving Average", false, false, { length: 5 });
+    // });
 
     return () => script.remove();
-  }, [symbol, auth?.token, theme?.palette]);
+  }, [symbol, auth, theme]);
 
   return (
     <Box

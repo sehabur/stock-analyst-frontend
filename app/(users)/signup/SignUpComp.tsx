@@ -10,7 +10,13 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { IconButton, InputAdornment } from "@mui/material";
+import {
+  IconButton,
+  InputAdornment,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -21,6 +27,10 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import { Stack } from "@mui/system";
 import Spinner from "@/components/shared/Spinner";
+// import PremiumDialogContent from "../signin/PremiumDialogContent";
+
+import CloseIcon from "@mui/icons-material/Close";
+import { useSearchParams } from "next/navigation";
 
 export default function SignUpComp() {
   const [formData, setFormData] = React.useState({
@@ -30,6 +40,10 @@ export default function SignUpComp() {
     password: "",
   });
 
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect") || null;
+
   const [isLoading, setIsLoading] = React.useState(false);
 
   const [successMessage, setSuccessMessage] = React.useState("");
@@ -38,7 +52,17 @@ export default function SignUpComp() {
 
   const [showPassword, setShowPassword] = React.useState(false);
 
+  // const [openPremiumDialog, setOpenPremiumDialog] = React.useState(false);
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  // const handlePremiumDialogOpen = () => {
+  //   setOpenPremiumDialog(true);
+  // };
+
+  // const handlePremiumDialogClose = () => {
+  //   setOpenPremiumDialog(false);
+  // };
 
   const handleInputChange = (event: any) => {
     setFormData({
@@ -64,6 +88,7 @@ export default function SignUpComp() {
       if (res.ok) {
         setErrorMessage("");
         setSuccessMessage("Account creation successful");
+        // handlePremiumDialogOpen();
       } else {
         let errorMsg = "";
 
@@ -94,13 +119,32 @@ export default function SignUpComp() {
       }}
     >
       {isLoading && <Spinner />}
+      {/* <Dialog
+        open={openPremiumDialog}
+        onClose={handlePremiumDialogClose}
+        fullWidth
+        maxWidth="sm"
+        disableScrollLock={true}
+      >
+        <PremiumDialogContent />
+        <IconButton
+          onClick={handlePremiumDialogClose}
+          sx={{
+            position: "absolute",
+            right: 12,
+            top: 12,
+          }}
+        >
+          <CloseIcon sx={{ fontSize: "1.6rem" }} />
+        </IconButton>
+      </Dialog> */}
       <Box sx={{ width: "100%" }}>
         {successMessage && (
           <Alert severity="success">
             {successMessage}. Please{" "}
             <Typography
               component={Link}
-              href="/signin"
+              href={redirect ? `/signin?redirect=${redirect}` : `/signin`}
               sx={{
                 textDecoration: "underline",
                 color: "primary.main",

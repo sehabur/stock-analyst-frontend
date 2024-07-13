@@ -14,19 +14,26 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 import SitemarkIcon from "./SitemarkIcon";
-import { Divider } from "@mui/material";
+import { Divider, useTheme } from "@mui/material";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" mt={1}>
+    <Typography variant="body2" color="text.primary" mt={1}>
       {"Copyright © "}
-      <Link href="https://mui.com/">Stocksupporter</Link>{" "}
+      <Box component="span" sx={{ fontWeight: 700 }}>
+        Stocksupporter
+      </Box>{" "}
       {new Date().getFullYear()}
     </Typography>
   );
 }
 
 export default function Footer() {
+  const theme: any = useTheme();
+
+  const themeColor = useSelector((state: any) => state.themeColor);
+
   return (
     <Box sx={{ bgcolor: "background.default" }}>
       <Divider />
@@ -57,7 +64,21 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: "100%", sm: "60%" } }}>
-              <SitemarkIcon />
+              <Box>
+                <img
+                  src={
+                    themeColor === "dark"
+                      ? "/images/logo/logo-full-dark.png"
+                      : "/images/logo/logo-full-light.png"
+                  }
+                  style={{
+                    width: "auto",
+                    height: "35px",
+                    marginLeft: "-4px",
+                  }}
+                  alt="logo of stocksupporter"
+                />
+              </Box>
               <Typography
                 fontWeight={700}
                 sx={{ mt: 2, mb: 1, fontSize: "1.1rem" }}
@@ -117,11 +138,15 @@ export default function Footer() {
             <Link color="text.secondary" variant="body2" href="/aboutus">
               About us
             </Link>
+            <Link color="text.secondary" variant="body2" href="/faq">
+              FAQs
+            </Link>
           </Box>
           <Box
             sx={{
               display: { xs: "none", sm: "flex" },
               flexDirection: "column",
+              gap: 1,
             }}
           >
             <Typography
@@ -132,10 +157,10 @@ export default function Footer() {
               Legal
             </Typography>
             <Link color="text.secondary" variant="body2" href="/terms">
-              Terms
+              Terms of service
             </Link>
             <Link color="text.secondary" variant="body2" href="#">
-              Privacy
+              Privacy policy
             </Link>
           </Box>
         </Box>
@@ -143,29 +168,51 @@ export default function Footer() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            pt: { xs: 3, sm: 4 },
+            pt: 3,
             width: "100%",
             borderTop: "1px solid",
             borderColor: "divider",
+            gap: 2,
           }}
         >
-          <div>
-            <Link color="text.secondary" variant="body2" href="#">
-              Privacy Policy
-            </Link>
-            <Typography display="inline" sx={{ mx: 0.5, opacity: 0.5 }}>
-              &nbsp;•&nbsp;
-            </Typography>
-            <Link color="text.secondary" variant="body2" href="/terms">
-              Terms of Service
-            </Link>
+          <Box>
             <Box sx={{ display: { xs: "block", sm: "none" }, mt: 0.8 }}>
+              <Link color="text.secondary" variant="body2" href="#">
+                Privacy Policy
+              </Link>
+              <Typography
+                display="inline"
+                sx={{ mx: 0.5, opacity: 0.5 }}
+                color="text.secondary"
+              >
+                &nbsp;•&nbsp;
+              </Typography>
               <Link color="text.secondary" variant="body2" href="/aboutus">
                 About us
               </Link>
+              <Typography
+                display="inline"
+                sx={{ mx: 0.5, opacity: 0.5 }}
+                color="text.secondary"
+              >
+                &nbsp;•&nbsp;
+              </Typography>
+              <Link color="text.secondary" variant="body2" href="/terms">
+                Terms of Service
+              </Link>
+              <Typography
+                display="inline"
+                sx={{ mx: 0.5, opacity: 0.5 }}
+                color="text.secondary"
+              >
+                &nbsp;•&nbsp;
+              </Typography>
+              <Link color="text.secondary" variant="body2" href="/faq">
+                FAQs
+              </Link>
             </Box>
             <Copyright />
-          </div>
+          </Box>
           <Stack
             direction="row"
             justifyContent="left"

@@ -36,6 +36,19 @@ const getStockDetails = async (tradingCode: string) => {
   return res.json();
 };
 
+const getMarketDepth = async (tradingCode: string) => {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/marketDepth?inst=${tradingCode}`,
+    {
+      next: { revalidate: 0 },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+};
+
 const getNews = async (tradingCode: string) => {
   const res = await fetch(
     `${process.env.BACKEND_URL}/api/prices/news/${tradingCode}`,
@@ -106,10 +119,11 @@ const getLatestPrice = (latest: any) => {
 export default async function StockDetails({ params }: any) {
   const { tradingCode } = params;
 
-  const [stock, news, blocktr] = await Promise.all([
+  const [stock, news, blocktr, marketDepth] = await Promise.all([
     getStockDetails(tradingCode),
     getNews(tradingCode),
     getBlocktr(tradingCode),
+    getMarketDepth(tradingCode),
   ]);
 
   const latestPriceData = getLatestPrice(stock.latest);
@@ -295,6 +309,7 @@ export default async function StockDetails({ params }: any) {
           stock={stock}
           news={news}
           blocktr={blocktr}
+          marketDepth={marketDepth}
           tradingCode={tradingCode}
         />
       </Box>

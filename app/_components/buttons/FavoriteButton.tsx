@@ -38,7 +38,7 @@ export default function FavoriteButton({ tradingCode }: any) {
   };
 
   const handleFavorite = async (favorite: any) => {
-    if (!auth) {
+    if (!auth?.isLoggedIn) {
       setMessage("Please login to save favorites");
       setOpenToast(true);
       return;

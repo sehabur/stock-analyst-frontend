@@ -68,8 +68,23 @@ export default function ShareholdingBarChart(props: any) {
     tooltip: {
       theme: "dark",
       y: {
-        formatter: (value: any) => value + "%",
+        formatter: (
+          value: any,
+          { series, seriesIndex, dataPointIndex, w }: any
+        ) => {
+          let change;
+          if (dataPointIndex == 0) {
+            change = 0;
+          } else {
+            change = Number(
+              (value - series[seriesIndex][dataPointIndex - 1]).toFixed(2)
+            );
+            if (change > 0) change = "+" + change;
+          }
+          return value + "% (" + change + "%)";
+        },
       },
+      followCursor: true,
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

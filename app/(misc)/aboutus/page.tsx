@@ -1,12 +1,13 @@
 import { aboutus } from "@/data/info";
 import { Box, Typography } from "@mui/material";
+import Highlights from "./Highlights";
 
 export default async function Terms() {
   return (
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
         sx={{
-          maxWidth: { sm: "750px" },
+          maxWidth: { sm: "1250px" },
           mx: "auto",
           py: 2,
           px: 2,
@@ -33,7 +34,7 @@ export default async function Terms() {
             py: { xs: 3, sm: 4 },
             px: { xs: 2, sm: 4 },
             my: 4,
-            borderRadius: 2,
+            borderRadius: 1,
           }}
         >
           <Typography
@@ -45,6 +46,9 @@ export default async function Terms() {
           >
             {aboutus}
           </Typography>
+        </Box>
+        <Box>
+          <Highlights />
         </Box>
       </Box>
     </Box>

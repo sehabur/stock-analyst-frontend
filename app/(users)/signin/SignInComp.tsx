@@ -8,17 +8,20 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Dialog, IconButton, InputAdornment } from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Link from "next/link";
 
-import { useRouter } from "next/navigation";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import Alert from "@mui/material/Alert/Alert";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "_store";
 import Spinner from "@/components/shared/Spinner";
+// import PremiumDialogContent from "./PremiumDialogContent";
 
 export default function SignInComp() {
   const dispatch = useDispatch();
@@ -27,10 +30,15 @@ export default function SignInComp() {
 
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect") || null;
+
+  console.log(redirect);
+
   const [formData, setFormData] = React.useState({
     phone: "",
     password: "",
-    // keepMeLoggedin: false,
   });
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -40,6 +48,16 @@ export default function SignInComp() {
   const [errorMessage, setErrorMessage] = React.useState("");
 
   const [showPassword, setShowPassword] = React.useState(false);
+
+  // const [openPremiumDialog, setOpenPremiumDialog] = React.useState(false);
+
+  // const handlePremiumDialogOpen = () => {
+  //   setOpenPremiumDialog(true);
+  // };
+
+  // const handlePremiumDialogClose = () => {
+  //   setOpenPremiumDialog(false);
+  // };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -67,13 +85,14 @@ export default function SignInComp() {
       const data = await res.json();
       if (res.ok) {
         setErrorMessage("");
-        setSuccessMessage("Sign in successful");
-
         dispatch(authActions.login(data.user));
 
-        // if (formData.keepMeLoggedin) {
-        //   localStorage.setItem("userInfo", JSON.stringify(data.user));
-        // }
+        // handlePremiumDialogOpen();
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          setSuccessMessage("Sign in successful");
+        }
       } else {
         setErrorMessage(data.message || "Error occured");
         setSuccessMessage("");
@@ -95,6 +114,25 @@ export default function SignInComp() {
       }}
     >
       {isLoading && <Spinner />}
+      {/* <Dialog
+        open={openPremiumDialog}
+        onClose={handlePremiumDialogClose}
+        fullWidth
+        maxWidth="sm"
+        disableScrollLock={true}
+      >
+        <PremiumDialogContent />
+        <IconButton
+          onClick={handlePremiumDialogClose}
+          sx={{
+            position: "absolute",
+            right: 12,
+            top: 12,
+          }}
+        >
+          <CloseIcon sx={{ fontSize: "1.6rem" }} />
+        </IconButton>
+      </Dialog> */}
       <Box sx={{ width: "100%" }}>
         {successMessage && (
           <Alert severity="success">

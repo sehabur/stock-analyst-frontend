@@ -10,6 +10,7 @@ import {
   MenuItem,
   InputAdornment,
   ToggleButton,
+  IconButton,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -23,12 +24,15 @@ import {
   GridToolbar,
   gridClasses,
 } from "@mui/x-data-grid";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import { filterOptions } from "./filters";
 import styles from "./Main.module.css";
+import { useSelector } from "react-redux";
+import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
 const startingFields = ["category", "tradingCode", "sector"];
 
@@ -55,6 +59,9 @@ const initialTextFieldInput = {
   marketCap: "",
   paidUpCap: "",
   totalShares: "",
+  epsCurrent: "",
+  navCurrent: "",
+  nocfpsCurrent: "",
   pe: "",
   de: "",
   ps: "",
@@ -109,11 +116,15 @@ const initialTextFieldInput = {
 };
 
 export default function Main() {
+  const auth = useSelector((state: any) => state.auth);
+
   const [formInputs, setFormInputs] = useState<any>({});
 
   const [textFieldInput, setTextFieldInput] = useState<any>(
     initialTextFieldInput
   );
+
+  const [openPremiumDialog, setOpenPremiumDialog] = useState(false);
 
   const [screenerData, setScreenerData] = useState<any>([]);
 
@@ -156,12 +167,24 @@ export default function Main() {
       }
       if (item.suffix) {
         column.renderCell = (params: any) => {
+          if (!params.value) {
+            return params.value == 0 ? 0 + item.suffix : "--";
+          }
           return params.value + item.suffix;
         };
       }
 
       return column;
     });
+
+  const handlePremiumDialogOpen = () => {
+    setOpenPremiumDialog(true);
+  };
+
+  const handlePremiumDialogClose = () => {
+    setOpenPremiumDialog(false);
+  };
+
   const handleTabChange = (event: any, newValue: number) => {
     setTabValue(newValue);
   };
@@ -181,6 +204,7 @@ export default function Main() {
     if (type === "custom") {
       const min = formInputs[name] ? formInputs[name].split(";")[0] : null;
       const max = formInputs[name] ? formInputs[name].split(";")[1] : null;
+
       setCustomRangeMenuOpen(true);
       setCustomRangeMenuContent({
         name,
@@ -263,16 +287,16 @@ export default function Main() {
     const data = await res.json();
 
     setScreenerData(data);
-
-    // console.log('out', data);
   };
-
-  // console.log(formInputs, screenerDatafields, columnVisibilityModel);
 
   useEffect(() => {
     getScreenerData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formInputs]);
+
+  useEffect(() => {
+    if (!auth?.isPremium) handlePremiumDialogOpen();
+  }, [auth]);
 
   useEffect(() => {
     let column: any = {};
@@ -505,6 +529,25 @@ export default function Main() {
 
   return (
     <Box>
+      <Dialog
+        open={openPremiumDialog}
+        // onClose={handlePremiumDialogClose}
+        fullWidth
+        maxWidth="sm"
+        disableScrollLock={true}
+      >
+        <PremiumDialogContent />
+        {/* <IconButton
+          onClick={handlePremiumDialogClose}
+          sx={{
+            position: "absolute",
+            right: 12,
+            top: 12,
+          }}
+        >
+          <CloseIcon sx={{ fontSize: "1.6rem" }} />
+        </IconButton> */}
+      </Dialog>
       <Box
         sx={{
           display: "flex",
@@ -598,7 +641,7 @@ export default function Main() {
             pb: 4,
           }}
         >
-          <Box sx={{ height: 565 }}>
+          <Box sx={{ height: 580 }}>
             <StripedDataGrid
               rows={screenerData}
               columns={columns}
@@ -619,6 +662,7 @@ export default function Main() {
                 params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
               }
               rowHeight={40}
+              columnHeaderHeight={80}
               slots={{
                 toolbar: GridToolbar,
               }}
@@ -626,7 +670,7 @@ export default function Main() {
                 toolbar: {
                   showQuickFilter: true,
                   printOptions: { disableToolbarButton: true },
-                  csvOptions: { disableToolbarButton: true },
+                  // csvOptions: { disableToolbarButton: true },
                 },
               }}
               sx={{
@@ -635,12 +679,12 @@ export default function Main() {
                   whiteSpace: "normal",
                   lineHeight: "normal",
                 },
-                ".MuiDataGrid-columnHeader": {
-                  // borderRight: '1px solid red',
-                  // color: 'text.primary',
-                  // fontSize: '.8rem',
-                  // textAlign: 'right',
-                },
+                // ".MuiDataGrid-columnHeader": {
+                //   borderRight: "1px solid red",
+                //   color: 'text.primary',
+                //   fontSize: '.8rem',
+                //   textAlign: 'right',
+                // },
                 // '.MuiDataGrid-cell': {
                 //   fontWeight: 500,
                 //   // fontSize: '.9rem',

@@ -152,6 +152,8 @@ export default function Overview({ stock }: any) {
   const weeklyCandleData = formatCandleChartData(stock.weekly);
   const monthlyCandleData = formatCandleChartData(stock.monthly);
 
+  console.log(dailyCandleData);
+
   const percentChangeData = formatPercentChangeData(
     stock.latest,
     stock.lastDay

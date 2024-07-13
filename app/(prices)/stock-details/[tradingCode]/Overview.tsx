@@ -494,7 +494,8 @@ export default function Overview({ stock }: any) {
         <Grid
           container
           alignItems="flex-start"
-          justifyContent="space-between"
+          // justifyContent="space-between"
+          justifyContent="flex-start"
           rowSpacing={{ xs: 4, sm: 6 }}
           columnSpacing={{ xs: 2, sm: 6 }}
           sx={{ mt: 2 }}
@@ -743,7 +744,25 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          {/* <Grid item xs={4} sm={2}>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Year End
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.yearEnd}
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Face Value
             </Typography>
@@ -764,23 +783,8 @@ export default function Overview({ stock }: any) {
                 BDT
               </Typography>
             </Stack>
-          </Grid> */}
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Year End
-            </Typography>
-            <Stack direction="row" alignItems="baseline">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
-                  fontWeight: 500,
-                }}
-              >
-                {stock.fundamentals.yearEnd}
-              </Typography>
-            </Stack>
           </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Beta (1 Year)
@@ -819,7 +823,7 @@ export default function Overview({ stock }: any) {
           </Grid>
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Paid up Capital
+              Paid-up Capital
             </Typography>
             <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
@@ -837,6 +841,49 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Shot-term loan
+            </Typography>
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                  mr: 0.7,
+                }}
+              >
+                {(stock.fundamentals.shortTermLoan / 10).toFixed(2)}
+              </Typography>
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Long-term loan
+            </Typography>
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                  mr: 0.7,
+                }}
+              >
+                {(stock.fundamentals.longTermLoan / 10).toFixed(2)}
+              </Typography>
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Total Shares

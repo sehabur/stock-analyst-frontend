@@ -46,7 +46,7 @@ export default async function Sector({ params }: any) {
               fontSize: "1.5rem",
               color: "text.secondary",
               mt: { xs: 0, sm: 2 },
-              mb: 2,
+              mb: 3,
             }}
           >
             {sector} sector chart

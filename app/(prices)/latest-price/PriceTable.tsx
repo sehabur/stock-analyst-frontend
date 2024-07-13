@@ -219,7 +219,7 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
             toolbar: {
               showQuickFilter: true,
               printOptions: { disableToolbarButton: true },
-              csvOptions: { disableToolbarButton: true },
+              // csvOptions: { disableToolbarButton: true },
             },
           }}
           // pageSizeOptions={[10, 25, 50, 100]}

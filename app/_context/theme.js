@@ -98,7 +98,7 @@ export const lightTheme = createTheme({
     stipedTableEvenRow: "#fafafa",
     appbarBorderBottom: "#e0e0e0",
     financeInfoCard: "#f5f7fa",
-    gainerCard: "#fafafa",
+    gainerCard: "#f9f9f9",
     gainerCardMobileView: "#f7f7f7",
     searchCardColor: "#fff",
     toggleButtonBgColor: "#0288d1",

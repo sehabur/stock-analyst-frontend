@@ -32,7 +32,7 @@ export default async function Terms() {
             py: 3,
             px: 2,
             mx: 2,
-            my: 2,
+            my: 3,
             borderRadius: 2,
           }}
         >

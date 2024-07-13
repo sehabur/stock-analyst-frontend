@@ -52,7 +52,7 @@ export default function CreatePortfolio() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: auth?.token,
+          Authorization: `Bearer ${auth?.token}`,
         },
         body: JSON.stringify(reqBody),
       });

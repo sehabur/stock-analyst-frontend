@@ -155,3 +155,31 @@ stocksupporter.com makes no warranties and gives no assurances regarding the tru
 export const aboutus: string = `Stocksupporter is a platform with a mission to revolutionize the landscape for traders and investors in Bangladesh by overcoming key barriers related to cost, analysis, and technology. It is a specialized software as a service (SaaS) dedicated to providing comprehensive data, information, and content tailored specifically for Bangladeshi stocks and mutual funds. We aim to empower investors with the tools and insights needed to make informed decisions and navigate the local market confidently.
 
 We invite you to join us on this exciting journey as we strive to democratize access to financial information and empower investors in Bangladesh with the tools they need to succeed. Together, let's break barriers and pave the way for a more inclusive and dynamic investment landscape.`;
+
+export const faqItems: any = [
+  {
+    id: 1,
+    ques: "How do I contact customer support if I have a question or issue?",
+    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+  },
+  {
+    id: 2,
+    ques: "How do I contact customer support if I have a question or issue?",
+    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+  },
+  {
+    id: 3,
+    ques: "How do I contact customer support if I have a question or issue?",
+    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+  },
+  {
+    id: 4,
+    ques: "How do I contact customer support if I have a question or issue?",
+    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+  },
+  {
+    id: 5,
+    ques: "How do I contact customer support if I have a question or issue?",
+    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+  },
+];

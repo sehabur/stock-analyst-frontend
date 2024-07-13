@@ -33,8 +33,10 @@ import { fundamentalsTooltip } from "@/data/info";
 import FundamentalInfoCard from "./_component/FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
 import FundamentalsDialogContent from "./_component/FundamentalsDialogContent";
+import { useSelector } from "react-redux";
+import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
-const formatYearlyData = (data: any, divideFactor = 1) => {
+const formatYearlyData = (data: any, divideFactor = 1, nonZero = false) => {
   if (!data) return;
   if (data.length < 1) return;
 
@@ -43,7 +45,11 @@ const formatYearlyData = (data: any, divideFactor = 1) => {
   let categories = [];
 
   for (let item of data) {
-    datapoint.push(Number((item.value / divideFactor).toFixed(3)));
+    const tempData = Number((item.value / divideFactor).toFixed(3));
+
+    let point = nonZero && tempData === 0 ? 0.001 : tempData;
+
+    datapoint.push(point);
     categories.push(item.year);
   }
 
@@ -87,8 +93,6 @@ const formatYearlyDividendData = (initdata: any, yieldData: any) => {
   }
 
   totalDividends.sort((a, b) => b - a);
-
-  console.log(totalDividends);
 
   return {
     categories,
@@ -358,10 +362,16 @@ const formatShareholdingData = (data: any) => {
 };
 
 export default function Financials({ data }: any) {
+  const auth = useSelector((state: any) => state.auth);
+
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [openPremiumDialog, setOpenPremiumDialog] = useState(false);
+
   const [dialogContent, setDialogContent] = useState("");
 
   const theme = useTheme();
+
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const handleDialogOpen = () => {
@@ -372,9 +382,21 @@ export default function Financials({ data }: any) {
     setOpenDialog(false);
   };
 
+  const handlePremiumDialogOpen = () => {
+    setOpenPremiumDialog(true);
+  };
+
+  const handlePremiumDialogClose = () => {
+    setOpenPremiumDialog(false);
+  };
+
   const handleItemClick = (type: string) => {
-    handleDialogOpen();
-    setDialogContent(type);
+    if (!auth?.isPremium) {
+      handlePremiumDialogOpen();
+    } else {
+      handleDialogOpen();
+      setDialogContent(type);
+    }
   };
 
   const epsYearly = formatYearlyData(data.epsYearly);
@@ -392,7 +414,9 @@ export default function Financials({ data }: any) {
   const operatingProfit = formatYearlyData(data.operatingProfit, 10000000);
   const totalAsset = formatYearlyData(data.totalAsset, 10000000);
   const dividendPayoutRatio = formatYearlyData(
-    data?.screener?.dividendPayoutRatio?.data
+    data?.screener?.dividendPayoutRatio?.data,
+    1,
+    false
   );
 
   const dividend = formatYearlyDividendData(
@@ -412,9 +436,30 @@ export default function Financials({ data }: any) {
 
   const reserveSurplus = formatReserveData(data.reserveSurplus);
 
+  console.log(dividend);
+
   return (
     <Box sx={{ bgcolor: "financePageBgcolor" }}>
       <Box sx={{ maxWidth: "1250px", mx: "auto", py: { xs: 0, sm: 2 }, px: 2 }}>
+        <Dialog
+          open={openPremiumDialog}
+          onClose={handlePremiumDialogClose}
+          fullWidth
+          maxWidth="sm"
+          disableScrollLock={true}
+        >
+          <PremiumDialogContent />
+          <IconButton
+            onClick={handlePremiumDialogClose}
+            sx={{
+              position: "absolute",
+              right: 12,
+              top: 12,
+            }}
+          >
+            <CloseIcon sx={{ fontSize: "1.6rem" }} />
+          </IconButton>
+        </Dialog>
         <Dialog
           open={openDialog}
           onClose={handleDialogClose}
@@ -996,7 +1041,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "netIncome" && (
             <FundamentalsDialogContent
-              title={`Revenue of ${data.tradingCode}`}
+              title={`Net Income of ${data.tradingCode}`}
               overview
               yearly
               overviewText={data?.screener?.netIncome?.overview}
@@ -1008,7 +1053,7 @@ export default function Financials({ data }: any) {
           )}
           {dialogContent === "revenue" && (
             <FundamentalsDialogContent
-              title={`Net Income of ${data.tradingCode}`}
+              title={`Revenue of ${data.tradingCode}`}
               overview
               yearly
               overviewText={data?.screener?.revenue?.overview}

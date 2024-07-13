@@ -1,23 +1,10 @@
 import { Box } from "@mui/material";
 import SharePrice from "./SharePrice";
 
-async function getData() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/prices/latestPrice`, {
-    next: { revalidate: 0 },
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
-}
-
-// async function getAllStocks() {
-//   const res = await fetch(
-//     `${process.env.BACKEND_URL}/api/prices/getAllStocks`,
-//     {
-//       next: { revalidate: 0 },
-//     }
-//   );
+// async function getData() {
+//   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/latestPrice`, {
+//     next: { revalidate: 0 },
+//   });
 //   if (!res.ok) {
 //     throw new Error("Failed to fetch data");
 //   }
@@ -25,8 +12,12 @@ async function getData() {
 // }
 
 export default async function Page() {
-  const data = await getData();
-  // const allStocks = await getAllStocks();
+  // const response = await getData();
+
+  // const data = response.filter(
+  //   (item: any) => !["00DSEX", "00DSES", "00DS30"].includes(item.tradingCode)
+  // );
+
   return (
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
@@ -37,7 +28,7 @@ export default async function Page() {
           px: 2,
         }}
       >
-        <SharePrice data={data} />
+        <SharePrice />
       </Box>
     </Box>
   );

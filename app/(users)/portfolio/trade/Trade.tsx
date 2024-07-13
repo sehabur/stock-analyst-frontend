@@ -2,7 +2,7 @@
 import SearchStockCard from "@/components/cards/SearchStockCard";
 import { Box, Typography, Button, Grid, TextField, Menu } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";

@@ -13,6 +13,18 @@ const authSlice = createSlice({
       return null;
     },
 
+    updateProfile: (state: any, { payload }) => {
+      const newState = {
+        ...state,
+        name: payload.name,
+        email: payload.email,
+      };
+
+      localStorage.setItem("userInfo", JSON.stringify(newState));
+
+      return newState;
+    },
+
     addItemToFavorite: (state: any, { payload }) => {
       const newState = {
         ...state,
