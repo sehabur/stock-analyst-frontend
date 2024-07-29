@@ -1,23 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
-
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
-
-import {
-  Box,
-  TextField,
-  Paper,
-  Grid,
-  Typography,
-  MenuItem,
-  Autocomplete,
-  ButtonBase,
-  Button,
-} from "@mui/material";
+import React from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
+
+import { Box, TextField, Button } from "@mui/material";
 import Alert from "@mui/material/Alert/Alert";
 import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
-import Link from "next/link";
 
 export default function CreatePortfolio() {
   const [formData, setFormData] = React.useState({

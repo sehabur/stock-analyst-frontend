@@ -1,5 +1,4 @@
-import SingleBarChart from "@/components/charts/HorizontalBarChart";
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Dashboard from "./Dashboard";
 
 async function getData() {
@@ -25,7 +24,7 @@ export default async function GainerLooser() {
         bgcolor: "background.default",
       }}
     >
-      <Dashboard data={data} />
+      <Dashboard initialdata={data} />
     </Box>
   );
 }

@@ -1,34 +1,19 @@
 "use client";
-
 import {
   Box,
-  Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
   useTheme,
   useMediaQuery,
-  Paper,
   Button,
-  Modal,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   IconButton,
   Chip,
   Card,
-  CardActionArea,
   CardContent,
-  Slider,
   Divider,
-  Zoom,
-  Fade,
 } from "@mui/material";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import HelpOutlineRoundedIcon from "@mui/icons-material/HelpOutlineRounded";
 import { fundamentalsTooltip } from "@/data/info";
-
 import { styled } from "@mui/material/styles";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 
@@ -50,9 +35,6 @@ export default function FinancialCard(props: any) {
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      // backgroundColor: '#f5f5f9',
-      // color: 'rgba(0, 0, 0, 0.87)',
-      // border: '1px solid #dadde9',
       maxWidth: 500,
       marginLeft: 2,
       fontSize: 14,
@@ -63,7 +45,6 @@ export default function FinancialCard(props: any) {
   return (
     <>
       <Card
-        // variant="outlined"
         elevation={0}
         sx={{
           "& .MuiCard-root": {
@@ -82,8 +63,6 @@ export default function FinancialCard(props: any) {
             sx={{ bgcolor: "financeCardTitlecolor", px: 2, py: 1.2 }}
           >
             <Typography
-              // component={Button}
-              // disableRipple
               onClick={() => handleItemClick(dialogtype)}
               color="primary.main"
               sx={{
@@ -118,10 +97,7 @@ export default function FinancialCard(props: any) {
                   },
                 }}
               >
-                <HelpOutlineRoundedIcon
-                  // color="info"
-                  sx={{ fontSize: "1.2rem" }}
-                />
+                <HelpOutlineRoundedIcon sx={{ fontSize: "1.2rem" }} />
               </IconButton>
             </CustomTooltip>
           </Stack>
@@ -129,7 +105,6 @@ export default function FinancialCard(props: any) {
             <Stack
               direction={matchesSmUp ? "row" : "column"}
               alignItems={matchesSmUp ? "center" : "flex-start"}
-              // justifyContent={matchesSmUp ? 'flex-start' : 'flex-start'}
               sx={{
                 px: 2,
                 py: 0,

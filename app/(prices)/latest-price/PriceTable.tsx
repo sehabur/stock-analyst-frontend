@@ -1,24 +1,24 @@
+import React from "react";
+import Link from "next/link";
+
 import {
   Box,
   TextField,
   MenuItem,
   Typography,
   InputAdornment,
+  Chip,
 } from "@mui/material";
-import React from "react";
-import Link from "next/link";
-import { sectorList } from "@/data/dse";
 import {
   DataGrid,
   GridColDef,
   GridToolbar,
   gridClasses,
 } from "@mui/x-data-grid";
+import { styled } from "@mui/material/styles";
+
+import { sectorList } from "@/data/dse";
 import styles from "./Pricetable.module.css";
-
-import { alpha, styled } from "@mui/material/styles";
-
-const ODD_OPACITY = 0.2;
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -50,13 +50,47 @@ const columns: GridColDef[] = [
     // cellClassName: styles.tradingCodeCell,
   },
   {
+    field: "sector",
+    headerName: "SECTOR",
+    align: "left",
+    headerAlign: "left",
+    width: 140,
+  },
+  {
     field: "category",
     headerName: "CATEGORY",
     align: "left",
     headerAlign: "left",
-    width: 90,
+    width: 85,
   },
   { field: "ltp", headerName: "LTP", align: "right", headerAlign: "right" },
+  {
+    field: "haltStatus",
+    headerName: "",
+    align: "left",
+    headerAlign: "left",
+    width: 62,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.value !== "none" ? (
+            <Chip
+              label="Halt"
+              size="small"
+              // variant="outlined"
+              color={params.value === "buy" ? "success" : "error"}
+              sx={{
+                ml: 1,
+                fontSize: ".8rem",
+              }}
+            />
+          ) : (
+            <></>
+          )}
+        </>
+      );
+    },
+  },
   { field: "ycp", headerName: "OPEN", align: "right", headerAlign: "right" },
   {
     field: "high",
@@ -106,9 +140,12 @@ const columns: GridColDef[] = [
   { field: "trade", headerName: "TRADE", align: "right", headerAlign: "right" },
   {
     field: "value",
-    headerName: "VALUE(MN)",
+    headerName: "VALUE(CR)",
     align: "right",
     headerAlign: "right",
+    valueFormatter: (params) => {
+      return (params.value / 10).toFixed(2);
+    },
   },
   {
     field: "volume",
@@ -219,201 +256,22 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
             toolbar: {
               showQuickFilter: true,
               printOptions: { disableToolbarButton: true },
-              // csvOptions: { disableToolbarButton: true },
+              csvOptions: { disableToolbarButton: true },
             },
           }}
           // pageSizeOptions={[10, 25, 50, 100]}
           sx={{
             border: "none",
-            // ".MuiDataGrid-columnHeader": {
-            //   color: "text.primary",
-            //   textAlign: "right",
-            // },
-            // ".MuiDataGrid-cell": {
-            //   fontWeight: 500,
-            //   fontFamily: "'Nunito Sans', sans-serif",
-            // },
+            ".MuiDataGrid-columnHeader": {
+              color: "text.primary",
+              fontSize: ".85rem",
+            },
+            ".MuiDataGrid-cell": {
+              fontWeight: 500,
+            },
           }}
         />
       </Box>
-
-      {/* <Paper sx={{ width: '100%', overflow: 'hidden' }} variant="outlined">
-        <Box
-          sx={{
-            pb: 1,
-            pt: 2,
-            display: 'flex',
-            justifyContent: 'center',
-            bgcolor: grey[50],
-          }}
-        >
-          <TextField
-            select
-            label="Category"
-            name="category"
-            value={formInputs.category}
-            onChange={handleFormChange}
-            size="small"
-            sx={{ mr: 2, width: 100 }}
-          >
-            <MenuItem key="all" value="all">
-              All
-            </MenuItem>
-            {categoryList.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </TextField>
-
-          <TextField
-            select
-            label="Change"
-            name="change"
-            value={formInputs.change}
-            onChange={handleFormChange}
-            size="small"
-            sx={{ mr: 2, width: 130 }}
-          >
-            <MenuItem key="all" value="all">
-              All
-            </MenuItem>
-            <MenuItem key={1} value={1}>
-              Positive
-            </MenuItem>
-            <MenuItem key={-1} value={-1}>
-              Negative
-            </MenuItem>
-            <MenuItem key={0} value={0}>
-              Neutral
-            </MenuItem>
-          </TextField>
-          <Button
-            variant="contained"
-            color="success"
-            onClick={handleFormSubmit}
-          >
-            Filter
-          </Button>
-        </Box>
-        <TableContainer sx={{ maxHeight: '70vh' }}>
-          <Table stickyHeader size="small">
-            <TableHead>
-              <TableRow sx={{ height: 45 }}>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    sx={{
-                      backgroundColor: 'primary.main',
-                      color: grey[50],
-                      fontSize: '1rem',
-                      minWidth: column.minWidth,
-                    }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {shares
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((dataItems: any) => {
-                  return (
-                    <TableRow
-                      hover
-                      key={dataItems.tradingCode}
-                      sx={{
-                        '&:nth-of-type(odd)': {
-                          backgroundColor: grey[50],
-                        },
-                      }}
-                    >
-                      {columns.map((column) => {
-                        const value = dataItems[column.id];
-                        return (
-                          <TableCell
-                            key={column.id}
-                            sx={{
-                              fontSize: '.5rem',
-                              color:
-                                dataItems.change == 0
-                                  ? blue[800]
-                                  : dataItems.change < 0
-                                  ? red[900]
-                                  : green[900],
-                            }}
-                          >
-                            {column.id === 'button' && (
-                              <>
-                                <IconButton
-                                  sx={{
-                                    py: 0,
-                                    ':hover': { bgcolor: 'transparent' },
-                                  }}
-                                >
-                                  <AlarmAddIcon
-                                    color="primary"
-                                    sx={{
-                                      fontSize: '1.2rem',
-                                      ':hover': {
-                                        color: 'secondary.main',
-                                      },
-                                    }}
-                                  />
-                                </IconButton>
-                                <IconButton
-                                  sx={{
-                                    py: 0,
-                                    ':hover': {
-                                      bgcolor: 'transparent',
-                                    },
-                                  }}
-                                >
-                                  <FavoriteBorderIcon
-                                    color="primary"
-                                    sx={{
-                                      fontSize: '1.2rem',
-                                      ':hover': {
-                                        color: 'secondary.main',
-                                      },
-                                    }}
-                                  />
-                                </IconButton>
-                              </>
-                            )}
-                            {column.id === 'tradingCode' ? (
-                              <Typography
-                                sx={{
-                                  ':hover': { textDecoration: 'underline' },
-                                }}
-                                component={Link}
-                                href={`/stock-details/${dataItems.tradingCode}`}
-                              >
-                                {value}
-                              </Typography>
-                            ) : (
-                              <Typography>{value}</Typography>
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[25, 50, 100, 200]}
-          component="div"
-          count={shares.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper> */}
     </Box>
   );
 }

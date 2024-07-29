@@ -4,13 +4,7 @@ import {
   Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
   Button,
-  Modal,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -22,7 +16,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import ReactTimeAgo from "react-time-ago";
 import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
@@ -32,6 +26,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
+import { DateTime } from "luxon";
 
 const options: any = [
   {
@@ -98,7 +93,6 @@ export default function News({ data }: any) {
       setAlignment(newAlignment);
 
       let text = new RegExp(newAlignment, "i");
-      // console.log(text, newAlignment);
 
       const newData = data
         .filter((item: any) => {
@@ -240,6 +234,17 @@ export default function News({ data }: any) {
                         date={item.time || item.date}
                         locale="en-US"
                         style={{ color: "#089981" }}
+                      />
+                      <Chip
+                        label={DateTime.fromISO(item.date).toFormat(
+                          "dd MMM, yyyy"
+                        )}
+                        size="small"
+                        sx={{
+                          ml: 3,
+                          borderRadius: 1,
+                          fontSize: ".9rem",
+                        }}
                       />
                     </Stack>
                   </Typography>

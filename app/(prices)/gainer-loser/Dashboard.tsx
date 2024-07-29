@@ -1,27 +1,19 @@
 "use client";
-import {
-  Box,
-  Chip,
-  Paper,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
 import * as React from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
+import { Box, Chip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import AreaChart from "@/components/charts/AreaChart";
-import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import styles from "./Dashboard.module.css";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
 import { styled } from "@mui/material/styles";
+
+import styles from "./Dashboard.module.css";
+import MobileViewPriceCard from "@/components/cards/MobileViewPriceCard";
 
 const variantMap = [
   {
@@ -30,8 +22,7 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top gainers",
-    pageSubtitle: "Stocks with a price gain against the previous day's close",
-    datafield: "gainerDaily",
+    pageSubtitle: "Stocks with a price gain against the previous day's price",
     datafieldName: null,
     columnTitle: null,
   },
@@ -41,10 +32,9 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top gainers",
-    pageSubtitle: "Stocks with a price gain against one week before data",
-    datafield: "gainerOneWeek",
+    pageSubtitle: "Stocks with a price gain against one week before price",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE",
+    columnTitle: "WEEKLY CHANGE (%)",
   },
   {
     type: "gainer",
@@ -52,10 +42,9 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top gainers",
-    pageSubtitle: "Stocks with a price gain against one month before data",
-    datafield: "gainerOneMonth",
+    pageSubtitle: "Stocks with a price gain against one month before price",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE",
+    columnTitle: "MONTHLY CHANGE (%)",
   },
   {
     type: "gainer",
@@ -63,10 +52,9 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top gainers",
-    pageSubtitle: "Stocks with a price gain against six month before data",
-    datafield: "gainerSixMonth",
+    pageSubtitle: "Stocks with a price gain against six months before price",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE",
+    columnTitle: "6 MONTHLY CHANGE (%)",
   },
   {
     type: "gainer",
@@ -74,10 +62,9 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top gainers",
-    pageSubtitle: "Stocks with a price gain against one year before data",
-    datafield: "gainerOneYear",
+    pageSubtitle: "Stocks with a price gain against one year before price",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE",
+    columnTitle: "YEARLY CHANGE (%)",
   },
   {
     type: "gainer",
@@ -85,28 +72,17 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top gainers",
-    pageSubtitle: "Stocks with a price gain against five year before data",
-    datafield: "gainerFiveYear",
+    pageSubtitle: "Stocks with a price gain against five years before price",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE",
+    columnTitle: "5 YEARLY CHANGE (%)",
   },
-  // {
-  //   type: "gainer",
-  //   variant: "alltime",
-  //   title: "All time",
-  //   titleSmall: "Alltime",
-  //   datafield: "gainerAllTime",
-  //   datafieldName: null,
-  //   columnTitle: null,
-  // },
   {
     type: "loser",
     variant: "1d",
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top losers",
-    pageSubtitle: "Stocks with a price lose against the previous day's close",
-    datafield: "loserDaily",
+    pageSubtitle: "Stocks with a price lose against the previous day's price",
     datafieldName: null,
     columnTitle: null,
   },
@@ -116,10 +92,9 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top losers",
-    pageSubtitle: "Stocks with a price lose against one week before data",
-    datafield: "loserOneWeek",
+    pageSubtitle: "Stocks with a price lose against one week before price",
     datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE",
+    columnTitle: "WEEKLY CHANGE (%)",
   },
   {
     type: "loser",
@@ -127,10 +102,9 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top losers",
-    pageSubtitle: "Stocks with a price lose against one month before data",
-    datafield: "loserOneMonth",
+    pageSubtitle: "Stocks with a price lose against one month before price",
     datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE",
+    columnTitle: "MONTHLY CHANGE (%)",
   },
   {
     type: "loser",
@@ -138,10 +112,9 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top losers",
-    pageSubtitle: "Stocks with a price lose against six month before data",
-    datafield: "loserSixMonth",
+    pageSubtitle: "Stocks with a price lose against six months before price",
     datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE",
+    columnTitle: "6 MONTHLY CHANGE (%)",
   },
   {
     type: "loser",
@@ -149,10 +122,9 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top losers",
-    pageSubtitle: "Stocks with a price lose against one year before data",
-    datafield: "loserOneYear",
+    pageSubtitle: "Stocks with a price lose against one year before price",
     datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE",
+    columnTitle: "YEARLY CHANGE (%)",
   },
   {
     type: "loser",
@@ -160,10 +132,9 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top losers",
-    pageSubtitle: "Stocks with a price lose against five year before data",
-    datafield: "loserFiveYear",
+    pageSubtitle: "Stocks with a price lose against five years before price",
     datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE",
+    columnTitle: "5 YEARLY CHANGE (%)",
   },
   {
     type: "value",
@@ -171,10 +142,9 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top values",
-    pageSubtitle: "Stocks with a value gain against the previous day's value",
-    datafield: "valueDaily",
+    pageSubtitle: "Stocks with top value for today",
     datafieldName: null,
-    columnTitle: "VALUE (MN)",
+    columnTitle: null,
   },
   {
     type: "value",
@@ -182,10 +152,9 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top values",
-    pageSubtitle: "Stocks with a value gain against one week before value",
-    datafield: "valueOneWeek",
-    datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE",
+    pageSubtitle: "Stocks with top value for last one week",
+    datafieldName: "oneWeekTotalValue",
+    columnTitle: "WEEK VALUE",
   },
   {
     type: "value",
@@ -193,10 +162,9 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top values",
-    pageSubtitle: "Stocks with a value gain against one month before value",
-    datafield: "valueOneMonth",
-    datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE",
+    pageSubtitle: "Stocks with top value for last one month",
+    datafieldName: "oneMonthTotalValue",
+    columnTitle: "MONTH VALUE",
   },
   {
     type: "value",
@@ -204,10 +172,9 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top values",
-    pageSubtitle: "Stocks with a value gain against six month before value",
-    datafield: "valueSixMonth",
-    datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE",
+    pageSubtitle: "Stocks with top value for last six months",
+    datafieldName: "sixMonthTotalValue",
+    columnTitle: "6 MONTH VALUE",
   },
   {
     type: "value",
@@ -215,10 +182,9 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top values",
-    pageSubtitle: "Stocks with a value gain against one year before value",
-    datafield: "valueOneYear",
-    datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE",
+    pageSubtitle: "Stocks with top value for last one year",
+    datafieldName: "oneYearTotalValue",
+    columnTitle: "YEAR VALUE",
   },
   {
     type: "value",
@@ -226,10 +192,9 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top values",
-    pageSubtitle: "Stocks with a value gain against five year before value",
-    datafield: "valueFiveYear",
-    datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE",
+    pageSubtitle: "Stocks with top value for last five years",
+    datafieldName: "fiveYearTotalValue",
+    columnTitle: "5 YEAR VALUE",
   },
   {
     type: "volume",
@@ -237,10 +202,9 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top volumes",
-    pageSubtitle: "Stocks with a volume gain against the previous day's volume",
-    datafield: "volumeDaily",
+    pageSubtitle: "Stocks with top volume for today",
     datafieldName: null,
-    columnTitle: "VOLUME",
+    columnTitle: null,
   },
   {
     type: "volume",
@@ -248,10 +212,9 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top volumes",
-    pageSubtitle: "Stocks with a volume gain against one week before data",
-    datafield: "volumeOneWeek",
-    datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE",
+    pageSubtitle: "Stocks with top volume for last one week",
+    datafieldName: "oneWeekTotalVolume",
+    columnTitle: "WEEK VOLUME",
   },
   {
     type: "volume",
@@ -259,10 +222,9 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top volumes",
-    pageSubtitle: "Stocks with a volume gain against one month before volume",
-    datafield: "volumeOneMonth",
-    datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE",
+    pageSubtitle: "Stocks with top volume for last one month",
+    datafieldName: "oneMonthTotalVolume",
+    columnTitle: "MONTH VOLUME",
   },
   {
     type: "volume",
@@ -270,10 +232,9 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top volumes",
-    pageSubtitle: "Stocks with a volume gain against six month before volume",
-    datafield: "volumeSixMonth",
-    datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE",
+    pageSubtitle: "Stocks with top volume for last six months",
+    datafieldName: "sixMonthTotalVolume",
+    columnTitle: "6 MONTH VOLUME",
   },
   {
     type: "volume",
@@ -281,10 +242,9 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top volumes",
-    pageSubtitle: "Stocks with a volume gain against one year before volume",
-    datafield: "volumeOneYear",
-    datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE",
+    pageSubtitle: "Stocks with top volume for last one year",
+    datafieldName: "oneYearTotalVolume",
+    columnTitle: "YEAR VOLUME",
   },
   {
     type: "volume",
@@ -292,10 +252,9 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top volumes",
-    pageSubtitle: "Stocks with a volume gain against five year before volume",
-    datafield: "volumeFiveYear",
-    datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE",
+    pageSubtitle: "Stocks with top volume for last five years",
+    datafieldName: "fiveYearTotalVolume",
+    columnTitle: "5 YEAR VOLUME",
   },
   {
     type: "trade",
@@ -303,10 +262,9 @@ const variantMap = [
     title: "Day",
     titleSmall: "1D",
     pageTitle: "Daily top trades",
-    pageSubtitle: "Stocks with a trade gain against the previous day's trade",
-    datafield: "tradeDaily",
+    pageSubtitle: "Stocks with top trade for today",
     datafieldName: null,
-    columnTitle: "TRADE",
+    columnTitle: null,
   },
   {
     type: "trade",
@@ -314,10 +272,9 @@ const variantMap = [
     title: "Week",
     titleSmall: "1W",
     pageTitle: "Weekly top trades",
-    pageSubtitle: "Stocks with a trade gain against one week before trade",
-    datafield: "tradeOneWeek",
-    datafieldName: "oneWeekPercentChange",
-    columnTitle: "WEEK CHANGE",
+    pageSubtitle: "Stocks with top trade for last one week",
+    datafieldName: "oneWeekTotalTrade",
+    columnTitle: "WEEK TRADE",
   },
   {
     type: "trade",
@@ -325,10 +282,9 @@ const variantMap = [
     title: "Month",
     titleSmall: "1M",
     pageTitle: "Monthly top trades",
-    pageSubtitle: "Stocks with a trade gain against one month before trade",
-    datafield: "tradeOneMonth",
-    datafieldName: "oneMonthPercentChange",
-    columnTitle: "MONTH CHANGE",
+    pageSubtitle: "Stocks with top trade for last one month",
+    datafieldName: "oneMonthTotalTrade",
+    columnTitle: "MONTH TRADE",
   },
   {
     type: "trade",
@@ -336,10 +292,9 @@ const variantMap = [
     title: "6 Months",
     titleSmall: "6M",
     pageTitle: "6 Month top trades",
-    pageSubtitle: "Stocks with a trade gain against six month before trade",
-    datafield: "tradeSixMonth",
-    datafieldName: "sixMonthPercentChange",
-    columnTitle: "6 MONTH CHANGE",
+    pageSubtitle: "Stocks with top trade for last six months",
+    datafieldName: "sixMonthTotalTrade",
+    columnTitle: "6 MONTH TRADE",
   },
   {
     type: "trade",
@@ -347,10 +302,9 @@ const variantMap = [
     title: "Year",
     titleSmall: "1Y",
     pageTitle: "Yearly top trades",
-    pageSubtitle: "Stocks with a trade gain against one year before trade",
-    datafield: "tradeOneYear",
-    datafieldName: "oneYearPercentChange",
-    columnTitle: "YEAR CHANGE",
+    pageSubtitle: "Stocks with top trade for last one year",
+    datafieldName: "oneYearTotalTrade",
+    columnTitle: "YEAR TRADE",
   },
   {
     type: "trade",
@@ -358,10 +312,9 @@ const variantMap = [
     title: "5 Years",
     titleSmall: "5Y",
     pageTitle: "5 Year top trades",
-    pageSubtitle: "Stocks with a trade gain against five year before trade",
-    datafield: "tradeFiveYear",
-    datafieldName: "fiveYearPercentChange",
-    columnTitle: "5 YEAR CHANGE",
+    pageSubtitle: "Stocks with top trade for last five years",
+    datafieldName: "fiveYearTotalTrade",
+    columnTitle: "5 YEAR TRADE",
   },
 ];
 
@@ -388,17 +341,22 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
 
-export default function Dashboard({ data }: any) {
+export default function Dashboard({ initialdata }: any) {
   const searchParams = useSearchParams();
 
   const type = searchParams.get("type");
+
   const variant = searchParams.get("variant");
 
   const theme = useTheme();
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [typeAlignment, setTypeAlignment] = React.useState(type);
+  const matchesSmDown = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const [data, setData] = React.useState<any>(initialdata);
+
+  const [typeAlignment, setTypeAlignment] = React.useState<any>(type);
 
   const [variantAlignment, setVariantAlignment] = React.useState<any>(variant);
 
@@ -406,117 +364,52 @@ export default function Dashboard({ data }: any) {
     (item) => item.type === typeAlignment && item.variant === variantAlignment
   );
 
-  function getHeaderName(data: any) {
-    return data.find(
-      (item: any) => item.type === selectedData.type && item.variant === "1d"
-    ).columnTitle;
-  }
+  React.useEffect(() => {
+    let newData;
 
-  const mobileColumns: GridColDef[] = [
-    {
-      field: "tradingCode",
-      headerName: "TRADING CODE",
-      width: 130,
-      align: "left",
-      headerAlign: "left",
-      disableColumnMenu: true,
-      renderCell: (params) => {
-        return (
-          <Typography
-            component={Link}
-            href={`/stock-details/${params.value}`}
-            sx={{
-              color: "primary.main",
-              ":hover": { textDecoration: "underline" },
-            }}
-          >
-            {params.value}
-          </Typography>
+    if (variantAlignment == "1d") {
+      if (typeAlignment == "loser") {
+        newData = [...initialdata].sort(
+          (a: any, b: any) => a.percentChange - b.percentChange
         );
-      },
-      cellClassName: styles.tradingCodeCell,
-    },
-    {
-      field: "ltp",
-      headerName: "LTP (BDT)",
-      align: "left",
-      headerAlign: "left",
-      width: 100,
-      disableColumnMenu: true,
-    },
-    {
-      field: selectedData.type,
-      headerName: getHeaderName(variantMap),
-      align: "left",
-      headerAlign: "left",
-      width: 110,
-      disableColumnMenu: true,
-    },
-    {
-      field: "percentChange",
-      headerName: "DAY CHANGE",
-      align: "left",
-      headerAlign: "left",
-      disableColumnMenu: true,
-      width: 100,
-      cellClassName: (params: any) => {
-        let cellClass;
-        if (params.value < 0) {
-          cellClass = styles.downTrend;
-        } else if (params.value > 0) {
-          cellClass = styles.upTrend;
-        } else {
-          cellClass = styles.neutral;
-        }
-        return cellClass;
-      },
-      valueFormatter: (params) => {
-        return params.value + "%";
-      },
-    },
-
-    {
-      field: selectedData.datafieldName,
-      headerName: selectedData.columnTitle,
-      align: "left",
-      headerAlign: "left",
-      disableColumnMenu: true,
-      width: 110,
-      cellClassName: (params: any) => {
-        let cellClass;
-        if (params.value < 0) {
-          cellClass = styles.downTrend;
-        } else if (params.value > 0) {
-          cellClass = styles.upTrend;
-        } else {
-          cellClass = styles.neutral;
-        }
-        if (["value", "trade", "volume"].includes(variantAlignment)) {
-          cellClass = "";
-        }
-        return cellClass;
-      },
-      valueFormatter: (params) => {
-        let format;
-        if (["value", "trade", "volume"].includes(variantAlignment)) {
-          if (variantAlignment === "value") {
-            format = params.value * 1000000;
-          } else {
-            format = params.value;
-          }
-        } else {
-          format = params.value + "%";
-        }
-        return format;
-      },
-    },
-  ];
+      }
+      if (typeAlignment == "gainer") {
+        newData = [...initialdata].sort(
+          (a: any, b: any) => b.percentChange - a.percentChange
+        );
+      }
+      if (typeAlignment == "value") {
+        newData = [...initialdata].sort((a: any, b: any) => b.value - a.value);
+      }
+      if (typeAlignment == "volume") {
+        newData = [...initialdata].sort(
+          (a: any, b: any) => b.volume - a.volume
+        );
+      }
+      if (typeAlignment == "trade") {
+        newData = [...initialdata].sort((a: any, b: any) => b.trade - a.trade);
+      }
+    } else {
+      if (typeAlignment == "loser") {
+        newData = [...initialdata]?.sort(
+          (a: any, b: any) =>
+            a[selectedData.datafieldName] - b[selectedData.datafieldName]
+        );
+      } else {
+        newData = [...initialdata]?.sort(
+          (a: any, b: any) =>
+            b[selectedData.datafieldName] - a[selectedData.datafieldName]
+        );
+      }
+    }
+    setData(newData);
+  }, [typeAlignment, variantAlignment]);
 
   const columns: GridColDef[] = [
     {
       field: "tradingCode",
       headerName: "TRADING CODE",
-      width: 140,
+      width: 160,
       align: "left",
       headerAlign: "left",
       renderCell: (params) => {
@@ -534,6 +427,13 @@ export default function Dashboard({ data }: any) {
         );
       },
       cellClassName: styles.tradingCodeCell,
+    },
+    {
+      field: "sector",
+      headerName: "SECTOR",
+      align: "left",
+      headerAlign: "left",
+      width: 200,
     },
     {
       field: "category",
@@ -543,32 +443,44 @@ export default function Dashboard({ data }: any) {
       width: 120,
     },
     {
-      field: "sector",
-      headerName: "SECTOR",
-      align: "left",
-      headerAlign: "left",
-      width: 260,
-    },
-    {
       field: "ltp",
       headerName: "LTP (BDT)",
       align: "left",
       headerAlign: "left",
-      width: 110,
+      width: 100,
     },
     {
-      field: selectedData.type,
-      headerName: getHeaderName(variantMap),
+      field: "haltStatus",
+      headerName: "",
       align: "left",
       headerAlign: "left",
-      width: 110,
+      width: 80,
+      renderCell: (params) => {
+        return (
+          <>
+            {params.value !== "none" ? (
+              <Chip
+                label="Halt"
+                size="small"
+                color={params.value === "buy" ? "success" : "error"}
+                sx={{
+                  ml: 1,
+                  fontSize: ".8rem",
+                }}
+              />
+            ) : (
+              <></>
+            )}
+          </>
+        );
+      },
     },
     {
       field: "percentChange",
-      headerName: "DAY CHANGE",
+      headerName: "CHANGE (%)",
       align: "left",
       headerAlign: "left",
-      width: 150,
+      width: 120,
       cellClassName: (params: any) => {
         let cellClass;
         if (params.value < 0) {
@@ -581,42 +493,66 @@ export default function Dashboard({ data }: any) {
         return cellClass;
       },
       valueFormatter: (params) => {
-        return params.value + "%";
+        return params.value.toFixed(2) + "%";
       },
     },
+
     {
       field: selectedData.datafieldName,
       headerName: selectedData.columnTitle,
       align: "left",
       headerAlign: "left",
-      width: 160,
+      width: 125,
       cellClassName: (params: any) => {
-        let cellClass;
-        if (params.value < 0) {
-          cellClass = styles.downTrend;
-        } else if (params.value > 0) {
-          cellClass = styles.upTrend;
-        } else {
-          cellClass = styles.neutral;
-        }
-        if (["value", "trade", "volume"].includes(variantAlignment)) {
-          cellClass = "";
+        let cellClass = "";
+        if (["gainer", "loser"].includes(typeAlignment)) {
+          if (params.value < 0) {
+            cellClass = styles.downTrend;
+          } else if (params.value > 0) {
+            cellClass = styles.upTrend;
+          } else {
+            cellClass = styles.neutral;
+          }
         }
         return cellClass;
       },
       valueFormatter: (params) => {
         let format;
-        if (["value", "trade", "volume"].includes(variantAlignment)) {
-          if (variantAlignment === "value") {
-            format = params.value * 1000000;
+        if (["value", "trade", "volume"].includes(typeAlignment)) {
+          if (typeAlignment === "value") {
+            format = (params.value / 10).toFixed(2);
           } else {
             format = params.value;
           }
         } else {
-          format = params.value + "%";
+          format = params.value.toFixed(2) + "%";
         }
         return format;
       },
+    },
+    {
+      field: "volume",
+      headerName: "VOLUME",
+      align: "left",
+      headerAlign: "left",
+      width: 130,
+    },
+    {
+      field: "value",
+      headerName: "VALUE (CRORE)",
+      align: "left",
+      headerAlign: "left",
+      width: 120,
+      valueFormatter: (params) => {
+        return (params.value / 10).toFixed(2);
+      },
+    },
+    {
+      field: "trade",
+      headerName: "TRADE",
+      align: "left",
+      headerAlign: "left",
+      width: 100,
     },
   ];
 
@@ -682,7 +618,6 @@ export default function Dashboard({ data }: any) {
       >
         <StyledToggleButtonGroup
           size="small"
-          // color="primary"
           value={variantAlignment}
           exclusive
           onChange={handleVariantAlignmentChange}
@@ -703,72 +638,69 @@ export default function Dashboard({ data }: any) {
       </Box>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
           my: 3,
+          maxWidth: { xs: 280, sm: 600 },
+          mx: "auto",
+          textAlign: "center",
         }}
       >
         <Typography
-          sx={{ fontSize: { xs: "1.3rem", sm: "1.4rem" } }}
+          sx={{ fontSize: { xs: "1.2rem", sm: "1.4rem" } }}
           color="text.primary"
-          gutterBottom
         >
           {selectedData.pageTitle}
         </Typography>
         <Typography
-          sx={{ fontSize: "1rem", textAlign: "center" }}
+          sx={{
+            fontSize: { xs: ".875rem", sm: "1rem" },
+            // display: { xs: "none", sm: "block" },
+          }}
           color="text.secondary"
         >
           {selectedData.pageSubtitle}
         </Typography>
       </Box>
       <Box sx={{ width: "100%" }}>
-        <DataGrid
-          rows={data[selectedData.datafield]}
-          columns={matchesSmUp ? columns : mobileColumns}
-          hideFooter={true}
-          columnVisibilityModel={{
-            [selectedData.datafieldName]: selectedData.datafieldName
-              ? true
-              : false,
-            percentChange:
-              matchesSmUp &&
-              !["volume", "value", "trade"].includes(selectedData.type)
+        {matchesSmUp && (
+          <DataGrid
+            rows={data}
+            columns={columns}
+            hideFooter={true}
+            columnVisibilityModel={{
+              [selectedData.datafieldName]: selectedData.datafieldName
                 ? true
-                : selectedData.variant !== "1d"
-                ? false
-                : true,
-            ltp: ["volume", "value", "trade"].includes(selectedData.type)
-              ? false
-              : true,
-            [selectedData.type]: ["value", "trade", "volume"].includes(
-              selectedData.type
-            ),
-          }}
-          sx={{
-            ".MuiDataGrid-columnHeader": {
-              color: "text.secondary",
-              fontSize: { xs: ".8rem", sm: ".9rem" },
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              overflow: "visible",
-              lineHeight: "1.43rem",
-              whiteSpace: "normal",
-            },
-            border: "none",
-            width: matchesSmUp
-              ? selectedData.datafieldName
-                ? 950
-                : 880
-              : "90vw",
-            mx: "auto",
-            mb: 6,
-            fontSize: ".9rem",
-            fontWeight: 500,
-          }}
-        />
+                : false,
+            }}
+            sx={{
+              ".MuiDataGrid-columnHeader": {
+                color: "text.primary",
+                fontSize: ".85rem",
+              },
+              ".MuiDataGrid-columnHeaderTitle": {
+                overflow: "visible",
+                lineHeight: "1.43rem",
+                whiteSpace: "normal",
+              },
+              ".MuiDataGrid-cell": {
+                fontWeight: 500,
+              },
+              border: "none",
+              width: selectedData.datafieldName ? 1250 : 1120,
+              mx: "auto",
+              mb: 6,
+              mt: 5,
+              fontSize: ".9rem",
+              fontWeight: 500,
+            }}
+          />
+        )}
+
+        {matchesSmDown &&
+          data.map((item: any, index: number) => (
+            <Box key={index}>
+              <MobileViewPriceCard item={item} />
+            </Box>
+          ))}
       </Box>
     </Box>
   );

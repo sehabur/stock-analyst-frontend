@@ -1,28 +1,23 @@
 "use client";
+import { useState } from "react";
+import { DateTime } from "luxon";
+
 import {
   Box,
   Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
   Button,
-  Modal,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
-  Chip,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import ReactTimeAgo from "react-time-ago";
 import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
@@ -139,6 +134,9 @@ export default function News({ news }: any) {
                         locale="en-US"
                         style={{ fontSize: "1rem", color: "#089981" }}
                       />
+                      <Typography sx={{ ml: 2 }}>
+                        {DateTime.fromISO(item.date).toFormat("dd-MM-YY")}
+                      </Typography>
                     </Stack>
                   </Typography>
                   <Typography sx={{ fontSize: ".9rem" }}>

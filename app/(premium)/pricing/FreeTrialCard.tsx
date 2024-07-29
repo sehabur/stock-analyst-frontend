@@ -1,17 +1,12 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Card,
-  CardContent,
-} from "@mui/material";
+
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
+import { Box, Typography, Button, Card, CardContent } from "@mui/material";
 
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
-import { useSelector } from "react-redux";
 
 export default function FreeTrialCard() {
   const auth = useSelector((state: any) => state.auth);

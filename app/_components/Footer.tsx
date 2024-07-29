@@ -1,21 +1,18 @@
 "use client";
 import * as React from "react";
+
+import { useSelector } from "react-redux";
+
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-
-import SitemarkIcon from "./SitemarkIcon";
 import { Divider, useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
 
 function Copyright() {
   return (

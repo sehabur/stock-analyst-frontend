@@ -1,22 +1,16 @@
 import * as React from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
-import PricingCard from "./PricingCard";
-import { Button, Card, CardContent } from "@mui/material";
-import Link from "next/link";
-
-import EastRoundedIcon from "@mui/icons-material/EastRounded";
-import FreeTrialCard from "./FreeTrialCard";
-
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
-import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
+
+import PricingCard from "./PricingCard";
+import FreeTrialCard from "./FreeTrialCard";
 
 const packages = [
   {
@@ -33,14 +27,14 @@ const packages = [
   },
   {
     title: "6 Months",
-    price: 699,
-    discountedPrice: 1399,
+    price: 1399,
+    discountedPrice: 699,
     discount: 50,
   },
   {
     title: "1 Year",
-    price: 1199,
-    discountedPrice: 2399,
+    price: 2399,
+    discountedPrice: 1199,
     discount: 50,
   },
 ];
@@ -99,6 +93,7 @@ export default function Price() {
           justifyContent: "center",
           px: 2,
           pb: 4,
+          maxWidth: 1200,
           mx: "auto",
         }}
       >

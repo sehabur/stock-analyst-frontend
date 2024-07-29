@@ -1,26 +1,21 @@
 "use client";
+import * as React from "react";
+
 import {
   Box,
   Button,
-  Chip,
-  Paper,
-  Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import * as React from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import AreaChart from "@/components/charts/AreaChart";
-import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import { styled } from "@mui/material/styles";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import SeeMoreButton from "../buttons/SeeMoreButton";
 
@@ -29,6 +24,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
     border: 0,
   },
 }));
+
 const StyledToggleButtonSuccess = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "24px !important",
@@ -121,7 +117,7 @@ export default function IndexMover({ data }: any) {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 2 } }}>
+    <Box sx={{ p: { xs: 2, sm: 2 }, maxWidth: 500 }}>
       <Box>
         <Button
           component={Link}
@@ -187,7 +183,7 @@ export default function IndexMover({ data }: any) {
               whiteSpace: "normal",
             },
             border: "none",
-            width: matchesSmUp ? 450 : "90vw",
+            width: matchesSmUp ? "100%" : "90vw",
             fontSize: ".9rem",
             fontWeight: 500,
           }}

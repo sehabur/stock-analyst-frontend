@@ -32,20 +32,6 @@ export default function RootLayout({ children }: any) {
           href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&display=swap"
           rel="stylesheet"
         ></link>
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,700&display=swap"
-          rel="stylesheet"
-        ></link>
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;500;700&family=Urbanist:wght@300;400;500;700&display=swap"
-          rel="stylesheet"
-        ></link>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap"
-          rel="stylesheet"
-        />
         <link
           href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;700&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,500;6..12,700&display=swap"
           rel="stylesheet"
@@ -54,11 +40,6 @@ export default function RootLayout({ children }: any) {
           href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
           rel="stylesheet"
         ></link>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap"
-          rel="stylesheet"
-        ></link>
-
         <script
           type="text/javascript"
           src="/app/_library/charting_library/charting_library.js"

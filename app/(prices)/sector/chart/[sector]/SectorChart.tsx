@@ -1,25 +1,16 @@
 "use client";
-import { sectorList } from "@/data/dse";
-import AreaChart from "@/components/charts/AreaChart";
-import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
-import {
-  Box,
-  Grid,
-  Typography,
-  useTheme,
-  useMediaQuery,
-  Link,
-} from "@mui/material";
-import { DateTime } from "luxon";
-import ToggleButton from "@mui/material/ToggleButton";
 import React from "react";
-import { grey } from "@mui/material/colors";
+import { DateTime } from "luxon";
 
+import { Box, useTheme, useMediaQuery } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
 import { styled } from "@mui/material/styles";
-
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
+
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {

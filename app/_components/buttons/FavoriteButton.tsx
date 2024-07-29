@@ -1,16 +1,14 @@
 "use client";
-
 import React from "react";
+import { authActions } from "_store";
+import { useDispatch, useSelector } from "react-redux";
 
 import { styled, alpha } from "@mui/material/styles";
-
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { IconButton, useTheme } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "_store";
+
 import Snackbar from "@mui/material/Snackbar/Snackbar";
 
 export default function FavoriteButton({ tradingCode }: any) {

@@ -1,18 +1,7 @@
 "use client";
 import PieChart from "@/components/charts/PieChart";
-import {
-  Paper,
-  Grid,
-  Typography,
-  Stack,
-  Button,
-  Chip,
-  useTheme,
-  Box,
-  Popover,
-} from "@mui/material";
-import Link from "next/link";
-import { useState } from "react";
+
+import { Paper, Typography, Stack, useTheme, Box } from "@mui/material";
 import KeyboardDoubleArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import KeyboardDoubleArrowDownRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowDownRounded";
 import PauseCircleOutlineRoundedIcon from "@mui/icons-material/PauseCircleOutlineRounded";
@@ -25,28 +14,28 @@ export default function MarketMoverChart({ data, sectorData }: any) {
   const theme: any = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  // const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const [type, setType] = useState<any>("uptrendItems");
+  // const [type, setType] = useState<any>("uptrendItems");
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    type: string
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setType(type);
-  };
+  // const handleClick = (
+  //   event: React.MouseEvent<HTMLButtonElement>,
+  //   type: string
+  // ) => {
+  //   setAnchorEl(event.currentTarget);
+  //   setType(type);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  // const open = Boolean(anchorEl);
+  // const id = open ? "simple-popover" : undefined;
 
   return (
     <>
-      <Popover
+      {/* <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -86,7 +75,7 @@ export default function MarketMoverChart({ data, sectorData }: any) {
               </Button>
             ))}
         </Box>
-      </Popover>
+      </Popover> */}
       <Paper
         elevation={0}
         sx={{

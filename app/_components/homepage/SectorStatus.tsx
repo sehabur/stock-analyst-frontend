@@ -1,6 +1,10 @@
+"use client";
+import * as React from "react";
+
+import { Grid, Paper, Typography } from "@mui/material";
+
 import HorizontalStackedBarChartValue from "@/components/charts/HorizontalStackedBarChartValue";
 import HorizontalStackedBarChartGain from "@/components/charts/HorizontalStackedBarChartGain";
-import { Box, Chip, Grid, Paper, Stack, Typography } from "@mui/material";
 
 const formatSectorTrendData = (sectorData: any) => {
   let categories = [];

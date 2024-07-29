@@ -1,20 +1,8 @@
 import React from "react";
 
-import {
-  Box,
-  Snackbar,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Autocomplete,
-  Avatar,
-} from "@mui/material";
+import { Box, Button, Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import KeyboardBackspaceRoundedIcon from "@mui/icons-material/KeyboardBackspaceRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 
 import Trade from "./Trade";
@@ -34,9 +22,6 @@ export default function Page({ searchParams }: any) {
           mx: "auto",
           pt: 3,
           px: 2,
-          // display: "flex",
-          // flexDirection: "column",
-          // alignItems: "center",
         }}
       >
         <Box>

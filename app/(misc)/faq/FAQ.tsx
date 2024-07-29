@@ -5,10 +5,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { faqItems } from "@/data/info";

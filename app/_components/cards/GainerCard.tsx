@@ -1,37 +1,18 @@
 "use client";
+import Link from "next/link";
+
 import {
-  AppBar,
-  Avatar,
   Box,
-  Button,
-  Divider,
-  FormControlLabel,
   Grid,
-  ListItemIcon,
-  ListItemText,
-  Menu,
-  MenuItem,
-  Popover,
-  Switch,
-  Toolbar,
   Typography,
   useMediaQuery,
   useTheme,
-  IconButton,
-  Dialog,
-  DialogContent,
-  TextField,
-  InputAdornment,
   Stack,
   Chip,
   Paper,
-  DialogTitle,
-  InputBase,
 } from "@mui/material";
-
-import { grey, blueGrey } from "@mui/material/colors";
-
-import Link from "next/link";
+import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
+import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -51,11 +32,12 @@ export default function GainerCard(props: any) {
   const theme = useTheme();
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>
       <Paper
         sx={{
-          my: 1,
+          my: { xs: 0.8, sm: 1.5 },
           px: { xs: 2, sm: 3 },
           py: 1.5,
           borderRadius: { xs: 0, sm: 2 },
@@ -65,7 +47,7 @@ export default function GainerCard(props: any) {
           bgcolor: { xs: "gainerCardMobileView", sm: "gainerCard" },
         }}
         elevation={0}
-        // variant="outlined"
+        variant={matchesSmUp ? "outlined" : "elevation"}
       >
         <Grid container spacing={8} alignItems="center">
           <Grid item xs={7.5} sm={8}>
@@ -92,29 +74,36 @@ export default function GainerCard(props: any) {
                 size="small"
                 sx={{
                   borderRadius: 1,
-                  // fontWeight: 700,
                   fontSize: ".9rem",
                   mr: 1,
                   mb: 0.5,
                 }}
               />
               <Chip
-                label={item.sector}
-                // variant="outlined"
-                // color="info"
+                label={item.category}
+                variant="outlined"
                 size="small"
                 sx={{
                   borderRadius: 1,
                   mb: 0.5,
-                  // fontWeight: 700,
+                  mr: 1,
+                  fontSize: ".9rem",
+                }}
+              />
+              <Chip
+                label={item.sector.slice(0, 20)}
+                size="small"
+                sx={{
+                  borderRadius: 1,
+                  mb: 0.5,
                   fontSize: ".9rem",
                 }}
               />
             </Stack>
 
             <Typography
-              sx={{ fontSize: ".875rem", ml: 0.3 }}
-              color="text.secondary"
+              sx={{ fontSize: ".9rem", ml: 0.3 }}
+              color="text.primary"
             >
               {matchesSmUp
                 ? ` Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(
@@ -137,14 +126,14 @@ export default function GainerCard(props: any) {
                 <Typography
                   color="text.primary"
                   sx={{
-                    fontSize: { xs: "1.4rem", sm: "1.4rem" },
+                    fontSize: { xs: "1.4rem", sm: "1.5rem" },
                     fontWeight: 500,
                   }}
                 >
                   {item.ltp.toFixed(1)}
                 </Typography>
                 <Typography
-                  sx={{ fontSize: ".875rem", mt: -0.5 }}
+                  sx={{ fontSize: ".85rem", mt: -0.5 }}
                   color="text.secondary"
                 >
                   BDT
@@ -162,7 +151,7 @@ export default function GainerCard(props: any) {
                         ? "error.main"
                         : "success.main",
                     fontWeight: 700,
-                    fontSize: ".9rem",
+                    fontSize: ".95rem",
                   }}
                 >
                   {addPlusSign(item.change)}
@@ -182,6 +171,25 @@ export default function GainerCard(props: any) {
                           : "success.main",
                       fontWeight: 700,
                       fontSize: ".9rem",
+                    }}
+                  />
+                )}
+
+                {item.haltStatus !== "none" && (
+                  <Chip
+                    label="Halt"
+                    size="small"
+                    color={item.haltStatus === "buy" ? "success" : "error"}
+                    icon={
+                      item.haltStatus === "buy" ? (
+                        <TrendingUpRoundedIcon />
+                      ) : (
+                        <TrendingDownRoundedIcon />
+                      )
+                    }
+                    sx={{
+                      borderRadius: 1,
+                      mt: 1,
                     }}
                   />
                 )}

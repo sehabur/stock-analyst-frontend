@@ -7,20 +7,12 @@ import {
   Typography,
   Stack,
   Chip,
-  TextField,
-  MenuItem,
-  InputAdornment,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
 
-import Link from "next/link";
-
 export default function SearchStockCard(props: any) {
   const { data: item } = props;
-
-  const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <>
@@ -54,17 +46,6 @@ export default function SearchStockCard(props: any) {
                     ? item.tradingCode.slice(2)
                     : item.tradingCode}
                 </Typography>
-                {/* <Chip
-                  label={item.category}
-                  size="small"
-                  // color="primary"
-                  variant="outlined"
-                  sx={{
-                    borderRadius: "50%",
-                    mr: 2,
-                    p: 0,
-                  }}
-                /> */}
 
                 {item.change !== 0 && (
                   <Chip
@@ -73,6 +54,7 @@ export default function SearchStockCard(props: any) {
                     sx={{
                       borderRadius: 1,
                       ml: 1,
+                      fontWeight: 700,
                       color:
                         item.change === 0
                           ? "primary.main"
@@ -89,6 +71,7 @@ export default function SearchStockCard(props: any) {
                   sx={{
                     ml: { xs: 1, sm: 1.5 },
                     borderRadius: 1,
+                    fontWeight: 700,
                     color:
                       item.change === 0
                         ? "primary.main"
@@ -97,6 +80,18 @@ export default function SearchStockCard(props: any) {
                         : "success.main",
                   }}
                 />
+
+                {item.haltStatus !== "none" && (
+                  <Chip
+                    label="Halt"
+                    size="small"
+                    color={item.haltStatus === "buy" ? "success" : "error"}
+                    sx={{
+                      ml: { xs: 1, sm: 1.5 },
+                      fontSize: ".8rem",
+                    }}
+                  />
+                )}
               </Stack>
               <Typography
                 sx={{ fontSize: { xs: ".8rem", sm: ".9rem" } }}

@@ -1,4 +1,10 @@
 "use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+
 import {
   AppBar,
   Box,
@@ -18,21 +24,13 @@ import {
   Slide,
   Drawer,
 } from "@mui/material";
-
-import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
-import React, { useState, useEffect } from "react";
-import { authActions, latestPriceActions, themeColorActions } from "_store";
 import { styled, alpha } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import SearchBar from "./SearchBar";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import WhatshotRoundedIcon from "@mui/icons-material/WhatshotRounded";
-
 import NewspaperRoundedIcon from "@mui/icons-material/NewspaperRounded";
-import HexagonRoundedIcon from "@mui/icons-material/HexagonRounded";
 import UpcomingRoundedIcon from "@mui/icons-material/UpcomingRounded";
 import CandlestickChartRoundedIcon from "@mui/icons-material/CandlestickChartRounded";
 import DonutSmallRoundedIcon from "@mui/icons-material/DonutSmallRounded";
@@ -44,8 +42,6 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import AddchartOutlinedIcon from "@mui/icons-material/AddchartOutlined";
-import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
-import InsightsRoundedIcon from "@mui/icons-material/InsightsRounded";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
@@ -54,14 +50,14 @@ import DataSaverOffRoundedIcon from "@mui/icons-material/DataSaverOffRounded";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import BatchPredictionRoundedIcon from "@mui/icons-material/BatchPredictionRounded";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
-
+import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 import { TransitionProps } from "@mui/material/transitions";
-import { useRouter } from "next/navigation";
 
+import { authActions, latestPriceActions, themeColorActions } from "_store";
 import ToastMessage from "@/components/shared/ToastMessage";
 import SearchStockCard from "./cards/SearchStockCard";
-
-import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
+import SigninDialogContent from "./shared/SigninDialogContent";
+import SearchBar from "./SearchBar";
 
 const TransitionSlide = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -81,7 +77,7 @@ const TransitionFade = React.forwardRef(function Transition(
   return <Fade ref={ref} {...props} />;
 });
 
-export default function Header(props: any) {
+export default function Header() {
   const dispatch = useDispatch();
 
   const route = useRouter();
@@ -117,12 +113,24 @@ export default function Header(props: any) {
 
   const [openSearchDialog, setOpenSearchDialog] = useState(false);
 
+  const [openSigninDialog, setOpenSigninDialog] = useState(false);
+
   const openMarket = Boolean(marketAnchorEl);
   const openStock = Boolean(stockAnchorEl);
   const openUser = Boolean(userAnchorEl);
   const openMobileView = Boolean(mobileViewAnchorEl);
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
+
+  const [redirection, setRedirection] = React.useState<string | null>(null);
+
+  const handleSigninDialogOpen = () => {
+    setOpenSigninDialog(true);
+  };
+
+  const handleSigninDialogClose = () => {
+    setOpenSigninDialog(false);
+  };
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpenDrawer(newOpen);
@@ -157,9 +165,20 @@ export default function Header(props: any) {
   const handleUserPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setUserAnchorEl(event.currentTarget);
   };
-  const handleUserPopoverClose = () => {
+  const handleUserPopoverClose = (redirect: any = null, dialogOpen = false) => {
     setUserAnchorEl(null);
+
+    if (!auth?.isLoggedIn && dialogOpen) {
+      handleSigninDialogOpen();
+      setRedirection(redirect);
+    }
+    if (auth?.isLoggedIn) {
+      route.push(redirect);
+    }
   };
+
+  console.log(openSigninDialog);
+
   const handleMobileViewPopoverOpen = (
     event: React.MouseEvent<HTMLElement>
   ) => {
@@ -175,8 +194,6 @@ export default function Header(props: any) {
 
   const handleSearchDialogOpen = (event: React.MouseEvent<HTMLElement>) => {
     setOpenSearchDialog(true);
-    // getSharesBySearch(true);
-    // setSearchResult(latestPrice);
   };
   const handleSearchDialogClose = () => {
     setOpenSearchDialog(false);
@@ -203,11 +220,10 @@ export default function Header(props: any) {
   const toggleTheme = () => {
     const theme = themeColor === "dark" ? "light" : "dark";
     localStorage.setItem("theme", theme);
-    dispatch(themeColorActions.setThemeColor(theme));
   };
 
   const getData = async () => {
-    const res = await fetch(`/api/latest-price`, {
+    const res = await fetch(`/api/latest-price?v=1`, {
       next: { revalidate: 0 },
     });
 
@@ -216,7 +232,6 @@ export default function Header(props: any) {
     }
     const initdata = await res.json();
 
-    console.log(initdata);
     dispatch(latestPriceActions.setData(initdata));
   };
 
@@ -237,12 +252,10 @@ export default function Header(props: any) {
       }, 1000);
       return () => clearTimeout(debounceFn);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -253,7 +266,6 @@ export default function Header(props: any) {
     return () => {
       clearInterval(interval);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -265,68 +277,27 @@ export default function Header(props: any) {
 
   const userMenu = (
     <Box sx={{ pt: 0.8 }}>
+      {auth?.isLoggedIn && (
+        <>
+          <Typography
+            sx={{
+              pl: 3,
+              pr: 2,
+              py: 1.5,
+              fontSize: "1rem",
+              textAlign: "left",
+            }}
+            color="text.secondary"
+          >
+            Hi, {auth?.name || "User"}
+          </Typography>
+          <Divider light />
+        </>
+      )}
       <Button
-        component={Link}
-        href="/signin"
-        startIcon={<LoginIcon color="primary" />}
-        onClick={handleUserPopoverClose}
-        sx={{
-          py: 1.2,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Sign in
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/signup"
-        onClick={handleUserPopoverClose}
-        startIcon={<AddCircleOutlineIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Create account
-      </Button>
-    </Box>
-  );
-
-  const loggedInUserMenu = (
-    <>
-      <Typography
-        sx={{
-          pl: 3,
-          pr: 2,
-          pt: 2,
-          pb: 1.5,
-          fontSize: "1rem",
-          textAlign: "left",
-        }}
-        color="text.secondary"
-      >
-        Hi, {auth?.name || "Signed in user"}
-      </Typography>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/favorites"
-        onClick={handleUserPopoverClose}
+        // component={Link}
+        // href="/favorites"
+        onClick={() => handleUserPopoverClose("/favorites", true)}
         startIcon={<FavoriteBorderRoundedIcon color="primary" />}
         sx={{
           py: 1,
@@ -344,9 +315,9 @@ export default function Header(props: any) {
       </Button>
       <Divider light />
       <Button
-        component={Link}
-        href="/alerts"
-        onClick={handleUserPopoverClose}
+        // component={Link}
+        // href="/alerts"
+        onClick={() => handleUserPopoverClose("/alerts", true)}
         startIcon={<BusinessCenterOutlinedIcon color="primary" />}
         sx={{
           py: 1,
@@ -364,9 +335,9 @@ export default function Header(props: any) {
       </Button>
       <Divider light />
       <Button
-        component={Link}
-        href="/portfolio"
-        onClick={handleUserPopoverClose}
+        // component={Link}
+        // href="/portfolio"
+        onClick={() => handleUserPopoverClose("/portfolio", true)}
         startIcon={<NotificationsNoneRoundedIcon color="primary" />}
         sx={{
           py: 1,
@@ -384,9 +355,9 @@ export default function Header(props: any) {
       </Button>
       <Divider light />
       <Button
-        component={Link}
-        href="/profile"
-        onClick={handleUserPopoverClose}
+        // component={Link}
+        // href="/profile"
+        onClick={() => handleUserPopoverClose("/profile", true)}
         startIcon={<Person2OutlinedIcon color="primary" />}
         sx={{
           py: 1,
@@ -403,24 +374,68 @@ export default function Header(props: any) {
         My account
       </Button>
       <Divider light />
-      <Button
-        onClick={handleSignOut}
-        startIcon={<LogoutOutlinedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Logout
-      </Button>
-    </>
+      {auth?.isLoggedIn ? (
+        <>
+          <Button
+            onClick={handleSignOut}
+            startIcon={<LogoutOutlinedIcon color="primary" />}
+            sx={{
+              py: 1,
+              px: 3,
+              textAlign: "left",
+              color: "text.primary",
+              ":hover": {
+                background: "transparent",
+                color: "primary.main",
+              },
+            }}
+            disableRipple
+          >
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button
+            component={Link}
+            href="/signin"
+            startIcon={<LoginIcon color="primary" />}
+            sx={{
+              py: 1.2,
+              px: 3,
+              textAlign: "left",
+              color: "text.primary",
+              ":hover": {
+                background: "transparent",
+                color: "primary.main",
+              },
+            }}
+            disableRipple
+          >
+            Sign in
+          </Button>
+          <Divider light />
+          <Button
+            component={Link}
+            href="/signup"
+            startIcon={<AddCircleOutlineIcon color="primary" />}
+            sx={{
+              py: 1,
+              px: 3,
+              textAlign: "left",
+              color: "text.primary",
+              ":hover": {
+                background: "transparent",
+                color: "primary.main",
+              },
+            }}
+            disableRipple
+          >
+            Create account
+          </Button>
+        </>
+      )}
+    </Box>
   );
 
   const stocksMenu = (
@@ -521,25 +536,6 @@ export default function Header(props: any) {
 
   const marketsMenu = (
     <>
-      {/* <Button
-        component={Link}
-        href="/market-today"
-        startIcon={<InsightsRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Market today
-      </Button>
-      <Divider light /> */}
       <Button
         component={Link}
         href="/gainer-loser?type=gainer&variant=1d"
@@ -736,8 +732,6 @@ export default function Header(props: any) {
       >
         Supercharts
       </Button>
-      {/* <Divider light />
-      {stocksMenu} */}
 
       <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 3 }}>
         Packages
@@ -790,15 +784,6 @@ export default function Header(props: any) {
             mx: "auto",
           }}
         >
-          {/* <Typography
-            variant="h6"
-            component={Link}
-            href="/"
-            // color="primary.main"
-            sx={{ fontWeight: "bold" }}
-          >
-            Stocksupporter
-          </Typography> */}
           <Box component={Link} href="/">
             <img
               src={
@@ -877,23 +862,6 @@ export default function Header(props: any) {
               >
                 Premium
               </Button>
-              {/* <Button
-                aria-owns={openStock ? "stocks-mouse-over-popover" : undefined}
-                aria-haspopup="true"
-                onClick={handleStockPopoverOpen}
-                endIcon={<ExpandMoreRoundedIcon />}
-                sx={{
-                  ".MuiButton-endIcon": {
-                    ml: 0.2,
-                    color: "text.secondary",
-                  },
-                  color: "text.primary",
-                  px: 2,
-                  borderRadius: 8,
-                }}
-              >
-                Stocks
-              </Button> */}
             </Box>
           )}
           <Box
@@ -905,14 +873,13 @@ export default function Header(props: any) {
           >
             {matchesSmDown && (
               <IconButton
-                aria-label="delete"
                 sx={{
-                  borderRadius: 3, // Make the button round
+                  borderRadius: 3,
                   border: `1.2px solid ${alpha(
                     theme.palette.primary.main,
                     0.2
-                  )}`, // Add border
-                  padding: 0.5, // Adjust padding as needed
+                  )}`,
+                  padding: 0.5,
                   bgcolor: alpha(theme.palette.primary.main, 0.03),
                   mx: { xs: 0.8, sm: 1 },
                 }}
@@ -939,18 +906,11 @@ export default function Header(props: any) {
             </IconButton>
 
             <IconButton
-              aria-label="delete"
               sx={{
                 borderRadius: 3,
-                border: {
-                  xs: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-                  sm: `1.2px solid ${alpha(theme.palette.warning.main, 0.2)}`,
-                },
+                border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                 padding: { xs: 0.5, sm: 0.8 },
-                bgcolor: {
-                  xs: alpha(theme.palette.primary.main, 0.03),
-                  sm: alpha(theme.palette.warning.main, 0.03),
-                },
+                bgcolor: alpha(theme.palette.primary.main, 0.03),
                 mx: { xs: 0.8, sm: 1 },
               }}
               aria-owns={openUser ? "user-mouse-over-popover" : undefined}
@@ -965,12 +925,12 @@ export default function Header(props: any) {
                 <IconButton
                   aria-label="delete"
                   sx={{
-                    borderRadius: 3, // Make the button round
+                    borderRadius: 3,
                     border: `1.2px solid ${alpha(
                       theme.palette.warning.main,
                       0.2
-                    )}`, // Add border
-                    padding: 0.5, // Adjust padding as needed
+                    )}`,
+                    padding: 0.5,
                     bgcolor: alpha(theme.palette.warning.main, 0.03),
                     mx: { xs: 0.8, sm: 1 },
                   }}
@@ -997,14 +957,31 @@ export default function Header(props: any) {
           onClick={toggleDrawer(false)}
         >
           <Box sx={{ ml: 2.4, my: 3 }}>
-            <Typography
+            {/* <Typography
               variant="h5"
               component={Link}
               href="/"
               color="primary.main"
             >
               Stocksupporter
-            </Typography>
+            </Typography> */}
+
+            <Box component={Link} href="/">
+              <img
+                src={
+                  themeColor === "dark"
+                    ? "/images/logo/logo-full-dark.png"
+                    : "/images/logo/logo-full-light.png"
+                }
+                style={{
+                  width: "auto",
+                  marginTop: "5px",
+                  height: matchesSmUp ? "40px" : "35px",
+                  cursor: "pointer",
+                }}
+                alt="logo of stocksupporter"
+              />
+            </Box>
           </Box>
           {mobileViewMenu}
         </Box>
@@ -1038,7 +1015,7 @@ export default function Header(props: any) {
       </Popover>
 
       <Popover
-        id="user-mouse-over-popover"
+        id="user-menu-popover"
         open={openUser}
         anchorEl={userAnchorEl}
         anchorOrigin={{
@@ -1051,16 +1028,15 @@ export default function Header(props: any) {
           },
         }}
         disableScrollLock={true}
-        onClose={handleUserPopoverClose}
+        onClose={() => handleUserPopoverClose()}
       >
         <Box
-          onMouseLeave={handleUserPopoverClose}
           sx={{
             width: 210,
             pb: 1.2,
           }}
         >
-          {auth?.isLoggedIn ? loggedInUserMenu : userMenu}
+          {userMenu}
         </Box>
       </Popover>
 
@@ -1193,6 +1169,26 @@ export default function Header(props: any) {
             </Box>
           </Box>
         </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={openSigninDialog}
+        onClose={handleSigninDialogClose}
+        fullWidth
+        maxWidth="sm"
+        disableScrollLock={true}
+      >
+        <SigninDialogContent redirect={redirection} />
+        <IconButton
+          onClick={handleSigninDialogClose}
+          sx={{
+            position: "absolute",
+            right: 12,
+            top: 12,
+          }}
+        >
+          <CloseIcon sx={{ fontSize: "1.6rem" }} />
+        </IconButton>
       </Dialog>
     </>
   );

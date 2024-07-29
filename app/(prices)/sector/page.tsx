@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 async function getData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/sectorWiseLatestPrice`,
+    `${process.env.BACKEND_URL}/api/prices/sectorLatestPrice`,
     {
       next: { revalidate: 0 },
     }

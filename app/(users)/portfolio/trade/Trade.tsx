@@ -1,14 +1,22 @@
 "use client";
-import SearchStockCard from "@/components/cards/SearchStockCard";
-import { Box, Typography, Button, Grid, TextField, Menu } from "@mui/material";
+
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  TextField,
+  MenuItem,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import { MenuItem, Alert } from "@mui/material";
+
+import SearchStockCard from "@/components/cards/SearchStockCard";
 import Spinner from "@/components/shared/Spinner";
 import ToastMessage from "@/components/shared/ToastMessage";
 
@@ -140,7 +148,6 @@ export default function Trade(props: any) {
       }, 500);
       return () => clearTimeout(debounceFn);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText]);
 
   useEffect(() => {

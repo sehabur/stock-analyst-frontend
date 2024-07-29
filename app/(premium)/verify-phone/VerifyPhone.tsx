@@ -1,35 +1,20 @@
 "use client";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import {
-  IconButton,
-  InputAdornment,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  Stack,
-} from "@mui/material";
-
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Link from "next/link";
 
 import { useRouter, useSearchParams } from "next/navigation";
+
+import Link from "next/link";
+import { useSelector } from "react-redux";
+
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { Dialog, DialogContent, Stack } from "@mui/material";
 import Alert from "@mui/material/Alert/Alert";
-import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "_store";
-import Spinner from "@/components/shared/Spinner";
-
-import CloseIcon from "@mui/icons-material/Close";
-
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
+
+import Spinner from "@/components/shared/Spinner";
 
 export default function VerifyPhone() {
   const auth = useSelector((state: any) => state.auth);

@@ -1,19 +1,10 @@
 import React from "react";
+
+import { Box, Typography } from "@mui/material";
+
 import Portfolio from "./Portfolio";
-import {
-  Box,
-  Snackbar,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Autocomplete,
-} from "@mui/material";
-import Typography from "@mui/material/Typography";
 
 export default async function Page() {
-  // const data = await getData();
   return (
     <Box
       component="main"

@@ -1,29 +1,17 @@
 "use client";
 import React, { useEffect } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { IconButton, InputAdornment } from "@mui/material";
-
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Alert from "@mui/material/Alert";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
-import { Stack } from "@mui/system";
-import Spinner from "@/components/shared/Spinner";
 
-import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "_store";
+import Spinner from "@/components/shared/Spinner";
 
 export default function EditComp() {
   const dispatch = useDispatch();

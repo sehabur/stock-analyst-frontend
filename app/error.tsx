@@ -1,6 +1,6 @@
-"use client"; // Error components must be Client Components
+"use client";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { red } from "@mui/material/colors";
 import Paper from "@mui/material/Paper/Paper";
 import { useEffect } from "react";
@@ -13,7 +13,6 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
@@ -37,10 +36,7 @@ export default function Error({
       <Button
         variant="contained"
         color="warning"
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
+        onClick={() => reset()}
         sx={{ borderRadius: 6, px: 12, fontSize: "1.1rem", mt: 2 }}
       >
         Try again

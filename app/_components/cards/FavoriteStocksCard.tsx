@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+
+import Link from "next/link";
+
 import {
   Box,
   Grid,
@@ -7,14 +10,9 @@ import {
   Typography,
   Stack,
   Chip,
-  TextField,
-  MenuItem,
-  InputAdornment,
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-
-import Link from "next/link";
 
 export default function FavoriteStocksCard(props: any) {
   const { data: item } = props;
@@ -42,19 +40,6 @@ export default function FavoriteStocksCard(props: any) {
         >
           <Grid container alignItems="center" justifyContent="space-between">
             <Grid item xs={10}>
-              {/* {matchesSmUp && (
-                <Typography
-                  gutterBottom
-                  sx={{
-                    fontSize: "1rem",
-                    fontWeight: 500,
-                    color: "info.main",
-                    mr: 1,
-                  }}
-                >
-                  {item.companyName}
-                </Typography>
-              )} */}
               <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
                 <Typography
                   sx={{
@@ -73,7 +58,7 @@ export default function FavoriteStocksCard(props: any) {
                     size="small"
                     sx={{
                       borderRadius: 1,
-                      mr: 1,
+                      ml: 1,
                       color:
                         item.change === 0
                           ? "primary.main"
@@ -83,7 +68,6 @@ export default function FavoriteStocksCard(props: any) {
                     }}
                   />
                 )}
-
                 <Chip
                   label={`${item.percentChange}%`}
                   size="small"
@@ -98,6 +82,18 @@ export default function FavoriteStocksCard(props: any) {
                         : "success.main",
                   }}
                 />
+
+                {item.haltStatus !== "none" && (
+                  <Chip
+                    label="Halt"
+                    size="small"
+                    color={item.haltStatus === "buy" ? "success" : "error"}
+                    sx={{
+                      ml: 1,
+                      fontSize: ".8rem",
+                    }}
+                  />
+                )}
               </Stack>
               <Typography
                 sx={{ fontSize: { xs: ".8rem", sm: ".9rem" } }}
@@ -106,29 +102,6 @@ export default function FavoriteStocksCard(props: any) {
                 Vol: {item.volume} | Val: {(item.value / 10).toFixed(2)}cr |
                 Trd: {item.trade}
               </Typography>
-              {/* {matchesSmUp && (
-                <Stack direction="row" sx={{ mt: 1 }}>
-                  <Chip
-                    label={item.sector}
-                    size="small"
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 1,
-                      mr: 1,
-                      p: 0,
-                    }}
-                  />
-                  <Chip
-                    label={`Category ${item.category}`}
-                    size="small"
-                    variant="outlined"
-                    sx={{
-                      borderRadius: 1,
-                      p: 0,
-                    }}
-                  />
-                </Stack>
-              )} */}
             </Grid>
 
             <Grid item xs={2}>
@@ -153,38 +126,6 @@ export default function FavoriteStocksCard(props: any) {
                 </Typography>
               </Stack>
             </Grid>
-
-            {/* <Grid item xs={2} sm={3}>
-              <Stack
-                direction={matchesSmUp ? "row" : "column"}
-                alignItems={matchesSmUp ? "baseline" : "flex-end"}
-                sx={{ mr: 0.7 }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: { xs: "1.4rem", sm: "1.5rem" },
-                    fontWeight: 500,
-                    color:
-                      item.change === 0
-                        ? "primary.main"
-                        : item.change < 0
-                        ? "error.main"
-                        : "success.main",
-                  }}
-                >
-                  {item.ltp}
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: { xs: ".7rem", sm: ".875rem" },
-                    ml: { xs: 0, sm: 0.5 },
-                  }}
-                  color="text.secondary"
-                >
-                  {item.tradingCode.startsWith("00") ? "" : "BDT"}
-                </Typography>
-              </Stack>
-            </Grid> */}
           </Grid>
         </Paper>
       </Box>

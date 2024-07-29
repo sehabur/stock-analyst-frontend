@@ -1,4 +1,3 @@
-import { terms } from "@/data/info";
 import { Box, Typography } from "@mui/material";
 import FAQ from "./FAQ";
 

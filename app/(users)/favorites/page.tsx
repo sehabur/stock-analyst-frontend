@@ -2,17 +2,7 @@ import React from "react";
 
 import Favorites from "./Favorites";
 
-import {
-  Box,
-  Snackbar,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Autocomplete,
-} from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Box, Typography } from "@mui/material";
 
 export default function Page() {
   return (

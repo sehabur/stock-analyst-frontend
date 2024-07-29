@@ -1,40 +1,30 @@
 "use client";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Dialog, IconButton, InputAdornment } from "@mui/material";
-
+import { IconButton, InputAdornment } from "@mui/material";
+import Alert from "@mui/material/Alert/Alert";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Link from "next/link";
 
-import CloseIcon from "@mui/icons-material/Close";
-
-import { useRouter, useSearchParams } from "next/navigation";
-import Alert from "@mui/material/Alert/Alert";
-import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "_store";
 import Spinner from "@/components/shared/Spinner";
-// import PremiumDialogContent from "./PremiumDialogContent";
 
-export default function SignInComp() {
+export default function SignInComp({ redirect }: any) {
   const dispatch = useDispatch();
-
-  const auth = useSelector((state: any) => state.auth);
 
   const router = useRouter();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const redirect = searchParams.get("redirect") || null;
-
-  console.log(redirect);
+  // const redirect = searchParams.get("redirect") || "/";
 
   const [formData, setFormData] = React.useState({
     phone: "",
@@ -49,25 +39,12 @@ export default function SignInComp() {
 
   const [showPassword, setShowPassword] = React.useState(false);
 
-  // const [openPremiumDialog, setOpenPremiumDialog] = React.useState(false);
-
-  // const handlePremiumDialogOpen = () => {
-  //   setOpenPremiumDialog(true);
-  // };
-
-  // const handlePremiumDialogClose = () => {
-  //   setOpenPremiumDialog(false);
-  // };
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleInputChange = (event: any) => {
     setFormData({
       ...formData,
-      [event.target.name]:
-        event.target.name === "keepMeLoggedin"
-          ? event.target.checked
-          : event.target.value,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -86,13 +63,8 @@ export default function SignInComp() {
       if (res.ok) {
         setErrorMessage("");
         dispatch(authActions.login(data.user));
-
-        // handlePremiumDialogOpen();
-        if (redirect) {
-          router.push(redirect);
-        } else {
-          setSuccessMessage("Sign in successful");
-        }
+        setSuccessMessage("Sign in successful");
+        router.push(redirect || "/");
       } else {
         setErrorMessage(data.message || "Error occured");
         setSuccessMessage("");
@@ -114,25 +86,6 @@ export default function SignInComp() {
       }}
     >
       {isLoading && <Spinner />}
-      {/* <Dialog
-        open={openPremiumDialog}
-        onClose={handlePremiumDialogClose}
-        fullWidth
-        maxWidth="sm"
-        disableScrollLock={true}
-      >
-        <PremiumDialogContent />
-        <IconButton
-          onClick={handlePremiumDialogClose}
-          sx={{
-            position: "absolute",
-            right: 12,
-            top: 12,
-          }}
-        >
-          <CloseIcon sx={{ fontSize: "1.6rem" }} />
-        </IconButton>
-      </Dialog> */}
       <Box sx={{ width: "100%" }}>
         {successMessage && (
           <Alert severity="success">
@@ -182,14 +135,6 @@ export default function SignInComp() {
             ),
           }}
         />
-        {/* <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Keep me signed in"
-          checked={formData.keepMeLoggedin}
-          name="keepMeLoggedin"
-          sx={{ color: "text.primary" }}
-          onChange={handleInputChange}
-        /> */}
         <Button
           type="submit"
           fullWidth
@@ -198,7 +143,7 @@ export default function SignInComp() {
         >
           Sign In
         </Button>
-        <Grid container>
+        <Grid container sx={{ gap: 1, mt: 1 }}>
           <Grid item xs>
             <Typography
               component={Link}

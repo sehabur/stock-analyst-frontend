@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+
 import {
   Box,
   Grid,
@@ -9,8 +11,6 @@ import {
   TextField,
   MenuItem,
   InputAdornment,
-  ToggleButton,
-  IconButton,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -24,14 +24,11 @@ import {
   GridToolbar,
   gridClasses,
 } from "@mui/x-data-grid";
-import CloseIcon from "@mui/icons-material/Close";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import { filterOptions } from "./filters";
 import styles from "./Main.module.css";
-import { useSelector } from "react-redux";
 import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
 const startingFields = ["category", "tradingCode", "sector"];
@@ -291,7 +288,6 @@ export default function Main() {
 
   useEffect(() => {
     getScreenerData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formInputs]);
 
   useEffect(() => {
@@ -308,7 +304,6 @@ export default function Main() {
 
     console.log(column);
     setColumnVisibilityModel(column);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screenerDatafields]);
 
   const customFilterMenu = (
@@ -531,22 +526,11 @@ export default function Main() {
     <Box>
       <Dialog
         open={openPremiumDialog}
-        // onClose={handlePremiumDialogClose}
         fullWidth
         maxWidth="sm"
         disableScrollLock={true}
       >
         <PremiumDialogContent />
-        {/* <IconButton
-          onClick={handlePremiumDialogClose}
-          sx={{
-            position: "absolute",
-            right: 12,
-            top: 12,
-          }}
-        >
-          <CloseIcon sx={{ fontSize: "1.6rem" }} />
-        </IconButton> */}
       </Dialog>
       <Box
         sx={{
@@ -670,26 +654,22 @@ export default function Main() {
                 toolbar: {
                   showQuickFilter: true,
                   printOptions: { disableToolbarButton: true },
-                  // csvOptions: { disableToolbarButton: true },
+                  csvOptions: { disableToolbarButton: true },
                 },
               }}
               sx={{
                 // border: 'none',
-                "& .MuiDataGrid-columnHeaderTitle": {
+                ".MuiDataGrid-columnHeader": {
+                  color: "text.primary",
+                },
+                ".MuiDataGrid-columnHeaderTitle": {
+                  overflow: "visible",
                   whiteSpace: "normal",
                   lineHeight: "normal",
                 },
-                // ".MuiDataGrid-columnHeader": {
-                //   borderRight: "1px solid red",
-                //   color: 'text.primary',
-                //   fontSize: '.8rem',
-                //   textAlign: 'right',
-                // },
-                // '.MuiDataGrid-cell': {
-                //   fontWeight: 500,
-                //   // fontSize: '.9rem',
-                //   fontFamily: "'Nunito Sans', sans-serif",
-                // },
+                ".MuiDataGrid-cell": {
+                  fontWeight: 500,
+                },
               }}
             />
           </Box>

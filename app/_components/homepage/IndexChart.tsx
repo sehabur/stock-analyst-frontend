@@ -1,4 +1,10 @@
 "use client";
+import * as React from "react";
+
+import Link from "next/link";
+import AreaChart from "@/components/charts/AreaChart";
+import { DateTime } from "luxon";
+
 import {
   Box,
   Chip,
@@ -10,28 +16,16 @@ import {
   useTheme,
   Button,
 } from "@mui/material";
-import * as React from "react";
-import AreaChart from "@/components/charts/AreaChart";
-import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
-
-import Link from "next/link";
-
 import { styled } from "@mui/material/styles";
-
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
 import Divider from "@mui/material/Divider";
-
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
 import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -211,22 +205,7 @@ export default function IndexChart({ indexData }: any) {
       >
         {currentIndex.title} Index
       </Button>
-      <Grid
-        container
-        spacing={0.5}
-        alignItems="center"
-        justifyContent="center"
-        sx={
-          {
-            // display: "flex",
-            // flexDirection: "row",
-            // flexWrap: "wrap",
-            // alignItems: "center",
-            // justifyContent: "space-around",
-            // mt: { xs: 1, sm: 2 },
-          }
-        }
-      >
+      <Grid container spacing={0.5} alignItems="center" justifyContent="center">
         <Grid item xs={12} sm={6}>
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
@@ -381,9 +360,6 @@ export default function IndexChart({ indexData }: any) {
             >
               {indexData?.latest.totalTrade?.toFixed(0)}
             </Typography>
-            {/* <Typography color="text.secondary" sx={{ ml: 1, fontSize: ".875rem" }}>
-              Crore
-            </Typography> */}
           </Stack>
         </Box>
       </Paper>

@@ -12,7 +12,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 
 const tiers = [
@@ -45,18 +44,6 @@ const tiers = [
     buttonVariant: "contained",
     color: "warning.main",
   },
-  // {
-  //   title: "Enterprise",
-  //   price: "30",
-  //   description: [
-  //     "50 users included",
-  //     "30 GB of storage",
-  //     "Help center access",
-  //     "Phone & email support",
-  //   ],
-  //   buttonText: "Contact us",
-  //   buttonVariant: "outlined",
-  // },
 ];
 
 export default function Pricing() {

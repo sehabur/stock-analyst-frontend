@@ -1,25 +1,9 @@
 "use client";
 import React from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-  Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  Button,
-  Modal,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Chip,
-  Divider,
-} from "@mui/material";
+import { DateTime } from "luxon";
+import Link from "next/link";
 
+import { Box, Typography, useTheme, Paper, Button, Chip } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -27,16 +11,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
-import { DateTime } from "luxon";
-
-import Link from "next/link";
-
 export default function BlockTr({ data }: any) {
-  const theme = useTheme();
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -113,9 +90,9 @@ export default function BlockTr({ data }: any) {
               }}
             >
               <TableCell>TRADING CODE</TableCell>
-              <TableCell align="right">TRADE</TableCell>
+              <TableCell align="right">VALUE (MN)</TableCell>
               <TableCell align="right">VOLUME</TableCell>
-              <TableCell align="right">VALUE (CRORE)</TableCell>
+              <TableCell align="right">TRADE</TableCell>
               <TableCell align="right">MAX PRICE</TableCell>
               <TableCell align="right">MIN PRICE</TableCell>
             </TableRow>
@@ -137,9 +114,6 @@ export default function BlockTr({ data }: any) {
                   }}
                   key={row._id}
                 >
-                  {/* <TableCell component="th" scope="row">
-                        {DateTime.fromISO(row.date).toFormat("dd MMM")}
-                      </TableCell> */}
                   <TableCell align="left">
                     <Typography
                       component={Link}
@@ -152,9 +126,9 @@ export default function BlockTr({ data }: any) {
                       {row.tradingCode}
                     </Typography>
                   </TableCell>
+                  <TableCell align="right">{row.value}</TableCell>
                   <TableCell align="right">{row.trades}</TableCell>
                   <TableCell align="right">{row.quantity}</TableCell>
-                  <TableCell align="right">{row.value}</TableCell>
                   <TableCell align="right">{row.maxPrice}</TableCell>
                   <TableCell align="right">{row.minPrice}</TableCell>
                 </TableRow>

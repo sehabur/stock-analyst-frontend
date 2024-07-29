@@ -1,29 +1,16 @@
-import {
-  Paper,
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Avatar,
-  Divider,
-} from "@mui/material";
 import React from "react";
-import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
-import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import Link from "next/link";
+import { DateTime } from "luxon";
 
-import List from "@mui/material/List";
+import { Paper, Box, Typography, Button, Avatar, Divider } from "@mui/material";
+import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-
 import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
-
-import Link from "next/link";
-import { DateTime } from "luxon";
 
 async function getIpo() {
   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/ipo`, {

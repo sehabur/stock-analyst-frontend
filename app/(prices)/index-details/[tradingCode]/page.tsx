@@ -1,22 +1,10 @@
-import CandlestickChart from "@/components/charts/CandlestickChart";
-import {
-  Box,
-  Grid,
-  Typography,
-  Chip,
-  Stack,
-  Tab,
-  Tabs,
-  Divider,
-  Button,
-  Tooltip,
-} from "@mui/material";
 import { DateTime } from "luxon";
-import { grey } from "@mui/material/colors";
 import Link from "next/link";
 
+import { Box, Typography, Chip, Button, Tooltip } from "@mui/material";
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
+
 import Overview from "./Overview";
 import FavoriteButton from "@/components/buttons/FavoriteButton";
 import News from "./News";
@@ -60,6 +48,7 @@ const addPlusSign = (value: number) => {
 };
 
 const getLatestPrice = (latest: any) => {
+  console.log(latest);
   const price = latest.ltp;
   const time = DateTime.fromISO(latest.time)
     .plus({ hours: 6 })

@@ -103,21 +103,15 @@ export default function CandlestickVolumeChart(props: any) {
 
     // chart.current.timeScale().fitContent();
 
-    const toolTipWidth = 80;
-    const toolTipHeight = 80;
-    const toolTipMargin = 15;
-
     tooltip.current = document.createElement("div");
 
     tooltip.current.className = "custom-tooltip-candle-volume";
-    // tooltip.current.style.background = grey[900];
     tooltip.current.style.color =
       theme.palette.mode == "light" ? grey[700] : grey[200];
 
     chartContainerRef.current.appendChild(tooltip.current);
 
     chart.current.subscribeCrosshairMove((param: any) => {
-      // console.log(param);
       if (
         param.point === undefined ||
         !param.time ||
@@ -135,37 +129,10 @@ export default function CandlestickVolumeChart(props: any) {
         const candleData = param.seriesData.get(candleSeries);
         const volumeData = param.seriesData.get(volumeSeries);
 
-        // console.log(candleData, volumeData);
-
-        // tooltip.current.innerHTML = `<div><div style="font-size: 15px; font-weight: bold; margin-bottom: 6px; color: ${"#2962ff"}">${dateStr}</div><div style="color: ${"black"}">
-        //         Open: ${candleData.open}
-        //         </div><div style="color: ${"black"}">
-        //         High: ${candleData.high}
-        //         </div><div style="color: ${"black"}">
-        //         Low: ${candleData.low}
-        //         </div><div style="color: ${"black"}">
-        //         Close: ${candleData.close}
-        //         </div><div style="color: ${"black"}; margin-top: 6px;">
-        //         Volume: ${volumeData.value}
-        //         </div></div>`;
-
         tooltip.current.innerHTML = `<style>span {
           margin-left: 3px;
           margin-right: 4px;
         }</style>O<span style="color: ${candleData.color}">${candleData.open}</span> H<span style="color: ${candleData.color}">${candleData.high}</span> L<span style="color: ${candleData.color}">${candleData.low}</span> C<span style="color: ${candleData.color}">${candleData.close}</span> Vol<span style="color: ${candleData.color}">${volumeData.value}</span>`;
-
-        // const y = param.point.y;
-        // let left = param.point.x + toolTipMargin;
-        // if (left > chartContainerRef.current.clientWidth - toolTipWidth) {
-        //   left = param.point.x - toolTipMargin - toolTipWidth;
-        // }
-
-        // let top = y + toolTipMargin;
-        // if (top > chartContainerRef.current.clientHeight - toolTipHeight) {
-        //   top = y - toolTipHeight - toolTipMargin;
-        // }
-        // tooltip.current.style.left = left + "px";
-        // tooltip.current.style.top = top + "px";
 
         tooltip.current.style.left = "0px";
         tooltip.current.style.top = "0px";
@@ -179,7 +146,6 @@ export default function CandlestickVolumeChart(props: any) {
         chart?.current?.remove();
       }
       if (tooltip?.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         chartContainerRef?.current?.removeChild(tooltip.current);
       }
     };

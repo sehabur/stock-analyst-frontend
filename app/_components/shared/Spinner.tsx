@@ -1,7 +1,7 @@
 "use client";
 import { CircularProgress, Dialog, Box } from "@mui/material";
 
-const Spinner = (props: any) => {
+export default function Spinner() {
   return (
     <Box
       component="main"
@@ -17,6 +17,4 @@ const Spinner = (props: any) => {
       </Dialog>
     </Box>
   );
-};
-
-export default Spinner;
+}

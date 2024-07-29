@@ -1,4 +1,7 @@
 "use client";
+import { useState } from "react";
+import Link from "next/link";
+
 import {
   Paper,
   Grid,
@@ -9,12 +12,9 @@ import {
   Popover,
   Box,
 } from "@mui/material";
-import Link from "next/link";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
-import { useState } from "react";
-// import { green, blue, red } from '@mui/material/colors';
 
 export default function SectorSummaryCard({ data }: { data: any }) {
   const sectorTag = data.sector.split(" ")[0].toLowerCase();

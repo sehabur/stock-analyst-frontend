@@ -1,5 +1,10 @@
 "use client";
 import React from "react";
+
+import Link from "next/link";
+import { DateTime } from "luxon";
+import { useSelector } from "react-redux";
+
 import {
   Avatar,
   Box,
@@ -9,15 +14,8 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-
-import Link from "next/link";
-
-import { useSelector } from "react-redux";
-
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
-import { DateTime } from "luxon";
 
 export default function Profile() {
   const auth = useSelector((state: any) => state.auth);

@@ -1,17 +1,6 @@
 import React from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Divider,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box } from "@mui/material";
 
-import WorkspacePremiumOutlinedIcon from "@mui/icons-material/WorkspacePremiumOutlined";
-import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import Profile from "./Profile";
 
 // async function getUserById(id: any) {

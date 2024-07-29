@@ -57,29 +57,29 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  // try {
-  const headersList = headers();
-  const authToken: any = headersList.get("Authorization");
+  try {
+    const headersList = headers();
+    const authToken: any = headersList.get("Authorization");
 
-  const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url);
 
-  const id = searchParams.get("id");
+    const id = searchParams.get("id");
 
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/api/tvcharts/chart?id=${id}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: authToken,
-      },
-    }
-  );
-  const data = await res.json();
-  console.log(data);
-  return NextResponse.json(data, { status: res.status });
-  // } catch (error) {
-  //   console.error(error);
-  //   return NextResponse.json(error, { status: 500 });
-  // }
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/api/tvcharts/chart?id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authToken,
+        },
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    return NextResponse.json(data, { status: res.status });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(error, { status: 500 });
+  }
 }

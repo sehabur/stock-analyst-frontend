@@ -244,7 +244,7 @@ export default async function StockDetails({ params }: any) {
                   fontSize: { xs: "1.3rem", sm: "1.5rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
-                  mr: 3,
+                  mr: 2,
                 }}
               >
                 {stock.latest.change !== 0
@@ -252,6 +252,22 @@ export default async function StockDetails({ params }: any) {
                   : 0}
                 {"%"}
               </Typography>
+
+              {stock.haltStatus != "none" && (
+                <Box>
+                  <Chip
+                    label="Halt"
+                    size="small"
+                    color={stock.haltStatus == "buy" ? "success" : "error"}
+                    sx={{
+                      borderRadius: 1,
+                      mt: -1.3,
+                      fontSize: "1rem",
+                      mr: 2,
+                    }}
+                  />
+                </Box>
+              )}
 
               <Tooltip
                 title={`Market is ${stock.marketOpenStatus.toLowerCase()} now`}

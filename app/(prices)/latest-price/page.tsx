@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+
 import SharePrice from "./SharePrice";
 
 // async function getData() {
@@ -22,7 +23,7 @@ export default async function Page() {
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
         sx={{
-          maxWidth: { xs: "100vw", sm: "1290px" },
+          maxWidth: { xs: "100vw", sm: "1475px" },
           mx: "auto",
           py: 2,
           px: 2,

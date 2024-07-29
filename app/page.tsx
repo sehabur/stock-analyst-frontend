@@ -34,7 +34,7 @@ async function getIndexData() {
 
 async function getGainerLoserData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/allGainerLoser?limit=10`,
+    `${process.env.BACKEND_URL}/api/prices/topGainerLoser`,
     {
       next: { revalidate: 0 },
     }
@@ -57,7 +57,7 @@ async function getIpo() {
 
 async function getSectorData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/sectorWiseLatestPrice`,
+    `${process.env.BACKEND_URL}/api/prices/sectorGainValueSummary`,
     {
       next: { revalidate: 0 },
     }

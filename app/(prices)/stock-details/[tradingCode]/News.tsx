@@ -24,6 +24,7 @@ import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import { DateTime } from "luxon";
 
 // interface NewsData {
 //   title: string;
@@ -135,6 +136,17 @@ export default function News({ news }: any) {
                         date={item.time || item.date}
                         locale="en-US"
                         style={{ fontSize: "1rem", color: "#089981" }}
+                      />
+                      <Chip
+                        label={DateTime.fromISO(item.date).toFormat(
+                          "dd MMM, yyyy"
+                        )}
+                        size="small"
+                        sx={{
+                          ml: 3,
+                          borderRadius: 1,
+                          fontSize: ".9rem",
+                        }}
                       />
                     </Stack>
                   </Typography>

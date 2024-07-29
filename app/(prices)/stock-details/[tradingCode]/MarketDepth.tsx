@@ -134,8 +134,6 @@ export default function MarketDepth(props: any) {
     setMarketDepthData(initdata);
   };
 
-  console.log(marketDepthData);
-
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

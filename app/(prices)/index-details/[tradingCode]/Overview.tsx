@@ -1,6 +1,9 @@
 "use client";
-import AreaChart from "@/components/charts/AreaChart";
-import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
+import React from "react";
+
+import { DateTime } from "luxon";
+import Link from "next/link";
+
 import {
   Box,
   Grid,
@@ -8,31 +11,19 @@ import {
   useTheme,
   useMediaQuery,
   Paper,
-  Card,
-  CardActionArea,
-  CardContent,
-  Slider,
   Divider,
   Button,
 } from "@mui/material";
-import { DateTime } from "luxon";
-import React from "react";
-import { grey } from "@mui/material/colors";
-import OverviewCard from "@/components/cards/OverviewCard";
-import Link from "next/link";
-
 import { styled } from "@mui/material/styles";
-
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import Stack from "@mui/material/Stack";
-import { constants } from "crypto";
+
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -139,20 +130,18 @@ export default function Overview({ stock }: any) {
       ? "#f45e6a"
       : "#00A25B";
 
-  const minuteChartData: any = stock.minute.map(
-    (item: { time: string; ltp: number; ycp: number }) => {
+  const minuteChartData: any = stock.minute
+    .filter((item: any) => item.ltp !== 0)
+    .map((item: { time: string; ltp: number; ycp: number }) => {
       return {
         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
         value: item.ltp,
       };
-    }
-  );
+    });
 
   const dailyCandleData = formatCandleChartData(stock.daily);
   const weeklyCandleData = formatCandleChartData(stock.weekly);
   const monthlyCandleData = formatCandleChartData(stock.monthly);
-
-  console.log(dailyCandleData);
 
   const percentChangeData = formatPercentChangeData(
     stock.latest,
@@ -565,7 +554,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.lastDay.oneYearHigh.toFixed(2) || "--"}
+                {stock?.lastDay?.oneYearHigh?.toFixed(2) || "--"}
               </Typography>
             </Stack>
           </Grid>
@@ -581,7 +570,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.lastDay.oneYearLow.toFixed(2) || "--"}
+                {stock?.lastDay?.oneYearLow?.toFixed(2) || "--"}
               </Typography>
             </Stack>
           </Grid>

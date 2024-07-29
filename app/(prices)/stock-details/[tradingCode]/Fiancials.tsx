@@ -41,10 +41,11 @@ const formatYearlyData = (data: any, divideFactor = 1, nonZero = false) => {
   if (data.length < 1) return;
 
   data.sort((a: { year: any }, b: { year: any }) => a.year - b.year);
+
   let datapoint = [];
   let categories = [];
 
-  for (let item of data) {
+  for (let item of data.slice(-8)) {
     const tempData = Number((item.value / divideFactor).toFixed(3));
 
     let point = nonZero && tempData === 0 ? 0.001 : tempData;
@@ -305,7 +306,7 @@ const formatShareholdingData = (data: any) => {
   let publicShare: any = [];
   let categories: any = [];
 
-  for (let item of data) {
+  for (let item of data.slice(-12)) {
     director.push(item.director);
     govt.push(item.govt);
     institute.push(item.institute);

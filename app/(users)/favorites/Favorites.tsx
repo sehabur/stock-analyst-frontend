@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   Box,
@@ -19,24 +20,18 @@ import {
   DialogTitle,
   DialogContent,
 } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import FavoriteStocksCard from "@/components/cards/FavoriteStocksCard";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
-import TimelineRoundedIcon from "@mui/icons-material/TimelineRounded";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
-import { authActions } from "_store";
-import ToastMessage from "@/components/shared/ToastMessage";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 
+import FavoriteStocksCard from "@/components/cards/FavoriteStocksCard";
+import { authActions } from "_store";
+import ToastMessage from "@/components/shared/ToastMessage";
+
 export default function Favorites() {
-  const theme = useTheme();
-
   const dispatch = useDispatch();
-
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   const auth = useSelector((state: any) => state.auth);
 

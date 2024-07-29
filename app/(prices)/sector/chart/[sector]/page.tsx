@@ -1,8 +1,9 @@
-import { Box, Card, CardContent, Paper } from "@mui/material";
+import Link from "next/link";
+
+import { Box, Paper, Typography } from "@mui/material";
+
 import SectorChart from "./SectorChart";
 import { sectorList } from "@/data/dse";
-import Typography from "@mui/material/Typography";
-import Link from "next/link";
 
 async function getData(sectorTag: string) {
   const res = await fetch(
@@ -64,7 +65,6 @@ export default async function Sector({ params }: any) {
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
-              // justifyContent: "center",
             }}
           >
             {sectorList

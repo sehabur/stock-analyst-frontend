@@ -1,32 +1,16 @@
-import {
-  Paper,
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Avatar,
-  Divider,
-} from "@mui/material";
-import React from "react";
-import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
-import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import { DateTime } from "luxon";
 
-import List from "@mui/material/List";
+import { Box, Typography, Avatar, Divider } from "@mui/material";
+import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-
 import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import PercentRoundedIcon from "@mui/icons-material/PercentRounded";
-
-import Link from "next/link";
-import { DateTime } from "luxon";
 
 async function getIpo() {
   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/ipo`, {
@@ -356,7 +340,6 @@ export default async function Ipo({ searchParams }: any) {
                 />
               </ListItem>
             </Box>
-            {/* <Divider light /> */}
           </Box>
         </Box>
       </Box>

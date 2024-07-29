@@ -1,11 +1,14 @@
 import * as React from "react";
+
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+
 import SignInComp from "./SignInComp";
 
-export default function SignIn() {
+export default function SignIn({ searchParams }: any) {
+  const { redirect } = searchParams;
   return (
     <Box
       component="main"
@@ -28,7 +31,7 @@ export default function SignIn() {
         </Typography>
       </Box>
       <Box sx={{ px: 2, pb: 4, maxWidth: 400, mx: "auto" }}>
-        <SignInComp />
+        <SignInComp redirect={redirect} />
       </Box>
     </Box>
   );

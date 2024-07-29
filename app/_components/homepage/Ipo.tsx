@@ -1,33 +1,20 @@
 "use client";
-import {
-  Paper,
-  Box,
-  Typography,
-  Stack,
-  Button,
-  Avatar,
-  Divider,
-} from "@mui/material";
 import React from "react";
-import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { DateTime } from "luxon";
+
+import { Paper, Box, Typography, Button, Avatar } from "@mui/material";
 import AddCardRoundedIcon from "@mui/icons-material/AddCardRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import DateRangeRoundedIcon from "@mui/icons-material/DateRangeRounded";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
-
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-
-import Link from "next/link";
-
-import { useRouter } from "next/navigation";
-import { DateTime } from "luxon";
 
 export default function Ipo(props: any) {
   const { data } = props;

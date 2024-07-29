@@ -1,35 +1,8 @@
 "use client";
-import {
-  Box,
-  Grid,
-  Typography,
-  Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  Button,
-  Modal,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Chip,
-  Card,
-  CardActionArea,
-  CardContent,
-} from "@mui/material";
-
-import Link from "next/link";
-import InfoIcon from "@mui/icons-material/Info";
-import { grey } from "@mui/material/colors";
+import { Box, Typography, Card, CardContent } from "@mui/material";
 
 export default function OverviewCard(props: any) {
   const { title, data } = props;
-
-  const theme = useTheme();
-  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <>

@@ -1,24 +1,12 @@
 "use client";
 import {
   Box,
-  Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
   useTheme,
   useMediaQuery,
-  Paper,
   Button,
-  Modal,
-  Dialog,
-  DialogTitle,
   DialogContent,
-  IconButton,
-  Chip,
-  Card,
-  CardActionArea,
-  CardContent,
 } from "@mui/material";
 
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
@@ -82,7 +70,7 @@ export default function PremiumDialogContent(props: any) {
               sx={{ mr: 2, py: 1.3 }}
               component={Link}
               href="/signin"
-            >
+            > 
               Sign in
             </Button> */}
             <Button

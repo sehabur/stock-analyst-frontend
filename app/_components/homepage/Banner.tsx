@@ -54,10 +54,6 @@ export default function Banner() {
       <Box
         sx={(theme) => ({
           width: "100%",
-          backgroundImage:
-            theme.palette.mode === "light"
-              ? "#0000ff"
-              : `linear-gradient( ${alpha("#090E10", 0.0)}, #101010)`,
           // backgroundImage:
           //   theme.palette.mode === "light"
           //     ? "linear-gradient(180deg, #ffffff, #f5f5f5)"
@@ -144,7 +140,7 @@ export default function Banner() {
               component={Link}
               href="/signup"
             >
-              Try premium for free
+              Try premium with 14 days free trial
             </Button>
           </Box>
         </Box>

@@ -1,43 +1,32 @@
 "use client";
+import { useState } from "react";
+
+import Link from "next/link";
+
 import {
   Box,
-  Grid,
   Typography,
   Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
   Button,
-  Modal,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
-  Chip,
 } from "@mui/material";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import ReactTimeAgo from "react-time-ago";
 import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
-import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-
 import { styled } from "@mui/material/styles";
-
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
 import CardActionArea from "@mui/material/CardActionArea";
-import Link from "next/link";
 
-import EastRoundedIcon from "@mui/icons-material/EastRounded";
-import SeeMoreButton from "../buttons/SeeMoreButton";
+import SeeMoreButton from "@/components/buttons/SeeMoreButton";
 
 const options: any = [
   {
@@ -108,7 +97,6 @@ export default function News({ data }: any) {
       setAlignment(newAlignment);
 
       let text = new RegExp(newAlignment, "i");
-      // console.log(text, newAlignment);
 
       const newData = data.filter((item: any) => {
         const position =
@@ -144,7 +132,7 @@ export default function News({ data }: any) {
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle sx={{ fontWeight: 700, fontSize: "1.3jhjrem" }}>
+        <DialogTitle sx={{ fontWeight: 700, fontSize: "1.3rem" }}>
           {dialogContent?.title}
         </DialogTitle>
         <DialogContent dividers>

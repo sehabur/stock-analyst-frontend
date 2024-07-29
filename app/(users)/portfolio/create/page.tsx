@@ -1,16 +1,6 @@
 import React from "react";
 
-import {
-  Box,
-  Snackbar,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Autocomplete,
-  Avatar,
-} from "@mui/material";
+import { Box, Avatar } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CreatePortfolio from "./CreatePortfolio";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";

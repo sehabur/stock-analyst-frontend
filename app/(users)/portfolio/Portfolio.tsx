@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Link from "next/link";
 import Spinner from "@/components/shared/Spinner";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -88,7 +87,6 @@ export default function Portfolio() {
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   return (

@@ -1,27 +1,18 @@
 "use client";
-import {
-  Box,
-  Chip,
-  Paper,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
 import * as React from "react";
+import Link from "next/link";
+
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import AreaChart from "@/components/charts/AreaChart";
-import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import styles from "./Dashboard.module.css";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
 import { styled } from "@mui/material/styles";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+
+import styles from "./Dashboard.module.css";
 
 const variants: any = {
   gainer: {

@@ -1,36 +1,22 @@
 "use client";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import {
-  IconButton,
-  InputAdornment,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-} from "@mui/material";
+import { IconButton, InputAdornment } from "@mui/material";
 
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Link from "next/link";
-
 import Alert from "@mui/material/Alert";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import { Stack } from "@mui/system";
-import Spinner from "@/components/shared/Spinner";
-// import PremiumDialogContent from "../signin/PremiumDialogContent";
 
-import CloseIcon from "@mui/icons-material/Close";
-import { useSearchParams } from "next/navigation";
+import Spinner from "@/components/shared/Spinner";
 
 export default function SignUpComp() {
   const [formData, setFormData] = React.useState({
@@ -42,7 +28,7 @@ export default function SignUpComp() {
 
   const searchParams = useSearchParams();
 
-  const redirect = searchParams.get("redirect") || null;
+  const redirect = searchParams.get("redirect");
 
   const [isLoading, setIsLoading] = React.useState(false);
 

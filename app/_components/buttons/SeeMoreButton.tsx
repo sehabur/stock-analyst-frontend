@@ -10,17 +10,25 @@ export default function SeeMoreButton({ href }: any) {
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
-    <Box sx={{ mx: 2, mt: 1.5 }}>
+    <Box
+      sx={{
+        mt: 1,
+        mr: { xs: 1, sm: 0 },
+        display: "flex",
+        justifyContent: "flex-end",
+      }}
+    >
       <Button
         component={Link}
         href={href}
-        variant={matchesSmUp ? "text" : "outlined"}
-        color="warning"
-        fullWidth
+        color="primary"
         endIcon={<EastRoundedIcon />}
         sx={{
-          fontSize: { xs: "1rem", sm: "1.1rem" },
+          fontSize: "1rem",
           py: 1,
+          ":hover": {
+            bgcolor: "transparent",
+          },
         }}
       >
         See more

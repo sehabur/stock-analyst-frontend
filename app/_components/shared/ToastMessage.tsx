@@ -1,7 +1,10 @@
+"use client";
+import React from "react";
+
 import { Alert, Snackbar } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
+
 export default function ToastMessage({
   open,
   severity,

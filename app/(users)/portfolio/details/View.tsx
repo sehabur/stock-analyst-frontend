@@ -1,26 +1,9 @@
 "use client";
-import SearchStockCard from "@/components/cards/SearchStockCard";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  TextField,
-  Menu,
-  Paper,
-} from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import Link from "next/link";
 
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import { MenuItem, Alert } from "@mui/material";
-import Spinner from "@/components/shared/Spinner";
-import ToastMessage from "@/components/shared/ToastMessage";
+import { Box, Typography, Button, Paper } from "@mui/material";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -28,6 +11,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+
+import Spinner from "@/components/shared/Spinner";
 
 const formatColor = (value: any) => {
   const res = value === 0 ? "#2962ff" : value < 0 ? "#f45e6a" : "#00A25B";
@@ -62,7 +47,6 @@ export default function View({ id }: any) {
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
   return (

@@ -1,10 +1,9 @@
 "use client";
+import Link from "next/link";
+
 import {
   Box,
   Button,
-  Chip,
-  Paper,
-  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,15 +13,9 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-import AreaChart from "@/components/charts/AreaChart";
-import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
 import { styled } from "@mui/material/styles";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import SeeMoreButton from "../buttons/SeeMoreButton";
 
@@ -123,7 +116,7 @@ export default function Beta({ data }: any) {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 2 } }}>
+    <Box sx={{ p: { xs: 2, sm: 2 }, maxWidth: 500 }}>
       <Box>
         <Button
           component={Link}
@@ -173,7 +166,7 @@ export default function Beta({ data }: any) {
         </StyledToggleButtonGroup>
       </Box>
 
-      <Box sx={{ mx: "auto" }}>
+      <Box>
         <DataGrid
           rows={data[typeAlignment]}
           columns={columns}
@@ -190,7 +183,7 @@ export default function Beta({ data }: any) {
               whiteSpace: "normal",
             },
             border: "none",
-            width: matchesSmUp ? 450 : "90vw",
+            width: matchesSmUp ? "100%" : "90vw",
             fontSize: ".9rem",
             fontWeight: 500,
           }}
