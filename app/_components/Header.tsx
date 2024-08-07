@@ -141,7 +141,7 @@ export default function Header() {
   };
 
   const handleSignOut = () => {
-    handleUserPopoverClose();
+    setUserAnchorEl(null);
     dispatch(authActions.logout());
     localStorage.removeItem("userInfo");
     setLogoutSuccess(true);
@@ -177,7 +177,7 @@ export default function Header() {
     }
   };
 
-  console.log(openSigninDialog);
+  // console.log(openSigninDialog);
 
   const handleMobileViewPopoverOpen = (
     event: React.MouseEvent<HTMLElement>
@@ -202,6 +202,24 @@ export default function Header() {
     setSearchText("");
   };
 
+  const getItemUrl = (
+    type: string,
+    tradingCode: string,
+    sectorTag: string = ""
+  ) => {
+    let url = "";
+    if (type == "stock") {
+      url = `/stock-details/${tradingCode}`;
+    } else if (type == "index") {
+      url = `/index-details/${tradingCode}`;
+    } else if (type == "sector") {
+      url = `/sector/chart/${sectorTag}`;
+    } else {
+      url = "#";
+    }
+    return url;
+  };
+
   const getSharesBySearch = async (init = false) => {
     setSearchResultFallbackText("Loading..");
     const initdata = latestPrice || [];
@@ -220,6 +238,7 @@ export default function Header() {
   const toggleTheme = () => {
     const theme = themeColor === "dark" ? "light" : "dark";
     localStorage.setItem("theme", theme);
+    dispatch(themeColorActions.setThemeColor(theme));
   };
 
   const getData = async () => {
@@ -233,6 +252,10 @@ export default function Header() {
     const initdata = await res.json();
 
     dispatch(latestPriceActions.setData(initdata));
+  };
+
+  const externalDialogClose = () => {
+    handleSigninDialogClose();
   };
 
   useEffect(() => {
@@ -716,7 +739,7 @@ export default function Header() {
       <Divider light />
       <Button
         component={Link}
-        href="/supercharts?symbol=00DSEX"
+        href="/supercharts?symbol=DSEX"
         startIcon={<AddchartOutlinedIcon color="primary" />}
         sx={{
           py: 1,
@@ -842,7 +865,7 @@ export default function Header() {
               </Button>
               <Button
                 component={Link}
-                href="/supercharts?symbol=00DSEX"
+                href="/supercharts?symbol=DSEX"
                 sx={{
                   color: "text.primary",
                   px: 2,
@@ -1131,16 +1154,19 @@ export default function Header() {
         </DialogTitle>
         <DialogContent dividers sx={{ px: { xs: 2, sm: 4 } }}>
           <Box sx={{ height: "450px" }}>
-            <Box>
+            <Box sx={{ pb: 1 }}>
               {searchResult.map((item: any) => (
                 <Box key={item.tradingCode} onClick={handleSearchDialogClose}>
                   <Box
                     component={Link}
-                    href={
-                      ["00DSEX", "00DSES", "00DS30"].includes(item.tradingCode)
-                        ? `/index-details/${item.tradingCode}`
-                        : `/stock-details/${item.tradingCode}`
-                    }
+                    href={getItemUrl(
+                      item.type,
+                      item.tradingCode,
+                      item.sectorTag
+                    )}
+                    sx={{
+                      display: item.tradingCode ? "block" : "none",
+                    }}
                   >
                     <SearchStockCard data={item} />
                   </Box>
@@ -1178,7 +1204,10 @@ export default function Header() {
         maxWidth="sm"
         disableScrollLock={true}
       >
-        <SigninDialogContent redirect={redirection} />
+        <SigninDialogContent
+          redirect={redirection}
+          externalDialogClose={externalDialogClose}
+        />
         <IconButton
           onClick={handleSigninDialogClose}
           sx={{

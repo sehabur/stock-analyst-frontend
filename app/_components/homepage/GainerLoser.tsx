@@ -87,7 +87,7 @@ export default function GainerLoser({ data }: any) {
         spacing={{ xs: 6, sm: 12 }}
       >
         <Grid item xs={12} sm={6}>
-          <Box sx={{ mx: 1 }}>
+          <Box sx={{ mx: { xs: 1, sm: 0 } }}>
             <Button
               component={Link}
               href="/gainer-loser?type=gainer&variant=1d"
@@ -110,7 +110,7 @@ export default function GainerLoser({ data }: any) {
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
-                mt: 2,
+                mt: 1,
                 mb: 3,
               }}
             >
@@ -143,7 +143,7 @@ export default function GainerLoser({ data }: any) {
           <SeeMoreButton href="/gainer-loser?type=gainer&variant=1d" />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Box sx={{ mx: 1 }}>
+          <Box sx={{ mx: { xs: 1, sm: 0 } }}>
             <Button
               component={Link}
               href="/gainer-loser?type=loser&variant=1d"
@@ -166,7 +166,7 @@ export default function GainerLoser({ data }: any) {
                 display: "flex",
                 justifyContent: "flex-start",
                 alignItems: "center",
-                mt: 2,
+                mt: 1,
                 mb: 3,
               }}
             >

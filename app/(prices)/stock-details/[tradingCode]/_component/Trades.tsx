@@ -280,7 +280,7 @@ export default function Trades(props: any) {
             mr: 1.5,
           }}
         >
-          {lastTrade?.volume || 0} shares @ {lastTrade?.ltp || 0} TK
+          {lastTrade?.volume || 0} shares @ {lastTrade?.ltp || 0} BDT
         </Typography>
 
         {lastTrade?.timeIso && (

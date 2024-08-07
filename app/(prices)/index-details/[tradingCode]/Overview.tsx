@@ -499,7 +499,13 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.volume}
+                {(stock.latest.volume / 10000000).toFixed(2)}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                Crore
               </Typography>
             </Stack>
           </Grid>

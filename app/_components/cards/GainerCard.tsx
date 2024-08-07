@@ -56,8 +56,8 @@ export default function GainerCard(props: any) {
               gutterBottom
               sx={{
                 fontSize: "1rem",
-                fontWeight: 500,
-                color: { xs: "primary.main", sm: "primary.main" },
+                fontWeight: 700,
+                // color: "primary.main",
               }}
             >
               {item.companyName}
@@ -70,13 +70,14 @@ export default function GainerCard(props: any) {
               <Chip
                 label={item.tradingCode}
                 variant="outlined"
-                color="info"
+                color="primary"
                 size="small"
                 sx={{
                   borderRadius: 1,
                   fontSize: ".9rem",
                   mr: 1,
                   mb: 0.5,
+                  // fontWeight: 700,
                 }}
               />
               <Chip
@@ -91,7 +92,10 @@ export default function GainerCard(props: any) {
                 }}
               />
               <Chip
-                label={item.sector.slice(0, 20)}
+                label={
+                  item.sector.slice(0, 21) +
+                  (item.sector.length > 21 ? ".." : "")
+                }
                 size="small"
                 sx={{
                   borderRadius: 1,
@@ -102,16 +106,11 @@ export default function GainerCard(props: any) {
             </Stack>
 
             <Typography
-              sx={{ fontSize: ".9rem", ml: 0.3 }}
+              sx={{ fontSize: ".875rem", ml: 0.3 }}
               color="text.primary"
             >
-              {matchesSmUp
-                ? ` Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(
-                    2
-                  )}cr | Trd: ${item.trade}`
-                : `Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(
-                    2
-                  )}cr`}
+              {`Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(2)}cr |
+              Trd: ${item.trade}`}
             </Typography>
           </Grid>
 
@@ -126,7 +125,7 @@ export default function GainerCard(props: any) {
                 <Typography
                   color="text.primary"
                   sx={{
-                    fontSize: { xs: "1.4rem", sm: "1.5rem" },
+                    fontSize: { xs: "1.4rem", sm: "1.6rem" },
                     fontWeight: 500,
                   }}
                 >
@@ -140,10 +139,30 @@ export default function GainerCard(props: any) {
                 </Typography>
               </Stack>
               <Stack direction="column" alignItems="flex-end">
-                <Typography
-                  gutterBottom
+                {item.change !== 0 && (
+                  <Typography
+                    gutterBottom
+                    sx={{
+                      mr: 1,
+                      color:
+                        item.change === 0
+                          ? "primary.main"
+                          : item.change < 0
+                          ? "error.main"
+                          : "success.main",
+                      fontWeight: 700,
+                      fontSize: "1rem",
+                    }}
+                  >
+                    {addPlusSign(item.change)}
+                  </Typography>
+                )}
+
+                <Chip
+                  label={`${addPlusSign(item.percentChange)}%`}
+                  size="small"
                   sx={{
-                    mr: 1,
+                    borderRadius: 1,
                     color:
                       item.change === 0
                         ? "primary.main"
@@ -153,27 +172,7 @@ export default function GainerCard(props: any) {
                     fontWeight: 700,
                     fontSize: ".95rem",
                   }}
-                >
-                  {addPlusSign(item.change)}
-                </Typography>
-
-                {item.change !== 0 && (
-                  <Chip
-                    label={`${addPlusSign(item.percentChange)}%`}
-                    size="small"
-                    sx={{
-                      borderRadius: 1,
-                      color:
-                        item.change === 0
-                          ? "primary.main"
-                          : item.change < 0
-                          ? "error.main"
-                          : "success.main",
-                      fontWeight: 700,
-                      fontSize: ".9rem",
-                    }}
-                  />
-                )}
+                />
 
                 {item.haltStatus !== "none" && (
                   <Chip
@@ -190,6 +189,7 @@ export default function GainerCard(props: any) {
                     sx={{
                       borderRadius: 1,
                       mt: 1,
+                      fontSize: ".9rem",
                     }}
                   />
                 )}

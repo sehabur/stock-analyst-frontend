@@ -17,13 +17,16 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { authActions } from "_store";
 import Spinner from "@/components/shared/Spinner";
 
-export default function SignInComp({ redirect }: any) {
+export default function SignInComp({
+  redirect,
+  isExternalDialog = false,
+  externalDialogClose,
+}: any) {
   const dispatch = useDispatch();
 
   const router = useRouter();
 
   // const searchParams = useSearchParams();
-
   // const redirect = searchParams.get("redirect") || "/";
 
   const [formData, setFormData] = React.useState({
@@ -33,7 +36,7 @@ export default function SignInComp({ redirect }: any) {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [successMessage, setSuccessMessage] = React.useState("");
+  // const [successMessage, setSuccessMessage] = React.useState("");
 
   const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -63,16 +66,18 @@ export default function SignInComp({ redirect }: any) {
       if (res.ok) {
         setErrorMessage("");
         dispatch(authActions.login(data.user));
-        setSuccessMessage("Sign in successful");
+        // setSuccessMessage("Sign in successful");
+        if (isExternalDialog) externalDialogClose();
         router.push(redirect || "/");
       } else {
         setErrorMessage(data.message || "Error occured");
-        setSuccessMessage("");
+        // setSuccessMessage("");
       }
       setIsLoading(false);
     } catch (error) {
       setErrorMessage("Error occured");
-      setSuccessMessage("");
+      // setSuccessMessage("");
+      if (isExternalDialog) externalDialogClose();
       setIsLoading(false);
     }
   };
@@ -87,7 +92,7 @@ export default function SignInComp({ redirect }: any) {
     >
       {isLoading && <Spinner />}
       <Box sx={{ width: "100%" }}>
-        {successMessage && (
+        {/* {successMessage && (
           <Alert severity="success">
             {successMessage}. Go to{" "}
             <Typography
@@ -101,7 +106,7 @@ export default function SignInComp({ redirect }: any) {
               Homepage
             </Typography>
           </Alert>
-        )}
+        )} */}
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Box>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>

@@ -6,7 +6,7 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function ShareholdingBarChart(props: any) {
+export default function ShareholdingLineChart(props: any) {
   const { data, categories, lineColors } = props;
 
   const theme: any = useTheme();
@@ -46,7 +46,6 @@ export default function ShareholdingBarChart(props: any) {
       enabled: false,
     },
     xaxis: {
-      tickPlacement: "between",
       categories: categories,
       axisBorder: {
         show: false,
@@ -84,7 +83,8 @@ export default function ShareholdingBarChart(props: any) {
           return value + "% (" + change + "%)";
         },
       },
-      followCursor: true,
+      shared: false,
+      // followCursor: true,
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

@@ -33,27 +33,32 @@ export default function SearchStockCard(props: any) {
         >
           <Grid container alignItems="center">
             <Grid item xs={10}>
-              <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                flexWrap="wrap"
+                sx={{ mb: 1 }}
+              >
                 <Typography
                   sx={{
                     fontSize: "1rem",
                     fontWeight: 500,
                     color: "text.primary",
-                    mr: 1,
+                    mr: { xs: 1, sm: 2 },
                   }}
                 >
-                  {item.tradingCode.startsWith("00")
-                    ? item.tradingCode.slice(2)
+                  {item.tradingCode?.startsWith("00")
+                    ? item.tradingCode?.slice(2)
                     : item.tradingCode}
                 </Typography>
 
-                {item.change !== 0 && (
+                {item.change && item.change !== 0 && (
                   <Chip
                     label={item.change}
                     size="small"
                     sx={{
                       borderRadius: 1,
-                      ml: 1,
+                      mr: { xs: 1, sm: 1.5 },
                       fontWeight: 700,
                       color:
                         item.change === 0
@@ -65,29 +70,31 @@ export default function SearchStockCard(props: any) {
                   />
                 )}
 
-                <Chip
-                  label={`${item.percentChange}%`}
-                  size="small"
-                  sx={{
-                    ml: { xs: 1, sm: 1.5 },
-                    borderRadius: 1,
-                    fontWeight: 700,
-                    color:
-                      item.change === 0
-                        ? "primary.main"
-                        : item.change < 0
-                        ? "error.main"
-                        : "success.main",
-                  }}
-                />
+                {item.percentChange && (
+                  <Chip
+                    label={`${item.percentChange}%`}
+                    size="small"
+                    sx={{
+                      mr: { xs: 1, sm: 1.5 },
+                      borderRadius: 1,
+                      fontWeight: 700,
+                      color:
+                        item.change === 0
+                          ? "primary.main"
+                          : item.change < 0
+                          ? "error.main"
+                          : "success.main",
+                    }}
+                  />
+                )}
 
-                {item.haltStatus !== "none" && (
+                {item.haltStatus && item.haltStatus !== "none" && (
                   <Chip
                     label="Halt"
                     size="small"
                     color={item.haltStatus === "buy" ? "success" : "error"}
                     sx={{
-                      ml: { xs: 1, sm: 1.5 },
+                      mr: 1,
                       fontSize: ".8rem",
                     }}
                   />
@@ -116,11 +123,11 @@ export default function SearchStockCard(props: any) {
                         : "success.main",
                   }}
                 >
-                  {item.ltp}
+                  {item.ltp.toFixed(2)}
                 </Typography>
 
                 <Typography sx={{ fontSize: ".85rem" }} color="text.secondary">
-                  {item.tradingCode.startsWith("00") ? "Point" : "BDT"}
+                  {item.tradingCode?.startsWith("00") ? "Point" : "BDT"}
                 </Typography>
               </Stack>
             </Grid>

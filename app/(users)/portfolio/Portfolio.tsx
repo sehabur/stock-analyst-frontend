@@ -44,6 +44,7 @@ export default function Portfolio() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
       },
     });
     if (!res.ok) {
@@ -62,7 +63,7 @@ export default function Portfolio() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          Authorization: auth?.token,
+          Authorization: `Bearer ${auth?.token}`,
         },
       });
 

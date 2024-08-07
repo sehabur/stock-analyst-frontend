@@ -17,8 +17,6 @@ interface AreaChartProps {
 export default function AreaChart(props: AreaChartProps) {
   let { data, color, fullWidth = false, height, chartWidthValue } = props;
 
-  console.log(data);
-
   data = getUniques(data, "time");
 
   const theme = useTheme();

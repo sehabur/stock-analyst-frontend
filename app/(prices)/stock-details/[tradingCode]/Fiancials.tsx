@@ -26,7 +26,7 @@ import { grey } from "@mui/material/colors";
 import CloseIcon from "@mui/icons-material/Close";
 import PieChart from "@/components/charts/PieChart";
 import { yearEndMap } from "@/data/dse";
-import ShareholdingBarChart from "@/components/charts/ShareholdingBarChart";
+import ShareholdingLineChart from "@/components/charts/ShareholdingLineChart";
 import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
 import FinancialCard from "@/components/cards/FinancialCard";
 import { fundamentalsTooltip } from "@/data/info";
@@ -1148,7 +1148,7 @@ export default function Financials({ data }: any) {
                       >
                         Director (%)
                       </Typography>
-                      <ShareholdingBarChart
+                      <ShareholdingLineChart
                         data={[shareholdings.series[0]]}
                         categories={shareholdings.categories}
                         lineColors={["#448aff"]}
@@ -1160,7 +1160,7 @@ export default function Financials({ data }: any) {
                       >
                         Institute (%)
                       </Typography>
-                      <ShareholdingBarChart
+                      <ShareholdingLineChart
                         data={[shareholdings.series[1]]}
                         categories={shareholdings.categories}
                         lineColors={["#b388ff"]}
@@ -1172,7 +1172,7 @@ export default function Financials({ data }: any) {
                       >
                         Public (%)
                       </Typography>
-                      <ShareholdingBarChart
+                      <ShareholdingLineChart
                         data={[shareholdings.series[2]]}
                         categories={shareholdings.categories}
                         lineColors={["#42bda8"]}
@@ -1184,7 +1184,7 @@ export default function Financials({ data }: any) {
                       >
                         Government (%)
                       </Typography>
-                      <ShareholdingBarChart
+                      <ShareholdingLineChart
                         data={[shareholdings.series[3]]}
                         categories={shareholdings.categories}
                         lineColors={["#4dd0e1"]}
@@ -1196,7 +1196,7 @@ export default function Financials({ data }: any) {
                       >
                         Foreign (%)
                       </Typography>
-                      <ShareholdingBarChart
+                      <ShareholdingLineChart
                         data={[shareholdings.series[4]]}
                         categories={shareholdings.categories}
                         lineColors={["#f57f17"]}

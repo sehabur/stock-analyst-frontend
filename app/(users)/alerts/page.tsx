@@ -1,7 +1,5 @@
 import React from "react";
 
-import Favorites from "./Favorites";
-
 import { Box, Typography } from "@mui/material";
 
 export default function Page() {
@@ -28,9 +26,18 @@ export default function Page() {
             mt: 2,
           }}
         >
-          My Favorites
+          My Alerts
         </Typography>
-        <Favorites />
+        <Typography
+          sx={{
+            fontSize: "1.1rem",
+            fontWeight: 500,
+            textAlign: "center",
+            mt: 4,
+          }}
+        >
+          Use our mobile app to avail this feature
+        </Typography>
       </Box>
     </Box>
   );

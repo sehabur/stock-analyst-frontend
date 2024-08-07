@@ -19,6 +19,7 @@ import {
   ListItemIcon,
   DialogTitle,
   DialogContent,
+  Typography,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -122,6 +123,7 @@ export default function Favorites() {
         onClose={handleDialogClose}
         fullWidth
         maxWidth="xs"
+        disableScrollLock={true}
       >
         <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
           Edit my favorites
@@ -191,11 +193,25 @@ export default function Favorites() {
       </Box>
       <Box>
         {favStockCard?.map((stock: any, index: number) => (
-          <Box sx={{ my: { xs: 1, sm: 1.7 } }} key={index}>
+          <Box sx={{ my: { xs: 1.2, sm: 2 } }} key={index}>
             <FavoriteStocksCard data={stock} />
           </Box>
         ))}
       </Box>
+      {favStockCard.length < 1 && (
+        <Box sx={{ textAlign: "center", pt: 6 }}>
+          <Typography sx={{ fontSize: "1.2rem" }}>
+            No items in favorite
+          </Typography>
+          <Button
+            sx={{ mt: 2 }}
+            variant="contained"
+            onClick={() => setDialogOpen(true)}
+          >
+            Add items
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }
