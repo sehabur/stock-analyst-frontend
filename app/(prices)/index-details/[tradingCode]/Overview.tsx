@@ -404,6 +404,32 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneYear.text}
             </Typography>
           </Box>
+          <Box
+            sx={{
+              mx: { xs: 2, sm: 8 },
+              my: { xs: 1, sm: 0 },
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "1.1rem",
+                color: "text.primary",
+                fontWeight: 500,
+              }}
+            >
+              5 Year
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "1.2rem",
+                fontWeight: 700,
+                color: percentChangeData.fiveYear.color,
+              }}
+            >
+              {percentChangeData.fiveYear.text || "--"}
+            </Typography>
+          </Box>
         </Paper>
 
         <Box sx={{ mb: 4 }}>
@@ -560,7 +586,10 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock?.lastDay?.oneYearHigh?.toFixed(2) || "--"}
+                {Math.max(
+                  stock?.lastDay?.oneYearHigh,
+                  stock.latest.ltp
+                )?.toFixed(2) || "--"}
               </Typography>
             </Stack>
           </Grid>
@@ -576,7 +605,10 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock?.lastDay?.oneYearLow?.toFixed(2) || "--"}
+                {Math.min(
+                  stock?.lastDay?.oneYearLow,
+                  stock.latest.ltp
+                )?.toFixed(2) || "--"}
               </Typography>
             </Stack>
           </Grid>

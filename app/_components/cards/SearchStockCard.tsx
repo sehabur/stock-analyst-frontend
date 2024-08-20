@@ -14,6 +14,8 @@ import {
 export default function SearchStockCard(props: any) {
   const { data: item } = props;
 
+  console.log(item.change, item.percentChange);
+
   return (
     <>
       <Box>
@@ -52,7 +54,7 @@ export default function SearchStockCard(props: any) {
                     : item.tradingCode}
                 </Typography>
 
-                {item.change && item.change !== 0 && (
+                {item.change !== 0 && (
                   <Chip
                     label={item.change}
                     size="small"
@@ -70,23 +72,21 @@ export default function SearchStockCard(props: any) {
                   />
                 )}
 
-                {item.percentChange && (
-                  <Chip
-                    label={`${item.percentChange}%`}
-                    size="small"
-                    sx={{
-                      mr: { xs: 1, sm: 1.5 },
-                      borderRadius: 1,
-                      fontWeight: 700,
-                      color:
-                        item.change === 0
-                          ? "primary.main"
-                          : item.change < 0
-                          ? "error.main"
-                          : "success.main",
-                    }}
-                  />
-                )}
+                <Chip
+                  label={`${item.percentChange}%`}
+                  size="small"
+                  sx={{
+                    mr: { xs: 1, sm: 1.5 },
+                    borderRadius: 1,
+                    fontWeight: 700,
+                    color:
+                      item.change === 0
+                        ? "primary.main"
+                        : item.change < 0
+                        ? "error.main"
+                        : "success.main",
+                  }}
+                />
 
                 {item.haltStatus && item.haltStatus !== "none" && (
                   <Chip

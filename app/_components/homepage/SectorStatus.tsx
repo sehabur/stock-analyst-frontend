@@ -7,6 +7,8 @@ import HorizontalStackedBarChartValue from "@/components/charts/HorizontalStacke
 import HorizontalStackedBarChartGain from "@/components/charts/HorizontalStackedBarChartGain";
 
 const formatSectorTrendData = (sectorData: any) => {
+  // sectorData.sort((a: any, b: any) => b.uptrend - a.uptrend);
+
   let categories = [];
   let uptrend = [];
   let downtrend = [];

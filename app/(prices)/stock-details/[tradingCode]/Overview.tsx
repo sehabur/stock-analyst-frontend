@@ -102,6 +102,14 @@ const formatCandleChartData = (data: any) => {
 };
 
 const calcPercentChange = (current: any, previous: any) => {
+  console.log(current, previous);
+  if (previous == "-") {
+    return {
+      text: "-",
+      color: "#2962ff",
+    };
+  }
+
   const stockchanged = current === 0 ? false : true;
   const change = stockchanged ? ((current - previous) / previous) * 100 : 0;
   return {
@@ -328,9 +336,9 @@ export default function Overview({ stock }: any) {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: { xs: "space-evenly", sm: "center" },
+            justifyContent: "space-between",
             my: 6,
-            mx: { xs: 0, sm: 8 },
+            mx: { xs: 0, sm: 4 },
             py: { xs: 1.5, sm: 3 },
             px: 2,
             borderRadius: 4,
@@ -340,7 +348,7 @@ export default function Overview({ stock }: any) {
         >
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 7 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -369,7 +377,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 7 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -398,7 +406,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 7 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -427,7 +435,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 7 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -456,7 +464,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 7 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -478,6 +486,35 @@ export default function Overview({ stock }: any) {
               }}
             >
               {percentChangeData.oneYear.text}
+            </Typography>
+          </Box>
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
+          <Box
+            sx={{
+              mx: { xs: 2, sm: 7 },
+              my: { xs: 1, sm: 0 },
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "1.1rem",
+                color: "text.primary",
+                fontWeight: 500,
+              }}
+            >
+              5 Year
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "1.2rem",
+                fontWeight: 700,
+                color: percentChangeData.fiveYear.color,
+              }}
+            >
+              {percentChangeData.fiveYear.text || "--"}
             </Typography>
           </Box>
         </Paper>
@@ -668,7 +705,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.lastDay.oneYearHigh || "--"}
+                {Math.max(stock.lastDay.oneYearHigh, stock.latest.ltp) || "--"}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -690,7 +727,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.lastDay.oneYearLow || "--"}
+                {Math.min(stock.lastDay.oneYearLow, stock.latest.ltp) || "--"}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -764,30 +801,7 @@ export default function Overview({ stock }: any) {
 
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Face Value
-            </Typography>
-            <Stack direction="row" alignItems="baseline">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                  fontWeight: 500,
-                }}
-              >
-                {stock.fundamentals.faceValue}
-              </Typography>
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
-                BDT
-              </Typography>
-            </Stack>
-          </Grid>
-
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Beta (1 Year)
+              P/E ratio
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
@@ -797,7 +811,39 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.technicals.beta}
+                {stock.fundamentals.pe.value}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              {`EPS (${stock.fundamentals.screener?.epsQuarterly.period})`}
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.screener?.epsQuarterly.value}
+              </Typography>
+            </Stack>
+          </Grid>
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              {`NAV (${stock.fundamentals.screener?.navQuarterly.period})`}
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.screener?.navQuarterly.value}
               </Typography>
             </Stack>
           </Grid>
@@ -838,6 +884,23 @@ export default function Overview({ stock }: any) {
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Beta (1 Year)
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.technicals.beta}
               </Typography>
             </Stack>
           </Grid>
@@ -937,6 +1000,29 @@ export default function Overview({ stock }: any) {
                 }}
               >
                 {dates.recordDate || "--"}
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Face Value
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.faceValue}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                BDT
               </Typography>
             </Stack>
           </Grid>

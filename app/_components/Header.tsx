@@ -51,6 +51,7 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import BatchPredictionRoundedIcon from "@mui/icons-material/BatchPredictionRounded";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
+import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
 import { TransitionProps } from "@mui/material/transitions";
 
 import { authActions, latestPriceActions, themeColorActions } from "_store";
@@ -341,7 +342,7 @@ export default function Header() {
         // component={Link}
         // href="/alerts"
         onClick={() => handleUserPopoverClose("/alerts", true)}
-        startIcon={<BusinessCenterOutlinedIcon color="primary" />}
+        startIcon={<NotificationsNoneRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -361,7 +362,7 @@ export default function Header() {
         // component={Link}
         // href="/portfolio"
         onClick={() => handleUserPopoverClose("/portfolio", true)}
-        startIcon={<NotificationsNoneRoundedIcon color="primary" />}
+        startIcon={<BusinessCenterOutlinedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -562,7 +563,7 @@ export default function Header() {
       <Button
         component={Link}
         href="/gainer-loser?type=gainer&variant=1d"
-        startIcon={<WhatshotRoundedIcon color="primary" />}
+        startIcon={<EmojiEventsRoundedIcon color="primary" />}
         sx={{
           py: 1,
           px: 3,
@@ -904,7 +905,7 @@ export default function Header() {
                   )}`,
                   padding: 0.5,
                   bgcolor: alpha(theme.palette.primary.main, 0.03),
-                  mx: { xs: 0.8, sm: 1 },
+                  mx: { xs: 0.5, sm: 1 },
                 }}
                 onClick={handleSearchDialogOpen}
               >
@@ -918,7 +919,7 @@ export default function Header() {
                 border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                 padding: { xs: 0.5, sm: 0.8 },
                 bgcolor: alpha(theme.palette.primary.main, 0.03),
-                mx: { xs: 0.8, sm: 1 },
+                mx: { xs: 0.5, sm: 1 },
               }}
             >
               {themeColor === "dark" ? (
@@ -934,13 +935,13 @@ export default function Header() {
                 border: `1.2px solid ${alpha(theme.palette.primary.main, 0.2)}`,
                 padding: { xs: 0.5, sm: 0.8 },
                 bgcolor: alpha(theme.palette.primary.main, 0.03),
-                mx: { xs: 0.8, sm: 1 },
+                mx: { xs: 0.5, sm: 1 },
               }}
               aria-owns={openUser ? "user-mouse-over-popover" : undefined}
               aria-haspopup="true"
               onClick={handleUserPopoverOpen}
             >
-              <PersonOutlineRoundedIcon color="warning" />
+              <PersonOutlineRoundedIcon color="primary" />
             </IconButton>
 
             {matchesSmDown && (
@@ -955,7 +956,7 @@ export default function Header() {
                     )}`,
                     padding: 0.5,
                     bgcolor: alpha(theme.palette.warning.main, 0.03),
-                    mx: { xs: 0.8, sm: 1 },
+                    mx: { xs: 0.5, sm: 1 },
                   }}
                   aria-owns={
                     openMobileView ? "mobile-mouse-over-popover" : undefined

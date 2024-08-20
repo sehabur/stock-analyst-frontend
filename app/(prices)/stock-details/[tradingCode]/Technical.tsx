@@ -1,23 +1,4 @@
 "use client";
-import {
-  calculateEma,
-  calculateSma,
-  calculateSmaLastValue,
-  calculateEmaLastValue,
-  calculateRsiLastValue,
-  calculateRsi,
-  calculateStochasticK,
-  calculateAdx,
-  calculateMacd,
-  calculateWilliamsPercentR,
-  calculateMoneyFlowIndex,
-  calculateStochasticKLastValue,
-  calculateAdxLastValue,
-  calculateWilliamsPercentRLastValue,
-  calculateMoneyFlowIndexLastValue,
-  calculateMacdLastValue,
-  calculatePivotPoints,
-} from "_library/movingAvgCalc";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -25,27 +6,21 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import CandlestickChartTwoToneIcon from "@mui/icons-material/CandlestickChartTwoTone";
 import CandlestickChartRoundedIcon from "@mui/icons-material/CandlestickChartRounded";
 import SsidChartRoundedIcon from "@mui/icons-material/SsidChartRounded";
-import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
-import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
 import InsightsRoundedIcon from "@mui/icons-material/InsightsRounded";
-import PollRoundedIcon from "@mui/icons-material/PollRounded";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import TroubleshootRoundedIcon from "@mui/icons-material/TroubleshootRounded";
 import { Box, Divider, Grid, Paper, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import ScatterPlotRoundedIcon from "@mui/icons-material/ScatterPlotRounded";
-import Spinner from "@/components/shared/Spinner";
-import SubjectRoundedIcon from "@mui/icons-material/SubjectRounded";
-import { styled, alpha } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { DateTime } from "luxon";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import { useSelector } from "react-redux";
+import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
 function formatPatternName(text: string) {
   return (text.charAt(0).toUpperCase() + text.slice(1)).replaceAll("_", " ");
@@ -54,13 +29,13 @@ function formatPatternName(text: string) {
 export default function Technical(props: any) {
   const { technicals, tradingCode } = props;
 
+  const auth = useSelector((state: any) => state.auth);
+
   const theme: any = useTheme();
 
   const [data, setData] = useState<any>({});
 
   const [isLoading, setIsLoading] = useState(false);
-
-  // console.log(data);
 
   const {
     sma10,
@@ -85,70 +60,29 @@ export default function Technical(props: any) {
   } = data;
 
   const getStockTechnicals = async (tradingCode: string) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
+      const res: any = await fetch(`/api/technicals?code=${tradingCode}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const techData = await res.json();
 
-    const res: any = await fetch(`/api/technicals?code=${tradingCode}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      setData(techData);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
     }
-    const techData = await res.json();
-
-    setIsLoading(false);
-    return setData(techData);
   };
 
   useEffect(() => {
-    getStockTechnicals(tradingCode);
+    if (auth?.isPremium) {
+      getStockTechnicals(tradingCode);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // const prices = data.map((item: any) => item.ltp);
-  // const lows = data.map((item: any) => item.low);
-  // const highs = data.map((item: any) => item.high);
-  // const volumes = data.map((item: any) => item.volume);
-
-  // const sma10 = calculateSmaLastValue(prices, 10);
-  // const sma20 = calculateSmaLastValue(prices, 20);
-  // const sma30 = calculateSmaLastValue(prices, 30);
-  // const sma50 = calculateSmaLastValue(prices, 50);
-  // const sma100 = calculateSmaLastValue(prices, 100);
-  // const sma200 = calculateSmaLastValue(prices, 200);
-
-  // const ema10 = calculateEmaLastValue(prices, 10);
-  // const ema20 = calculateEmaLastValue(prices, 20);
-  // const ema30 = calculateEmaLastValue(prices, 30);
-  // const ema50 = calculateEmaLastValue(prices, 50);
-  // const ema100 = calculateEmaLastValue(prices, 100);
-  // const ema200 = calculateEmaLastValue(prices, 200);
-
-  // const rsi = calculateRsiLastValue(prices);
-  // const stoch = calculateStochasticKLastValue(prices);
-  // const adx = calculateAdxLastValue(highs, lows, prices);
-  // const williamR = calculateWilliamsPercentRLastValue(highs, lows, prices);
-  // const mfi = calculateMoneyFlowIndexLastValue(highs, lows, prices, volumes);
-  // const macd = calculateMacdLastValue(prices);
-  // const lastPrice = data.slice(-1)[0];
-
-  // const pivots = calculatePivotPoints(
-  //   lastPrice.high,
-  //   lastPrice.low,
-  //   lastPrice.ltp
-  // );
-
-  // const rsi = calculateRsi(prices.slice(0, 30));
-  // const stoch = calculateStochasticK(prices);
-  // const adx = calculateAdx(highs, lows, prices);
-  // const williamR = calculateWilliamsPercentR(highs, lows, prices);
-  // const mfi = calculateMoneyFlowIndex(highs, lows, prices, volumes);
-  // const macd = calculateMacd(prices);
-
-  // console.log(prices, rsi, stoch, adx, williamR, mfi, macd, lastPrice, pivots);
+  }, [auth]);
 
   return (
     <Box
@@ -160,6 +94,16 @@ export default function Technical(props: any) {
         px: 2,
       }}
     >
+      <LoadingSpinner open={isLoading} />
+      <Box
+        sx={{
+          maxWidth: 700,
+          mx: "auto",
+          display: auth?.isPremium ? "none" : "block",
+        }}
+      >
+        <PremiumDialogContent />
+      </Box>
       <Grid
         container
         rowSpacing={8}
@@ -167,6 +111,7 @@ export default function Technical(props: any) {
         direction="row"
         justifyContent="flex-start"
         alignItems="flex-start"
+        sx={{ display: auth?.isPremium ? "flex" : "none" }}
       >
         <Grid item xs={12} sm={6}>
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>

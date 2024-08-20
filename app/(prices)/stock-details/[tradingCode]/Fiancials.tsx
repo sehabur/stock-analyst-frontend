@@ -1219,13 +1219,23 @@ export default function Financials({ data }: any) {
             <CloseIcon sx={{ fontSize: "1.6rem" }} />
           </IconButton>
         </Dialog>
+        <Box
+          sx={{
+            py: { xs: 1, sm: 4 },
+            maxWidth: 700,
+            mx: "auto",
+            display: auth?.isPremium ? "none" : "block",
+          }}
+        >
+          <PremiumDialogContent />
+        </Box>
         <Grid
           container
           direction="row"
           justifyContent="flex-start"
           rowSpacing={{ xs: 3, sm: 6 }}
           columnSpacing={{ xs: 1, sm: 4 }}
-          sx={{ pt: 4 }}
+          sx={{ pt: 4, display: auth?.isPremium ? "flex" : "none" }}
         >
           <Grid item xs={6} sm={3}>
             <FinancialCard

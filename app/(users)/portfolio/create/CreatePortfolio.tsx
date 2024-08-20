@@ -71,7 +71,17 @@ export default function CreatePortfolio() {
         {successMessage && <Alert severity="success">{successMessage}</Alert>}
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Box>
-      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleSubmit}>
+        <Button
+          variant="text"
+          color="primary"
+          component={Link}
+          href="/portfolio"
+          startIcon={<KeyboardBackspaceRoundedIcon />}
+          sx={{ mb: 1 }}
+        >
+          Go back
+        </Button>
         <TextField
           margin="normal"
           required
@@ -101,15 +111,6 @@ export default function CreatePortfolio() {
           sx={{ mt: 3, mb: 2 }}
         >
           Create
-        </Button>
-        <Button
-          variant="text"
-          color="warning"
-          component={Link}
-          href="/portfolio"
-          startIcon={<KeyboardBackspaceRoundedIcon />}
-        >
-          Go back
         </Button>
       </Box>
     </Box>

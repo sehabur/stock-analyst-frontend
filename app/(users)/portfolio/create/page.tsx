@@ -22,7 +22,7 @@ export default function Page() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ bgcolor: "text.secondary" }}>
+        <Avatar>
           <WorkRoundedIcon />
         </Avatar>
         <Typography

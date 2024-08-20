@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Button,
   DialogContent,
+  Avatar,
 } from "@mui/material";
 
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
@@ -26,10 +27,9 @@ export default function PremiumDialogContent(props: any) {
         <Box sx={{ maxWidth: "700px", mx: "auto", py: 2 }}>
           <Stack direction="row" alignItems="center" gap={2}>
             <Box>
-              <WorkspacePremiumRoundedIcon
-                sx={{ fontSize: 40 }}
-                color="warning"
-              />
+              <Avatar sx={{ width: 60, height: 60 }}>
+                <WorkspacePremiumRoundedIcon sx={{ fontSize: 42 }} />
+              </Avatar>
             </Box>
 
             <Box>
@@ -56,7 +56,7 @@ export default function PremiumDialogContent(props: any) {
             </Box>
           </Stack>
 
-          <Box sx={{ mt: 4, ml: 1, mb: 4 }}>
+          <Box sx={{ mt: 4, mb: 4 }}>
             <Typography sx={{ fontSize: "1rem" }}>
               Elevate your investing potential with a Premium membership. Gain
               personalised and actionable insights with enhanced features to
@@ -64,7 +64,7 @@ export default function PremiumDialogContent(props: any) {
             </Typography>
           </Box>
 
-          <Box sx={{ ml: 1 }}>
+          <Box>
             {/* <Button
               variant="outlined"
               sx={{ mr: 2, py: 1.3 }}
@@ -75,12 +75,12 @@ export default function PremiumDialogContent(props: any) {
             </Button> */}
             <Button
               variant="contained"
-              sx={{ py: 1.3, px: 4, fontSize: "1.1rem" }}
+              sx={{ py: 1, px: 4, fontSize: "1.1rem", borderRadius: 1 }}
               component={Link}
               fullWidth={matchesSmDown}
               href={auth?.isLoggedIn ? "/pricing" : "/signup?redirect=/pricing"}
             >
-              Get started for free
+              Get 14 days free trial
             </Button>
           </Box>
         </Box>

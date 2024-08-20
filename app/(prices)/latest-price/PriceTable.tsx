@@ -59,7 +59,7 @@ const columns: GridColDef[] = [
   {
     field: "category",
     headerName: "CATEGORY",
-    align: "left",
+    align: "center",
     headerAlign: "left",
     width: 85,
   },

@@ -22,7 +22,7 @@ export default async function Page() {
       >
         <Box
           sx={{
-            maxWidth: 600,
+            maxWidth: 475,
             mx: "auto",
             textAlign: "center",
           }}

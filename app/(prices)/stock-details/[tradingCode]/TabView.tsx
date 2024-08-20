@@ -35,7 +35,7 @@ const TabPanel = (props: any) => {
 };
 
 export default function TabView(props: any) {
-  const { stock, news, blocktr, marketDepth, tradingCode } = props;
+  const { stock, news, blocktr, tradingCode } = props;
 
   const theme = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));

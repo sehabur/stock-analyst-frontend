@@ -16,6 +16,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
 
 const colors = ["#00A25B", "#2962ff", "#f23645"];
 
@@ -117,21 +118,32 @@ const formatData = (data: any) => {
 export default function MarketDepth(props: any) {
   const { data, tradingCode, marketOpenStatus } = props;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [marketDepthData, setMarketDepthData] = useState<any>();
 
   const { rows, totalBuy, totalSell, lastTrade } = formatData(data);
 
   const getData = async () => {
-    const res = await fetch(`/api/market-depth?code=${tradingCode}`, {
-      next: { revalidate: 0 },
-    });
+    try {
+      setIsLoading(true);
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      if (marketOpenStatus === "Closed") {
+        setMarketDepthData(null);
+        return;
+      }
+
+      const res = await fetch(`/api/market-depth?code=${tradingCode}`, {
+        next: { revalidate: 0 },
+      });
+      const initdata = await res.json();
+
+      setMarketDepthData(initdata);
+      setIsLoading(false);
+    } catch (error) {
+      setMarketDepthData(null);
+      setIsLoading(false);
     }
-    const initdata = await res.json();
-
-    setMarketDepthData(initdata);
   };
 
   useEffect(() => {
@@ -153,6 +165,7 @@ export default function MarketDepth(props: any) {
         mx: "auto",
       }}
     >
+      <LoadingSpinner open={isLoading} />
       {marketOpenStatus !== "Closed" && (
         <Box>
           <Box sx={{ display: "flex", flexDirection: "row" }}>

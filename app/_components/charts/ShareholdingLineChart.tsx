@@ -19,6 +19,9 @@ export default function ShareholdingLineChart(props: any) {
       type: "line",
       foreColor: theme.palette.text.primary,
       fontFamily: "'DM Sans', sans-serif",
+      zoom: {
+        enabled: false,
+      },
       toolbar: {
         show: false,
         tools: {
@@ -29,19 +32,7 @@ export default function ShareholdingLineChart(props: any) {
     markers: {
       size: 6,
     },
-    // plotOptions: {
-    //   bar: {
-    //     horizontal: false,
-    //     borderRadius: 2,
-    //     columnWidth: matchesSmDown ? "50%" : "35%",
-    //   },
-    // },
-    // dataLabels: {
-    //   enabled: true,
-    //   formatter: (value: any) => {
-    //     return value + "%";
-    //   },
-    // },
+
     dataLabels: {
       enabled: false,
     },
@@ -83,8 +74,6 @@ export default function ShareholdingLineChart(props: any) {
           return value + "% (" + change + "%)";
         },
       },
-      shared: false,
-      // followCursor: true,
     },
     grid: {
       borderColor: theme.palette.chartGridColor,

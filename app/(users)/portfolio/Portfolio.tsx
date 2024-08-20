@@ -130,7 +130,7 @@ export default function Portfolio() {
           href="/portfolio/create"
           variant="contained"
           color="primary"
-          sx={{ borderRadius: 6, px: 4, mt: 2, mb: 4 }}
+          sx={{ borderRadius: 6, px: 4, mt: 3, mb: 4 }}
         >
           Create new portfolio
         </Button>
@@ -275,7 +275,7 @@ export default function Portfolio() {
           <Box
             sx={{
               bgcolor: "secondaryBackground",
-              mt: 8,
+              mt: 4,
               py: 2,
               px: 4,
               borderRadius: 2,
