@@ -13,8 +13,8 @@ export default function Logs({ data }: any) {
       <Typography sx={{ fontSize: "1.2rem", mb: 1, textAlign: "center" }}>
         SETTINGS
       </Typography>
-      {dataArr.map((item: any) => (
-        <Paper sx={{ my: 1.5, px: 2, py: 1 }} variant="outlined">
+      {dataArr.map((item: any, index: number) => (
+        <Paper sx={{ my: 1.5, px: 2, py: 1 }} variant="outlined" key={index}>
           <Box
           // sx={{
           //   display: "flex",

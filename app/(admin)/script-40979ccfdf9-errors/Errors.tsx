@@ -9,8 +9,8 @@ export default function Errors({ data }: any) {
       <Typography sx={{ fontSize: "1.2rem", mb: 1, textAlign: "center" }}>
         ERRORS
       </Typography>
-      {data.map((item: any) => (
-        <Paper sx={{ my: 1, px: 2, py: 0.5 }} variant="outlined">
+      {data.map((item: any, index: number) => (
+        <Paper sx={{ my: 1, px: 2, py: 0.5 }} variant="outlined" key={index}>
           <Box
             sx={{
               display: "flex",

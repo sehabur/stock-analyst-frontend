@@ -185,6 +185,10 @@ export default function PriceTable(props: { data: Array<{}>; sector: any }) {
   }: {
     target: { value: string };
   }) => {
+    console.log(
+      data.filter((a: any) => !a.sector),
+      value
+    );
     let newData = [];
     if (value !== "all") {
       newData = data.filter(
