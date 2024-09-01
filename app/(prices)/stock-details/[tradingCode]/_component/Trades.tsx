@@ -16,6 +16,7 @@ import {
   Chip,
   Typography,
   Stack,
+  alpha,
 } from "@mui/material";
 import LaunchOutlinedIcon from "@mui/icons-material/LaunchOutlined";
 import { DateTime } from "luxon";
@@ -264,17 +265,19 @@ export default function Trades(props: any) {
           borderRadius: 1.5,
           fontWeight: 700,
           mb: { xs: 1, sm: 0 },
+          bgcolor: alpha(theme.palette.primary.main, 0.1),
         }}
         severity="info"
         onClick={handleClick}
         icon={<LocalMallOutlinedIcon fontSize="inherit" />}
         action={
-          <IconButton color="inherit" size="small">
+          <IconButton color="primary" size="small">
             <ZoomOutMapOutlinedIcon sx={{ fontSize: "1.1rem" }} />
           </IconButton>
         }
       >
         <Typography
+          color="text.primary"
           sx={{
             display: "inline",
             mr: 1.5,

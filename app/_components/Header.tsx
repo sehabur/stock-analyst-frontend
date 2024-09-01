@@ -562,7 +562,7 @@ export default function Header() {
     <>
       <Button
         component={Link}
-        href="/gainer-loser?type=gainer&variant=1d"
+        href="/gainer-loser?type=gainer&variant=day"
         startIcon={<EmojiEventsRoundedIcon color="primary" />}
         sx={{
           py: 1,

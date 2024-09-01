@@ -90,7 +90,7 @@ export default function GainerLoser({ data }: any) {
           <Box sx={{ mx: { xs: 1, sm: 0 } }}>
             <Button
               component={Link}
-              href="/gainer-loser?type=gainer&variant=1d"
+              href="/gainer-loser?type=gainer&variant=day"
               color="primary"
               endIcon={<ArrowForwardIosRoundedIcon />}
               sx={{
@@ -140,13 +140,13 @@ export default function GainerLoser({ data }: any) {
           {dataFormatter(data[alignmentGainer]).map((item: any) => (
             <GainerCard item={item} key={item.id} />
           ))}
-          <SeeMoreButton href="/gainer-loser?type=gainer&variant=1d" />
+          <SeeMoreButton href="/gainer-loser?type=gainer&variant=day" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box sx={{ mx: { xs: 1, sm: 0 } }}>
             <Button
               component={Link}
-              href="/gainer-loser?type=loser&variant=1d"
+              href="/gainer-loser?type=loser&variant=day"
               color="primary"
               endIcon={<ArrowForwardIosRoundedIcon />}
               sx={{
@@ -196,7 +196,7 @@ export default function GainerLoser({ data }: any) {
           {dataFormatter(data[alignmentLoser]).map((item: any) => (
             <GainerCard item={item} key={item.id} />
           ))}
-          <SeeMoreButton href="/gainer-loser?type=loser&variant=1d" />
+          <SeeMoreButton href="/gainer-loser?type=loser&variant=day" />
         </Grid>
       </Grid>
     </Box>

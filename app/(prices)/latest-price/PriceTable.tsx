@@ -1,14 +1,7 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Link from "next/link";
-
-import {
-  Box,
-  TextField,
-  MenuItem,
-  Typography,
-  InputAdornment,
-  Chip,
-} from "@mui/material";
+import { Box, Typography, Chip } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -16,8 +9,6 @@ import {
   gridClasses,
 } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
-
-import { sectorList } from "@/data/dse";
 import styles from "./Pricetable.module.css";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
@@ -30,7 +21,7 @@ const columns: GridColDef[] = [
   {
     field: "tradingCode",
     headerName: "TRADING CODE",
-    width: 150,
+    width: 140,
     align: "left",
     headerAlign: "left",
     renderCell: (params) => {
@@ -54,7 +45,7 @@ const columns: GridColDef[] = [
     headerName: "SECTOR",
     align: "left",
     headerAlign: "left",
-    width: 140,
+    width: 150,
   },
   {
     field: "category",
@@ -63,13 +54,13 @@ const columns: GridColDef[] = [
     headerAlign: "left",
     width: 85,
   },
-  { field: "ltp", headerName: "LTP", align: "right", headerAlign: "right" },
+  { field: "ltp", headerName: "LTP", align: "center", headerAlign: "center" },
   {
     field: "haltStatus",
     headerName: "",
     align: "left",
     headerAlign: "left",
-    width: 62,
+    width: 65,
     renderCell: (params) => {
       return (
         <>
@@ -77,12 +68,8 @@ const columns: GridColDef[] = [
             <Chip
               label="Halt"
               size="small"
-              // variant="outlined"
+              variant="outlined"
               color={params.value === "buy" ? "success" : "error"}
-              sx={{
-                ml: 1,
-                fontSize: ".8rem",
-              }}
             />
           ) : (
             <></>
@@ -91,15 +78,20 @@ const columns: GridColDef[] = [
       );
     },
   },
-  { field: "ycp", headerName: "OPEN", align: "right", headerAlign: "right" },
+  { field: "ycp", headerName: "OPEN", align: "center", headerAlign: "center" },
   {
     field: "high",
     headerName: "HIGH",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
   },
-  { field: "low", headerName: "LOW", align: "right", headerAlign: "right" },
-  { field: "close", headerName: "CLOSE", align: "right", headerAlign: "right" },
+  { field: "low", headerName: "LOW", align: "center", headerAlign: "center" },
+  {
+    field: "close",
+    headerName: "CLOSE",
+    align: "center",
+    headerAlign: "center",
+  },
   {
     field: "change",
     headerName: "CHANGE",
@@ -114,14 +106,14 @@ const columns: GridColDef[] = [
       }
       return cellClass;
     },
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
   },
   {
     field: "percentChange",
     headerName: "CHANGE(%)",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
     cellClassName: (params: any) => {
       let cellClass;
       if (params.value < 0) {
@@ -137,12 +129,17 @@ const columns: GridColDef[] = [
       return params.value + "%";
     },
   },
-  { field: "trade", headerName: "TRADE", align: "right", headerAlign: "right" },
+  {
+    field: "trade",
+    headerName: "TRADE",
+    align: "center",
+    headerAlign: "center",
+  },
   {
     field: "value",
     headerName: "VALUE(CR)",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
     valueFormatter: (params) => {
       return (params.value / 10).toFixed(2);
     },
@@ -150,83 +147,20 @@ const columns: GridColDef[] = [
   {
     field: "volume",
     headerName: "VOLUME",
-    align: "right",
-    headerAlign: "right",
+    align: "center",
+    headerAlign: "center",
   },
 ];
 
-export default function PriceTable(props: { data: Array<{}>; sector: any }) {
-  let { data, sector } = props;
+export default function PriceTable(props: any) {
+  let { data } = props;
 
-  data = data.map((item, index) => {
+  let shares = data?.map((item: any, index: number) => {
     return { ...item, id: index };
   });
 
-  const filterInitialShares = (sector: string) => {
-    let shareData = [];
-    if (sector) {
-      shareData = data.filter(
-        (share: any) => share.sector.split(" ")[0].toLowerCase() === sector
-      );
-    } else {
-      shareData = data;
-    }
-    return shareData;
-  };
-
-  const [shares, setShares] = React.useState(filterInitialShares(sector));
-
-  const [sectorFormInputs, setSectorFormInputs] = React.useState(
-    sector || "all"
-  );
-
-  const handleFormChange = ({
-    target: { value },
-  }: {
-    target: { value: string };
-  }) => {
-    console.log(
-      data.filter((a: any) => !a.sector),
-      value
-    );
-    let newData = [];
-    if (value !== "all") {
-      newData = data.filter(
-        (share: any) => share.sector.split(" ")[0].toLowerCase() === value
-      );
-    } else {
-      newData = data;
-    }
-    setSectorFormInputs(value);
-    setShares(newData);
-  };
-
   return (
     <Box>
-      <TextField
-        select
-        name="sector"
-        value={sectorFormInputs}
-        onChange={handleFormChange}
-        size="small"
-        variant="outlined"
-        sx={{ width: 300, mb: 1 }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">Sector:</InputAdornment>
-          ),
-        }}
-      >
-        <MenuItem key="all" value="all">
-          All
-        </MenuItem>
-        {sectorList.map((option: any) => (
-          <MenuItem key={option.tag} value={option.tag}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField>
-
       <Box sx={{ height: "80vh" }}>
         <StripedDataGrid
           rows={shares}

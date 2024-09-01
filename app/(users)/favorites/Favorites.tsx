@@ -24,6 +24,8 @@ import {
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TurnedInNotRoundedIcon from "@mui/icons-material/TurnedInNotRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 
@@ -125,7 +127,7 @@ export default function Favorites() {
         maxWidth="xs"
         disableScrollLock={true}
       >
-        <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
+        <DialogTitle sx={{ fontWeight: 500, pr: 6 }}>
           Edit my favorites
         </DialogTitle>
         <DialogContent dividers>
@@ -164,27 +166,34 @@ export default function Favorites() {
           </Box>
         </DialogContent>
         <DialogActions sx={{ py: 2 }}>
-          <Button
-            onClick={handleDialogClose}
-            variant="outlined"
-            color="warning"
-            sx={{ mr: 2 }}
-          >
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={handleSaveItems}>
-            Save
-          </Button>
+          <Box sx={{ mr: { xs: 4, sm: 6 } }}>
+            <Button
+              onClick={handleDialogClose}
+              variant="outlined"
+              color="warning"
+              sx={{ mr: 2 }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ px: 2.8 }}
+              onClick={handleSaveItems}
+            >
+              Save
+            </Button>
+          </Box>
         </DialogActions>
       </Dialog>
 
-      <Box sx={{ mt: 4, mb: 1 }}>
+      <Box sx={{ mt: 3, mb: 2 }}>
         <Button
           startIcon={<EditNoteRoundedIcon />}
           sx={{
-            px: 4,
+            px: 2,
             borderRadius: 6,
           }}
+          size="small"
           onClick={() => setDialogOpen(true)}
           variant="outlined"
         >
@@ -193,24 +202,31 @@ export default function Favorites() {
       </Box>
       <Box>
         {favStockCard?.map((stock: any, index: number) => (
-          <Box sx={{ my: { xs: 1.2, sm: 2 } }} key={index}>
+          <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
             <FavoriteStocksCard data={stock} />
           </Box>
         ))}
       </Box>
       {favStockCard.length < 1 && (
-        <Box sx={{ textAlign: "center", pt: 6 }}>
-          <Typography sx={{ fontSize: "1.2rem" }}>
-            No items in favorite
-          </Typography>
-          <Button
-            sx={{ mt: 2 }}
-            variant="contained"
-            onClick={() => setDialogOpen(true)}
-          >
-            Add items
-          </Button>
-        </Box>
+        <>
+          <Box sx={{ textAlign: "center", py: 4, px: 1 }}>
+            <Typography color="text.primary" sx={{ fontSize: "1.3rem", mb: 2 }}>
+              No items in favorite
+            </Typography>
+            <Typography color="text.primary" sx={{ fontSize: "1rem" }}>
+              Add your favorite and target items in your favorite list to track
+              them with ease
+            </Typography>{" "}
+            <Button
+              sx={{ mt: 2 }}
+              variant="outlined"
+              onClick={() => setDialogOpen(true)}
+              startIcon={<AddRoundedIcon />}
+            >
+              Add items
+            </Button>
+          </Box>
+        </>
       )}
     </Box>
   );

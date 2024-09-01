@@ -208,8 +208,9 @@ export default function IndexChart({ indexData }: any) {
         <Grid item xs={12} sm={6}>
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
+              variant="number"
               sx={{
-                fontSize: { xs: "1.8rem", sm: "2.4rem" },
+                fontSize: { xs: "1.8rem", sm: "2.3rem" },
                 color: textColor,
                 fontWeight: 700,
               }}
@@ -222,9 +223,9 @@ export default function IndexChart({ indexData }: any) {
               sx={{
                 borderRadius: 1,
                 mx: { xs: 1, sm: 2 },
-                mt: 0.3,
                 py: 1.8,
                 fontSize: "1rem",
+                fontFamily: "'Nunito Sans', sans-serif",
                 fontWeight: 700,
                 color: textColor,
               }}
@@ -237,6 +238,7 @@ export default function IndexChart({ indexData }: any) {
                 py: 1.8,
                 fontSize: "1rem",
                 fontWeight: 700,
+                fontFamily: "'Nunito Sans', sans-serif",
                 color: textColor,
               }}
             />
@@ -315,6 +317,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
+              variant="number"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalVolume / 10000000)?.toFixed(2)}
@@ -335,6 +338,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
+              variant="number"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalValue / 10)?.toFixed(2)}
@@ -355,6 +359,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
+              variant="number"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {indexData?.latest.totalTrade?.toFixed(0)}

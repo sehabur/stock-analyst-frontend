@@ -656,6 +656,7 @@ export default function Main() {
                   printOptions: { disableToolbarButton: true },
                   csvOptions: { disableToolbarButton: true },
                 },
+                filterPanel: { sx: { maxWidth: "90vw" } },
               }}
               sx={{
                 // border: 'none',

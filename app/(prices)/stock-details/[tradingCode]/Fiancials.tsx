@@ -475,7 +475,10 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data?.screener?.navQuarterly?.overview}
+              overviewText={
+                data?.screener?.navQuarterly?.overview ||
+                data?.screener?.navYearly?.overview
+              }
               quarterlyData={navQuarterly}
               yearlyData={navYearly}
               info
@@ -489,7 +492,10 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data?.screener?.epsQuarterly?.overview}
+              overviewText={
+                data?.screener?.epsQuarterly?.overview ||
+                data?.screener?.epsYearly?.overview
+              }
               quarterlyData={epsQuarterly}
               yearlyData={epsYearly}
               info
@@ -1106,7 +1112,10 @@ export default function Financials({ data }: any) {
               overview
               quarterly
               yearly
-              overviewText={data?.screener?.nocfpsQuarterly?.overview}
+              overviewText={
+                data?.screener?.nocfpsQuarterly?.overview ||
+                data?.screener?.nocfpsYearly?.overview
+              }
               quarterlyData={nocfpsQuarterly}
               yearlyData={nocfpsYearly}
               info
@@ -1182,24 +1191,24 @@ export default function Financials({ data }: any) {
                       <Typography
                         sx={{ textAlign: "center", fontSize: "1rem" }}
                       >
-                        Government (%)
-                      </Typography>
-                      <ShareholdingLineChart
-                        data={[shareholdings.series[3]]}
-                        categories={shareholdings.categories}
-                        lineColors={["#4dd0e1"]}
-                      />
-                    </Box>
-                    <Box sx={{ mb: 4 }}>
-                      <Typography
-                        sx={{ textAlign: "center", fontSize: "1rem" }}
-                      >
                         Foreign (%)
                       </Typography>
                       <ShareholdingLineChart
                         data={[shareholdings.series[4]]}
                         categories={shareholdings.categories}
                         lineColors={["#f57f17"]}
+                      />
+                    </Box>
+                    <Box sx={{ mb: 4 }}>
+                      <Typography
+                        sx={{ textAlign: "center", fontSize: "1rem" }}
+                      >
+                        Government (%)
+                      </Typography>
+                      <ShareholdingLineChart
+                        data={[shareholdings.series[3]]}
+                        categories={shareholdings.categories}
+                        lineColors={["#4dd0e1"]}
                       />
                     </Box>
                   </Box>
@@ -1241,7 +1250,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="EPS"
               title="Earning Per Share (EPS)"
-              data={data?.screener?.epsQuarterly}
+              data={data?.screener?.epsQuarterly || data?.screener?.epsYearly}
               dialogtype="eps"
               handleItemClick={handleItemClick}
             />
@@ -1250,7 +1259,7 @@ export default function Financials({ data }: any) {
             <FinancialCard
               title="Net Asset Value (NAV)"
               titleShort="NAV"
-              data={data?.screener?.navQuarterly}
+              data={data?.screener?.navQuarterly || data?.screener?.navYearly}
               dialogtype="nav"
               handleItemClick={handleItemClick}
             />
@@ -1348,7 +1357,9 @@ export default function Financials({ data }: any) {
             <FinancialCard
               titleShort="NOCFPS"
               title="NOCFPS"
-              data={data?.screener?.nocfpsQuarterly}
+              data={
+                data?.screener?.nocfpsQuarterly || data?.screener?.nocfpsYearly
+              }
               dialogtype="nocfps"
               handleItemClick={handleItemClick}
             />

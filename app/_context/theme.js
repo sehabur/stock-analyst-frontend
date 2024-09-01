@@ -68,6 +68,11 @@ const defaultSettings = {
       fontSize: ".875rem",
       fontWeight: 500,
     },
+    number: {
+      fontSize: ".875rem",
+      fontWeight: 500,
+      fontFamily: "'Nunito Sans', sans-serif",
+    },
   },
   components: {
     MuiButton: {
@@ -82,6 +87,15 @@ const defaultSettings = {
       styleOverrides: (themeParam) => ({
         body: themeParam.palette.mode === "dark" ? darkScrollbar() : null,
       }),
+    },
+    MuiTextField: {
+      defaultProps: {
+        SelectProps: {
+          MenuProps: {
+            disableScrollLock: true, // Prevent scroll locking when dropdown is open
+          },
+        },
+      },
     },
   },
 };
@@ -110,7 +124,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     ...darkPalleteColors,
-    secondaryBackground: "#151515",
+    secondaryBackground: "#212121",
     financePageBgcolor: "#17171780",
     financeCardTitlecolor: "#212121",
     chartGridColor: "#494949",

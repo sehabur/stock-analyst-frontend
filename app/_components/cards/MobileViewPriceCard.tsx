@@ -66,6 +66,7 @@ export default function MobileViewPriceCard({ item }: any) {
                 <Chip
                   label="Halt"
                   size="small"
+                  variant="outlined"
                   color={item.haltStatus === "buy" ? "success" : "error"}
                   sx={{
                     ml: 1,

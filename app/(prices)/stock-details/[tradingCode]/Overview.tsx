@@ -344,6 +344,7 @@ export default function Overview({ stock }: any) {
             borderRadius: 4,
             bgcolor: "secondaryBackground",
           }}
+          // elevation={0}
           variant="outlined"
         >
           <Box
@@ -817,7 +818,10 @@ export default function Overview({ stock }: any) {
           </Grid>
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              {`EPS (${stock.fundamentals.screener?.epsQuarterly.period})`}
+              {`EPS (${
+                stock.fundamentals.screener?.epsQuarterly?.period ||
+                stock.fundamentals.screener?.epsYearly?.period
+              })`}
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
@@ -827,13 +831,17 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.screener?.epsQuarterly.value}
+                {stock.fundamentals.screener?.epsQuarterly?.value ||
+                  stock.fundamentals.screener?.epsYearly?.value}
               </Typography>
             </Stack>
           </Grid>
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              {`NAV (${stock.fundamentals.screener?.navQuarterly.period})`}
+              {`NAV (${
+                stock.fundamentals.screener?.navQuarterly?.period ||
+                stock.fundamentals.screener?.navYearly?.period
+              })`}
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
@@ -843,7 +851,8 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.screener?.navQuarterly.value}
+                {stock.fundamentals.screener?.navQuarterly?.value ||
+                  stock.fundamentals.screener?.navYearly?.value}
               </Typography>
             </Stack>
           </Grid>

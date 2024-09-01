@@ -25,7 +25,7 @@ export default function Page() {
             fontSize: "1.6rem",
             fontWeight: 500,
             textAlign: "center",
-            mt: 2,
+            mt: 1,
           }}
         >
           My Favorites

@@ -84,9 +84,19 @@ export default function FundamentalsDialogContent(props: any) {
               >
                 Quarterly
               </Typography>
-              {quarterlyData && (
+              {quarterlyData ? (
                 <Box>
                   <QuarterlyColumnChart data={quarterlyData} />
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    ml: 2,
+                    mt: 1,
+                    mb: 4,
+                  }}
+                >
+                  <Typography>No data available</Typography>
                 </Box>
               )}
             </>

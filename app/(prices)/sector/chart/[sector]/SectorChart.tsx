@@ -2,7 +2,7 @@
 import React from "react";
 import { DateTime } from "luxon";
 
-import { Box, useTheme, useMediaQuery } from "@mui/material";
+import { Box, useTheme, useMediaQuery, Button } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import { styled } from "@mui/material/styles";
 import ToggleButtonGroup, {
@@ -87,7 +87,7 @@ const formatCandleChartData = (data: any) => {
 };
 
 export default function SectorChart({ data }: any) {
-  const [alignment, setAlignment] = React.useState("daily");
+  const [alignment, setAlignment] = React.useState("minute");
 
   const theme = useTheme();
 
@@ -126,7 +126,7 @@ export default function SectorChart({ data }: any) {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4, mb: 2 }}>
         <StyledToggleButtonGroup
           size="small"
           value={alignment}
@@ -152,7 +152,7 @@ export default function SectorChart({ data }: any) {
           </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
-      <Box sx={{ mt: 4, mb: 4 }}>
+      <Box sx={{ mb: 2 }}>
         {alignment === "minute" && (
           <Box>
             <AreaChart

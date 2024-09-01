@@ -104,7 +104,7 @@ export default async function StockDetails({ params }: any) {
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: { xs: "flex-start", sm: "space-between" },
-            bgcolor: "secondaryBackground",
+            bgcolor: "financeCardTitlecolor",
             pt: { xs: 3, sm: 4 },
             pb: { xs: 4, sm: 4 },
             borderRadius: { xs: 0, sm: 4 },

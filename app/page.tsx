@@ -165,7 +165,7 @@ export default async function Home() {
       <Divider />
       <FAQ /> */}
 
-      <Box sx={{ maxWidth: "1250px", mx: "auto", pt: { xs: 2, sm: 4 } }}>
+      <Box sx={{ maxWidth: "1250px", mx: "auto", pt: { xs: 2, sm: 2 } }}>
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sm={7.5}>
             <Box sx={{ bgcolor: "background.default" }}>
