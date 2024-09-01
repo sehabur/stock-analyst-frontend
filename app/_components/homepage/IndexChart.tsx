@@ -208,7 +208,7 @@ export default function IndexChart({ indexData }: any) {
         <Grid item xs={12} sm={6}>
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
-              variant="number"
+              variant="body2"
               sx={{
                 fontSize: { xs: "1.8rem", sm: "2.3rem" },
                 color: textColor,
@@ -317,7 +317,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="number"
+              variant="body2"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalVolume / 10000000)?.toFixed(2)}
@@ -338,7 +338,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="number"
+              variant="body2"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {(indexData?.latest.totalValue / 10)?.toFixed(2)}
@@ -359,7 +359,7 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="number"
+              variant="body2"
               sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
             >
               {indexData?.latest.totalTrade?.toFixed(0)}

@@ -53,12 +53,6 @@ const darkPalleteColors = {
     dark: "#00713f",
     contrastText: "#fff",
   },
-  // secondary: {
-  //   main: "#ed6c02",
-  //   light: "#ff9800",
-  //   dark: "#e65100",
-  //   contrastText: "#fff",
-  // },
 };
 
 const defaultSettings = {
@@ -68,10 +62,12 @@ const defaultSettings = {
       fontSize: ".875rem",
       fontWeight: 500,
     },
-    number: {
+    body2: {
       fontSize: ".875rem",
       fontWeight: 500,
       fontFamily: "'Nunito Sans', sans-serif",
+      lineHeight: 1.5,
+      letterSpacing: "0.00938em",
     },
   },
   components: {
@@ -92,7 +88,7 @@ const defaultSettings = {
       defaultProps: {
         SelectProps: {
           MenuProps: {
-            disableScrollLock: true, // Prevent scroll locking when dropdown is open
+            disableScrollLock: true,
           },
         },
       },
