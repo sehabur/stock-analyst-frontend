@@ -3,7 +3,7 @@ import BlockTransection from "./BlockTransection";
 
 const getBlockTr = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/blockTr/all?limit=250`,
+    `${process.env.BACKEND_URL}/api/prices/blockTr/lastday`,
     {
       next: { revalidate: 0 },
     }
@@ -14,8 +14,32 @@ const getBlockTr = async () => {
   return res.json();
 };
 
+function getBlockTrSummary(data: any) {
+  let quantity = 0;
+  let value = 0;
+  let trades = 0;
+  let scripts = 0;
+  for (let row of data) {
+    quantity += row.quantity;
+    value += row.value;
+    trades += row.trades;
+    scripts++;
+  }
+  return {
+    quantity,
+    value,
+    trades,
+    scripts,
+  };
+}
+
 export default async function BlockTr() {
   const data = await getBlockTr();
+
+  const summary = getBlockTrSummary(data);
+
+  const date = data.length > 0 && data[0]?.date;
+
   return (
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
@@ -38,7 +62,7 @@ export default async function BlockTr() {
         >
           Block Transections
         </Typography>
-        <BlockTransection data={data} />
+        <BlockTransection data={data} summary={summary} date={date} />
       </Box>
     </Box>
   );

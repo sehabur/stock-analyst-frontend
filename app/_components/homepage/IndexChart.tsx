@@ -208,11 +208,11 @@ export default function IndexChart({ indexData }: any) {
         <Grid item xs={12} sm={6}>
           <Stack direction="row" alignItems="center" justifyContent="center">
             <Typography
-              variant="body2"
               sx={{
                 fontSize: { xs: "1.8rem", sm: "2.3rem" },
                 color: textColor,
                 fontWeight: 700,
+                fontFamily: "'Nunito Sans', sans-serif",
               }}
             >
               {indexData?.latest[alignment].index.toFixed(2)}
@@ -317,8 +317,11 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="body2"
-              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
+              sx={{
+                fontSize: { xs: "1.2rem", sm: "1.7rem" },
+                fontWeight: 700,
+                fontFamily: "'Nunito Sans', sans-serif",
+              }}
             >
               {(indexData?.latest.totalVolume / 10000000)?.toFixed(2)}
             </Typography>
@@ -338,8 +341,11 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="body2"
-              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
+              sx={{
+                fontSize: { xs: "1.2rem", sm: "1.7rem" },
+                fontWeight: 700,
+                fontFamily: "'Nunito Sans', sans-serif",
+              }}
             >
               {(indexData?.latest.totalValue / 10)?.toFixed(2)}
             </Typography>
@@ -359,8 +365,11 @@ export default function IndexChart({ indexData }: any) {
           <Stack direction="row" alignItems="baseline">
             <Typography
               color="text.primary"
-              variant="body2"
-              sx={{ fontSize: { xs: "1.2rem", sm: "1.7rem" }, fontWeight: 700 }}
+              sx={{
+                fontSize: { xs: "1.2rem", sm: "1.7rem" },
+                fontWeight: 700,
+                fontFamily: "'Nunito Sans', sans-serif",
+              }}
             >
               {indexData?.latest.totalTrade?.toFixed(0)}
             </Typography>

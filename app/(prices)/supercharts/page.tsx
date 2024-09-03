@@ -4,7 +4,7 @@ import TradingviewChart from "./TradingviewChart";
 
 async function getGainerLoserData() {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/allGainerLoser`,
+    `${process.env.BACKEND_URL}/api/prices/topGainerLoser`,
     {
       next: { revalidate: 0 },
     }

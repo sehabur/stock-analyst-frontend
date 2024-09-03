@@ -10,8 +10,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box, Typography, Paper } from "@mui/material";
+import SummaryCard from "./SummaryCard";
 
-export default function BlockTransection({ data }: any) {
+export default function BlockTransection({ data, summary, date }: any) {
   return (
     <Box
       sx={{
@@ -20,6 +21,9 @@ export default function BlockTransection({ data }: any) {
         py: 4,
       }}
     >
+      <Box>
+        <SummaryCard summary={summary} date={date} />
+      </Box>
       <TableContainer
         component={Paper}
         variant="outlined"
@@ -38,11 +42,11 @@ export default function BlockTransection({ data }: any) {
             >
               <TableCell>Date</TableCell>
               <TableCell>Trading Code</TableCell>
-              <TableCell align="right">Value (Mn)</TableCell>
-              <TableCell align="right">Volume</TableCell>
-              <TableCell align="right">Trades</TableCell>
-              <TableCell align="right">Max Price</TableCell>
-              <TableCell align="right">Min Price</TableCell>
+              <TableCell>Value (Mn)</TableCell>
+              <TableCell>Volume</TableCell>
+              <TableCell>Trades</TableCell>
+              <TableCell>Max Price</TableCell>
+              <TableCell>Min Price</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,11 +79,11 @@ export default function BlockTransection({ data }: any) {
                     {row.tradingCode}
                   </Typography>
                 </TableCell>
-                <TableCell align="right">{row.value}</TableCell>
-                <TableCell align="right">{row.quantity}</TableCell>
-                <TableCell align="right">{row.trades}</TableCell>
-                <TableCell align="right">{row.maxPrice}</TableCell>
-                <TableCell align="right">{row.minPrice}</TableCell>
+                <TableCell>{row.value}</TableCell>
+                <TableCell>{row.quantity}</TableCell>
+                <TableCell>{row.trades}</TableCell>
+                <TableCell>{row.maxPrice}</TableCell>
+                <TableCell>{row.minPrice}</TableCell>
               </TableRow>
             ))}
           </TableBody>

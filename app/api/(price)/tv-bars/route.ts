@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const urlParameters = request.nextUrl.searchParams;
+    const urlParameters: any = request.nextUrl.searchParams;
 
     const params = [
       "exchange",
@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
     ];
 
     const query = params
-      .map((name: string) => `${name}=${urlParameters.get(name)}`)
+      .map(
+        (name: string) =>
+          `${name}=${encodeURIComponent(urlParameters.get(name))}`
+      )
       .join("&");
 
     const res = await fetch(

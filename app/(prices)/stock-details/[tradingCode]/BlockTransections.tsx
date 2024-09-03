@@ -48,11 +48,11 @@ export default function BlockTransections({ blocktr }: any) {
               }}
             >
               <TableCell>DATE</TableCell>
-              <TableCell align="right">TRADES</TableCell>
-              <TableCell align="right">VOLUME</TableCell>
-              <TableCell align="right">VALUE (CRORE)</TableCell>
-              <TableCell align="right">MAX PRICE</TableCell>
-              <TableCell align="right">MIN PRICE</TableCell>
+              <TableCell>VALUE (CRORE)</TableCell>
+              <TableCell>VOLUME</TableCell>
+              <TableCell>TRADES</TableCell>
+              <TableCell>MAX PRICE</TableCell>
+              <TableCell>MIN PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -76,11 +76,11 @@ export default function BlockTransections({ blocktr }: any) {
                 <TableCell sx={{ minWidth: 90 }}>
                   {DateTime.fromISO(row.date).toFormat("dd MMM")}
                 </TableCell>
-                <TableCell align="right">{row.trades}</TableCell>
-                <TableCell align="right">{row.quantity}</TableCell>
-                <TableCell align="right">{row.value}</TableCell>
-                <TableCell align="right">{row.maxPrice}</TableCell>
-                <TableCell align="right">{row.minPrice}</TableCell>
+                <TableCell>{row.value}</TableCell>
+                <TableCell>{row.quantity}</TableCell>
+                <TableCell>{row.trades}</TableCell>
+                <TableCell>{row.maxPrice}</TableCell>
+                <TableCell>{row.minPrice}</TableCell>
               </TableRow>
             ))}
           </TableBody>

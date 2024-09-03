@@ -61,14 +61,15 @@ const defaultSettings = {
     body1: {
       fontSize: ".875rem",
       fontWeight: 500,
+      fontFamily: "'DM Sans', sans-serif",
     },
-    body2: {
-      fontSize: ".875rem",
-      fontWeight: 500,
-      fontFamily: "'Nunito Sans', sans-serif",
-      lineHeight: 1.5,
-      letterSpacing: "0.00938em",
-    },
+    // body2: {
+    //   fontSize: ".875rem",
+    //   fontWeight: 500,
+    //   fontFamily: "'Nunito Sans', sans-serif",
+    //   lineHeight: 1.5,
+    //   letterSpacing: "0.00938em",
+    // },
   },
   components: {
     MuiButton: {

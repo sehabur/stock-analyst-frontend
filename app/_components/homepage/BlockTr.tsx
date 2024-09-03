@@ -127,8 +127,8 @@ export default function BlockTr({ data }: any) {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">{row.value}</TableCell>
-                  <TableCell align="right">{row.trades}</TableCell>
                   <TableCell align="right">{row.quantity}</TableCell>
+                  <TableCell align="right">{row.trades}</TableCell>
                   <TableCell align="right">{row.maxPrice}</TableCell>
                   <TableCell align="right">{row.minPrice}</TableCell>
                 </TableRow>
