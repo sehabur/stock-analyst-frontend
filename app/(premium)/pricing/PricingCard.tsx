@@ -24,7 +24,8 @@ export default function PricingCard({ data, type }: any) {
       elevation={6}
     >
       <CardContent sx={{ p: 0 }}>
-        <Box component={Link} href="/verify-phone?type=premium_package">
+        {/* <Box component={Link} href="/verify-phone?type=premium_package"> */}
+        <Box component={Link} href="/checkout">
           <Box sx={{ bgcolor: "warning.dark" }}>
             <Typography
               gutterBottom

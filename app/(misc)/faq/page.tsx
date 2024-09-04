@@ -17,7 +17,7 @@ export default async function FaqPage() {
             color="text.secondary"
             gutterBottom
             sx={{
-              fontSize: "1.8rem",
+              fontSize: "1.6rem",
               fontWeight: 500,
               textAlign: "center",
             }}

@@ -1,4 +1,4 @@
-import { terms } from "@/data/info";
+import { privacy, terms } from "@/data/info";
 import { Box, Typography } from "@mui/material";
 
 export default async function Terms() {
@@ -16,13 +16,13 @@ export default async function Terms() {
           color="text.secondary"
           gutterBottom
           sx={{
-            fontSize: "1.8rem",
+            fontSize: "1.6rem",
             fontWeight: 500,
             textAlign: "center",
             mt: 2,
           }}
         >
-          Privacy policy
+          Privacy Policy
         </Typography>
 
         <Box
@@ -43,7 +43,7 @@ export default async function Terms() {
               textAlign: { xs: "left", sm: "justify" },
             }}
           >
-            {terms}
+            {privacy}
           </Typography>
         </Box>
       </Box>

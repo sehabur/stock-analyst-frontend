@@ -18,7 +18,7 @@ export default async function Terms() {
           color="text.primary"
           gutterBottom
           sx={{
-            fontSize: "1.8rem",
+            fontSize: "1.6rem",
             fontWeight: 500,
             textAlign: "center",
             mt: 2,

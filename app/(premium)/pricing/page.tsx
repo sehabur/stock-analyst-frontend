@@ -97,7 +97,7 @@ export default function Price() {
           mx: "auto",
         }}
       >
-        <FreeTrialCard />
+        {/* <FreeTrialCard /> */}
         {packages.map((item: any, index: number) => (
           <PricingCard data={item} key={index} />
         ))}

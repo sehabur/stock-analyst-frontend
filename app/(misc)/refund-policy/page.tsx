@@ -1,4 +1,4 @@
-import { terms } from "@/data/info";
+import { refunds, terms } from "@/data/info";
 import { Box, Typography } from "@mui/material";
 
 export default async function Terms() {
@@ -22,7 +22,7 @@ export default async function Terms() {
             mt: 2,
           }}
         >
-          Terms and Conditions
+          Refund Policy
         </Typography>
 
         <Box
@@ -43,7 +43,7 @@ export default async function Terms() {
               textAlign: { xs: "left", sm: "justify" },
             }}
           >
-            {terms}
+            {refunds}
           </Typography>
         </Box>
       </Box>

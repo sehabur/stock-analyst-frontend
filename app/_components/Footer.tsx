@@ -89,6 +89,17 @@ export default function Footer() {
               <Typography color="text.primary">
                 Email: support@stocksupporter.com
               </Typography>
+              <Box sx={{ mt: 2 }}>
+                <img
+                  src="/images/ssl-footer.jpg"
+                  style={{
+                    width: "auto",
+                    height: "60px",
+                    marginLeft: "-4px",
+                  }}
+                  alt="logo of stocksupporter"
+                />
+              </Box>
             </Box>
           </Box>
           <Box
@@ -135,6 +146,9 @@ export default function Footer() {
             <Link color="text.secondary" variant="body2" href="/aboutus">
               About us
             </Link>
+            {/* <Link color="text.secondary" variant="body2" href="/contactus">
+              Contact us
+            </Link> */}
             <Link color="text.secondary" variant="body2" href="/faq">
               FAQs
             </Link>
@@ -154,10 +168,13 @@ export default function Footer() {
               Legal
             </Typography>
             <Link color="text.secondary" variant="body2" href="/terms">
-              Terms of service
+              Terms and Conditions
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Privacy policy
+            <Link color="text.secondary" variant="body2" href="/privacy-policy">
+              Privacy Policy
+            </Link>
+            <Link color="text.secondary" variant="body2" href="/refund-policy">
+              Refund Policy
             </Link>
           </Box>
         </Box>
@@ -174,16 +191,6 @@ export default function Footer() {
         >
           <Box>
             <Box sx={{ display: { xs: "block", sm: "none" }, mt: 0.8 }}>
-              <Link color="text.secondary" variant="body2" href="#">
-                Privacy Policy
-              </Link>
-              <Typography
-                display="inline"
-                sx={{ mx: 0.5, opacity: 0.5 }}
-                color="text.secondary"
-              >
-                &nbsp;•&nbsp;
-              </Typography>
               <Link color="text.secondary" variant="body2" href="/aboutus">
                 About us
               </Link>
@@ -194,8 +201,36 @@ export default function Footer() {
               >
                 &nbsp;•&nbsp;
               </Typography>
+              <Link
+                color="text.secondary"
+                variant="body2"
+                href="/privacy-policy"
+              >
+                Privacy Policy
+              </Link>
+              <Typography
+                display="inline"
+                sx={{ mx: 0.5, opacity: 0.5 }}
+                color="text.secondary"
+              >
+                &nbsp;•&nbsp;
+              </Typography>
               <Link color="text.secondary" variant="body2" href="/terms">
-                Terms of Service
+                Terms and Conditions
+              </Link>
+              <Typography
+                display="inline"
+                sx={{ mx: 0.5, opacity: 0.5 }}
+                color="text.secondary"
+              >
+                &nbsp;•&nbsp;
+              </Typography>
+              <Link
+                color="text.secondary"
+                variant="body2"
+                href="/refund-policy"
+              >
+                Refund Policy
               </Link>
               <Typography
                 display="inline"
