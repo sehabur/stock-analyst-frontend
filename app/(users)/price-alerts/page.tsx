@@ -34,6 +34,7 @@ export default function Page() {
             fontWeight: 500,
             textAlign: "center",
             mt: 4,
+            color: "text.primary",
           }}
         >
           Use our mobile app to avail this feature

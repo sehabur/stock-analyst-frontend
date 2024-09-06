@@ -24,10 +24,10 @@ export default function PremiumDialogContent(props: any) {
   return (
     <>
       <DialogContent>
-        <Box sx={{ maxWidth: "700px", mx: "auto", py: 2 }}>
+        <Box sx={{ maxWidth: 480, mx: "auto", py: { xs: 2, sm: 4 } }}>
           <Stack direction="row" alignItems="center" gap={2}>
-            <Box>
-              <Avatar sx={{ width: 60, height: 60 }}>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Avatar sx={{ width: 70, height: 70 }}>
                 <WorkspacePremiumRoundedIcon sx={{ fontSize: 42 }} />
               </Avatar>
             </Box>
@@ -38,7 +38,7 @@ export default function PremiumDialogContent(props: any) {
                   fontSize: "1.8rem",
                   fontWeight: 700,
                   color: "text.primary",
-                  lineHeight: 1.1,
+                  lineHeight: 1,
                 }}
                 gutterBottom
               >
@@ -46,9 +46,10 @@ export default function PremiumDialogContent(props: any) {
               </Typography>
               <Typography
                 sx={{
-                  fontSize: "1rem",
+                  fontSize: ".9rem",
                   fontWeight: 500,
                   color: "text.primary",
+                  maxWidth: 280,
                 }}
               >
                 Please subscribe to premium package to access this feature
@@ -57,7 +58,7 @@ export default function PremiumDialogContent(props: any) {
           </Stack>
 
           <Box sx={{ mt: 4, mb: 4 }}>
-            <Typography sx={{ fontSize: "1rem" }}>
+            <Typography sx={{ fontSize: "1rem", color: "text.secondary" }}>
               Elevate your investing potential with a Premium membership. Gain
               personalised and actionable insights with enhanced features to
               maximise your investments!
@@ -75,7 +76,7 @@ export default function PremiumDialogContent(props: any) {
             </Button> */}
             <Button
               variant="contained"
-              sx={{ py: 1, px: 4, fontSize: "1.1rem", borderRadius: 1 }}
+              sx={{ py: 1.5, px: 2.5, fontSize: "1.1rem", borderRadius: 2 }}
               component={Link}
               fullWidth={matchesSmDown}
               href={auth?.isLoggedIn ? "/pricing" : "/signup?redirect=/pricing"}

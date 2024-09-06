@@ -25,29 +25,29 @@ const authSlice = createSlice({
       return newState;
     },
 
-    addItemToFavorite: (state: any, { payload }) => {
-      const newState = {
-        ...state,
-        favorites: [...state.favorites, payload],
-      };
+    // addItemToFavorite: (state: any, { payload }) => {
+    //   const newState = {
+    //     ...state,
+    //     favorites: [...state.favorites, payload],
+    //   };
 
-      localStorage.setItem("userInfo", JSON.stringify(newState));
+    //   localStorage.setItem("userInfo", JSON.stringify(newState));
 
-      return newState;
-    },
+    //   return newState;
+    // },
 
-    removeItemFromFavorite: (state: any, { payload }) => {
-      // const userDataFromLocal = localStorage.getItem("userInfo");
+    // removeItemFromFavorite: (state: any, { payload }) => {
+    //   // const userDataFromLocal = localStorage.getItem("userInfo");
 
-      const newState = {
-        ...state,
-        favorites: state.favorites.filter((item: string) => item !== payload),
-      };
+    //   const newState = {
+    //     ...state,
+    //     favorites: state.favorites.filter((item: string) => item !== payload),
+    //   };
 
-      localStorage.setItem("userInfo", JSON.stringify(newState));
+    //   localStorage.setItem("userInfo", JSON.stringify(newState));
 
-      return newState;
-    },
+    //   return newState;
+    // },
 
     resetFavoritesWithNewValue: (state: any, { payload }) => {
       const newState = {

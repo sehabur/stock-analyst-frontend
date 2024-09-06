@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { authActions } from "_store";
+import { favoriteActions } from "_store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { styled, alpha } from "@mui/material/styles";
@@ -10,18 +10,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, useTheme } from "@mui/material";
 
 import Snackbar from "@mui/material/Snackbar/Snackbar";
+import ToastMessage from "../shared/ToastMessage";
 
 export default function FavoriteButton({ tradingCode }: any) {
   const dispatch = useDispatch();
+
   const theme: any = useTheme();
 
   const auth = useSelector((state: any) => state.auth);
 
-  const checkFav = auth?.favorites?.includes(tradingCode);
+  const favorite = useSelector((state: any) => state.favorite);
 
-  const [isFavorite, setIsFavorite] = React.useState(checkFav);
+  const [isFavorite, setIsFavorite] = React.useState(
+    favorite?.includes(tradingCode)
+  );
 
-  const [message, setMessage] = React.useState("");
+  const [toastMessage, setToastMessage] = React.useState({
+    text: "",
+    severity: "success",
+  });
 
   const [openToast, setOpenToast] = React.useState(false);
 
@@ -37,7 +44,10 @@ export default function FavoriteButton({ tradingCode }: any) {
 
   const handleFavorite = async (favorite: any) => {
     if (!auth?.isLoggedIn) {
-      setMessage("Please login to save favorites");
+      setToastMessage({
+        text: "Please login to save favorites",
+        severity: "error",
+      });
       setOpenToast(true);
       return;
     }
@@ -61,38 +71,32 @@ export default function FavoriteButton({ tradingCode }: any) {
       });
       const data = await res.json();
 
-      setMessage(data.message);
+      setToastMessage({
+        text: data.message,
+        severity: "success",
+      });
 
       favorite
-        ? dispatch(authActions.addItemToFavorite(tradingCode))
-        : dispatch(authActions.removeItemFromFavorite(tradingCode));
+        ? dispatch(favoriteActions.addItemToFavorite(tradingCode))
+        : dispatch(favoriteActions.removeItemFromFavorite(tradingCode));
 
       setOpenToast(true);
     } catch (error) {
-      setMessage("Something went wrong");
+      setToastMessage({
+        text: "Something went wrong",
+        severity: "error",
+      });
     }
   };
 
   return (
     <>
-      <Snackbar
+      <ToastMessage
         open={openToast}
-        autoHideDuration={6000}
         onClose={handleToastClose}
-        message={message}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            sx={{ p: 0.5 }}
-            onClick={handleToastClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        }
+        severity={toastMessage.severity}
+        message={toastMessage.text}
       />
-
       <IconButton
         aria-label="delete"
         size="small"

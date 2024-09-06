@@ -4,18 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {
   Box,
-  Snackbar,
   TextField,
   Button,
   List,
   ListItem,
   ListItemText,
   Autocomplete,
-  useTheme,
-  useMediaQuery,
   IconButton,
-  ListItemAvatar,
-  Avatar,
   ListItemIcon,
   DialogTitle,
   DialogContent,
@@ -30,7 +25,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 
 import FavoriteStocksCard from "@/components/cards/FavoriteStocksCard";
-import { authActions } from "_store";
+import { favoriteActions } from "_store";
 import ToastMessage from "@/components/shared/ToastMessage";
 
 export default function Favorites() {
@@ -38,15 +33,17 @@ export default function Favorites() {
 
   const auth = useSelector((state: any) => state.auth);
 
+  const favorite = useSelector((state: any) => state.favorite);
+
   const latestPrice = useSelector((state: any) => state.latestPrice);
 
   const [favStock, setFavStock] = React.useState<any>([]);
 
-  const [favStockCard, setFavStockCard] = React.useState([]);
+  const [favStockCard, setFavStockCard] = React.useState<any>(null);
 
-  const [toastOpen, setToastOpen] = React.useState(false);
+  const [toastOpen, setToastOpen] = React.useState<boolean>(false);
 
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = React.useState<boolean>(false);
 
   const [toastMessage, setToastMessage] = React.useState("");
 
@@ -63,7 +60,6 @@ export default function Favorites() {
   };
 
   const handleDeleteItem = (tradingCode: string) => {
-    // const newFav = favStock.filter((item: any) => item.tradingCode !== tradingCode);
     setFavStock((prevstate: any) =>
       prevstate.filter((item: any) => item.tradingCode !== tradingCode)
     );
@@ -85,11 +81,19 @@ export default function Favorites() {
           userId: auth?._id,
         }),
       });
+
       const data = await res.json();
-      dispatch(authActions.resetFavoritesWithNewValue(addItems));
-      setToastOpen(true);
-      setToastMessage("Items successfully added to favorites");
-      setFavStockCard(favStock);
+
+      if (res.ok) {
+        dispatch(favoriteActions.resetFavoritesWithNewValue(addItems));
+        setToastOpen(true);
+        setToastMessage(data.message);
+        setFavStockCard(favStock);
+      } else {
+        setToastOpen(true);
+        setToastMessage("Something went wrong");
+      }
+
       handleDialogClose();
     } catch (error) {
       setToastOpen(true);
@@ -100,11 +104,11 @@ export default function Favorites() {
 
   React.useEffect(() => {
     const favs = latestPrice.filter((item: any) =>
-      auth.favorites.includes(item.tradingCode)
+      favorite.includes(item.tradingCode)
     );
     setFavStock(favs);
     setFavStockCard(favs);
-  }, [auth, latestPrice]);
+  }, [favorite, latestPrice]);
 
   return (
     <Box
@@ -201,33 +205,37 @@ export default function Favorites() {
         </Button>
       </Box>
       <Box>
-        {favStockCard?.map((stock: any, index: number) => (
-          <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
-            <FavoriteStocksCard data={stock} />
-          </Box>
-        ))}
+        {favStockCard &&
+          favStockCard.map((stock: any, index: number) => (
+            <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
+              <FavoriteStocksCard data={stock} />
+            </Box>
+          ))}
+        {favStockCard && favStockCard.length < 1 && (
+          <>
+            <Box sx={{ textAlign: "center", py: 4, px: 1 }}>
+              <Typography
+                color="text.primary"
+                sx={{ fontSize: "1.3rem", mb: 2 }}
+              >
+                No items in favorite
+              </Typography>
+              <Typography color="text.primary" sx={{ fontSize: "1rem" }}>
+                Add your favorite and target items in your favorite list to
+                track them with ease
+              </Typography>{" "}
+              <Button
+                sx={{ mt: 2 }}
+                variant="outlined"
+                onClick={() => setDialogOpen(true)}
+                startIcon={<AddRoundedIcon />}
+              >
+                Add items
+              </Button>
+            </Box>
+          </>
+        )}
       </Box>
-      {favStockCard.length < 1 && (
-        <>
-          <Box sx={{ textAlign: "center", py: 4, px: 1 }}>
-            <Typography color="text.primary" sx={{ fontSize: "1.3rem", mb: 2 }}>
-              No items in favorite
-            </Typography>
-            <Typography color="text.primary" sx={{ fontSize: "1rem" }}>
-              Add your favorite and target items in your favorite list to track
-              them with ease
-            </Typography>{" "}
-            <Button
-              sx={{ mt: 2 }}
-              variant="outlined"
-              onClick={() => setDialogOpen(true)}
-              startIcon={<AddRoundedIcon />}
-            >
-              Add items
-            </Button>
-          </Box>
-        </>
-      )}
     </Box>
   );
 }

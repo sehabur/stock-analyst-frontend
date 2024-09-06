@@ -54,7 +54,12 @@ import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRou
 import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
 import { TransitionProps } from "@mui/material/transitions";
 
-import { authActions, latestPriceActions, themeColorActions } from "_store";
+import {
+  authActions,
+  favoriteActions,
+  latestPriceActions,
+  themeColorActions,
+} from "_store";
 import ToastMessage from "@/components/shared/ToastMessage";
 import SearchStockCard from "./cards/SearchStockCard";
 import SigninDialogContent from "./shared/SigninDialogContent";
@@ -255,6 +260,26 @@ export default function Header() {
     dispatch(latestPriceActions.setData(initdata));
   };
 
+  const getFavorites = async () => {
+    if (!auth) return;
+
+    const res = await fetch(`/api/favorite?user=${auth?._id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth?.token}`,
+      },
+      next: { revalidate: 0 },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const initdata = await res.json();
+
+    dispatch(favoriteActions.setData(initdata.favorites));
+  };
+
   const externalDialogClose = () => {
     handleSigninDialogClose();
   };
@@ -281,6 +306,10 @@ export default function Header() {
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {
+    getFavorites();
+  }, [auth]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -341,7 +370,7 @@ export default function Header() {
       <Button
         // component={Link}
         // href="/alerts"
-        onClick={() => handleUserPopoverClose("/alerts", true)}
+        onClick={() => handleUserPopoverClose("/price-alerts", true)}
         startIcon={<NotificationsNoneRoundedIcon color="primary" />}
         sx={{
           py: 1,
@@ -355,7 +384,7 @@ export default function Header() {
         }}
         disableRipple
       >
-        Alerts
+        Price alerts
       </Button>
       <Divider light />
       <Button
