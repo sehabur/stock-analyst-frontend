@@ -126,12 +126,12 @@ export default function MarketDepth(props: any) {
 
   const getData = async () => {
     try {
-      setIsLoading(true);
-
       if (marketOpenStatus === "Closed") {
         setMarketDepthData(null);
         return;
       }
+
+      setIsLoading(true);
 
       const res = await fetch(`/api/market-depth?code=${tradingCode}`, {
         next: { revalidate: 0 },

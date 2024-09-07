@@ -266,6 +266,7 @@ export default function Trades(props: any) {
           fontWeight: 700,
           mb: { xs: 1, sm: 0 },
           bgcolor: alpha(theme.palette.primary.main, 0.1),
+          maxWidth: 475,
         }}
         severity="info"
         onClick={handleClick}
