@@ -847,7 +847,7 @@ export default function Header() {
               style={{
                 width: "auto",
                 marginTop: "5px",
-                height: matchesSmUp ? "40px" : "35px",
+                height: "35px",
                 cursor: "pointer",
               }}
               alt="logo of stocksupporter"

@@ -51,10 +51,12 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     paddingTop: "4px",
     paddingBottom: "4px",
     paddingRight: "18px",
+    "&.Mui-selected": {
+      color: theme.palette.background.default,
+      backgroundColor: theme.palette.text.secondary,
+    },
   },
   color: theme.palette.text.primary,
-  // fontSize: ".9rem",
-  // textTransform: "none",
 }));
 
 const formatCandleChartData = (data: any) => {
@@ -102,11 +104,10 @@ const formatCandleChartData = (data: any) => {
 };
 
 const calcPercentChange = (current: any, previous: any) => {
-  console.log(current, previous);
-  if (previous == "-") {
+  if (!previous) {
     return {
       text: "-",
-      color: "#2962ff",
+      color: "",
     };
   }
 
@@ -812,7 +813,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.pe.value}
+                {stock.fundamentals?.pe?.value}
               </Typography>
             </Stack>
           </Grid>

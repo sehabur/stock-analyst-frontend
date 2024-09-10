@@ -37,6 +37,11 @@ export default function PieChart(props: any) {
       },
       position: "bottom",
     },
+    dataLabels: {
+      formatter: function (val: any, opts: any) {
+        return val.toFixed(2) + "%";
+      },
+    },
     responsive: [
       {
         breakpoint: 480,

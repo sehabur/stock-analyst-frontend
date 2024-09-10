@@ -252,17 +252,18 @@ export default async function StockDetails({ params }: any) {
                 {"%"}
               </Typography>
 
-              {stock.haltStatus != "none" && (
+              {stock.haltStatus && stock.haltStatus != "none" && (
                 <Box>
                   <Chip
                     label="Halt"
                     size="small"
                     color={stock.haltStatus == "buy" ? "success" : "error"}
                     sx={{
-                      borderRadius: 1,
+                      // borderRadius: 1,
                       mt: -1.3,
-                      fontSize: "1rem",
+                      fontSize: ".9rem",
                       mr: 2,
+                      px: 0.4,
                     }}
                   />
                 </Box>

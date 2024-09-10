@@ -130,7 +130,6 @@ export default function MarketDepth(props: any) {
         setMarketDepthData(null);
         return;
       }
-
       setIsLoading(true);
 
       const res = await fetch(`/api/market-depth?code=${tradingCode}`, {
@@ -160,14 +159,14 @@ export default function MarketDepth(props: any) {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
-        gap: { xs: 6, sm: 12 },
+        gap: { xs: 0, sm: 12 },
         maxWidth: "1250px",
         mx: "auto",
       }}
     >
       <LoadingSpinner open={isLoading} />
       {marketOpenStatus !== "Closed" && (
-        <Box>
+        <Box sx={{ mb: 6 }}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Box sx={{ px: 1.2 }}>
               <Typography
@@ -311,7 +310,7 @@ export default function MarketDepth(props: any) {
         </Box>
       )}
 
-      <Box sx={{ maxWidth: { xs: 380, sm: 600 } }}>
+      <Box sx={{ width: { xs: "90vw", sm: 800 } }}>
         <Stack
           direction="row"
           spacing={{ xs: 1, sm: 3 }}

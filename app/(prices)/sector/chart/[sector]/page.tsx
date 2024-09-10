@@ -8,6 +8,7 @@ import FavoriteButton from "@/components/buttons/FavoriteButton";
 import { DateTime } from "luxon";
 
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
+import Overview from "./Overview";
 
 async function getData(sectorTag: string) {
   const res = await fetch(
@@ -104,8 +105,8 @@ export default async function Sector({ params }: any) {
               variant="h1"
               sx={{
                 color: "text.primary",
-                fontSize: { xs: "1.4rem", sm: "1.6rem" },
-                fontWeight: 700,
+                fontSize: { xs: "1.4rem", sm: "1.8rem" },
+                fontWeight: 500,
               }}
             >
               {sector.name}
@@ -206,6 +207,7 @@ export default async function Sector({ params }: any) {
             </Button>
           </Box>
         </Box>
+
         <Box sx={{ px: 2 }}>
           <Box>
             <Button
@@ -229,6 +231,10 @@ export default async function Sector({ params }: any) {
             <SectorChart data={data} />
           </Box>
 
+          <Box>
+            <Overview data={data} />
+          </Box>
+
           <Box sx={{ px: 2, mb: 4, mt: 4 }}>
             <Box>
               <Typography
@@ -243,7 +249,7 @@ export default async function Sector({ params }: any) {
               container
               alignItems="flex-start"
               justifyContent="flex-start"
-              rowSpacing={2}
+              rowSpacing={3}
               sx={{ mt: 1, ml: 1 }}
             >
               <Grid item xs={6} sm={2.4}>
@@ -372,7 +378,7 @@ export default async function Sector({ params }: any) {
                 </Stack>
               </Grid>
 
-              {/* <Grid item xs={6} sm={2.4} >
+              <Grid item xs={6} sm={2.4}>
                 <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                   52W High
                 </Typography>
@@ -385,13 +391,13 @@ export default async function Sector({ params }: any) {
                     }}
                   >
                     {Math.max(
-                      stock?.lastDay?.oneYearHigh,
-                      stock.latest.ltp
+                      data?.lastDay?.oneYearHigh,
+                      data.latest.ltp
                     )?.toFixed(2) || "--"}
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid item xs={6} sm={2.4} >
+              <Grid item xs={6} sm={2.4}>
                 <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                   52W Low
                 </Typography>
@@ -404,18 +410,19 @@ export default async function Sector({ params }: any) {
                     }}
                   >
                     {Math.min(
-                      stock?.lastDay?.oneYearLow,
-                      stock.latest.ltp
+                      data?.lastDay?.oneYearLow,
+                      data.latest.ltp
                     )?.toFixed(2) || "--"}
                   </Typography>
                 </Stack>
-              </Grid> */}
+              </Grid>
             </Grid>
           </Box>
 
-          <Box sx={{ mt: 6, mb: 6, px: 2 }}>
+          <Box sx={{ pt: { xs: 2, sm: 8 }, pb: 6, px: 2 }}>
             <Typography
-              sx={{ fontSize: "1.3rem", color: "text.primary", mb: 2 }}
+              color="text.primary"
+              sx={{ fontSize: "1.4rem", fontWeight: 700, pb: 2 }}
             >
               Other Sectors
             </Typography>
@@ -438,7 +445,7 @@ export default async function Sector({ params }: any) {
                       px: 2,
                       minWidth: 80,
                       textAlign: "center",
-                      borderRadius: 2,
+                      borderRadius: 1,
                       ":hover": {
                         bgcolor: "secondaryBackground",
                         cursor: "pointer",

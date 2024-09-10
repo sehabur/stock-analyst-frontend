@@ -25,6 +25,29 @@ import Stack from "@mui/material/Stack";
 import AreaChart from "@/components/charts/AreaChart";
 import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 
+// const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+//   [`& .${toggleButtonGroupClasses.grouped}`]: {
+//     marginLeft: "12px",
+//     marginRight: "12px",
+//     border: 0,
+//     borderRadius: 3,
+//   },
+// }));
+// const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
+//   "&.MuiToggleButtonGroup-grouped": {
+//     borderRadius: "24px !important",
+//     marginRight: "16px",
+//     border: `1px solid lightgrey !important`,
+//     paddingLeft: "18px",
+//     paddingTop: "4px",
+//     paddingBottom: "4px",
+//     paddingRight: "18px",
+//   },
+//   color: theme.palette.text.primary,
+//   // fontSize: ".9rem",
+//   // textTransform: "none",
+// }));
+
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
     marginLeft: "12px",
@@ -42,6 +65,10 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     paddingTop: "4px",
     paddingBottom: "4px",
     paddingRight: "18px",
+    "&.Mui-selected": {
+      color: theme.palette.background.default,
+      backgroundColor: theme.palette.text.secondary,
+    },
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",
@@ -93,6 +120,12 @@ const formatCandleChartData = (data: any) => {
 };
 
 const calcPercentChange = (current: any, previous: any) => {
+  if (!previous) {
+    return {
+      text: "-",
+      color: "",
+    };
+  }
   const stockchanged = current === 0 ? false : true;
   const change = stockchanged ? ((current - previous) / previous) * 100 : 0;
   return {
@@ -252,7 +285,7 @@ export default function Overview({ stock }: any) {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: { xs: "space-evenly", sm: "center" },
+            justifyContent: "space-evenly",
             my: 6,
             mx: { xs: 0, sm: 8 },
             py: { xs: 1.5, sm: 3 },
@@ -264,7 +297,7 @@ export default function Overview({ stock }: any) {
         >
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -293,7 +326,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -322,7 +355,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -351,7 +384,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -380,7 +413,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -406,7 +439,7 @@ export default function Overview({ stock }: any) {
           </Box>
           <Box
             sx={{
-              mx: { xs: 2, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -427,7 +460,7 @@ export default function Overview({ stock }: any) {
                 color: percentChangeData.fiveYear.color,
               }}
             >
-              {percentChangeData.fiveYear.text || "--"}
+              {percentChangeData.fiveYear.text}
             </Typography>
           </Box>
         </Paper>
@@ -525,7 +558,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {(stock.latest.volume / 10000000).toFixed(2)}
+                {(stock.latest.value / 10000000).toFixed(2)}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -547,7 +580,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {(stock.latest.value / 10).toFixed(2)}
+                {(stock.latest.volume / 10000000).toFixed(2)}
               </Typography>
               <Typography
                 color="text.secondary"

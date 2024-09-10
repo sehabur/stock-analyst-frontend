@@ -76,7 +76,7 @@ export default function PremiumDialogContent(props: any) {
             </Button> */}
             <Button
               variant="contained"
-              sx={{ py: 1.5, px: 2.5, fontSize: "1.1rem", borderRadius: 2 }}
+              sx={{ py: 1.5, px: 2.5, fontSize: "1.1rem", borderRadius: 1 }}
               component={Link}
               fullWidth={matchesSmDown}
               href={auth?.isLoggedIn ? "/pricing" : "/signup?redirect=/pricing"}

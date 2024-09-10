@@ -313,7 +313,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {rsi || "--"}
+                    {rsi || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -324,7 +324,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {adx || "--"}
+                    {adx || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -333,7 +333,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {stoch || "--"}
+                    {stoch || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -342,7 +342,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {mfi || "--"}
+                    {mfi || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -351,7 +351,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {macd || "--"}
+                    {macd || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -362,7 +362,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {williamR || "--"}
+                    {williamR || "-"}
                   </TableCell>
                 </TableRow>
               </TableBody>

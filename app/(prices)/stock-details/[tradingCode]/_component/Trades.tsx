@@ -265,7 +265,10 @@ export default function Trades(props: any) {
           borderRadius: 1.5,
           fontWeight: 700,
           mb: { xs: 1, sm: 0 },
-          bgcolor: alpha(theme.palette.primary.main, 0.1),
+          bgcolor: alpha(
+            theme.palette.primary.main,
+            theme.palette.mode == "light" ? 0.1 : 0.2
+          ),
           maxWidth: 475,
         }}
         severity="info"
