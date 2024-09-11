@@ -17,26 +17,19 @@ import Footer from "./_components/Footer";
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
 
-export const metadata: Metadata = {
-  title: "Stocksupporter - Stock Analysis Tool for DSE",
-  description:
-    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
-  keywords: [
-    "DSE",
-    "DSEX",
-    "DS30",
-    "DSES",
-    "Dhaka Stock Exchange",
-    "Stocksupporter",
-    "Stock supporter",
-    "Bangladesh stock market",
-  ],
-};
-
 export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
       <head>
+        <title>Stocksupporter - Stock Analysis Tool for DSE</title>
+        <meta
+          name="description"
+          content="Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade."
+        ></meta>
+        <meta
+          name="keywords"
+          content="DSE,DSEX,DS30,DSES,Dhaka Stock Exchange,Stocksupporter,Stock supporter,Bangladesh stock market"
+        ></meta>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
