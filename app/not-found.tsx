@@ -7,7 +7,7 @@ export default function NotFound() {
       component="main"
       sx={{
         bgcolor: "background.default",
-        minHeight: "70vh",
+        height: "100vh",
         color: "text.primary",
       }}
     >

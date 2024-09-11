@@ -89,7 +89,7 @@ const formatData = (data: any) => {
         time: DateTime.fromISO(item.time).toFormat("HH:mm"),
         timeIso: DateTime.fromISO(item.time),
         ltp: item.ltp,
-        value: Number((item.value - prevItem.value).toFixed(2)),
+        value: Number((item.value - prevItem.value).toFixed(3)),
         volume: Number((item.volume - prevItem.volume).toFixed(2)),
         trade: Number((item.trade - prevItem.trade).toFixed(2)),
         type: typeValue.type,
@@ -220,25 +220,27 @@ export default function Trades(props: any) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row: any) => (
-                    <TableRow
-                      hover={true}
-                      sx={{
-                        backgroundColor: row.color + "0a",
-                        ".MuiTableCell-root": {
-                          color: row.color,
-                        },
-                      }}
-                      key={row.id}
-                    >
-                      <TableCell>{row.time}</TableCell>
-                      <TableCell>{row.type}</TableCell>
-                      <TableCell align="right">{row.ltp}</TableCell>
-                      <TableCell align="right">{row.volume}</TableCell>
-                      <TableCell align="right">{row.value}</TableCell>
-                      <TableCell align="right">{row.trade}</TableCell>
-                    </TableRow>
-                  ))}
+                  {rows
+                    .filter((row: any) => row.volume !== 0)
+                    .map((row: any) => (
+                      <TableRow
+                        hover={true}
+                        sx={{
+                          backgroundColor: row.color + "0a",
+                          ".MuiTableCell-root": {
+                            color: row.color,
+                          },
+                        }}
+                        key={row.id}
+                      >
+                        <TableCell>{row.time}</TableCell>
+                        <TableCell>{row.type}</TableCell>
+                        <TableCell align="right">{row.ltp}</TableCell>
+                        <TableCell align="right">{row.volume}</TableCell>
+                        <TableCell align="right">{row.value}</TableCell>
+                        <TableCell align="right">{row.trade}</TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>

@@ -260,10 +260,10 @@ export default async function StockDetails({ params }: any) {
                     color={stock.haltStatus == "buy" ? "success" : "error"}
                     sx={{
                       // borderRadius: 1,
+                      fontSize: ".875rem",
+                      px: 0.3,
                       mt: -1.3,
-                      fontSize: ".9rem",
                       mr: 2,
-                      px: 0.4,
                     }}
                   />
                 </Box>
@@ -276,7 +276,7 @@ export default async function StockDetails({ params }: any) {
               >
                 <Chip
                   label={stock.marketOpenStatus}
-                  variant="outlined"
+                  // variant="outlined"
                   size="small"
                   icon={
                     stock.marketOpenStatus == "Open" ? (

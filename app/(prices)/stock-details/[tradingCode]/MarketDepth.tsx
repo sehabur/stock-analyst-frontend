@@ -74,7 +74,7 @@ const formatData = (data: any) => {
         time: DateTime.fromISO(item.time).toFormat("HH:mm"),
         timeIso: DateTime.fromISO(item.time),
         ltp: item.ltp,
-        value: Number((item.value - prevItem.value).toFixed(2)),
+        value: Number((item.value - prevItem.value).toFixed(3)),
         volume: Number((item.volume - prevItem.volume).toFixed(2)),
         trade: Number((item.trade - prevItem.trade).toFixed(2)),
         type: typeValue.type,
@@ -159,14 +159,14 @@ export default function MarketDepth(props: any) {
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center",
-        gap: { xs: 0, sm: 12 },
+        alignItems: "center",
         maxWidth: "1250px",
         mx: "auto",
       }}
     >
       <LoadingSpinner open={isLoading} />
       {marketOpenStatus !== "Closed" && (
-        <Box sx={{ mb: 6 }}>
+        <Box sx={{ mb: 6, mr: { xs: 0, sm: 8 } }}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Box sx={{ px: 1.2 }}>
               <Typography
@@ -310,7 +310,7 @@ export default function MarketDepth(props: any) {
         </Box>
       )}
 
-      <Box sx={{ width: { xs: "90vw", sm: 800 } }}>
+      <Box sx={{ width: { xs: "90vw", sm: 600 } }}>
         <Stack
           direction="row"
           spacing={{ xs: 1, sm: 3 }}
@@ -355,32 +355,34 @@ export default function MarketDepth(props: any) {
               >
                 <TableCell>TIME</TableCell>
                 <TableCell>TYPE</TableCell>
-                <TableCell align="right">PRICE</TableCell>
-                <TableCell align="right">VOLUME</TableCell>
-                <TableCell align="right">VALUE (mn)</TableCell>
-                <TableCell align="right">TRADE</TableCell>
+                <TableCell>PRICE</TableCell>
+                <TableCell>VOLUME</TableCell>
+                <TableCell>VALUE (MN)</TableCell>
+                <TableCell>TRADE</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row: any) => (
-                <TableRow
-                  hover={true}
-                  sx={{
-                    backgroundColor: row.color + "0a",
-                    ".MuiTableCell-root": {
-                      color: row.color,
-                    },
-                  }}
-                  key={row.id}
-                >
-                  <TableCell>{row.time}</TableCell>
-                  <TableCell>{row.type}</TableCell>
-                  <TableCell align="right">{row.ltp}</TableCell>
-                  <TableCell align="right">{row.volume}</TableCell>
-                  <TableCell align="right">{row.value}</TableCell>
-                  <TableCell align="right">{row.trade}</TableCell>
-                </TableRow>
-              ))}
+              {rows
+                .filter((row: any) => row.volume !== 0)
+                .map((row: any) => (
+                  <TableRow
+                    hover={true}
+                    sx={{
+                      backgroundColor: row.color + "0a",
+                      ".MuiTableCell-root": {
+                        color: row.color,
+                      },
+                    }}
+                    key={row.id}
+                  >
+                    <TableCell>{row.time}</TableCell>
+                    <TableCell>{row.type}</TableCell>
+                    <TableCell>{row.ltp}</TableCell>
+                    <TableCell>{row.volume}</TableCell>
+                    <TableCell>{row.value}</TableCell>
+                    <TableCell>{row.trade}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
