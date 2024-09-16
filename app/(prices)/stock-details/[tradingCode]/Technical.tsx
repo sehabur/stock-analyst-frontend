@@ -99,7 +99,7 @@ export default function Technical(props: any) {
         sx={{
           maxWidth: 700,
           mx: "auto",
-          display: auth?.isPremium ? "none" : "block",
+          display: auth?.isPremiumEligible ? "none" : "block",
         }}
       >
         <PremiumDialogContent />
@@ -111,7 +111,7 @@ export default function Technical(props: any) {
         direction="row"
         justifyContent="flex-start"
         alignItems="flex-start"
-        sx={{ display: auth?.isPremium ? "flex" : "none" }}
+        sx={{ display: auth?.isPremiumEligible ? "flex" : "none" }}
       >
         <Grid item xs={12} sm={6}>
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>

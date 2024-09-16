@@ -106,15 +106,26 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-// export async function generateStaticParams() {
-//   const symbols = await fetch(
-//     `${process.env.BACKEND_URL}/api/prices/getStocksList`
-//   ).then((res) => res.json());
+export async function generateStaticParams() {
+  const symbols = await fetch(
+    `${process.env.BACKEND_URL}/api/prices/getStocksList`,
+    {
+      next: { revalidate: 0 },
+    }
+  ).then((res) => res.json());
 
-//   return symbols.map((symbol: string) => ({
-//     tradingCode: symbol,
-//   }));
-// }
+  return symbols.map((symbol: string) => ({
+    tradingCode: symbol,
+  }));
+}
+
+export async function generateMetadata({ params }: any) {
+  const { tradingCode } = params;
+  return {
+    title: `${tradingCode} Price, News, Financial Analysis`,
+    description: `Get finacial data and prepared analytics for ${tradingCode} helping you find the perfect trade`,
+  };
+}
 
 export default async function StockDetails({ params }: any) {
   const { tradingCode } = params;
@@ -257,6 +268,7 @@ export default async function StockDetails({ params }: any) {
                   <Chip
                     label="Halt"
                     size="small"
+                    // variant="outlined"
                     color={stock.haltStatus == "buy" ? "success" : "error"}
                     sx={{
                       // borderRadius: 1,

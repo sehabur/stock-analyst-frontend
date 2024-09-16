@@ -35,7 +35,7 @@ export default function CreatePortfolio() {
         commission: formData.commission,
         user: auth._id,
       };
-      console.log(reqBody);
+
       const res = await fetch(`/api/portfolio`, {
         method: "POST",
         headers: {

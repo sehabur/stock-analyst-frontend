@@ -437,7 +437,9 @@ export default function Financials({ data }: any) {
 
   const reserveSurplus = formatReserveData(data.reserveSurplus);
 
-  console.log(dividend);
+  // React.useEffect(() => {
+  //   if (!auth?.isPremiumEligible) handlePremiumDialogOpen();
+  // }, [auth]);
 
   return (
     <Box sx={{ bgcolor: "financePageBgcolor" }}>
@@ -1233,7 +1235,7 @@ export default function Financials({ data }: any) {
             py: { xs: 1, sm: 4 },
             maxWidth: 700,
             mx: "auto",
-            display: auth?.isPremium ? "none" : "block",
+            display: auth?.isPremiumEligible ? "none" : "block",
           }}
         >
           <PremiumDialogContent />
@@ -1244,7 +1246,7 @@ export default function Financials({ data }: any) {
           justifyContent="flex-start"
           rowSpacing={{ xs: 3, sm: 6 }}
           columnSpacing={{ xs: 1, sm: 4 }}
-          sx={{ pt: 4, display: auth?.isPremium ? "flex" : "none" }}
+          sx={{ pt: 4, display: auth?.isPremiumEligible ? "flex" : "none" }}
         >
           <Grid item xs={6} sm={3}>
             <FinancialCard

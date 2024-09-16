@@ -100,6 +100,8 @@ export default function Header() {
 
   const auth = useSelector((state: any) => state.auth);
 
+  console.log(auth);
+
   const [searchText, setSearchText] = useState("");
 
   const [logoutSuccess, setLogoutSuccess] = useState(false);
@@ -149,6 +151,7 @@ export default function Header() {
   const handleSignOut = () => {
     setUserAnchorEl(null);
     dispatch(authActions.logout());
+    dispatch(favoriteActions.clearData());
     localStorage.removeItem("userInfo");
     setLogoutSuccess(true);
     route.push("/");
@@ -260,14 +263,17 @@ export default function Header() {
     dispatch(latestPriceActions.setData(initdata));
   };
 
-  const getFavorites = async () => {
+  const getUserData = async () => {
+    const authDataFromStorage: any = localStorage.getItem("userInfo");
+    const auth = JSON.parse(authDataFromStorage);
+
     if (!auth) return;
 
-    const res = await fetch(`/api/favorite?user=${auth?._id}`, {
+    const res = await fetch(`/api/profile?user=${auth._id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${auth?.token}`,
+        Authorization: `Bearer ${auth.token}`,
       },
       next: { revalidate: 0 },
     });
@@ -275,16 +281,19 @@ export default function Header() {
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    const initdata = await res.json();
+    const data = await res.json();
 
-    dispatch(favoriteActions.setData(initdata.favorites));
+    if (data) {
+      dispatch(authActions.login({ ...data, token: auth.token }));
+      dispatch(favoriteActions.setData(data.favorites));
+    }
   };
 
   const externalDialogClose = () => {
     handleSigninDialogClose();
   };
 
-  useEffect(() => {
+  const setTheme = () => {
     const themeColor = localStorage.getItem("theme");
     if (themeColor) {
       dispatch(themeColorActions.setThemeColor(themeColor));
@@ -292,7 +301,7 @@ export default function Header() {
       localStorage.setItem("theme", "light");
       dispatch(themeColorActions.setThemeColor("light"));
     }
-  }, [dispatch]);
+  };
 
   useEffect(() => {
     if (searchText !== "") {
@@ -304,29 +313,19 @@ export default function Header() {
   }, [searchText]);
 
   useEffect(() => {
+    setTheme();
     getData();
+    getUserData();
   }, []);
-
-  useEffect(() => {
-    getFavorites();
-  }, [auth]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       getData();
     }, 60000);
-
     return () => {
       clearInterval(interval);
     };
   }, []);
-
-  useEffect(() => {
-    const authDataFromStorage: any = localStorage.getItem("userInfo");
-    const data = JSON.parse(authDataFromStorage);
-
-    if (data) dispatch(authActions.login(data));
-  }, [dispatch]);
 
   const userMenu = (
     <Box sx={{ pt: 0.8 }}>

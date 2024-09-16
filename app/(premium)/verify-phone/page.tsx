@@ -21,14 +21,18 @@ export default function VerifyPhonePage() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "text.secondary" }}>
+        <Avatar sx={{ mb: 2, bgcolor: "text.secondary" }}>
           <SystemUpdateRoundedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5" color="text.primary">
+        <Typography
+          component="h1"
+          color="text.primary"
+          sx={{ fontSize: "1.6rem" }}
+        >
           Verify your phone number
         </Typography>
       </Box>
-      <Box sx={{ px: 2, pb: 4, maxWidth: 400, mx: "auto" }}>
+      <Box sx={{ px: 3, pb: 4, maxWidth: 400, mx: "auto" }}>
         <VerifyPhone />
       </Box>
     </Box>

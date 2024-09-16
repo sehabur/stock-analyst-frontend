@@ -4,7 +4,7 @@ import { createChart, ColorType, CrosshairMode } from "lightweight-charts";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { alpha } from "@mui/system";
 import "./tooltip.css";
-import { getUniques } from "_helper";
+import { getUniques } from "_helper/getter";
 
 interface AreaChartProps {
   data: { time: string; value: number }[];

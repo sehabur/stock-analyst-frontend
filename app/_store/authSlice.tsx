@@ -5,7 +5,6 @@ const authSlice = createSlice({
   initialState: null,
   reducers: {
     login: (state, { payload }) => {
-      localStorage.setItem("userInfo", JSON.stringify(payload));
       return payload;
     },
 
@@ -19,9 +18,6 @@ const authSlice = createSlice({
         name: payload.name,
         email: payload.email,
       };
-
-      localStorage.setItem("userInfo", JSON.stringify(newState));
-
       return newState;
     },
 
@@ -49,16 +45,13 @@ const authSlice = createSlice({
     //   return newState;
     // },
 
-    resetFavoritesWithNewValue: (state: any, { payload }) => {
-      const newState = {
-        ...state,
-        favorites: payload,
-      };
-
-      localStorage.setItem("userInfo", JSON.stringify(newState));
-
-      return newState;
-    },
+    // resetFavoritesWithNewValue: (state: any, { payload }) => {
+    //   const newState = {
+    //     ...state,
+    //     favorites: payload,
+    //   };
+    //   return newState;
+    // },
   },
 });
 

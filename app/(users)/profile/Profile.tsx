@@ -44,7 +44,10 @@ export default function Profile() {
               </Typography>
 
               <Box sx={{ my: 4 }}>
-                <Typography color="text.secondary" sx={{ mb: 2 }}>
+                <Typography
+                  color="text.secondary"
+                  sx={{ mb: 2, fontSize: "1rem" }}
+                >
                   Contact information
                 </Typography>
 
@@ -56,10 +59,14 @@ export default function Profile() {
                 </Typography>
               </Box>
               <Box sx={{ my: 5 }}>
-                <Typography sx={{ mb: 2 }} color="text.secondary" gutterBottom>
+                <Typography
+                  sx={{ mb: 2, fontSize: "1rem" }}
+                  color="text.secondary"
+                  gutterBottom
+                >
                   Account type
                 </Typography>
-                {auth?.isPremium ? (
+                {auth?.isPremiumEligible ? (
                   <>
                     <Chip
                       icon={<WorkspacePremiumRoundedIcon />}
@@ -90,17 +97,17 @@ export default function Profile() {
                 <Button
                   component={Link}
                   href="/profile/edit"
-                  variant="contained"
+                  variant="outlined"
                   color="primary"
                 >
                   Edit profile
                 </Button>
-                {!auth?.isPremium && (
+                {!auth?.isPremiumEligible && (
                   <Button
                     component={Link}
-                    href="#"
+                    href="/pricing"
                     variant="contained"
-                    color="warning"
+                    color="primary"
                   >
                     Get Premium
                   </Button>

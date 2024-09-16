@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import News from "./News";
+import { Metadata } from "next";
 
 const getNews = async () => {
   const res = await fetch(
@@ -12,6 +13,12 @@ const getNews = async () => {
     throw new Error("Failed to fetch data");
   }
   return res.json();
+};
+
+export const metadata: Metadata = {
+  title: "Latest News | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
 };
 
 export default async function LatestNews() {

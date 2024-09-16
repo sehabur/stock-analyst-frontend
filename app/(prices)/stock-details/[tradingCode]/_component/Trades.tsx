@@ -163,11 +163,12 @@ export default function Trades(props: any) {
         fullWidth
         maxWidth="md"
         fullScreen={!matchesSmUp}
+        disableScrollLock={true}
       >
         <DialogTitle sx={{ fontWeight: 700, pr: 6 }}>
           Latest trades of {tradingCode}
         </DialogTitle>
-        <DialogContent dividers sx={{ py: 0 }}>
+        <DialogContent dividers sx={{ pb: 2, pt: 0 }}>
           <Box sx={{ maxWidth: "650px", mx: "auto", py: 2 }}>
             <Stack
               direction="row"
@@ -178,20 +179,24 @@ export default function Trades(props: any) {
               <Chip
                 label={`Total Buy: ${totalBuy}`}
                 icon={<TrendingUpRoundedIcon color="success" />}
+                color="success"
                 sx={{
-                  color: "success.main",
+                  // color: "success.main",
                   borderRadius: 1,
                   fontSize: "1rem",
+                  // fontWeight: 700,
                   py: 2.5,
                 }}
               />
               <Chip
                 label={`Total Sell: ${totalSell}`}
                 icon={<TrendingDownRoundedIcon color="error" />}
+                color="error"
                 sx={{
-                  color: "error.main",
+                  // color: "error.main",
                   borderRadius: 1,
                   fontSize: "1rem",
+                  // fontWeight: 700,
                   py: 2.5,
                 }}
               />
@@ -200,7 +205,10 @@ export default function Trades(props: any) {
               component={Paper}
               elevation={0}
               variant="outlined"
-              sx={{ borderRadius: 1, maxHeight: { xs: 500, sm: 450 } }}
+              sx={{
+                borderRadius: 1,
+                maxHeight: { xs: 500, sm: 450 },
+              }}
             >
               <Table size="small" stickyHeader>
                 <TableHead>

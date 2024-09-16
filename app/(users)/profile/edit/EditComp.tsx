@@ -41,7 +41,7 @@ export default function EditComp() {
     setIsLoading(true);
     event.preventDefault();
     try {
-      const res = await fetch(`/api/edit-profile?id=${auth._id}`, {
+      const res = await fetch(`/api/profile?id=${auth._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default function EditComp() {
         {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Box>
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
               name="name"
@@ -149,24 +149,21 @@ export default function EditComp() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 4, mb: 3 }}
         >
           Update
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Typography
-              component={Link}
-              href="/"
-              sx={{
-                textDecoration: "underline",
-                color: "primary.main",
-              }}
-            >
-              Go back to homepage
-            </Typography>
-          </Grid>
-        </Grid>
+
+        <Typography
+          component={Link}
+          href="/"
+          sx={{
+            textDecoration: "underline",
+            color: "primary.main",
+          }}
+        >
+          Go back to homepage
+        </Typography>
       </Box>
     </Box>
   );

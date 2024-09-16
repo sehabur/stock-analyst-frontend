@@ -1,6 +1,7 @@
 import { Box, Grid } from "@mui/material";
 import Gainers from "./Gainers";
 import TradingviewChart from "./TradingviewChart";
+import { Metadata } from "next";
 
 async function getGainerLoserData() {
   const res = await fetch(
@@ -14,6 +15,12 @@ async function getGainerLoserData() {
   }
   return res.json();
 }
+
+export const metadata: Metadata = {
+  title: "Supercharts | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics with help of advanced chart for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+};
 
 export default async function Page() {
   const gainerLoserData = await getGainerLoserData();

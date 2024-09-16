@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 
 import SharePrice from "./SharePrice";
+import { Metadata } from "next";
 
 // async function getData() {
 //   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/latestPrice`, {
@@ -11,6 +12,12 @@ import SharePrice from "./SharePrice";
 //   }
 //   return res.json();
 // }
+
+export const metadata: Metadata = {
+  title: "Stock Prices | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) shares helping you find the perfect trade.",
+};
 
 export default async function Page() {
   // const response = await getData();

@@ -213,7 +213,7 @@ export default function MarketDepth(props: any) {
                           }}
                           key={index}
                         >
-                          <TableCell>{item[0]}</TableCell>
+                          <TableCell>{item[0].toFixed(1)}</TableCell>
                           <TableCell>{item[1]}</TableCell>
                         </TableRow>
                       )

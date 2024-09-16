@@ -291,7 +291,7 @@ export default function Main() {
   }, [formInputs]);
 
   useEffect(() => {
-    if (!auth?.isPremium) handlePremiumDialogOpen();
+    if (!auth?.isPremiumEligible) handlePremiumDialogOpen();
   }, [auth]);
 
   useEffect(() => {
@@ -301,8 +301,6 @@ export default function Main() {
       column[item.name] =
         screenerDatafields.indexOf(item.name) === -1 ? false : true;
     }
-
-    console.log(column);
     setColumnVisibilityModel(column);
   }, [screenerDatafields]);
 

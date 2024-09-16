@@ -24,32 +24,32 @@ export default function PremiumDialogContent(props: any) {
   return (
     <>
       <DialogContent>
-        <Box sx={{ maxWidth: 480, mx: "auto", py: { xs: 2, sm: 4 } }}>
-          <Stack direction="row" alignItems="center" gap={2}>
+        <Box sx={{ maxWidth: 480, mx: "auto", py: { xs: 2, sm: 3 } }}>
+          <Stack direction="row" alignItems="center" gap={4}>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Avatar sx={{ width: 70, height: 70 }}>
-                <WorkspacePremiumRoundedIcon sx={{ fontSize: 42 }} />
+                <WorkspacePremiumRoundedIcon sx={{ fontSize: 45 }} />
               </Avatar>
             </Box>
 
             <Box>
               <Typography
                 sx={{
-                  fontSize: "1.8rem",
+                  fontSize: { xs: "1.8rem", sm: "2rem" },
                   fontWeight: 700,
                   color: "text.primary",
                   lineHeight: 1,
+                  mb: 2,
                 }}
-                gutterBottom
               >
-                Premium feature
+                Premium Content
               </Typography>
               <Typography
                 sx={{
-                  fontSize: ".9rem",
+                  fontSize: "1rem",
                   fontWeight: 500,
                   color: "text.primary",
-                  maxWidth: 280,
+                  maxWidth: 300,
                 }}
               >
                 Please subscribe to premium package to access this feature
@@ -57,7 +57,7 @@ export default function PremiumDialogContent(props: any) {
             </Box>
           </Stack>
 
-          <Box sx={{ mt: 4, mb: 4 }}>
+          <Box sx={{ mt: 3, mb: 3 }}>
             <Typography sx={{ fontSize: "1rem", color: "text.secondary" }}>
               Elevate your investing potential with a Premium membership. Gain
               personalised and actionable insights with enhanced features to
@@ -66,17 +66,9 @@ export default function PremiumDialogContent(props: any) {
           </Box>
 
           <Box>
-            {/* <Button
-              variant="outlined"
-              sx={{ mr: 2, py: 1.3 }}
-              component={Link}
-              href="/signin"
-            > 
-              Sign in
-            </Button> */}
             <Button
               variant="contained"
-              sx={{ py: 1.5, px: 2.5, fontSize: "1.1rem", borderRadius: 1 }}
+              sx={{ py: 1.5, px: 3, borderRadius: 1 }}
               component={Link}
               fullWidth={matchesSmDown}
               href={auth?.isLoggedIn ? "/pricing" : "/signup?redirect=/pricing"}

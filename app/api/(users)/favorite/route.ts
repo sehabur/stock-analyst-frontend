@@ -1,33 +1,34 @@
 import { NextResponse, NextRequest } from "next/server";
 import { headers } from "next/headers";
 
-export async function GET(request: NextRequest) {
-  try {
-    const headersList = headers();
-    const authToken: any = headersList.get("Authorization");
+// // this is used for getting user info //
+// export async function GET(request: NextRequest) {
+//   try {
+//     const headersList = headers();
+//     const authToken: any = headersList.get("Authorization");
 
-    const searchParams = request.nextUrl.searchParams;
-    const user = searchParams.get("user");
+//     const searchParams = request.nextUrl.searchParams;
+//     const user = searchParams.get("user");
 
-    const res = await fetch(
-      `${process.env.BACKEND_URL}/api/users/favorite/${user}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken,
-        },
-        next: { revalidate: 0 },
-      }
-    );
+//     const res = await fetch(
+//       `${process.env.BACKEND_URL}/api/users/favorite/${user}`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: authToken,
+//         },
+//         next: { revalidate: 0 },
+//       }
+//     );
 
-    const data = await res.json();
-    return NextResponse.json(data, { status: res.status });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(error, { status: 500 });
-  }
-}
+//     const data = await res.json();
+//     return NextResponse.json(data, { status: res.status });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json(error, { status: 500 });
+//   }
+// }
 
 export async function PATCH(request: NextRequest) {
   try {

@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import BlockTransection from "./BlockTransection";
+import { Metadata } from "next";
 
 const getBlockTr = async () => {
   const res = await fetch(
@@ -32,6 +33,12 @@ function getBlockTrSummary(data: any) {
     scripts,
   };
 }
+
+export const metadata: Metadata = {
+  title: "Block Transections of DSE Shares - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+};
 
 export default async function BlockTr() {
   const data = await getBlockTr();

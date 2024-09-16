@@ -59,15 +59,41 @@ const getLatestPrice = (latest: any) => {
   };
 };
 
-// export async function generateStaticParams() {
-//   const symbols = await fetch(
-//     `${process.env.BACKEND_URL}/api/prices/getStocksList`
-//   ).then((res) => res.json());
+const symbols = [
+  {
+    code: "00DSEX",
+    name: "DSEX",
+    description: "Dhaka Stock Exchange Index",
+  },
+  {
+    code: "00DSES",
+    name: "DSES",
+    description: "Dhaka Stock Exchange Shariah Index",
+  },
+  {
+    code: "00DS30",
+    name: "DS30",
+    description: "Dhaka Stock Exchange 30",
+  },
+];
 
-//   return symbols.map((symbol: string) => ({
-//     tradingCode: symbol,
-//   }));
-// }
+export async function generateStaticParams() {
+  return symbols.map((symbol: { code: string }) => ({
+    tradingCode: symbol.code,
+  }));
+}
+
+export async function generateMetadata({ params }: any) {
+  const { tradingCode } = params;
+  const { name, description }: any = symbols.find(
+    (item: any) => item.code == tradingCode
+  );
+
+  return {
+    title: `${description} (${name}) News, Info & Analysis`,
+    description: `Get finacial data and prepared analytics for ${description} (${name}) helping you find the perfect trade`,
+  };
+}
 
 export default async function StockDetails({ params }: any) {
   const { tradingCode } = params;

@@ -51,7 +51,7 @@ export default function News({ news }: any) {
   };
 
   return (
-    <Box sx={{ bgcolor: "secondaryBackground" }}>
+    <Box sx={{ bgcolor: "financePageBgcolor" }}>
       <Dialog
         onClose={handleDialogClose}
         open={openDialog}
@@ -109,11 +109,12 @@ export default function News({ news }: any) {
           direction="row"
           justifyContent="flex-start"
           alignItems="stretch"
-          spacing={{ xs: 1.5, sm: 3 }}
+          columnSpacing={{ xs: 1.5, sm: 2 }}
+          rowSpacing={{ xs: 1.5, sm: 3 }}
         >
           {news.map((item: any) => (
             <Grid item xs={12} sm={4} key={item._id}>
-              <Card sx={{ minWidth: 275 }} elevation={0}>
+              <Card sx={{ minWidth: 275, borderRadius: 1 }} variant="outlined">
                 <CardContent sx={{ pb: 1 }}>
                   <Typography
                     gutterBottom

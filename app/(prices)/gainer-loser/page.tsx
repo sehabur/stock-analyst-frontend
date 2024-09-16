@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import Dashboard from "./Dashboard";
+import { Metadata } from "next";
 
 async function getData() {
   const res = await fetch(
@@ -13,6 +14,12 @@ async function getData() {
   }
   return res.json();
 }
+
+export const metadata: Metadata = {
+  title: "Top Shares | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get top shares by gain, value, volume, trade etc of Dhaka Stock Exchange (DSE) helping you find the perfect trade.",
+};
 
 export default async function GainerLooser() {
   const data = await getData();

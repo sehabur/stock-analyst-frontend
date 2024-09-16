@@ -11,35 +11,60 @@ import DoneAllRoundedIcon from "@mui/icons-material/DoneAllRounded";
 
 import PricingCard from "./PricingCard";
 import FreeTrialCard from "./FreeTrialCard";
+import Pricing from "./Pricing";
 
-const packages = [
-  {
-    title: "1 Month",
-    price: 299,
-    discountedPrice: 149,
-    discount: 50,
-  },
-  {
-    title: "3 Months",
-    price: 799,
-    discountedPrice: 399,
-    discount: 50,
-  },
-  {
-    title: "6 Months",
-    price: 1399,
-    discountedPrice: 699,
-    discount: 50,
-  },
-  {
-    title: "1 Year",
-    price: 2399,
-    discountedPrice: 1199,
-    discount: 50,
-  },
-];
+// const packages = [
+//   {
+//     title: "1 Month",
+//     product: "premium_1month_299",
+//     originalPrice: 299,
+//     currentPrice: 149,
+//     discount: 50,
+//     validityDays: 31,
+//     isActive: true,
+//   },
+//   {
+//     title: "3 Months",
+//     product: "premium_3month_799",
+//     originalPrice: 799,
+//     currentPrice: 399,
+//     discount: 50,
+//     validityDays: 92,
+//     isActive: true,
+//   },
+//   {
+//     title: "6 Months",
+//     product: "premium_6month_1399",
+//     originalPrice: 1399,
+//     currentPrice: 699,
+//     discount: 50,
+//     validityDays: 183,
+//     isActive: true,
+//   },
+//   {
+//     title: "1 Year",
+//     product: "premium_1year_2399",
+//     originalPrice: 2399,
+//     currentPrice: 1199,
+//     discount: 50,
+//     validityDays: 365,
+//     isActive: true,
+//   },
+// ];
 
-export default function Price() {
+async function getData() {
+  const res = await fetch(`${process.env.BACKEND_URL}/api/payment/packages`, {
+    next: { revalidate: 0 },
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+export default async function Price() {
+  const packages = await getData();
+
   return (
     <Box component="main" sx={{ bgcolor: "background.default", px: 2 }}>
       <Box
@@ -52,30 +77,28 @@ export default function Price() {
           justifyContent: "center",
         }}
       >
-        <Box>
+        <Box sx={{ mb: 1 }}>
           <WorkspacePremiumRoundedIcon
-            sx={{ fontSize: { xs: 40, sm: 50 } }}
-            color="warning"
+            sx={{ fontSize: { xs: 45, sm: 50 }, color: "text.secondary" }}
           />
         </Box>
         <Typography
           component="h1"
           color="text.primary"
           sx={{
-            fontSize: { xs: "1.8rem", sm: "2rem" },
+            fontSize: { xs: "1.6rem", sm: "2rem" },
             fontWeight: 700,
             color: "text.primary",
-            lineHeight: 1.1,
           }}
           gutterBottom
         >
-          Premium membership
+          Premium Membership
         </Typography>
 
         <Typography
           color="text.primary"
           sx={{
-            fontSize: "1.1rem",
+            fontSize: "1rem",
             fontWeight: 500,
             color: "text.primary",
             textAlign: "center",
@@ -84,36 +107,21 @@ export default function Price() {
           Elevate your investing potential with a premium package
         </Typography>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          direction: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          px: 2,
-          pb: 4,
-          maxWidth: 1200,
-          mx: "auto",
-        }}
-      >
-        {/* <FreeTrialCard /> */}
-        {packages.map((item: any, index: number) => (
-          <PricingCard data={item} key={index} />
-        ))}
-      </Box>
-      <Box sx={{ maxWidth: 600, mx: "auto", textAlign: "center", py: 6 }}>
+
+      <Pricing packages={packages} />
+      <Box sx={{ maxWidth: 500, mx: "auto", pt: 3, pb: 6 }}>
         <Typography
           component="h1"
           color="text.primary"
           sx={{
-            fontSize: "2rem",
+            fontSize: { xs: "1.7rem", sm: "2rem" },
             fontWeight: 700,
             color: "text.primary",
-            mb: 3,
+            mb: 2,
+            ml: 2,
           }}
         >
-          What you will get
+          What you will get ?
         </Typography>
 
         <Box>

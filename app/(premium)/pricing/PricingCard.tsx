@@ -11,22 +11,23 @@ import Link from "next/link";
 
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
 
-export default function PricingCard({ data, type }: any) {
+export default function PricingCard({ data, handleCardClick }: any) {
+  const { currentPrice, originalPrice, title, discount, product } = data;
+
   return (
     <Card
       sx={{
         my: 2,
         mx: 2,
-        borderRadius: 3,
-        width: { xs: 320, sm: 350 },
+        borderRadius: 2,
+        width: 300,
         textAlign: "center",
       }}
       elevation={6}
     >
       <CardContent sx={{ p: 0 }}>
-        {/* <Box component={Link} href="/verify-phone?type=premium_package"> */}
-        <Box component={Link} href="/checkout">
-          <Box sx={{ bgcolor: "warning.dark" }}>
+        <Box>
+          <Box sx={{ bgcolor: "primary.dark" }}>
             <Typography
               gutterBottom
               sx={{
@@ -37,7 +38,7 @@ export default function PricingCard({ data, type }: any) {
                 pb: 1,
               }}
             >
-              {data?.title}
+              {title}
             </Typography>
           </Box>
 
@@ -54,7 +55,7 @@ export default function PricingCard({ data, type }: any) {
                   textDecoration: "line-through red 3px",
                 }}
               >
-                {data?.price}
+                {originalPrice}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -69,7 +70,7 @@ export default function PricingCard({ data, type }: any) {
               justifyContent="center"
             >
               <Typography color="text.primary" sx={{ fontSize: "1.6rem" }}>
-                {data?.discountedPrice}
+                {currentPrice}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -81,7 +82,7 @@ export default function PricingCard({ data, type }: any) {
           </Box>
           <Box>
             <Typography sx={{ fontSize: "1rem" }}>
-              Now at {data?.discount}% discount{" "}
+              Now at {discount}% discount{" "}
             </Typography>
           </Box>
 
@@ -89,7 +90,7 @@ export default function PricingCard({ data, type }: any) {
             <Button
               variant="outlined"
               endIcon={<EastRoundedIcon />}
-              color="warning"
+              color="primary"
               sx={{
                 borderRadius: 8,
                 ":hover": {
@@ -98,6 +99,14 @@ export default function PricingCard({ data, type }: any) {
                 fontSize: "1rem",
                 px: 3,
               }}
+              onClick={(e) =>
+                handleCardClick(e, {
+                  type: "premium_package",
+                  product,
+                  price: currentPrice,
+                  validity: title,
+                })
+              }
             >
               Subscribe now
             </Button>

@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.stocksupporter.com
+
+# Sitemaps
+Sitemap: https://www.stocksupporter.com/sitemap.xml

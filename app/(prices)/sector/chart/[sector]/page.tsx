@@ -23,11 +23,22 @@ async function getData(sectorTag: string) {
   return res.json();
 }
 
-// export async function generateStaticParams() {
-//   return sectorList.map((item: { tag: string }) => ({
-//     sector: item.tag,
-//   }));
-// }
+export async function generateStaticParams() {
+  return sectorList.map((item: { tag: string }) => ({
+    sector: item.tag,
+  }));
+}
+
+export async function generateMetadata({ params }: any) {
+  const { sector } = params;
+
+  const { name }: any = sectorList.find((item: any) => item.tag == sector);
+
+  return {
+    title: `${name} Sector News, Info & Analysis`,
+    description: `Get finacial data and prepared analytics for ${name} sector of DSE helping you find the perfect trade`,
+  };
+}
 
 const addPlusSign = (value: number) => {
   let result;

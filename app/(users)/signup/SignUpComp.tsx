@@ -227,25 +227,21 @@ export default function SignUpComp() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 3 }}
         >
           Sign Up
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Typography
-              component={Link}
-              href="signin"
-              variant="body2"
-              sx={{
-                textDecoration: "underline",
-                color: "primary.main",
-              }}
-            >
-              Already have an account? Sign in
-            </Typography>
-          </Grid>
-        </Grid>
+        <Typography
+          component={Link}
+          href={`/signin${redirect ? "?redirect=" + redirect : ""}`}
+          variant="body2"
+          sx={{
+            textDecoration: "underline",
+            color: "primary.main",
+          }}
+        >
+          Already have an account? Sign in
+        </Typography>
       </Box>
     </Box>
   );

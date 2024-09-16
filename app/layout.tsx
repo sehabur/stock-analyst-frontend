@@ -2,12 +2,11 @@
 /* eslint-disable @next/next/no-page-custom-font */
 "use client";
 import "./globals.css";
-import type { Metadata } from "next";
 import ThemeRegistry from "./ThemeRegistry";
 import Header from "./_components/Header";
 import store from "./_store";
 import { Provider } from "react-redux";
-import React, { FC } from "react";
+import React from "react";
 import TimeAgo from "javascript-time-ago";
 
 import en from "javascript-time-ago/locale/en.json";
@@ -21,7 +20,7 @@ export default function RootLayout({ children }: any) {
   return (
     <html lang="en">
       <head>
-        <title>Stocksupporter - Stock Analysis Tool for DSE</title>
+        {/* <title>Stocksupporter - Stock Analysis Tool for DSE</title>
         <meta
           name="description"
           content="Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade."
@@ -29,7 +28,7 @@ export default function RootLayout({ children }: any) {
         <meta
           name="keywords"
           content="DSE,DSEX,DS30,DSES,Dhaka Stock Exchange,Stocksupporter,Stock supporter,Bangladesh stock market"
-        ></meta>
+        ></meta> */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />

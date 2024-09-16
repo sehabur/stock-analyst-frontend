@@ -19,8 +19,7 @@ import Spinner from "@/components/shared/Spinner";
 
 export default function SignInComp({
   redirect,
-  isExternalDialog = false,
-  externalDialogClose,
+  externalDialogClose = () => {},
 }: any) {
   const dispatch = useDispatch();
 
@@ -65,19 +64,26 @@ export default function SignInComp({
       const data = await res.json();
       if (res.ok) {
         setErrorMessage("");
+
         dispatch(authActions.login(data.user));
-        // setSuccessMessage("Sign in successful");
-        if (isExternalDialog) externalDialogClose();
+
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            _id: data.user._id,
+            token: data.user.token,
+          })
+        );
+        externalDialogClose();
         router.push(redirect || "/");
       } else {
         setErrorMessage(data.message || "Error occured");
-        // setSuccessMessage("");
       }
       setIsLoading(false);
     } catch (error) {
       setErrorMessage("Error occured");
       // setSuccessMessage("");
-      if (isExternalDialog) externalDialogClose();
+      externalDialogClose();
       setIsLoading(false);
     }
   };
@@ -144,36 +150,36 @@ export default function SignInComp({
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 3 }}
         >
           Sign In
         </Button>
-        <Grid container sx={{ gap: 1, mt: 1 }}>
-          <Grid item xs>
-            <Typography
-              component={Link}
-              href="/forget-passwprd"
-              sx={{
-                textDecoration: "underline",
-                color: "primary.main",
-              }}
-            >
-              Forgot password?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              component={Link}
-              href="/signup"
-              sx={{
-                textDecoration: "underline",
-                color: "primary.main",
-              }}
-            >
-              {"Don't have an account? Sign Up"}
-            </Typography>
-          </Grid>
-        </Grid>
+
+        <Box sx={{ mb: 1 }}>
+          <Typography
+            component={Link}
+            href="/forget-passwprd"
+            sx={{
+              textDecoration: "underline",
+              color: "primary.main",
+            }}
+          >
+            Forgot password?
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography
+            component={Link}
+            href={`/signup${redirect ? "?redirect=" + redirect : ""}`}
+            sx={{
+              textDecoration: "underline",
+              color: "primary.main",
+            }}
+          >
+            {"Don't have an account? Sign Up"}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

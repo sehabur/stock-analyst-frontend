@@ -11,6 +11,7 @@ import DoDisturbAltRoundedIcon from "@mui/icons-material/DoDisturbAltRounded";
 import PlayCircleOutlineRoundedIcon from "@mui/icons-material/PlayCircleOutlineRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
+import { Metadata } from "next";
 
 async function getIpo() {
   const res = await fetch(`${process.env.BACKEND_URL}/api/prices/ipo`, {
@@ -21,6 +22,12 @@ async function getIpo() {
   }
   return res.json();
 }
+
+export const metadata: Metadata = {
+  title: "Latest IPO | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+};
 
 export default async function Ipo({}) {
   const data = await getIpo();

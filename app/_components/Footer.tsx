@@ -96,6 +96,7 @@ export default function Footer() {
                     width: "auto",
                     height: "60px",
                     marginLeft: "-4px",
+                    borderRadius: "5px",
                   }}
                   alt="logo of stocksupporter"
                 />

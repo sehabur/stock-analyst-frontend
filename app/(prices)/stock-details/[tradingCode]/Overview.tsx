@@ -120,13 +120,24 @@ const calcPercentChange = (current: any, previous: any) => {
 };
 
 const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
+  // if (!latestdata || !lastdaydata) return;
+  const {
+    oneWeekBeforeData,
+    oneMonthBeforeData,
+    sixMonthBeforeData,
+    oneYearBeforeData,
+    fiveYearBeforeData,
+  } = lastdaydata;
+
+  const { ltp, ycp } = latestdata;
+
   return {
-    today: calcPercentChange(latestdata.ltp, latestdata.ycp),
-    oneWeek: calcPercentChange(latestdata.ltp, lastdaydata.oneWeekBeforeData),
-    oneMonth: calcPercentChange(latestdata.ltp, lastdaydata.oneMonthBeforeData),
-    sixMonth: calcPercentChange(latestdata.ltp, lastdaydata.sixMonthBeforeData),
-    oneYear: calcPercentChange(latestdata.ltp, lastdaydata.oneYearBeforeData),
-    fiveYear: calcPercentChange(latestdata.ltp, lastdaydata.fiveYearBeforeData),
+    today: calcPercentChange(ltp, ycp),
+    oneWeek: calcPercentChange(ltp, oneWeekBeforeData),
+    oneMonth: calcPercentChange(ltp, oneMonthBeforeData),
+    sixMonth: calcPercentChange(ltp, sixMonthBeforeData),
+    oneYear: calcPercentChange(ltp, oneYearBeforeData),
+    fiveYear: calcPercentChange(ltp, fiveYearBeforeData),
   };
 };
 
@@ -276,21 +287,22 @@ export default function Overview({ stock }: any) {
           onChange={handleAlignment}
           sx={{
             "& .MuiToggleButtonGroup-grouped": {
-              px: { xs: 1.5, sm: 2.5 },
+              px: { xs: 2, sm: 2.5 },
+              mx: 2,
             },
           }}
         >
           <StyledToggleButton value="minute">
-            {matchesSmDown ? "Minute" : "Minute chart"}
+            {matchesSmDown ? "Minute" : "Minute"}
           </StyledToggleButton>
           <StyledToggleButton value="daily">
-            {matchesSmDown ? "Day" : "Daily chart"}
+            {matchesSmDown ? "Day" : "Daily"}
           </StyledToggleButton>
           <StyledToggleButton value="weekly">
-            {matchesSmDown ? "Week" : "Weekly chart"}
+            {matchesSmDown ? "Week" : "Weekly"}
           </StyledToggleButton>
           <StyledToggleButton value="monthly">
-            {matchesSmDown ? "Month" : "Monthly chart"}
+            {matchesSmDown ? "Month" : "Monthly"}
           </StyledToggleButton>
         </StyledToggleButtonGroup>
       </Box>
@@ -342,7 +354,7 @@ export default function Overview({ stock }: any) {
             mx: { xs: 0, sm: 4 },
             py: { xs: 1.5, sm: 3 },
             px: 2,
-            borderRadius: 4,
+            borderRadius: 2,
             bgcolor: "secondaryBackground",
           }}
           // elevation={0}

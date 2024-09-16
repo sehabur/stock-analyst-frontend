@@ -8,6 +8,10 @@ const favoriteSlice = createSlice({
       return payload;
     },
 
+    clearData: () => {
+      return [];
+    },
+
     addItemToFavorite: (state: any, { payload }: { payload: any }) => {
       let newstate = state;
       newstate.push(payload);

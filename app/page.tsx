@@ -133,21 +133,21 @@ async function getIndexMover() {
   return res.json();
 }
 
-// export const metadata: Metadata = {
-//   title: "Stocksupporter - Stock Analysis Tool for DSE",
-//   description:
-//     "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
-//   keywords: [
-//     "DSE",
-//     "DSEX",
-//     "DS30",
-//     "DSES",
-//     "Dhaka Stock Exchange",
-//     "Stocksupporter",
-//     "Stock supporter",
-//     "Bangladesh stock market",
-//   ],
-// };
+export const metadata: Metadata = {
+  title: "Stocksupporter - Stock Analysis Tool for DSE",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+  keywords: [
+    "DSE",
+    "DSEX",
+    "DS30",
+    "DSES",
+    "Dhaka Stock Exchange",
+    "Stocksupporter",
+    "Stock supporter",
+    "Bangladesh stock market",
+  ],
+};
 
 export default async function Home() {
   const [

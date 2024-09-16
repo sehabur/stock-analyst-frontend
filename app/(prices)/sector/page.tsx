@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import SectorSummaryCard from "./sectorCard";
 import { Box } from "@mui/material";
 
@@ -13,6 +14,12 @@ async function getData() {
   }
   return res.json();
 }
+
+export const metadata: Metadata = {
+  title: "Top Sectors | Dhaka Stock Exchange (DSE) - Stocksupporter",
+  description:
+    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+};
 
 export default async function Sector() {
   const data = await getData();
