@@ -3,7 +3,14 @@ import React from "react";
 
 import Link from "next/link";
 
-import { Box, Typography, Button, Card, CardContent } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+} from "@mui/material";
 
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
 import { useSelector } from "react-redux";
@@ -25,22 +32,22 @@ export default function FreeTrialCard({ handleCardClick }: any) {
       >
         <CardContent sx={{ p: 0 }}>
           <Box>
-            <Box sx={{ bgcolor: "success.main" }}>
+            <Box sx={{ bgcolor: "overviewHeader" }}>
               <Typography
                 gutterBottom
                 sx={{
-                  color: "#ffffff",
-                  fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                  color: "text.primary",
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
                   mx: 2,
-                  pt: 1.2,
-                  pb: 1,
+                  pt: 1.4,
+                  pb: 1.4,
                 }}
               >
                 14 Days
               </Typography>
             </Box>
 
-            <Box sx={{ my: 3.5 }}>
+            <Box sx={{ my: 4 }}>
               {auth?.isFreeTrialUsed ? (
                 <Box sx={{ px: 6, py: 1 }}>
                   <Typography
@@ -52,38 +59,47 @@ export default function FreeTrialCard({ handleCardClick }: any) {
               ) : (
                 <>
                   <Typography
-                    color="text.primary"
+                    color="success.main"
                     sx={{
                       fontSize: "1.8rem",
                     }}
                   >
-                    Free
+                    Free Trial
                   </Typography>
-                  <Typography
-                    color="text.primary"
-                    sx={{
-                      fontSize: "1.8rem",
-                    }}
+
+                  <Stack
+                    direction="row"
+                    alignItems="baseline"
+                    justifyContent="center"
                   >
-                    Trial
-                  </Typography>
+                    <Typography
+                      color="text.primary"
+                      sx={{ fontSize: "1.6rem" }}
+                    >
+                      0
+                    </Typography>
+                    <Typography
+                      color="text.secondary"
+                      sx={{ fontSize: "1rem", ml: 1 }}
+                    >
+                      BDT
+                    </Typography>
+                  </Stack>
                 </>
               )}
             </Box>
 
             <Box sx={{ mt: 2 }}>
               <Button
-                variant="outlined"
+                variant="contained"
                 endIcon={<EastRoundedIcon />}
                 color="success"
                 disabled={auth?.isFreeTrialUsed}
                 sx={{
                   borderRadius: 8,
-                  ":hover": {
-                    bgcolor: "transparent",
-                  },
                   fontSize: "1rem",
                   px: 3,
+                  py: 1,
                 }}
                 onClick={(e) => handleCardClick(e, { type: "free_trial" })}
               >

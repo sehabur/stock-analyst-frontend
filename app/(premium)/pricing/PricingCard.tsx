@@ -23,19 +23,19 @@ export default function PricingCard({ data, handleCardClick }: any) {
         width: 300,
         textAlign: "center",
       }}
-      elevation={6}
+      elevation={8}
     >
       <CardContent sx={{ p: 0 }}>
         <Box>
-          <Box sx={{ bgcolor: "primary.dark" }}>
+          <Box sx={{ bgcolor: "overviewHeader" }}>
             <Typography
               gutterBottom
               sx={{
-                color: "#ffffff",
-                fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                color: "text.primary",
+                fontSize: { xs: "1.1rem", sm: "1.4rem" },
                 mx: 2,
-                pt: 1.2,
-                pb: 1,
+                pt: 1.4,
+                pb: 1.4,
               }}
             >
               {title}
@@ -88,16 +88,14 @@ export default function PricingCard({ data, handleCardClick }: any) {
 
           <Box sx={{ mt: 2 }}>
             <Button
-              variant="outlined"
+              variant="contained"
               endIcon={<EastRoundedIcon />}
               color="primary"
               sx={{
                 borderRadius: 8,
-                ":hover": {
-                  bgcolor: "transparent",
-                },
                 fontSize: "1rem",
                 px: 3,
+                py: 1,
               }}
               onClick={(e) =>
                 handleCardClick(e, {

@@ -8,9 +8,10 @@ export async function GET(request: NextRequest) {
 
     const searchParams = request.nextUrl.searchParams;
     const product = searchParams.get("product");
+    const otp = searchParams.get("otp");
 
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/payment/init?product=${product}`,
+      `${process.env.BACKEND_URL}/api/payment/init?product=${product}&otp=${otp}`,
       {
         method: "GET",
         headers: {

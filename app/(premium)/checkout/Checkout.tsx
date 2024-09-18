@@ -2,7 +2,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Button, Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+} from "@mui/material";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -17,13 +23,16 @@ export default function Checkout() {
   const price = searchParams.get("price");
   const product = searchParams.get("product");
   const validity = searchParams.get("validity");
+  const otp = searchParams.get("otp");
+
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log("a", product);
 
     try {
-      const res = await fetch(`/api/payment?product=${product}`, {
+      const res = await fetch(`/api/payment?product=${product}&otp=${otp}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -33,15 +42,32 @@ export default function Checkout() {
       const data = await res.json();
 
       if (res.ok) {
-        const { url } = data;
-        router.push(url);
+        router.push(data.url);
+      } else {
+        setErrorMessage(data.message);
       }
-    } catch (error) {}
+    } catch (error) {
+      setErrorMessage("Something went wrong");
+    }
   };
   return (
     <>
       <Box sx={{ px: 2, pb: 4, maxWidth: 400, mx: "auto" }}>
-        <Box sx={{ textAlign: "center", mt: 2, mb: 3 }}>
+        {errorMessage && (
+          <Alert sx={{ mt: 1 }} severity="error">
+            {errorMessage}
+          </Alert>
+        )}
+        <Box
+          sx={{
+            textAlign: "center",
+            mt: 1.5,
+            mb: 2,
+            py: 0.6,
+            bgcolor: "financeCardTitlecolor",
+            borderRadius: 1,
+          }}
+        >
           <Typography
             color="success.main"
             sx={{
@@ -53,6 +79,7 @@ export default function Checkout() {
             {price} BDT for {validity}
           </Typography>
         </Box>
+
         <Box>
           <img
             src="/images/ssl-banner.jpg"

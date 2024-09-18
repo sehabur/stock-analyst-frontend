@@ -167,7 +167,7 @@ export default function News({ data }: any) {
 
       <Box
         sx={{
-          py: { xs: 2, sm: 4 },
+          py: { xs: 2, sm: 2 },
           mr: { xs: 0, sm: 4 },
         }}
       >

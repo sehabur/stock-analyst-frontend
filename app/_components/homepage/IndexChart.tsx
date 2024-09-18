@@ -87,14 +87,14 @@ import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
     border: 0,
-    marginRight: "12px",
-    marginLeft: "12px",
+    marginRight: "14px",
+    marginLeft: "14px",
   },
 }));
 
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
-    borderRadius: "5px !important",
+    borderRadius: "4px !important",
     marginRight: "10px",
     marginLeft: "10px",
     border: `1px solid #2962ff !important`,
@@ -239,7 +239,7 @@ export default function IndexChart({ indexData }: any) {
   const chartData: any = formatChartData(indexData.minute);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ px: 2, pt: 1, pb: 1 }}>
       <Box
         sx={{
           display: "flex",
@@ -384,13 +384,14 @@ export default function IndexChart({ indexData }: any) {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          justifyContent: "space-evenly",
+          justifyContent: "space-around",
           py: 1.5,
           px: 2,
-          mx: { xs: 0, sm: 2 },
+          mx: { xs: 0, sm: 3 },
           mt: 3,
           borderRadius: 2,
-          bgcolor: "financePageBgcolor",
+          bgcolor: "gainerCardMobileView",
+          maxWidth: 600,
         }}
       >
         <Box>
@@ -412,7 +413,7 @@ export default function IndexChart({ indexData }: any) {
               color="text.secondary"
               sx={{ ml: 1, fontSize: ".875rem" }}
             >
-              Crore
+              {matchesSmUp ? "CRORE" : "CR"}
             </Typography>
           </Stack>
         </Box>
@@ -436,7 +437,7 @@ export default function IndexChart({ indexData }: any) {
               color="text.secondary"
               sx={{ ml: 1, fontSize: ".875rem" }}
             >
-              Crore
+              {matchesSmUp ? "CRORE" : "CR"}
             </Typography>
           </Stack>
         </Box>

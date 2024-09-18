@@ -45,21 +45,21 @@ export default function SuccessPage({ searchParams }: any) {
             maxWidth: 500,
             mx: 2,
             my: 3,
-            px: 3,
+            px: 4,
             py: 3,
-            borderRadius: 3,
+            borderRadius: 4,
           }}
         >
           <Typography
-            sx={{ fontSize: "1.6rem", fontWeight: 700, color: "error.main" }}
+            sx={{ fontSize: "1.5rem", fontWeight: 700, color: "error.main" }}
           >
             Payment Cancelled!
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
-              fontWeight: 700,
-              color: "primary.main",
+              fontSize: "1rem",
+              fontWeight: 500,
+              color: "text.primary",
               mt: 2,
               mb: 4,
             }}

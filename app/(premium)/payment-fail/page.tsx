@@ -45,26 +45,26 @@ export default function SuccessPage({ searchParams }: any) {
             maxWidth: 500,
             mx: 2,
             my: 3,
-            px: 3,
+            px: 4,
             py: 3,
-            borderRadius: 3,
+            borderRadius: 4,
           }}
         >
           <Typography
-            sx={{ fontSize: "1.6rem", fontWeight: 700, color: "error.main" }}
+            sx={{ fontSize: "1.5rem", fontWeight: 700, color: "error.main" }}
           >
             Payment Failed!
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: "1rem",
               fontWeight: 700,
-              color: "primary.main",
+              color: "text.primary",
               mt: 2,
               mb: 4,
             }}
           >
-            Seomething went wrong. Please try again later.
+            Something went wrong. Please try again later.
           </Typography>
           <Button
             component={Link}

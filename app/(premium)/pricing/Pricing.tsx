@@ -25,6 +25,11 @@ export default function Pricing({ packages }: any) {
 
   const handleCardClick = async (event: any, itemInfo: any) => {
     event.preventDefault();
+
+    if (!auth?.isLoggedIn) {
+      router.push("/signin?redirect=/pricing");
+      return;
+    }
     try {
       const res = await fetch(`/api/generate-otp`, {
         method: "GET",
@@ -57,7 +62,17 @@ export default function Pricing({ packages }: any) {
 
   return (
     <>
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+      {errorMessage && (
+        <Box
+          sx={{
+            maxWidth: 400,
+            mx: "auto",
+            mb: 1,
+          }}
+        >
+          <Alert severity="error">{errorMessage}</Alert>
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",

@@ -131,7 +131,7 @@ export default function TopFinancials(props: any) {
   return (
     <Box
       sx={{
-        py: { xs: 2, sm: 4 },
+        py: { xs: 2, sm: 2 },
         ml: { xs: 2, sm: 4 },
         mr: 2,
       }}

@@ -109,7 +109,7 @@ export default function VerifyPhone() {
           router.push(
             `/checkout?price=${price}&product=${product}&validity=${encodeURIComponent(
               validity
-            )}`
+            )}&otp=${formData.otp}`
           );
         }
       } else {

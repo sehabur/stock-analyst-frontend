@@ -156,11 +156,11 @@ export const aboutus: string = `Stocksupporter is a platform with a mission to r
 
 We invite you to join us on this exciting journey as we strive to democratize access to financial information and empower investors in Bangladesh with the tools they need to succeed. Together, let's break barriers and pave the way for a more inclusive and dynamic investment landscape.
 
-Address:
-Varoimari, Basherbada,
-Ishwardi, Pabna-6620
-
 Trade License No: 784/2024`;
+
+const address = `Address:
+Varoimari, Basherbada,
+Ishwardi, Pabna-6620`;
 
 export const faqItems: any = [
   {

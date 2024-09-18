@@ -45,20 +45,20 @@ export default function SuccessPage({ searchParams }: any) {
             maxWidth: 500,
             mx: 2,
             my: 3,
-            px: 3,
+            px: 4,
             pt: 3,
             pb: 4,
-            borderRadius: 3,
+            borderRadius: 4,
           }}
         >
           <Typography
-            sx={{ fontSize: "1.8rem", fontWeight: 700, color: "success.main" }}
+            sx={{ fontSize: "1.5rem", fontWeight: 700, color: "success.main" }}
           >
             Payment Successful!
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
               fontWeight: 700,
               color: "text.secondary",
               mt: 3,
@@ -69,10 +69,10 @@ export default function SuccessPage({ searchParams }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
               fontWeight: 700,
-              color: "primary.main",
-              mb: 3,
+              color: "text.primary",
+              mb: 4,
             }}
           >
             {tranId || "not available"}
@@ -82,10 +82,10 @@ export default function SuccessPage({ searchParams }: any) {
               fontSize: "1rem",
               fontWeight: 500,
               color: "text.primary",
-              mb: 4,
+              mb: 3,
             }}
           >
-            Please signin again to take the changes to be effected.
+            Please sign in again for the changes to take effect.
           </Typography>
           <Button
             component={Link}
