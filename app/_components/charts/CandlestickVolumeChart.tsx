@@ -101,6 +101,17 @@ export default function CandlestickVolumeChart(props: any) {
 
     volumeSeries.setData(volumedata);
 
+    chart.current.applyOptions({
+      watermark: {
+        visible: true,
+        fontSize: 24,
+        horzAlign: "center",
+        vertAlign: "center",
+        color: "rgba(125, 125, 125, 0.3)",
+        text: "Stocksupporter",
+      },
+    });
+
     // chart.current.timeScale().fitContent();
 
     tooltip.current = document.createElement("div");

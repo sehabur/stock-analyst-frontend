@@ -39,7 +39,7 @@ export default function Favorites() {
 
   const [favStock, setFavStock] = React.useState<any>([]);
 
-  const [favStockCard, setFavStockCard] = React.useState<any>(null);
+  const [favStockCard, setFavStockCard] = React.useState<any>([]);
 
   const [toastOpen, setToastOpen] = React.useState<boolean>(false);
 
@@ -190,30 +190,33 @@ export default function Favorites() {
         </DialogActions>
       </Dialog>
 
-      <Box sx={{ mt: 3, mb: 2 }}>
-        <Button
-          startIcon={<EditNoteRoundedIcon />}
-          sx={{
-            px: 2,
-            borderRadius: 6,
-          }}
-          size="small"
-          onClick={() => setDialogOpen(true)}
-          variant="outlined"
-        >
-          Edit my list
-        </Button>
-      </Box>
       <Box>
         {favStockCard &&
+          favStockCard.length > 0 &&
           favStockCard.map((stock: any, index: number) => (
-            <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
-              <FavoriteStocksCard data={stock} />
-            </Box>
+            <>
+              <Box sx={{ mt: 3, mb: 2 }}>
+                <Button
+                  startIcon={<EditNoteRoundedIcon />}
+                  sx={{
+                    px: 2,
+                    borderRadius: 6,
+                  }}
+                  size="small"
+                  onClick={() => setDialogOpen(true)}
+                  variant="outlined"
+                >
+                  Edit my list
+                </Button>
+              </Box>
+              <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
+                <FavoriteStocksCard data={stock} />
+              </Box>
+            </>
           ))}
         {favStockCard && favStockCard.length < 1 && (
           <>
-            <Box sx={{ textAlign: "center", py: 4, px: 1 }}>
+            <Box sx={{ textAlign: "center", py: 6, px: 1 }}>
               <Typography
                 color="text.primary"
                 sx={{ fontSize: "1.3rem", mb: 2 }}
@@ -225,7 +228,7 @@ export default function Favorites() {
                 track them with ease
               </Typography>{" "}
               <Button
-                sx={{ mt: 2 }}
+                sx={{ mt: 3, px: 4 }}
                 variant="outlined"
                 onClick={() => setDialogOpen(true)}
                 startIcon={<AddRoundedIcon />}

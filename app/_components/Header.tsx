@@ -180,13 +180,10 @@ export default function Header() {
     if (!auth?.isLoggedIn && dialogOpen) {
       handleSigninDialogOpen();
       setRedirection(redirect);
-    }
-    if (auth?.isLoggedIn) {
+    } else {
       route.push(redirect);
     }
   };
-
-  // console.log(openSigninDialog);
 
   const handleMobileViewPopoverOpen = (
     event: React.MouseEvent<HTMLElement>
@@ -449,8 +446,9 @@ export default function Header() {
       ) : (
         <>
           <Button
-            component={Link}
-            href="/signin"
+            // component={Link}
+            // href="/signin"
+            onClick={() => handleUserPopoverClose("/signin")}
             startIcon={<LoginIcon color="primary" />}
             sx={{
               py: 1.2,
@@ -468,8 +466,9 @@ export default function Header() {
           </Button>
           <Divider light />
           <Button
-            component={Link}
-            href="/signup"
+            // component={Link}
+            // href="/signup"
+            onClick={() => handleUserPopoverClose("/signup")}
             startIcon={<AddCircleOutlineIcon color="primary" />}
             sx={{
               py: 1,
@@ -1230,7 +1229,7 @@ export default function Header() {
         open={openSigninDialog}
         onClose={handleSigninDialogClose}
         fullWidth
-        maxWidth="sm"
+        maxWidth="xs"
         disableScrollLock={true}
       >
         <SigninDialogContent

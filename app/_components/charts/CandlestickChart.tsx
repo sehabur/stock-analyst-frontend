@@ -67,6 +67,17 @@ export default function CandlestickChart(props: { data: any[] }) {
       wickDownColor: "#ef5350",
     });
 
+    chart.current.applyOptions({
+      watermark: {
+        visible: true,
+        fontSize: 24,
+        horzAlign: "center",
+        vertAlign: "center",
+        color: "rgba(125, 125, 125, 0.3)",
+        text: "Stocksupporter",
+      },
+    });
+
     candleSeries.setData(data);
 
     chart.current.timeScale().fitContent();

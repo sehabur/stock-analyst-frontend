@@ -15,17 +15,16 @@ export default function SigninDialogContent({
   return (
     <>
       <DialogContent>
-        <Box sx={{ maxWidth: "700px", mx: "auto", py: 3 }}>
+        <Box sx={{ maxWidth: 400, mx: "auto", py: 3, px: { xs: 0, sm: 3 } }}>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              px: 2,
               mb: { xs: 1, sm: 3 },
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "text.secondary" }}>
+            <Avatar sx={{ m: 1, mb: 2, bgcolor: "text.secondary" }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography
@@ -41,7 +40,7 @@ export default function SigninDialogContent({
               Please sign in to use this feature
             </Typography>
           </Box>
-          <Box sx={{ px: 2, pb: 2, maxWidth: 400, mx: "auto" }}>
+          <Box sx={{ pb: 2, maxWidth: 400, mx: "auto" }}>
             <SignInComp
               redirect={redirect}
               externalDialogClose={externalDialogClose}

@@ -12,6 +12,7 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import ru from "javascript-time-ago/locale/ru.json";
 import Footer from "./_components/Footer";
+import DisableCopyPaste from "./_components/shared/DisableCopyPaste";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: any) {
           <ThemeRegistry options={{ key: "mui" }}>
             <Header />
             {children}
+            <DisableCopyPaste />
             <Footer />
           </ThemeRegistry>
         </Provider>

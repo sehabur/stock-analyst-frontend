@@ -58,18 +58,17 @@ export default function SuccessPage({ searchParams }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: "1rem",
               fontWeight: 700,
               color: "text.secondary",
-              mt: 3,
-              mb: 1,
+              mt: 2,
             }}
           >
             Transection Id of your order is
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: "1rem",
               fontWeight: 700,
               color: "text.primary",
               mb: 4,
@@ -77,7 +76,7 @@ export default function SuccessPage({ searchParams }: any) {
           >
             {tranId || "not available"}
           </Typography>
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: "1rem",
               fontWeight: 500,
@@ -86,14 +85,23 @@ export default function SuccessPage({ searchParams }: any) {
             }}
           >
             Please sign in again for the changes to take effect.
-          </Typography>
+          </Typography> */}
+          <Box sx={{ my: 3 }}>
+            <Typography sx={{ fontSize: "1.4rem", mb: 2 }}>
+              Congratulations!
+            </Typography>
+            <Typography sx={{ fontSize: "1rem" }}>
+              You are now subscribed to premium package. Enjoy full access to
+              all features of the platform.
+            </Typography>
+          </Box>
           <Button
             component={Link}
-            href="/signin"
+            href="/"
             variant="contained"
-            sx={{ px: 4, fontSize: "1rem" }}
+            sx={{ px: 4, fontSize: "1rem", py: 1 }}
           >
-            Sign in
+            Go to Homepage
           </Button>
         </Paper>
       </Box>
