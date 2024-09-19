@@ -15,7 +15,7 @@ import {
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
 import { useSelector } from "react-redux";
 
-export default function FreeTrialCard({ handleCardClick }: any) {
+export default function FreeTrialCard({ data, handleCardClick }: any) {
   const auth = useSelector((state: any) => state.auth);
 
   return (
@@ -43,7 +43,7 @@ export default function FreeTrialCard({ handleCardClick }: any) {
                   pb: 1.4,
                 }}
               >
-                14 Days
+                {data.title}
               </Typography>
             </Box>
 
@@ -76,7 +76,7 @@ export default function FreeTrialCard({ handleCardClick }: any) {
                       color="text.primary"
                       sx={{ fontSize: "1.6rem" }}
                     >
-                      0
+                      {data.currentPrice}
                     </Typography>
                     <Typography
                       color="text.secondary"
@@ -101,7 +101,14 @@ export default function FreeTrialCard({ handleCardClick }: any) {
                   px: 3,
                   py: 1,
                 }}
-                onClick={(e) => handleCardClick(e, { type: "free_trial" })}
+                onClick={(e) =>
+                  handleCardClick(e, {
+                    type: "free_trial",
+                    product: data.product,
+                    price: data.currentPrice,
+                    validity: data.title,
+                  })
+                }
               >
                 Subscribe now
               </Button>

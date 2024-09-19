@@ -99,7 +99,7 @@ export default function PricingCard({ data, handleCardClick }: any) {
               }}
               onClick={(e) =>
                 handleCardClick(e, {
-                  type: "premium_package",
+                  type: "premium_package", //free_trial
                   product,
                   price: currentPrice,
                   validity: title,

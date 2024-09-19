@@ -25,12 +25,18 @@ export default function Pricing({ packages }: any) {
 
   const handleCardClick = async (event: any, itemInfo: any) => {
     event.preventDefault();
-
-    if (!auth?.isLoggedIn) {
-      router.push("/signin?redirect=/pricing");
-      return;
-    }
     try {
+      const queryString = new URLSearchParams(itemInfo).toString();
+
+      if (!auth?.isLoggedIn) {
+        router.push(
+          `/signin?redirect=${encodeURIComponent(
+            "/verify-phone" + queryString
+          )}&action=generate_otp`
+        );
+        return;
+      }
+
       const res = await fetch(`/api/generate-otp`, {
         method: "GET",
         headers: {
@@ -41,17 +47,7 @@ export default function Pricing({ packages }: any) {
       const data = await res.json();
 
       if (res.ok) {
-        // const { type, currentPrice, title, product } = itemInfo;
-
-        const queryString = new URLSearchParams(itemInfo).toString();
-
-        if (itemInfo.type == "free_trial") {
-          router.push(
-            auth?.isFreeTrialUsed ? "#" : `/verify-phone?${queryString}`
-          );
-        } else {
-          router.push(`/verify-phone?${queryString}`);
-        }
+        router.push(`/verify-phone?${queryString}`);
       } else {
         setErrorMessage(data.message || "Something went wrong");
       }
@@ -89,15 +85,20 @@ export default function Pricing({ packages }: any) {
         }}
       >
         <Box>
-          <FreeTrialCard handleCardClick={handleCardClick} />
-        </Box>
-        {packages?.map((item: any, index: number) => (
-          <PricingCard
+          <FreeTrialCard
+            data={packages?.find((item: any) => item.product === "free_trial")}
             handleCardClick={handleCardClick}
-            data={item}
-            key={index}
           />
-        ))}
+        </Box>
+        {packages
+          ?.filter((item: any) => item.product !== "free_trial")
+          .map((item: any, index: number) => (
+            <PricingCard
+              handleCardClick={handleCardClick}
+              data={item}
+              key={index}
+            />
+          ))}
       </Box>
     </>
   );

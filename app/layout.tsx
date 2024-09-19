@@ -55,7 +55,7 @@ export default function RootLayout({ children }: any) {
           <ThemeRegistry options={{ key: "mui" }}>
             <Header />
             {children}
-            <DisableCopyPaste />
+            {/* <DisableCopyPaste /> */}
             <Footer />
           </ThemeRegistry>
         </Provider>

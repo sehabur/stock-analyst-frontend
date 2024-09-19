@@ -19,6 +19,7 @@ import Spinner from "@/components/shared/Spinner";
 
 export default function SignInComp({
   redirect,
+  action,
   externalDialogClose = () => {},
 }: any) {
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ export default function SignInComp({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     event.preventDefault();
+
     try {
       const res = await fetch(`/api/signin`, {
         method: "POST",
@@ -61,7 +63,9 @@ export default function SignInComp({
         },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
+
       if (res.ok) {
         setErrorMessage("");
 
@@ -75,6 +79,22 @@ export default function SignInComp({
           })
         );
         externalDialogClose();
+
+        if (action === "generate_otp") {
+          const res = await fetch(`/api/generate-otp`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${data.user.token}`,
+            },
+          });
+
+          // if (res.ok) {
+          //   router.push(redirect || "/");
+          // } else {
+          //   setErrorMessage("OTP generation failed");
+          // }
+        }
         router.push(redirect || "/");
       } else {
         setErrorMessage(data.message || "Error occured");
