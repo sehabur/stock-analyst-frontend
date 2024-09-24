@@ -166,27 +166,41 @@ export const faqItems: any = [
   {
     id: 1,
     ques: "How do I contact customer support if I have a question or issue?",
-    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+    ans: "You can reach our customer support team by emailing us or direct call us out hotline number. We are here to assist you promptly.",
   },
   {
     id: 2,
-    ques: "How do I contact customer support if I have a question or issue?",
-    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+    ques: "How much does it cost?",
+    ans: "You can check our Premium package and check which package is suitable for you.",
   },
   {
     id: 3,
-    ques: "How do I contact customer support if I have a question or issue?",
-    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+    ques: "How do I cancel?",
+    ans: "Stocksupporter is flexible. You can easily cancel your account online in two clicks. There are no cancellation fees to start or stop your account anytime..",
   },
   {
     id: 4,
-    ques: "How do I contact customer support if I have a question or issue?",
-    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+    ques: "Can I Auto renew the package?",
+    ans: "Yes ",
   },
   {
     id: 5,
-    ques: "How do I contact customer support if I have a question or issue?",
-    ans: "You can reach our customer support team by emailing support@email.com or calling our toll-free number. We&apos;re here to assist you promptly.",
+    ques: "What features do I have access in premium package?",
+    ans: `- Fundamental
+          - Screener
+          - Technical
+	        - Price alerts	
+          - Ad free unlimited use.`,
+  },
+  {
+    id: 6,
+    ques: "How do I open my account??",
+    ans: "Go to stocksupporter.com and click on create new account.",
+  },
+  {
+    id: 7,
+    ques: "How do I select the company before I invest?",
+    ans: "Before investing, ensure you fully understand the investment, including analyzing financial statements like annual reports and EPS (Earnings Per Share). Avoid basing decisions on rumors or unverified information. Rely on rational, evidence-based reasoning",
   },
 ];
 
@@ -207,9 +221,9 @@ However, if the case is that you have been charged by mistake or due to any erro
 
 Stocksupporter reserves the right to update or modify any information, including prices, technical specifications, purchase terms, and product or service offerings, without prior notice.`;
 
-export const privacy: any = `Welcome to StockSupporter! Your privacy is incredibly important to us, and we’re dedicated to keeping your information safe and secure. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website stocksupporter.com (“the Website”) and our StockSupporter mobile application (“the App,” together known as “the Service”).Our 
+export const privacy: any = `Welcome to StockSupporter! Your privacy is incredibly important to us, and we’re dedicated to keeping your information safe and secure. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website stocksupporter.com (“the Website”) and our StockSupporter mobile application (“the App,” together known as “the Service”). 
 
-Commitment to Your Privacy
+Our Commitment to Your Privacy
 
 At StockSupporter, we’re committed to protecting your privacy. By using our Service, you agree to our Privacy Policy. We encourage you to review this Policy regularly to stay informed of any updates. If you don’t agree with our policy, please discontinue use of our Service and uninstall the App if applicable.
 

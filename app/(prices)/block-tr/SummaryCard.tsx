@@ -7,7 +7,7 @@ export default function SummaryCard({ summary, date }: any) {
     <Paper
       elevation={0}
       sx={{
-        bgcolor: "secondaryBackground",
+        // bgcolor: "secondaryBackground",
         px: 3,
         pb: 1.5,
         pt: 1.5,
@@ -30,7 +30,7 @@ export default function SummaryCard({ summary, date }: any) {
           label={DateTime.fromISO(date).toFormat("dd MMM, yyyy")}
           // variant="outlined"
           size="small"
-          sx={{ fontSize: ".9rem" }}
+          sx={{ fontSize: ".9rem", borderRadius: 1 }}
         />
       </Box>
       <Box

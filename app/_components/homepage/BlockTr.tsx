@@ -38,7 +38,7 @@ export default function BlockTr({ data }: any) {
         component={Paper}
         elevation={4}
         variant="outlined"
-        sx={{ borderRadius: 4 }}
+        sx={{ borderRadius: 3 }}
       >
         <Box
           sx={{

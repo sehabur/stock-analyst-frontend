@@ -98,10 +98,10 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     marginRight: "10px",
     marginLeft: "10px",
     border: `1px solid #2962ff !important`,
-    paddingLeft: "16px",
+    paddingLeft: "24px",
+    paddingRight: "24px",
     paddingTop: "3px",
     paddingBottom: "3px",
-    paddingRight: "16px",
     "&.Mui-selected": {
       color: grey[50],
       backgroundColor: theme.palette.primary.main,
@@ -239,12 +239,43 @@ export default function IndexChart({ indexData }: any) {
   const chartData: any = formatChartData(indexData.minute);
 
   return (
-    <Box sx={{ px: 2, pt: 1, pb: 1 }}>
+    <Paper
+      elevation={0}
+      // variant="outlined"
+      sx={{
+        px: 2,
+        pt: 1,
+        pb: 1,
+        bgcolor: "background.default",
+        borderRadius: 3,
+      }}
+    >
+      <Button
+        component={Link}
+        href={`/index-details/${currentIndex.tradingCode}`}
+        color="primary"
+        endIcon={<ChevronRightRoundedIcon />}
+        sx={{
+          fontSize: "1.2rem",
+          fontWeight: 700,
+          ":hover": {
+            bgcolor: "transparent",
+            color: "primary.main",
+            textDecoration: "underline",
+          },
+          mt: 0.5,
+          ml: { xs: -1, sm: 1.5 },
+        }}
+      >
+        {currentIndex.title} Index
+      </Button>
+
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          mb: 2,
         }}
       >
         <StyledToggleButtonGroup
@@ -261,25 +292,6 @@ export default function IndexChart({ indexData }: any) {
         </StyledToggleButtonGroup>
       </Box>
 
-      <Button
-        component={Link}
-        href={`/index-details/${currentIndex.tradingCode}`}
-        color="primary"
-        endIcon={<ChevronRightRoundedIcon />}
-        sx={{
-          fontSize: "1.2rem",
-          fontWeight: 700,
-          ":hover": {
-            bgcolor: "transparent",
-            color: "primary.main",
-            textDecoration: "underline",
-          },
-          mt: 1,
-          ml: { xs: -1, sm: 1.5 },
-        }}
-      >
-        {currentIndex.title} Index
-      </Button>
       <Grid container spacing={0.5} alignItems="center" justifyContent="center">
         <Grid item xs={12} sm={6}>
           <Stack
@@ -380,18 +392,21 @@ export default function IndexChart({ indexData }: any) {
         />
       </Box>
       <Paper
-        variant="outlined"
+        // variant="outlined"
+        elevation={0}
         sx={{
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-around",
-          py: 1.5,
+          pt: 2,
+          pb: 1.5,
           px: 2,
           mx: { xs: 0, sm: 3 },
-          mt: 3,
+          mt: 2,
+          mb: 2,
           borderRadius: 2,
-          bgcolor: "gainerCardMobileView",
-          maxWidth: 600,
+          bgcolor: "secondaryBackground",
+          maxWidth: 640,
         }}
       >
         <Box>
@@ -460,6 +475,6 @@ export default function IndexChart({ indexData }: any) {
           </Stack>
         </Box>
       </Paper>
-    </Box>
+    </Paper>
   );
 }

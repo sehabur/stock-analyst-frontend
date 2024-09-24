@@ -14,6 +14,7 @@ import {
 
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
 import { useSelector } from "react-redux";
+import { grey } from "@mui/material/colors";
 
 export default function FreeTrialCard({ data, handleCardClick }: any) {
   const auth = useSelector((state: any) => state.auth);
@@ -22,25 +23,35 @@ export default function FreeTrialCard({ data, handleCardClick }: any) {
     <>
       <Card
         sx={{
-          my: 2,
+          my: 1,
           mx: 2,
-          borderRadius: 2,
+          borderRadius: 1,
           width: 280,
           textAlign: "center",
         }}
-        elevation={6}
+        elevation={16}
       >
-        <CardContent sx={{ p: 0 }}>
+        <CardContent
+          sx={{ p: 0, m: 0, ":hover": { cursor: "pointer" } }}
+          onClick={(e) =>
+            handleCardClick(e, {
+              type: "free_trial",
+              product: data.product,
+              price: data.currentPrice,
+              validity: data.title,
+            })
+          }
+        >
           <Box>
-            <Box sx={{ bgcolor: "overviewHeader" }}>
+            <Box sx={{ bgcolor: "success.dark" }}>
               <Typography
                 gutterBottom
                 sx={{
-                  color: "text.primary",
+                  color: grey[50],
                   fontSize: { xs: "1.1rem", sm: "1.4rem" },
                   mx: 2,
-                  pt: 1.4,
-                  pb: 1.4,
+                  pt: 1.5,
+                  pb: 1.5,
                 }}
               >
                 {data.title}
@@ -59,9 +70,9 @@ export default function FreeTrialCard({ data, handleCardClick }: any) {
               ) : (
                 <>
                   <Typography
-                    color="success.main"
+                    color="text.primary"
                     sx={{
-                      fontSize: "1.8rem",
+                      fontSize: "1.6rem",
                     }}
                   >
                     Free Trial
@@ -91,24 +102,14 @@ export default function FreeTrialCard({ data, handleCardClick }: any) {
 
             <Box sx={{ mt: 2 }}>
               <Button
-                variant="contained"
+                variant="outlined"
                 endIcon={<EastRoundedIcon />}
                 color="success"
                 disabled={auth?.isFreeTrialUsed}
                 sx={{
-                  borderRadius: 8,
                   fontSize: "1rem",
                   px: 3,
-                  py: 1,
                 }}
-                onClick={(e) =>
-                  handleCardClick(e, {
-                    type: "free_trial",
-                    product: data.product,
-                    price: data.currentPrice,
-                    validity: data.title,
-                  })
-                }
               >
                 Subscribe now
               </Button>

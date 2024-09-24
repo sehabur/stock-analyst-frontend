@@ -91,12 +91,18 @@ export default function SectorStatus(props: any) {
   const formattedSectorValueData = formatSectorValueData(sectorData);
 
   return (
-    <Grid container direction="row" justifyContent="center" spacing={4}>
+    <Grid container direction="row" justifyContent="center" spacing={2}>
       <Grid item xs={12} sm={6}>
         <Paper
           elevation={0}
           // variant="outlined"
-          sx={{ bgcolor: "background.default", px: 1, pb: 1, pt: 3 }}
+          sx={{
+            bgcolor: "background.default",
+            px: 1,
+            pb: 1,
+            pt: 3,
+            borderRadius: 3,
+          }}
         >
           <Typography
             color="text.primary"
@@ -115,7 +121,13 @@ export default function SectorStatus(props: any) {
         <Paper
           elevation={0}
           // variant="outlined"
-          sx={{ bgcolor: "background.default", px: 1, pb: 1, pt: 3 }}
+          sx={{
+            bgcolor: "background.default",
+            px: 1,
+            pb: 1,
+            pt: 3,
+            borderRadius: 3,
+          }}
         >
           <Typography
             color="text.primary"

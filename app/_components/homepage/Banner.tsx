@@ -28,27 +28,28 @@ export default function Banner() {
 
   return (
     <Box
-    // sx={(theme) => ({
-    //   width: "100%",
-    //   backgroundImage:
-    //     theme.palette.mode === "light"
-    //       ? "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)"
-    //       : "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)",
-    //   backgroundImage: `radial-gradient(${theme.palette.background.default}, ${secondColor})`,
-    //   backgroundRepeat: "no-repeat",
-    // })}
-    // sx={{
-    //   backgroundImage: `linear-gradient(${theme.palette.background.default}, ${secondColor})`,
-    //   height: { xs: "300px", sm: "600px" },
-    //   backgroundRepeat: "no-repeat",
-    //   backgroundPosition: "center center",
-    //   display: "flex",
-    //   flexDirection: "column",
-    //   alignItems: "center",
-    //   justifyContent: "center",
-    //   backgroundSize: "contain",
-    //   textAlign: "center",
-    // }}
+      sx={{ pt: 4, pb: 4 }}
+      // sx={(theme) => ({
+      //   width: "100%",
+      //   backgroundImage:
+      //     theme.palette.mode === "light"
+      //       ? "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)"
+      //       : "radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 16%), transparent)",
+      //   backgroundImage: `radial-gradient(${theme.palette.background.default}, ${secondColor})`,
+      //   backgroundRepeat: "no-repeat",
+      // })}
+      // sx={{
+      //   backgroundImage: `linear-gradient(${theme.palette.background.default}, ${secondColor})`,
+      //   height: { xs: "300px", sm: "600px" },
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundPosition: "center center",
+      //   display: "flex",
+      //   flexDirection: "column",
+      //   alignItems: "center",
+      //   justifyContent: "center",
+      //   backgroundSize: "contain",
+      //   textAlign: "center",
+      // }}
     >
       <Divider />
       <Box
@@ -60,8 +61,8 @@ export default function Banner() {
           //     : `linear-gradient( ${alpha("#090E10", 0.0)}, #101010)`,
           backgroundRepeat: "no-repeat",
           textAlign: "left",
-          pt: { xs: 2, sm: 5 },
-          pb: { xs: 4, sm: 7 },
+          pt: { xs: 2, sm: 6 },
+          pb: { xs: 4, sm: 4 },
           px: 2,
         })}
       >
@@ -109,21 +110,6 @@ export default function Banner() {
             </Typography>
           </Box>
           <Box>
-            {/* <Button
-              variant="outlined"
-              color="warning"
-              sx={{
-                fontSize: { xs: "1rem", sm: "1rem" },
-                // borderRadius: 2,
-                px: { xs: 3, sm: 4 },
-                py: 1,
-                mr: { xs: 2, sm: 4 },
-              }}
-              component={Link}
-              href="/signin"
-            >
-              Sign in
-            </Button> */}
             <Button
               variant="contained"
               color="primary"
@@ -138,7 +124,7 @@ export default function Banner() {
                 },
               }}
               component={Link}
-              href="/signup"
+              href="/pricing"
             >
               Try premium with 14 days free trial
             </Button>

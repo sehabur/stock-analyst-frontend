@@ -40,14 +40,18 @@ export default function GainerCard(props: any) {
           my: { xs: 0.8, sm: 1.5 },
           px: { xs: 2, sm: 3 },
           py: 1.5,
-          borderRadius: { xs: 0, sm: 1.5 },
+          borderRadius: { xs: 0, sm: 2 },
           ":hover": {
-            bgcolor: "financeCardTitlecolor",
+            // bgcolor: "gainerCardHover",
+            boxShadow:
+              theme.palette.mode == "light"
+                ? "rgba(0, 0, 0, 0.35) 0px 2px 15px"
+                : "rgba(255, 255, 255, 0.3) 0px 2px 15px",
           },
-          bgcolor: { xs: "gainerCardMobileView", sm: "gainerCard" },
+          bgcolor: "gainerCardBackground",
         }}
         elevation={0}
-        variant={matchesSmUp ? "outlined" : "elevation"}
+        // variant={matchesSmUp ? "outlined" : "elevation"}
       >
         <Grid container spacing={8} alignItems="center">
           <Grid item xs={7.5} sm={8}>

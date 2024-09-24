@@ -29,9 +29,10 @@ export default function Pricing({ packages }: any) {
       const queryString = new URLSearchParams(itemInfo).toString();
 
       if (!auth?.isLoggedIn) {
+        // console.log(queryString);
         router.push(
           `/signin?redirect=${encodeURIComponent(
-            "/verify-phone" + queryString
+            "/verify-phone?" + queryString
           )}&action=generate_otp`
         );
         return;

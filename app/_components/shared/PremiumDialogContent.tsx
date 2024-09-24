@@ -8,13 +8,14 @@ import {
   Button,
   DialogContent,
   Avatar,
+  Paper,
 } from "@mui/material";
 
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-export default function PremiumDialogContent(props: any) {
+export default function PremiumDialogContent({ variant = "elevation" }: any) {
   const auth = useSelector((state: any) => state.auth);
 
   const theme: any = useTheme();
@@ -24,7 +25,11 @@ export default function PremiumDialogContent(props: any) {
   return (
     <>
       <DialogContent>
-        <Box sx={{ maxWidth: 480, mx: "auto", py: { xs: 2, sm: 3 } }}>
+        <Paper
+          elevation={0}
+          variant={variant}
+          sx={{ maxWidth: 550, mx: "auto", p: { xs: 2, sm: 4 } }}
+        >
           <Stack direction="row" alignItems="center" gap={4}>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Avatar sx={{ width: 70, height: 70 }}>
@@ -71,12 +76,12 @@ export default function PremiumDialogContent(props: any) {
               sx={{ py: 1.5, px: 3, borderRadius: 1 }}
               component={Link}
               fullWidth={matchesSmDown}
-              href={auth?.isLoggedIn ? "/pricing" : "/signup?redirect=/pricing"}
+              href="/pricing"
             >
               Get 14 days free trial
             </Button>
           </Box>
-        </Box>
+        </Paper>
       </DialogContent>
     </>
   );

@@ -79,14 +79,14 @@ export default async function Price() {
       >
         <Box sx={{ mb: 1 }}>
           <WorkspacePremiumRoundedIcon
-            sx={{ fontSize: { xs: 45, sm: 50 }, color: "text.secondary" }}
+            sx={{ fontSize: { xs: 40, sm: 40 }, color: "warning.main" }}
           />
         </Box>
         <Typography
           component="h1"
           color="text.primary"
           sx={{
-            fontSize: { xs: "1.6rem", sm: "2rem" },
+            fontSize: { xs: "1.5rem", sm: "1.8rem" },
             fontWeight: 700,
             color: "text.primary",
           }}

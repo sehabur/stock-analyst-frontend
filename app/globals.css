@@ -77,6 +77,10 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  user-select: none;
+  -webkit-user-select: none; /* For Chrome, Safari, Opera */
+  -moz-user-select: none; /* For Firefox */
+  -ms-user-select: none; /* For Internet Explorer/Edge */
 }
 
 html,

@@ -69,10 +69,11 @@ export default function Overview({ data }: any) {
           mx: { xs: 0, sm: 4 },
           py: { xs: 1.5, sm: 3 },
           px: 2,
-          borderRadius: 4,
+          borderRadius: 2,
           bgcolor: "secondaryBackground",
         }}
-        variant="outlined"
+        elevation={0}
+        // variant="outlined"
       >
         <Box
           sx={{

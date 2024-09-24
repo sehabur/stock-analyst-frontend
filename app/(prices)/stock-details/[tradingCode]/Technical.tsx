@@ -78,7 +78,7 @@ export default function Technical(props: any) {
   };
 
   useEffect(() => {
-    if (auth?.isPremium) {
+    if (auth?.isPremiumEligible) {
       getStockTechnicals(tradingCode);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,7 +102,7 @@ export default function Technical(props: any) {
           display: auth?.isPremiumEligible ? "none" : "block",
         }}
       >
-        <PremiumDialogContent />
+        <PremiumDialogContent variant="outlined" />
       </Box>
       <Grid
         container

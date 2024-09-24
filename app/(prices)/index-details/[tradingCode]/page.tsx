@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import Link from "next/link";
 
-import { Box, Typography, Chip, Button, Tooltip } from "@mui/material";
+import { Box, Typography, Chip, Button, Tooltip, Divider } from "@mui/material";
 import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 
@@ -124,16 +124,15 @@ export default async function StockDetails({ params }: any) {
           sx={{
             maxWidth: 1210,
             mx: "auto",
-            px: { xs: 2, sm: 8 },
+            px: { xs: 2, sm: 1 },
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: { xs: "flex-start", sm: "space-between" },
-            bgcolor: "financeCardTitlecolor",
-            pt: { xs: 3, sm: 4 },
-            pb: { xs: 4, sm: 4 },
-            borderRadius: { xs: 0, sm: 4 },
+            // bgcolor: "financeCardTitlecolor",
+            pt: { xs: 3, sm: 3 },
+            pb: { xs: 4, sm: 0 },
           }}
         >
           <Box>
@@ -227,11 +226,17 @@ export default async function StockDetails({ params }: any) {
               {latestPriceData.time}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", mt: 0.8 }}>
-            <FavoriteButton tradingCode={stock.fundamentals.tradingCode} />
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              mt: { xs: 2, sm: 0.8 },
+            }}
+          >
+            <FavoriteButton tradingCode={tradingCode} />
             <Button
               component={Link}
-              href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
+              href={`/supercharts?symbol=${tradingCode.slice(2)}`}
               target="_blank"
               sx={{ borderRadius: 2, py: 1.05 }}
               variant="contained"
@@ -240,6 +245,7 @@ export default async function StockDetails({ params }: any) {
             </Button>
           </Box>
         </Box>
+
         <Box>
           <Overview stock={stock} />
         </Box>

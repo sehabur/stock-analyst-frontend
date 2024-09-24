@@ -9,7 +9,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography, Paper, Divider } from "@mui/material";
 import SummaryCard from "./SummaryCard";
 
 export default function BlockTransection({ data, summary, date }: any) {
@@ -24,6 +24,7 @@ export default function BlockTransection({ data, summary, date }: any) {
       <Box>
         <SummaryCard summary={summary} date={date} />
       </Box>
+
       <TableContainer
         component={Paper}
         variant="outlined"
@@ -36,7 +37,6 @@ export default function BlockTransection({ data, summary, date }: any) {
                 ".MuiTableCell-head": {
                   fontSize: "1rem",
                   fontWeight: 700,
-                  pb: 1.5,
                 },
               }}
             >

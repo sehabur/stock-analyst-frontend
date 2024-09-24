@@ -61,7 +61,7 @@ const options: any = [
     tag: "revenue",
   },
   {
-    header: "Reserve & Surplus (Crore)",
+    header: "Reserve & Surplus (Cr)",
     button: "Reserve",
     tag: "reserve",
   },
@@ -90,12 +90,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
-    borderRadius: "6px !important",
+    borderRadius: "5px !important",
     marginBottom: "10px",
     border: `1px solid lightgrey !important`,
     paddingLeft: "12px",
-    paddingTop: "4px",
-    paddingBottom: "4px",
+    paddingTop: "5px",
+    paddingBottom: "5px",
     paddingRight: "12px",
     "&.Mui-selected": {
       color: theme.palette.background.default,
@@ -177,19 +177,19 @@ export default function TopFinancials(props: any) {
         <Box sx={{ ml: 2 }}>
           <TableContainer
             component={Paper}
-            elevation={4}
+            // elevation={0}
             variant="outlined"
-            sx={{ borderRadius: 2, width: { xs: "100%", sm: 430 } }}
+            sx={{ borderRadius: 2, minWidth: { xs: "100%", sm: 445 } }}
           >
             <Table size="small">
-              <TableHead>
+              <TableHead sx={{ height: 65 }}>
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
                       fontSize: "1rem",
                       fontWeight: 500,
-                      bgcolor: "financeCardTitlecolor",
-                      color: "text.secondary",
+                      // bgcolor: "financeCardTitlecolor",
+                      color: "text.primary",
                     },
                   }}
                 >
@@ -200,7 +200,7 @@ export default function TopFinancials(props: any) {
                   {matchesSmUp && (
                     <>
                       <TableCell align="right">LTP</TableCell>
-                      <TableCell align="right">Change(%)</TableCell>
+                      <TableCell align="right">Change (%)</TableCell>
                     </>
                   )}
                 </TableRow>
@@ -232,7 +232,7 @@ export default function TopFinancials(props: any) {
                         {row.tradingCode}
                       </Typography>
                     </TableCell>
-                    <TableCell align="right" sx={{ fontSize: "1rem" }}>
+                    <TableCell align="right" sx={{ fontSize: ".9rem" }}>
                       {alignment === "dividend"
                         ? row.value
                         : row.value.toFixed(2)}

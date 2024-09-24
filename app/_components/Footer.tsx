@@ -101,6 +101,19 @@ export default function Footer() {
                   alt="logo of stocksupporter"
                 />
               </Box>
+              <Box>
+                <Typography color="text.secondary">
+                  Charts are powered by{" "}
+                  <Typography
+                    component={Link}
+                    href="https://www.tradingview.com/"
+                    target="_blank"
+                    sx={{ color: "primary.main" }}
+                  >
+                    TradingView
+                  </Typography>
+                </Typography>
+              </Box>
             </Box>
           </Box>
           <Box

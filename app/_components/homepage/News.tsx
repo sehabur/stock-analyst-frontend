@@ -67,8 +67,8 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     marginRight: "12px",
     border: `1px solid lightgrey !important`,
     paddingLeft: "16px",
-    paddingTop: "4px",
-    paddingBottom: "4px",
+    paddingTop: "2px",
+    paddingBottom: "2px",
     paddingRight: "16px",
     "&.Mui-selected": {
       color: theme.palette.background.default,
@@ -192,7 +192,7 @@ export default function News({ data }: any) {
         </Button>
         <Box
           sx={{
-            mb: { xs: 1, sm: 3 },
+            mb: { xs: 1, sm: 1 },
           }}
         >
           <StyledToggleButtonGroup
@@ -223,8 +223,9 @@ export default function News({ data }: any) {
         <Box>
           {news.slice(0, 4).map((item: any) => (
             <Card
-              sx={{ minWidth: 275, my: 1 }}
+              sx={{ minWidth: 275, my: 1, borderRadius: 2 }}
               variant="outlined"
+              elevation={0}
               key={item._id}
             >
               <CardActionArea onClick={() => handleItemClick(item)}>

@@ -6,11 +6,13 @@ import KeyboardDoubleArrowUpRoundedIcon from "@mui/icons-material/KeyboardDouble
 import KeyboardDoubleArrowDownRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowDownRounded";
 import PauseCircleOutlineRoundedIcon from "@mui/icons-material/PauseCircleOutlineRounded";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import GaugeChart from "../charts/GaugeChart";
+import MarketPieChart from "../charts/MarketPieChart";
 
 const colors = ["#24b29b", "#448aff", "#f45e6a"];
 const labels = ["Uptrend", "Neutral", "Downtrend"];
 
-export default function MarketMoverChart({ data, sectorData }: any) {
+export default function MarketMoverChart({ data, rsi, sectorData }: any) {
   const theme: any = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -34,7 +36,7 @@ export default function MarketMoverChart({ data, sectorData }: any) {
   // const id = open ? "simple-popover" : undefined;
 
   return (
-    <>
+    <Box>
       {/* <Popover
         id={id}
         open={open}
@@ -82,17 +84,21 @@ export default function MarketMoverChart({ data, sectorData }: any) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          py: 4,
+          pt: 2,
+          pb: 1,
           px: 2,
-          mt: { xs: 3, sm: 8 },
-          bgcolor: "secondaryBackground",
-          borderRadius: 5,
+          // mt: { xs: 3, sm: 8 },
+          bgcolor: "background.default",
+          borderRadius: 3,
         }}
       >
-        <Typography color="text.secondary" sx={{ fontSize: "1.4rem" }}>
+        <Typography
+          color="text.secondary"
+          sx={{ fontSize: "1.4rem", fontWeight: 700, mt: 1, mb: 1 }}
+        >
           Market trend
         </Typography>
-        <Stack direction="row" alignItems="center" sx={{ my: 2 }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
           <Box
             // component={Button}
             // onClick={(e) => handleClick(e, "uptrendItems")}
@@ -184,7 +190,7 @@ export default function MarketMoverChart({ data, sectorData }: any) {
           </Box>
         </Stack>
         <Box>
-          <PieChart
+          <MarketPieChart
             data={[
               data.issuesAdvanced,
               data.issuesUnchanged,
@@ -193,11 +199,21 @@ export default function MarketMoverChart({ data, sectorData }: any) {
             colors={colors}
             labels={labels}
             // height={300}
-            width={360}
+            width={400}
             donutSize="60%"
           />
         </Box>
-      </Paper>{" "}
-    </>
+        <Box sx={{ mt: 3 }}>
+          <Typography
+            color="text.secondary"
+            sx={{ fontSize: "1.4rem", fontWeight: 700, textAlign: "center" }}
+          >
+            Sentiment
+          </Typography>
+
+          <GaugeChart rsi={rsi} />
+        </Box>
+      </Paper>
+    </Box>
   );
 }

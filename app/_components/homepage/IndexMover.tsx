@@ -4,6 +4,7 @@ import * as React from "react";
 import {
   Box,
   Button,
+  Paper,
   Typography,
   useMediaQuery,
   useTheme,
@@ -70,7 +71,7 @@ export default function IndexMover({ data }: any) {
     {
       field: "tradingCode",
       headerName: "TRADING CODE",
-      width: matchesSmUp ? 150 : 140,
+      width: matchesSmUp ? 180 : 140,
       align: "left",
       headerAlign: "left",
       disableColumnMenu: true,
@@ -94,7 +95,7 @@ export default function IndexMover({ data }: any) {
       headerName: "LTP (BDT)",
       align: "right",
       headerAlign: "right",
-      width: matchesSmUp ? 140 : 100,
+      width: matchesSmUp ? 180 : 100,
       disableColumnMenu: true,
     },
     {
@@ -102,7 +103,7 @@ export default function IndexMover({ data }: any) {
       headerName: "INDEX MOVE",
       align: "right",
       headerAlign: "right",
-      width: matchesSmUp ? 150 : 100,
+      width: matchesSmUp ? 180 : 100,
       disableColumnMenu: true,
     },
   ];
@@ -117,79 +118,84 @@ export default function IndexMover({ data }: any) {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 2 }, maxWidth: 500 }}>
-      <Box>
-        <Button
-          component={Link}
-          href="/index-mover"
-          color="primary"
-          endIcon={<ArrowForwardIosRoundedIcon />}
-          sx={{
-            mb: 1,
-            fontSize: "1.5rem",
-            fontWeight: 700,
-            ":hover": {
-              bgcolor: "transparent",
-              color: "primary.main",
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Index Movers
-        </Button>
-      </Box>
-      <Box
-        sx={{
-          mb: 2,
-          mt: 1,
-          ml: 0.8,
-        }}
+    <Box sx={{ mr: 1 }}>
+      <Paper
+        elevation={0}
+        sx={{ p: { xs: 2, sm: 2 }, width: "100%", borderRadius: 3 }}
       >
-        <StyledToggleButtonGroup
-          size="small"
-          value={typeAlignment}
-          exclusive
-          onChange={handleTypeAlignmentChange}
-        >
-          <StyledToggleButtonSuccess
-            value="gainer"
-            sx={{ px: { xs: 1.4, sm: 4 } }}
+        <Box>
+          <Button
+            component={Link}
+            href="/index-mover"
+            color="primary"
+            endIcon={<ArrowForwardIosRoundedIcon />}
+            sx={{
+              mb: 1,
+              fontSize: "1.5rem",
+              fontWeight: 700,
+              ":hover": {
+                bgcolor: "transparent",
+                color: "primary.main",
+                textDecoration: "underline",
+              },
+            }}
           >
-            + Index Mover
-          </StyledToggleButtonSuccess>
-          <StyledToggleButtonError
-            value="loser"
-            sx={{ px: { xs: 1.4, sm: 4 } }}
-          >
-            - Index Mover
-          </StyledToggleButtonError>
-        </StyledToggleButtonGroup>
-      </Box>
-
-      <Box>
-        <DataGrid
-          rows={data[typeAlignment]}
-          columns={columns}
-          hideFooter={true}
-          rowHeight={41}
+            Index Movers
+          </Button>
+        </Box>
+        <Box
           sx={{
-            ".MuiDataGrid-columnHeader": {
-              color: "text.secondary",
-              // fontSize: { xs: ".8rem", sm: ".9rem" },
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              overflow: "visible",
-              lineHeight: "1.43rem",
-              whiteSpace: "normal",
-            },
-            border: "none",
-            width: matchesSmUp ? "100%" : "90vw",
-            fontSize: ".9rem",
-            fontWeight: 500,
+            mb: 2,
+            mt: 1,
+            ml: 0.8,
           }}
-        />
-      </Box>
-      <SeeMoreButton href="/index-mover" />
+        >
+          <StyledToggleButtonGroup
+            size="small"
+            value={typeAlignment}
+            exclusive
+            onChange={handleTypeAlignmentChange}
+          >
+            <StyledToggleButtonSuccess
+              value="gainer"
+              sx={{ px: { xs: 1.4, sm: 4 } }}
+            >
+              + Index Mover
+            </StyledToggleButtonSuccess>
+            <StyledToggleButtonError
+              value="loser"
+              sx={{ px: { xs: 1.4, sm: 4 } }}
+            >
+              - Index Mover
+            </StyledToggleButtonError>
+          </StyledToggleButtonGroup>
+        </Box>
+
+        <Box>
+          <DataGrid
+            rows={data[typeAlignment]}
+            columns={columns}
+            hideFooter={true}
+            rowHeight={41}
+            sx={{
+              ".MuiDataGrid-columnHeader": {
+                color: "text.secondary",
+                // fontSize: { xs: ".8rem", sm: ".9rem" },
+              },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                overflow: "visible",
+                lineHeight: "1.43rem",
+                whiteSpace: "normal",
+              },
+              border: "none",
+              width: matchesSmUp ? "100%" : "90vw",
+              fontSize: ".9rem",
+              fontWeight: 500,
+            }}
+          />
+        </Box>
+        <SeeMoreButton href="/index-mover" />
+      </Paper>
     </Box>
   );
 }

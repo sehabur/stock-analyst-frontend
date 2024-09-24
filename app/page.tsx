@@ -173,7 +173,7 @@ export default async function Home() {
   ]);
 
   return (
-    <Box component="main" sx={{ bgcolor: "background.default" }}>
+    <Box component="main" sx={{ bgcolor: "homepageBackground" }}>
       {/* <Hero />
       <Divider />
       <Highlights />
@@ -185,24 +185,15 @@ export default async function Home() {
       <Box sx={{ maxWidth: "1250px", mx: "auto", pt: { xs: 2, sm: 2 } }}>
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sm={7.5}>
-            <Box sx={{ bgcolor: "background.default" }}>
-              <IndexChart indexData={indexData} />
-            </Box>
+            <IndexChart indexData={indexData} />
           </Grid>
 
           <Grid item xs={12} sm={4.5}>
-            <Box
-              sx={{
-                bgcolor: "background.default",
-                pl: { xs: 2, sm: 6 },
-                pr: 2,
-              }}
-            >
-              <MarketMoverChart
-                data={indexData.latest}
-                sectorData={sectorData[0]}
-              />
-            </Box>
+            <MarketMoverChart
+              data={indexData.latest}
+              rsi={indexData.rsi}
+              sectorData={sectorData[0]}
+            />
           </Grid>
 
           <Grid item xs={12}>
@@ -246,22 +237,6 @@ export default async function Home() {
             <BlockTr data={blockTrData} />
           </Grid>
         </Grid>
-      </Box>
-      <Box sx={{ py: 4 }}>
-        <Typography
-          sx={{ fontSize: ".9rem", textAlign: "center" }}
-          color="text.secondary"
-        >
-          Charts are powered by{" "}
-          <Typography
-            component={Link}
-            href="https://www.tradingview.com/"
-            target="_blank"
-            sx={{ color: "primary.main" }}
-          >
-            TradingView
-          </Typography>
-        </Typography>
       </Box>
       <Banner />
     </Box>

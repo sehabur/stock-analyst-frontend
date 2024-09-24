@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
+  Chip,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -89,7 +90,7 @@ export default function News({ news }: any) {
         sx={{
           maxWidth: "1250px",
           mx: "auto",
-          py: { xs: 2, sm: 4 },
+          py: { xs: 2, sm: 2 },
           px: 2,
         }}
       >
@@ -134,9 +135,21 @@ export default function News({ news }: any) {
                         locale="en-US"
                         style={{ fontSize: "1rem", color: "#089981" }}
                       />
-                      <Typography sx={{ ml: 2 }}>
+                      {/* <Typography sx={{ ml: 2 }}>
                         {DateTime.fromISO(item.date).toFormat("dd-MM-YY")}
-                      </Typography>
+                      </Typography> */}
+
+                      <Chip
+                        label={DateTime.fromISO(item.date).toFormat(
+                          "dd MMM, yyyy"
+                        )}
+                        size="small"
+                        sx={{
+                          ml: 2,
+                          borderRadius: 1,
+                          fontSize: ".9rem",
+                        }}
+                      />
                     </Stack>
                   </Typography>
                   <Typography sx={{ fontSize: ".9rem" }}>

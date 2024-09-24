@@ -100,8 +100,6 @@ export default function Header() {
 
   const auth = useSelector((state: any) => state.auth);
 
-  console.log(auth);
-
   const [searchText, setSearchText] = useState("");
 
   const [logoutSuccess, setLogoutSuccess] = useState(false);

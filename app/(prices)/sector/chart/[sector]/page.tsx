@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import SectorChart from "./SectorChart";
 import { sectorList } from "@/data/dse";
@@ -98,17 +106,14 @@ export default async function Sector({ params }: any) {
           sx={{
             maxWidth: 1210,
             mx: "auto",
-            px: { xs: 3, sm: 8 },
-
+            px: 3,
             display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: { xs: "flex-start", sm: "space-between" },
-            bgcolor: "financeCardTitlecolor",
             pt: { xs: 3, sm: 4 },
             pb: { xs: 4, sm: 4 },
-            borderRadius: { xs: 0, sm: 4 },
           }}
         >
           <Box>
@@ -206,7 +211,7 @@ export default async function Sector({ params }: any) {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
-            <FavoriteButton tradingCode={data?.fundamentals?.tradingCode} />
+            <FavoriteButton tradingCode={sector.name} />
             <Button
               component={Link}
               href={`/supercharts?symbol=${encodeURIComponent(sector.name)}`}
@@ -220,6 +225,7 @@ export default async function Sector({ params }: any) {
         </Box>
 
         <Box sx={{ px: 2 }}>
+          <Divider sx={{ mx: 1, my: { xs: 0, sm: 1 } }} />
           <Box>
             <Button
               component={Link}
@@ -430,10 +436,10 @@ export default async function Sector({ params }: any) {
             </Grid>
           </Box>
 
-          <Box sx={{ pt: { xs: 2, sm: 8 }, pb: 6, px: 2 }}>
+          <Box sx={{ pt: { xs: 2, sm: 4 }, pb: 6, px: 2 }}>
             <Typography
               color="text.primary"
-              sx={{ fontSize: "1.4rem", fontWeight: 700, pb: 2 }}
+              sx={{ fontSize: "1.4rem", fontWeight: 700, pb: 3 }}
             >
               Other Sectors
             </Typography>

@@ -48,7 +48,7 @@ export default function BlockTransections({ blocktr }: any) {
               }}
             >
               <TableCell>DATE</TableCell>
-              <TableCell>VALUE (CRORE)</TableCell>
+              <TableCell>VALUE (MN)</TableCell>
               <TableCell>VOLUME</TableCell>
               <TableCell>TRADES</TableCell>
               <TableCell>MAX PRICE</TableCell>

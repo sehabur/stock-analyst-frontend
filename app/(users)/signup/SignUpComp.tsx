@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -17,6 +17,8 @@ import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import { Stack } from "@mui/system";
 
 import Spinner from "@/components/shared/Spinner";
+import { authActions } from "_store";
+import { useDispatch } from "react-redux";
 
 export default function SignUpComp() {
   const [formData, setFormData] = React.useState({
@@ -25,6 +27,10 @@ export default function SignUpComp() {
     phone: "",
     password: "",
   });
+
+  const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const searchParams = useSearchParams();
 
@@ -72,9 +78,11 @@ export default function SignUpComp() {
       const data = await res.json();
 
       if (res.ok) {
-        setErrorMessage("");
-        setSuccessMessage("Account creation successful");
+        // setSuccessMessage("Account creation successful");
         // handlePremiumDialogOpen();
+        dispatch(authActions.login(data.user));
+        setErrorMessage("");
+        router.push("/");
       } else {
         let errorMsg = "";
 

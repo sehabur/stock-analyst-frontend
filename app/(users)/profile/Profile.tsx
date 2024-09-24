@@ -21,18 +21,18 @@ export default function Profile() {
   const auth = useSelector((state: any) => state.auth);
 
   return (
-    <>
+    <Box sx={{ maxWidth: 550, px: 3 }}>
       <Grid
         container
-        spacing={2}
+        spacing={4}
         direction="row"
-        justifyContent="center"
+        justifyContent="flex-start"
         alignItems="flex-start"
       >
         {auth && (
           <>
-            <Grid item xs={12} sm={3} sx={{}}>
-              <Avatar sx={{ width: 80, height: 80, mx: "auto", mt: 2 }} />
+            <Grid item xs={12} sm={3}>
+              <Avatar sx={{ width: 80, height: 80, mt: 2 }} />
             </Grid>
             <Grid item xs={12} sm={9} sx={{ mt: 2 }}>
               <Typography
@@ -43,10 +43,12 @@ export default function Profile() {
                 {auth.name || "User"}
               </Typography>
 
-              <Box sx={{ my: 4 }}>
+              <Divider light sx={{ my: 2 }} />
+
+              <Box sx={{ mt: 2, mb: 3 }}>
                 <Typography
                   color="text.secondary"
-                  sx={{ mb: 2, fontSize: "1rem" }}
+                  sx={{ mb: 2, fontSize: "1.1rem" }}
                 >
                   Contact information
                 </Typography>
@@ -58,9 +60,12 @@ export default function Profile() {
                   Phone: {auth.phone || "No phone number"}
                 </Typography>
               </Box>
-              <Box sx={{ my: 5 }}>
+
+              <Divider light sx={{ my: 2 }} />
+
+              <Box sx={{ mt: 2, mb: 5 }}>
                 <Typography
-                  sx={{ mb: 2, fontSize: "1rem" }}
+                  sx={{ mb: 2, fontSize: "1.1rem" }}
                   color="text.secondary"
                   gutterBottom
                 >
@@ -117,6 +122,6 @@ export default function Profile() {
           </>
         )}
       </Grid>
-    </>
+    </Box>
   );
 }

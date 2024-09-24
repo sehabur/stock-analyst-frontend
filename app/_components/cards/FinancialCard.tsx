@@ -46,6 +46,7 @@ export default function FinancialCard(props: any) {
     <>
       <Card
         elevation={0}
+        // variant="outlined"
         sx={{
           "& .MuiCard-root": {
             "& :hover": {
@@ -53,6 +54,7 @@ export default function FinancialCard(props: any) {
             },
           },
           "& .MuiCardContent-root:last-child": { pb: 0.3 },
+          borderRadius: 1.5,
         }}
       >
         <CardContent sx={{ p: 0 }}>
@@ -138,9 +140,9 @@ export default function FinancialCard(props: any) {
 
               <Chip
                 label={data?.period}
-                variant="outlined"
+                // variant="outlined"
                 size="small"
-                color="info"
+                // color="info"
                 sx={{
                   ml: { xs: 0, sm: 2 },
                   fontSize: ".9rem",

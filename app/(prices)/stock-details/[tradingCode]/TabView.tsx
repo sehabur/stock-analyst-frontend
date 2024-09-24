@@ -97,7 +97,6 @@ export default function TabView(props: any) {
           variant="scrollable"
           onChange={handleChange}
           sx={{ mx: { xs: 1, sm: "auto" }, maxWidth: 1250 }}
-          // centered
         >
           {tabItems.map((item, index) => (
             <Tab

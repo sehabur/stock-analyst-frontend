@@ -357,8 +357,8 @@ export default function Overview({ stock }: any) {
             borderRadius: 2,
             bgcolor: "secondaryBackground",
           }}
-          // elevation={0}
-          variant="outlined"
+          elevation={0}
+          // variant="outlined"
         >
           <Box
             sx={{
@@ -533,12 +533,12 @@ export default function Overview({ stock }: any) {
           </Box>
         </Paper>
 
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mb: 3 }}>
           <Typography
             color="text.primary"
-            sx={{ fontSize: "1.5rem", fontWeight: 700 }}
+            sx={{ fontSize: "1.3rem", fontWeight: 700 }}
           >
-            Key Stats
+            Matket Today
           </Typography>
         </Box>
 
@@ -547,7 +547,7 @@ export default function Overview({ stock }: any) {
           alignItems="flex-start"
           // justifyContent="space-between"
           justifyContent="flex-start"
-          rowSpacing={{ xs: 4, sm: 6 }}
+          rowSpacing={{ xs: 4, sm: 4 }}
           columnSpacing={{ xs: 2, sm: 6 }}
           sx={{ mt: 2 }}
         >
@@ -573,6 +573,30 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Low
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.latest.low}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                BDT
+              </Typography>
+            </Stack>
+          </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               High
@@ -588,28 +612,6 @@ export default function Overview({ stock }: any) {
                 {stock.latest.high}
               </Typography>
 
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
-                BDT
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Low
-            </Typography>
-            <Stack direction="row" alignItems="baseline">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                  fontWeight: 500,
-                }}
-              >
-                {stock.latest.low}
-              </Typography>
               <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
@@ -707,28 +709,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              52W High
-            </Typography>
-            <Stack direction="row" alignItems="baseline">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                  fontWeight: 500,
-                }}
-              >
-                {Math.max(stock.lastDay.oneYearHigh, stock.latest.ltp) || "--"}
-              </Typography>
-              <Typography
-                color="text.secondary"
-                sx={{ ml: 0.7, fontSize: ".875rem" }}
-              >
-                BDT
-              </Typography>
-            </Stack>
-          </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               52W Low
@@ -751,9 +732,10 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Circuit Up
+              52W High
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
@@ -763,16 +745,17 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.isCircuitEnabled ? stock.fundamentals.circuitUp : "No"}
+                {Math.max(stock.lastDay.oneYearHigh, stock.latest.ltp) || "--"}
               </Typography>
               <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                {dates.isCircuitEnabled ? "BDT" : ""}
+                BDT
               </Typography>
             </Stack>
           </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Circuit Low
@@ -798,7 +781,30 @@ export default function Overview({ stock }: any) {
 
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Year End
+              Circuit Up
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {dates.isCircuitEnabled ? stock.fundamentals.circuitUp : "No"}
+              </Typography>
+              <Typography
+                color="text.secondary"
+                sx={{ ml: 0.7, fontSize: ".875rem" }}
+              >
+                {dates.isCircuitEnabled ? "BDT" : ""}
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Beta (1 Year)
             </Typography>
             <Stack direction="row" alignItems="baseline">
               <Typography
@@ -808,11 +814,31 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.yearEnd}
+                {stock.fundamentals.technicals.beta}
               </Typography>
             </Stack>
           </Grid>
+        </Grid>
 
+        <Divider light sx={{ my: 4, mr: { xs: 0, sm: 4 } }} />
+
+        <Box sx={{ mt: 1, mb: 3 }}>
+          <Typography
+            color="text.primary"
+            sx={{ fontSize: "1.3rem", fontWeight: 700 }}
+          >
+            Financial Indicators
+          </Typography>
+        </Box>
+
+        <Grid
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+          rowSpacing={{ xs: 4, sm: 6 }}
+          columnSpacing={{ xs: 2, sm: 6 }}
+          sx={{ mt: 2 }}
+        >
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               P/E ratio
@@ -869,60 +895,24 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Market Capital
-            </Typography>
-            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                  fontWeight: 500,
-                  mr: 0.7,
-                }}
-              >
-                {(stock.fundamentals.marketCap / 10).toFixed(2)}
-              </Typography>
-              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-                Crore
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item xs={4} sm={2}>
-            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Paid-up Capital
-            </Typography>
-            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
-              <Typography
-                color="text.primary"
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
-                  fontWeight: 500,
-                  mr: 0.7,
-                }}
-              >
-                {(stock.fundamentals.paidUpCap / 10).toFixed(2)}
-              </Typography>
-              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-                Crore
-              </Typography>
-            </Stack>
-          </Grid>
 
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Beta (1 Year)
+              Total Shares
             </Typography>
-            <Stack direction="row" alignItems="baseline">
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
                 color="text.primary"
                 sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
                   fontWeight: 500,
+                  mr: 0.7,
                 }}
               >
-                {stock.fundamentals.technicals.beta}
+                {(stock.fundamentals.totalShares / 10000000).toFixed(2)}
+              </Typography>
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+                Crore
               </Typography>
             </Stack>
           </Grid>
@@ -971,7 +961,7 @@ export default function Overview({ stock }: any) {
 
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
-              Total Shares
+              Market Capital
             </Typography>
             <Stack direction="row" alignItems="baseline" flexWrap="wrap">
               <Typography
@@ -982,13 +972,58 @@ export default function Overview({ stock }: any) {
                   mr: 0.7,
                 }}
               >
-                {(stock.fundamentals.totalShares / 10000000).toFixed(2)}
+                {(stock.fundamentals.marketCap / 10).toFixed(2)}
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
               </Typography>
             </Stack>
           </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Paid-up Capital
+            </Typography>
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                  mr: 0.7,
+                }}
+              >
+                {(stock.fundamentals.paidUpCap / 10).toFixed(2)}
+              </Typography>
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+
+          <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Authorized Capital
+            </Typography>
+            <Stack direction="row" alignItems="baseline" flexWrap="wrap">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
+                  fontWeight: 500,
+                  mr: 0.7,
+                }}
+              >
+                {stock.fundamentals.authCap == 0
+                  ? "-"
+                  : stock.fundamentals.authCap.toFixed(2) / 10}
+              </Typography>
+              <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+                Crore
+              </Typography>
+            </Stack>
+          </Grid>
+
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               {dates.agmPrefix} AGM Date
@@ -1028,6 +1063,23 @@ export default function Overview({ stock }: any) {
 
           <Grid item xs={4} sm={2}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
+              Year End
+            </Typography>
+            <Stack direction="row" alignItems="baseline">
+              <Typography
+                color="text.primary"
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.4rem" },
+                  fontWeight: 500,
+                }}
+              >
+                {stock.fundamentals.yearEnd}
+              </Typography>
+            </Stack>
+          </Grid>
+
+          {/* <Grid item xs={4} sm={2}>
+            <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Face Value
             </Typography>
             <Stack direction="row" alignItems="baseline">
@@ -1047,13 +1099,15 @@ export default function Overview({ stock }: any) {
                 BDT
               </Typography>
             </Stack>
-          </Grid>
+          </Grid> */}
         </Grid>
 
-        <Box sx={{ mt: { xs: 6, sm: 8 }, mb: { xs: 2, sm: 4 } }}>
+        <Divider light sx={{ my: 5, mr: { xs: 0, sm: 4 } }} />
+
+        <Box sx={{ mt: { xs: 2, sm: 2 }, mb: { xs: 2, sm: 4 } }}>
           <Typography
             color="text.primary"
-            sx={{ fontSize: "1.5rem", fontWeight: 700 }}
+            sx={{ fontSize: "1.4rem", fontWeight: 700 }}
           >
             About {stock.fundamentals.companyName}
           </Typography>
@@ -1140,7 +1194,7 @@ export default function Overview({ stock }: any) {
         <Box sx={{ mt: 4 }}>
           <Typography
             color="text.secondary"
-            sx={{ fontSize: ".9rem", textAlign: { xs: "left", sm: "justify" } }}
+            sx={{ fontSize: "1rem", textAlign: { xs: "left", sm: "justify" } }}
           >
             {stock.fundamentals.about}
           </Typography>

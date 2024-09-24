@@ -192,6 +192,7 @@ export default function Overview({ stock }: any) {
 
   return (
     <Box sx={{ maxWidth: "1250px", mx: "auto", py: { xs: 2, sm: 4 }, px: 2 }}>
+      <Divider sx={{ mx: { xs: 0, sm: 1 }, mt: { xs: 0, sm: 1 }, mb: 3 }} />
       <Button
         component={Link}
         href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
@@ -290,10 +291,11 @@ export default function Overview({ stock }: any) {
             mx: { xs: 0, sm: 8 },
             py: { xs: 1.5, sm: 3 },
             px: 2,
-            borderRadius: 4,
+            borderRadius: 2,
             bgcolor: "secondaryBackground",
           }}
-          variant="outlined"
+          elevation={0}
+          // variant="outlined"
         >
           <Box
             sx={{
