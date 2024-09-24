@@ -12,12 +12,12 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { faqItems } from "@/data/info";
 
 export default function FAQ() {
-  const [expanded, setExpanded] = React.useState<string | false>("panel1");
+  // const [expanded, setExpanded] = React.useState<string | false>(0);
 
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  // const handleChange =
+  //   (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  //     setExpanded(isExpanded ? panel : false);
+  //   };
 
   return (
     <Container
@@ -33,36 +33,26 @@ export default function FAQ() {
       <Box sx={{ width: "100%" }}>
         {faqItems.map((item: any, index: number) => (
           <Box key={index}>
-            {index !== 0 && <Divider />}
-            <Accordion
-              // expanded={expanded === "panel1"}
-              expanded
-              onChange={handleChange("panel1")}
-              elevation={0}
-            >
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1d-content"
-                id="panel1d-header"
+            {index != 0 && <Divider />}
+            <Box sx={{ my: 0.8 }}>
+              <Accordion
+                // expanded={expanded === "panel1"}
+                // onChange={handleChange(index)}
+                elevation={0}
               >
-                <Typography
-                  component="h3"
-                  variant="subtitle2"
-                  sx={{ fontSize: "1.1rem" }}
-                >
-                  {item.ques}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography
-                  variant="body2"
-                  gutterBottom
-                  sx={{ maxWidth: { sm: "100%", md: "70%" } }}
-                >
-                  {item.ans}
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography sx={{ fontSize: "1rem" }}>{item.ques}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    gutterBottom
+                    sx={{ maxWidth: { xs: "100%", md: "80%" } }}
+                  >
+                    {item.ans}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Box>
           </Box>
         ))}
       </Box>

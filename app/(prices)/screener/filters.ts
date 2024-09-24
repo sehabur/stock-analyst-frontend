@@ -1899,8 +1899,8 @@ export const filterOptions = [
     placement: "technical",
     columnOrder: 100,
     options: [
-      { type: "default", value: "-20;0", text: "Overbought" },
-      { type: "default", value: "-100;-80", text: "Oversold" },
+      // { type: "default", value: "-20;0", text: "Overbought" },
+      // { type: "default", value: "-100;-80", text: "Oversold" },
       { type: "default", value: "-10;0", text: "Over -10" },
       { type: "default", value: "-20;0", text: "Over -20" },
       { type: "default", value: "-30;0", text: "Over -30" },

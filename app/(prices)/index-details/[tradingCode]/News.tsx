@@ -115,11 +115,9 @@ export default function News({ news }: any) {
                 <CardContent sx={{ pb: 1 }}>
                   <Typography
                     gutterBottom
-                    variant="h5"
-                    component="div"
                     sx={{
-                      fontWeight: { xs: 700, sm: 500 },
-                      fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
                     }}
                   >
                     {item.title}

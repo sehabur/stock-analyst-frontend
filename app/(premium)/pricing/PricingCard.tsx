@@ -20,6 +20,7 @@ export default function PricingCard({ data, handleCardClick }: any) {
     data;
 
   const theme = useTheme();
+
   return (
     <Card
       sx={{
@@ -41,7 +42,7 @@ export default function PricingCard({ data, handleCardClick }: any) {
         }}
         onClick={(e) =>
           handleCardClick(e, {
-            type: "premium_package", //free_trial
+            type: "premium_package",
             product,
             price: currentPrice,
             validity: title,
@@ -49,7 +50,11 @@ export default function PricingCard({ data, handleCardClick }: any) {
         }
       >
         <Box>
-          <Box sx={{ bgcolor: "primary.dark" }}>
+          <Box
+            sx={{
+              background: "linear-gradient(135deg, #6a11cb, #2575fc)",
+            }}
+          >
             <Box
               sx={{
                 display: "flex",

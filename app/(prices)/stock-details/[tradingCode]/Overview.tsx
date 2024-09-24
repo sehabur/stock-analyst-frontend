@@ -835,7 +835,7 @@ export default function Overview({ stock }: any) {
           container
           alignItems="flex-start"
           justifyContent="flex-start"
-          rowSpacing={{ xs: 4, sm: 6 }}
+          rowSpacing={{ xs: 4, sm: 4 }}
           columnSpacing={{ xs: 2, sm: 6 }}
           sx={{ mt: 2 }}
         >

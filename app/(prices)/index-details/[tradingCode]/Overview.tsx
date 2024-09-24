@@ -482,9 +482,9 @@ export default function Overview({ stock }: any) {
           justifyContent="flex-start"
           rowSpacing={{ xs: 2, sm: 4 }}
           // columnSpacing={{ xs: 2, sm: 6 }}
-          sx={{ mt: 2, ml: 3 }}
+          sx={{ mt: 2, ml: { xs: 0, sm: 3 } }}
         >
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Open
             </Typography>
@@ -500,7 +500,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               High
             </Typography>
@@ -516,7 +516,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Low
             </Typography>
@@ -532,7 +532,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               YCP
             </Typography>
@@ -548,7 +548,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Volume
             </Typography>
@@ -570,7 +570,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Value
             </Typography>
@@ -592,7 +592,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               Trade
             </Typography>
@@ -609,7 +609,7 @@ export default function Overview({ stock }: any) {
             </Stack>
           </Grid>
 
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               52W High
             </Typography>
@@ -628,7 +628,7 @@ export default function Overview({ stock }: any) {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={6} sm={2.4}>
+          <Grid item xs={4} sm={2.4}>
             <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
               52W Low
             </Typography>

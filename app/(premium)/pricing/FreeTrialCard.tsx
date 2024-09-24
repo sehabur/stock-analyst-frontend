@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
   Stack,
+  useTheme,
 } from "@mui/material";
 
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
@@ -18,6 +19,8 @@ import { grey } from "@mui/material/colors";
 
 export default function FreeTrialCard({ data, handleCardClick }: any) {
   const auth = useSelector((state: any) => state.auth);
+
+  const theme = useTheme();
 
   return (
     <>
@@ -43,7 +46,11 @@ export default function FreeTrialCard({ data, handleCardClick }: any) {
           }
         >
           <Box>
-            <Box sx={{ bgcolor: "success.dark" }}>
+            <Box
+              sx={{
+                background: "linear-gradient(135deg, #009432, #005C4B)",
+              }}
+            >
               <Typography
                 gutterBottom
                 sx={{

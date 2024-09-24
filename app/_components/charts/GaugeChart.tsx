@@ -27,6 +27,7 @@ export default function GaugeChart({ rsi }: any) {
     <Box
       sx={{
         display: "flex",
+        flexWrap: "wrap-reverse",
         alignItems: "center",
         justifyContent: "center",
         px: 0,

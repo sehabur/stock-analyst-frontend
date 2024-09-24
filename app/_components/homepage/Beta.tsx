@@ -94,7 +94,7 @@ export default function Beta({ data }: any) {
       headerName: "LTP (BDT)",
       align: "right",
       headerAlign: "right",
-      width: matchesSmUp ? 180 : 100,
+      width: matchesSmUp ? 160 : 100,
       disableColumnMenu: true,
     },
     {
@@ -102,7 +102,7 @@ export default function Beta({ data }: any) {
       headerName: "BETA (1 Year)",
       align: "right",
       headerAlign: "right",
-      width: matchesSmUp ? 180 : 100,
+      width: matchesSmUp ? 170 : 100,
       disableColumnMenu: true,
     },
   ];
@@ -117,10 +117,10 @@ export default function Beta({ data }: any) {
   };
 
   return (
-    <Box sx={{ ml: 1 }}>
+    <Box sx={{ mx: 0 }}>
       <Paper
         elevation={0}
-        sx={{ p: { xs: 2, sm: 2 }, width: "100%", borderRadius: 3 }}
+        sx={{ py: 2, px: { xs: 2, sm: 6 }, width: "100%", borderRadius: 3 }}
       >
         <Box>
           <Button

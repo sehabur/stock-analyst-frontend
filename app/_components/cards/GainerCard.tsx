@@ -49,6 +49,7 @@ export default function GainerCard(props: any) {
                 : "rgba(255, 255, 255, 0.3) 0px 2px 15px",
           },
           bgcolor: "gainerCardBackground",
+          minHeight: 110,
         }}
         elevation={0}
         // variant={matchesSmUp ? "outlined" : "elevation"}

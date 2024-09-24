@@ -27,7 +27,7 @@ export default async function LatestNews() {
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
         sx={{
-          maxWidth: { sm: "1280px" },
+          maxWidth: { sm: "1220px" },
           mx: "auto",
           py: 2,
           px: 2,

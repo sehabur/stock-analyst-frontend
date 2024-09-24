@@ -304,7 +304,7 @@ export default function IndexChart({ indexData }: any) {
           >
             <Typography
               sx={{
-                fontSize: { xs: "1.8rem", sm: "2.3rem" },
+                fontSize: { xs: "1.8rem", sm: "2.2rem" },
                 color: textColor,
                 fontWeight: 700,
                 fontFamily: "'Nunito Sans', sans-serif",

@@ -26,7 +26,7 @@ export default function Ipo(props: any) {
   };
 
   return (
-    <Box sx={{ my: 4, mx: { xs: 2, sm: 0 } }}>
+    <Box sx={{ my: 6, mx: { xs: 2, sm: 0 } }}>
       <Button
         component={Link}
         href="/ipo"

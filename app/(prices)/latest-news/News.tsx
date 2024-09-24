@@ -64,12 +64,12 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "24px !important",
-    marginRight: "16px",
+    marginRight: "14px",
     border: `1px solid lightgrey !important`,
-    paddingLeft: "20px",
+    paddingLeft: "16px",
     paddingTop: "4px",
     paddingBottom: "4px",
-    paddingRight: "20px",
+    paddingRight: "16px",
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",
@@ -131,6 +131,7 @@ export default function News({ data }: any) {
         open={openDialog}
         fullWidth
         maxWidth="sm"
+        disableScrollLock={true}
       >
         <DialogTitle sx={{ fontWeight: 700, fontSize: "1.3jhjrem" }}>
           {dialogContent?.title}
@@ -169,7 +170,7 @@ export default function News({ data }: any) {
         sx={{
           maxWidth: "1250px",
           mx: "auto",
-          py: { xs: 2, sm: 4 },
+          py: { xs: 2, sm: 3 },
         }}
       >
         <Box
@@ -177,7 +178,7 @@ export default function News({ data }: any) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            mb: { xs: 2, sm: 4 },
+            mb: { xs: 2, sm: 2 },
           }}
         >
           <StyledToggleButtonGroup
@@ -208,18 +209,24 @@ export default function News({ data }: any) {
         <Grid
           container
           direction="row"
-          justifyContent="flex-start"
+          justifyContent="center"
           alignItems="stretch"
           spacing={{ xs: 1.5, sm: 2.5 }}
         >
           {news.map((item: any) => (
-            <Grid item xs={12} sm={4} key={item._id}>
-              <Card sx={{ minWidth: 275 }} variant="outlined" key={item._id}>
+            <Grid item xs={12} md={4} key={item._id}>
+              <Card
+                sx={{
+                  minWidth: 275,
+                  borderRadius: 1,
+                  bgcolor: "gainerCardBackground",
+                }}
+                variant="outlined"
+                key={item._id}
+              >
                 <CardContent sx={{ pb: 0 }}>
                   <Typography
                     gutterBottom
-                    variant="h5"
-                    component="div"
                     sx={{ fontWeight: 700, fontSize: "1.1rem" }}
                   >
                     {item.title}
@@ -241,7 +248,7 @@ export default function News({ data }: any) {
                         )}
                         size="small"
                         sx={{
-                          ml: 3,
+                          ml: 2,
                           borderRadius: 1,
                           fontSize: ".9rem",
                         }}
@@ -256,8 +263,10 @@ export default function News({ data }: any) {
                 <CardActions sx={{ pt: 0, pl: 1.5 }}>
                   <Button
                     size="small"
+                    disableRipple
                     endIcon={<ChevronRightRoundedIcon sx={{ ml: -0.7 }} />}
                     onClick={() => handleItemClick(item)}
+                    sx={{ ":hover": { bgcolor: "transparent" } }}
                   >
                     Read more
                   </Button>

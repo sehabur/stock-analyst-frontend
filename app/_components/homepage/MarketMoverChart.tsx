@@ -87,7 +87,6 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
           pt: 2,
           pb: 1,
           px: 2,
-          // mt: { xs: 3, sm: 8 },
           bgcolor: "background.default",
           borderRadius: 3,
         }}
@@ -199,7 +198,7 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
             colors={colors}
             labels={labels}
             // height={300}
-            width={400}
+            width={matchesSmUp ? 400 : 375}
             donutSize="60%"
           />
         </Box>

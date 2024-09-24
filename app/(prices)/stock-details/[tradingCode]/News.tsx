@@ -51,17 +51,19 @@ export default function News({ news }: any) {
   };
 
   return (
-    <Box sx={{ bgcolor: "financePageBgcolor" }}>
+    <Box>
       <Dialog
         onClose={handleDialogClose}
         open={openDialog}
         fullWidth
         maxWidth="sm"
+        disableScrollLock={true}
       >
         <DialogTitle
           sx={{
             fontWeight: { xs: 700, sm: 500 },
             fontSize: { xs: "1.2rem", sm: "1.4rem" },
+            mr: 3,
           }}
         >
           {dialogContent?.title}
@@ -88,8 +90,8 @@ export default function News({ news }: any) {
           onClick={handleDialogClose}
           sx={{
             position: "absolute",
-            right: 4,
-            top: 4,
+            right: 6,
+            top: 6,
           }}
         >
           <CloseIcon />
@@ -114,15 +116,20 @@ export default function News({ news }: any) {
         >
           {news.map((item: any) => (
             <Grid item xs={12} sm={4} key={item._id}>
-              <Card sx={{ minWidth: 275, borderRadius: 1 }} variant="outlined">
+              <Card
+                sx={{
+                  minWidth: 275,
+                  borderRadius: 1,
+                  bgcolor: "gainerCardBackground",
+                }}
+                variant="outlined"
+              >
                 <CardContent sx={{ pb: 1 }}>
                   <Typography
                     gutterBottom
-                    variant="h5"
-                    component="div"
                     sx={{
-                      fontWeight: { xs: 700, sm: 500 },
-                      fontSize: { xs: "1.1rem", sm: "1.3rem" },
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
                     }}
                   >
                     {item.title}
@@ -144,7 +151,7 @@ export default function News({ news }: any) {
                         )}
                         size="small"
                         sx={{
-                          ml: 3,
+                          ml: 2,
                           borderRadius: 1,
                           fontSize: ".9rem",
                         }}
@@ -159,8 +166,10 @@ export default function News({ news }: any) {
                 <CardActions sx={{ pt: 0, pl: 1.5 }}>
                   <Button
                     size="small"
+                    disableRipple
                     endIcon={<ChevronRightRoundedIcon sx={{ ml: -0.7 }} />}
                     onClick={() => handleItemClick(item)}
+                    sx={{ ":hover": { bgcolor: "transparent" } }}
                   >
                     Read more
                   </Button>

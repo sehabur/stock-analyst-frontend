@@ -6,7 +6,7 @@ export default async function FaqPage() {
     <Box component="main" sx={{ bgcolor: "background.default" }}>
       <Box
         sx={{
-          maxWidth: { sm: "1080px" },
+          maxWidth: { sm: "950px" },
           mx: "auto",
           py: 2,
         }}
