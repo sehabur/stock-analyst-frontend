@@ -13,6 +13,7 @@ import en from "javascript-time-ago/locale/en.json";
 import ru from "javascript-time-ago/locale/ru.json";
 import Footer from "./_components/Footer";
 import DisableCopyPaste from "./_components/shared/DisableCopyPaste";
+import GoogleAnalytics from "./_components/analytics/googleAnalytics";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: any) {
           type="text/javascript"
           src="/app/_library/charting_library/charting_library.js"
         ></script>
+        <GoogleAnalytics />
       </head>
       <body>
         <Provider store={store}>
