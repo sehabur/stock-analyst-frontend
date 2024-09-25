@@ -50,8 +50,8 @@ export default function RootLayout({ children }: any) {
           type="text/javascript"
           src="/app/_library/charting_library/charting_library.js"
         ></script>
-        <GoogleAnalytics />
       </head>
+      <GoogleAnalytics />
       <body>
         <Provider store={store}>
           <ThemeRegistry options={{ key: "mui" }}>
