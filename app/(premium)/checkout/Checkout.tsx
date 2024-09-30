@@ -52,7 +52,7 @@ export default function Checkout() {
   };
   return (
     <>
-      <Box sx={{ px: 2, pb: 4, maxWidth: 400, mx: "auto" }}>
+      <Box sx={{ px: 2, pb: 4, pt: 2, maxWidth: 400, mx: "auto" }}>
         {errorMessage && (
           <Alert sx={{ mt: 1 }} severity="error">
             {errorMessage}
@@ -61,7 +61,7 @@ export default function Checkout() {
         <Box
           sx={{
             textAlign: "center",
-            mt: 1.5,
+            mt: 2,
             mb: 2,
             py: 0.6,
             bgcolor: "financeCardTitlecolor",
@@ -69,7 +69,7 @@ export default function Checkout() {
           }}
         >
           <Typography
-            color="success.main"
+            color="primary.main"
             sx={{
               fontSize: "1.3rem",
               fontWeight: 700,

@@ -113,6 +113,8 @@ const initialTextFieldInput = {
 };
 
 export default function Main() {
+  const [loading, setLoading] = useState(false);
+
   const auth = useSelector((state: any) => state.auth);
 
   const [formInputs, setFormInputs] = useState<any>({});
@@ -264,26 +266,32 @@ export default function Main() {
   };
 
   const getScreenerData = async () => {
-    const fieldSet: any = new Set([
-      ...startingFields,
-      ...Object.keys(formInputs),
-      ...endingFields,
-    ]);
-    setscreenerDatafields([...fieldSet]);
+    try {
+      setLoading(true);
+      const fieldSet: any = new Set([
+        ...startingFields,
+        ...Object.keys(formInputs),
+        ...endingFields,
+      ]);
+      setscreenerDatafields([...fieldSet]);
 
-    const res = await fetch(`/api/screener`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formInputs),
-    });
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
+      const res = await fetch(`/api/screener`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formInputs),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const data = await res.json();
+
+      setScreenerData(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
     }
-    const data = await res.json();
-
-    setScreenerData(data);
   };
 
   useEffect(() => {
@@ -656,6 +664,7 @@ export default function Main() {
                 },
                 filterPanel: { sx: { maxWidth: "90vw" } },
               }}
+              loading={loading}
               sx={{
                 // border: 'none',
                 ".MuiDataGrid-columnHeader": {

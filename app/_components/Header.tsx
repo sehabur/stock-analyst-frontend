@@ -150,7 +150,6 @@ export default function Header() {
     setUserAnchorEl(null);
     dispatch(authActions.logout());
     dispatch(favoriteActions.clearData());
-    localStorage.removeItem("userInfo");
     setLogoutSuccess(true);
     route.push("/");
   };

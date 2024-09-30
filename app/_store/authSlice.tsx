@@ -5,10 +5,18 @@ const authSlice = createSlice({
   initialState: null,
   reducers: {
     login: (state, { payload }) => {
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify({
+          _id: payload._id,
+          token: payload.token,
+        })
+      );
       return payload;
     },
 
     logout: () => {
+      localStorage.removeItem("userInfo");
       return null;
     },
 

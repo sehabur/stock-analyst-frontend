@@ -349,7 +349,7 @@ export default function Overview({ stock }: any) {
           sx={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "space-between",
+            justifyContent: "space-evenly",
             my: 6,
             mx: { xs: 0, sm: 4 },
             py: { xs: 1.5, sm: 3 },
@@ -362,7 +362,7 @@ export default function Overview({ stock }: any) {
         >
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -391,7 +391,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -420,7 +420,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -449,7 +449,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -478,7 +478,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -507,7 +507,7 @@ export default function Overview({ stock }: any) {
           )}
           <Box
             sx={{
-              mx: { xs: 2, sm: 7 },
+              mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
             }}
@@ -820,9 +820,9 @@ export default function Overview({ stock }: any) {
           </Grid>
         </Grid>
 
-        <Divider light sx={{ my: 4, mr: { xs: 0, sm: 4 } }} />
+        <Divider light sx={{ mt: 5, mb: 5, mr: { xs: 0, sm: 4 } }} />
 
-        <Box sx={{ mt: 1, mb: 3 }}>
+        <Box sx={{ mb: 3 }}>
           <Typography
             color="text.primary"
             sx={{ fontSize: "1.3rem", fontWeight: 700 }}
@@ -1104,7 +1104,7 @@ export default function Overview({ stock }: any) {
 
         <Divider light sx={{ my: 5, mr: { xs: 0, sm: 4 } }} />
 
-        <Box sx={{ mt: { xs: 2, sm: 2 }, mb: { xs: 2, sm: 4 } }}>
+        <Box sx={{ mb: { xs: 2, sm: 4 } }}>
           <Typography
             color="text.primary"
             sx={{ fontSize: "1.4rem", fontWeight: 700 }}

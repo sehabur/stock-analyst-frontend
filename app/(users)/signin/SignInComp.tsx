@@ -68,16 +68,7 @@ export default function SignInComp({
 
       if (res.ok) {
         setErrorMessage("");
-
         dispatch(authActions.login(data.user));
-
-        localStorage.setItem(
-          "userInfo",
-          JSON.stringify({
-            _id: data.user._id,
-            token: data.user.token,
-          })
-        );
         externalDialogClose();
 
         if (action === "generate_otp") {
