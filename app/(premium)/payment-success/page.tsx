@@ -12,9 +12,10 @@ import {
   Paper,
 } from "@mui/material";
 import Link from "next/link";
+import AppInfo from "./AppInfo";
 
 export default function SuccessPage({ searchParams }: any) {
-  const { tranId } = searchParams;
+  const { tranId, platform } = searchParams;
 
   return (
     <Box
@@ -95,14 +96,18 @@ export default function SuccessPage({ searchParams }: any) {
               all features of the platform.
             </Typography>
           </Box>
-          <Button
-            component={Link}
-            href="/"
-            variant="contained"
-            sx={{ px: 4, fontSize: "1rem", py: 1 }}
-          >
-            Go to Homepage
-          </Button>
+          {platform == "app" ? (
+            <AppInfo />
+          ) : (
+            <Button
+              component={Link}
+              href="/"
+              variant="contained"
+              sx={{ px: 4, fontSize: "1rem", py: 1 }}
+            >
+              Go to Homepage
+            </Button>
+          )}
         </Paper>
       </Box>
     </Box>

@@ -32,13 +32,16 @@ export default function Checkout() {
     console.log("a", product);
 
     try {
-      const res = await fetch(`/api/payment?product=${product}&otp=${otp}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth?.token}`,
-        },
-      });
+      const res = await fetch(
+        `/api/payment?product=${product}&otp=${otp}&platform=web`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth?.token}`,
+          },
+        }
+      );
       const data = await res.json();
 
       if (res.ok) {
