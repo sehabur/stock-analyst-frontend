@@ -22,6 +22,7 @@ import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 import Trades from "./_component/Trades";
 import FavoriteButton from "@/components/buttons/FavoriteButton";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 const getStockDetails = async (tradingCode: string) => {
   const res = await fetch(
@@ -144,6 +145,8 @@ export default async function StockDetails({ params }: any) {
       : stock.latest.change < 0
       ? "error.main"
       : "success.main";
+
+  const isSpotEnabled = isWithinPreviousTwoDays(stock.fundamentals.recordDate);
 
   return (
     <Box
@@ -270,6 +273,24 @@ export default async function StockDetails({ params }: any) {
                     size="small"
                     // variant="outlined"
                     color={stock.haltStatus == "buy" ? "success" : "error"}
+                    sx={{
+                      // borderRadius: 1,
+                      fontSize: ".875rem",
+                      px: 0.3,
+                      mt: -1.3,
+                      mr: 2,
+                    }}
+                  />
+                </Box>
+              )}
+
+              {isSpotEnabled && (
+                <Box>
+                  <Chip
+                    label="Spot"
+                    size="small"
+                    // variant="outlined"
+                    color="warning"
                     sx={{
                       // borderRadius: 1,
                       fontSize: ".875rem",

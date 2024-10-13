@@ -3,8 +3,11 @@ import React from "react";
 import Link from "next/link";
 
 import { Box, Grid, Paper, Typography, Stack, Chip } from "@mui/material";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 export default function MobileViewPriceCard({ item }: any) {
+  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
+
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>
       <Paper
@@ -62,12 +65,27 @@ export default function MobileViewPriceCard({ item }: any) {
                       : "success.main",
                 }}
               />
-              {item.haltStatus !== "none" && (
+              {item.haltStatus &&
+                item.haltStatus !== "none" &&
+                !isSpotEnabled && (
+                  <Chip
+                    label="Halt"
+                    size="small"
+                    variant="outlined"
+                    color={item.haltStatus === "buy" ? "success" : "error"}
+                    sx={{
+                      ml: 1,
+                      fontSize: ".8rem",
+                    }}
+                  />
+                )}
+
+              {isSpotEnabled && (
                 <Chip
-                  label="Halt"
+                  label="Spot"
                   size="small"
                   variant="outlined"
-                  color={item.haltStatus === "buy" ? "success" : "error"}
+                  color="warning"
                   sx={{
                     ml: 1,
                     fontSize: ".8rem",

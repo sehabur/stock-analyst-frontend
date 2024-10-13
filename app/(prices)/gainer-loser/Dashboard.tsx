@@ -14,6 +14,7 @@ import { styled } from "@mui/material/styles";
 
 import styles from "./Dashboard.module.css";
 import MobileViewPriceCard from "@/components/cards/MobileViewPriceCard";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 // const variantMap = [
 //   {
@@ -453,7 +454,10 @@ export default function Dashboard({ initialdata }: any) {
       ltp: item.ltp,
       sector: item.sector,
       category: item.category,
-      haltStatus: item.haltStatus,
+      haltStatus: isWithinPreviousTwoDays(item.recordDate)
+        ? "spot"
+        : item.haltStatus,
+      recordDate: item.recordDate,
       change: item[variantAlignment].change,
       percentChange: item[variantAlignment].percentChange,
       volume: item[variantAlignment].volume,
@@ -525,12 +529,20 @@ export default function Dashboard({ initialdata }: any) {
       renderCell: (params) => {
         return (
           <>
-            {params.value == "buy" || params.value == "sell" ? (
+            {params.value == "buy" ||
+            params.value == "sell" ||
+            params.value == "spot" ? (
               <Chip
-                label="Halt"
+                label={params.value == "spot" ? "Spot" : "Halt"}
                 size="small"
                 variant="outlined"
-                color={params.value === "buy" ? "success" : "error"}
+                color={
+                  params.value == "spot"
+                    ? "warning"
+                    : params.value === "buy"
+                    ? "success"
+                    : "error"
+                }
               />
             ) : (
               <></>

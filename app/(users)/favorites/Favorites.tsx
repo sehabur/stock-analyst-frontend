@@ -191,24 +191,24 @@ export default function Favorites() {
       </Dialog>
 
       <Box>
+        <Box sx={{ mt: 3, mb: 2 }}>
+          <Button
+            startIcon={<EditNoteRoundedIcon />}
+            sx={{
+              px: 2,
+              borderRadius: 6,
+            }}
+            size="small"
+            onClick={() => setDialogOpen(true)}
+            variant="outlined"
+          >
+            Edit my list
+          </Button>
+        </Box>
         {favStockCard &&
           favStockCard.length > 0 &&
           favStockCard.map((stock: any, index: number) => (
             <>
-              <Box sx={{ mt: 3, mb: 2 }}>
-                <Button
-                  startIcon={<EditNoteRoundedIcon />}
-                  sx={{
-                    px: 2,
-                    borderRadius: 6,
-                  }}
-                  size="small"
-                  onClick={() => setDialogOpen(true)}
-                  variant="outlined"
-                >
-                  Edit my list
-                </Button>
-              </Box>
               <Box sx={{ my: { xs: 1, sm: 1.5 } }} key={index}>
                 <FavoriteStocksCard data={stock} />
               </Box>

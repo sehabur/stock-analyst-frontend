@@ -18,7 +18,7 @@ export default async function Terms() {
           color="text.primary"
           gutterBottom
           sx={{
-            fontSize: "1.6rem",
+            fontSize: "1.8rem",
             fontWeight: 500,
             textAlign: "center",
             mt: 2,
@@ -29,12 +29,12 @@ export default async function Terms() {
 
         <Box
           sx={{
-            bgcolor: "gainerCardMobileView",
+            bgcolor: "stipedTableEvenRow",
             color: "text.primary",
             py: { xs: 3, sm: 4 },
             px: { xs: 2, sm: 4 },
             my: 4,
-            borderRadius: 1,
+            borderRadius: 2,
           }}
         >
           <Typography

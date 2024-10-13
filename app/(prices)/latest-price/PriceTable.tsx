@@ -10,6 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 import styles from "./Pricetable.module.css";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -64,12 +65,25 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       return (
         <>
-          {params.value !== "none" ? (
+          {params.value == "buy" ||
+          params.value == "sell" ||
+          params.value == "spot" ? (
             <Chip
-              label="Halt"
+              label={params.value == "spot" ? "Spot" : "Halt"}
               size="small"
               variant="outlined"
-              color={params.value === "buy" ? "success" : "error"}
+              color={
+                params.value == "spot"
+                  ? "warning"
+                  : params.value === "buy"
+                  ? "success"
+                  : "error"
+              }
+              sx={{
+                "& .MuiChip-label": {
+                  px: 0.8,
+                },
+              }}
             />
           ) : (
             <></>
@@ -130,8 +144,8 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "trade",
-    headerName: "TRADE",
+    field: "volume",
+    headerName: "VOLUME",
     align: "center",
     headerAlign: "center",
   },
@@ -145,8 +159,8 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: "volume",
-    headerName: "VOLUME",
+    field: "trade",
+    headerName: "TRADE",
     align: "center",
     headerAlign: "center",
   },
@@ -156,8 +170,16 @@ export default function PriceTable(props: any) {
   let { data } = props;
 
   let shares = data?.map((item: any, index: number) => {
-    return { ...item, id: index };
+    return {
+      ...item,
+      id: index,
+      haltStatus: isWithinPreviousTwoDays(item.recordDate)
+        ? "spot"
+        : item.haltStatus,
+    };
   });
+
+  console.log(shares);
 
   return (
     <Box>

@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
+import AdjustIcon from "@mui/icons-material/Adjust";
+import OpenInFullIcon from "@mui/icons-material/OpenInFull";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -32,6 +35,8 @@ export default function GainerCard(props: any) {
   const theme = useTheme();
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
 
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>
@@ -178,22 +183,38 @@ export default function GainerCard(props: any) {
                     fontSize: ".95rem",
                   }}
                 />
-
-                {item.haltStatus !== "none" && (
+                {item.haltStatus &&
+                  item.haltStatus !== "none" &&
+                  !isSpotEnabled && (
+                    <Chip
+                      label="Halt"
+                      size="small"
+                      color={item.haltStatus === "buy" ? "success" : "error"}
+                      icon={
+                        item.haltStatus === "buy" ? (
+                          <TrendingUpRoundedIcon />
+                        ) : (
+                          <TrendingDownRoundedIcon />
+                        )
+                      }
+                      sx={{
+                        borderRadius: 1,
+                        mt: 1,
+                        fontSize: ".9rem",
+                      }}
+                    />
+                  )}
+                {isSpotEnabled && (
                   <Chip
-                    label="Halt"
+                    label="Spot"
                     size="small"
-                    color={item.haltStatus === "buy" ? "success" : "error"}
-                    icon={
-                      item.haltStatus === "buy" ? (
-                        <TrendingUpRoundedIcon />
-                      ) : (
-                        <TrendingDownRoundedIcon />
-                      )
-                    }
+                    variant="outlined"
+                    color="warning"
+                    icon={<OpenInFullIcon />}
                     sx={{
                       borderRadius: 1,
                       mt: 1,
+                      pl: 0.2,
                       fontSize: ".9rem",
                     }}
                   />

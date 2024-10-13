@@ -270,7 +270,7 @@ export default function Footer() {
           >
             <IconButton
               color="primary"
-              href="https://github.com/mui"
+              href="https://www.facebook.com/profile.php?id=61566267416444"
               aria-label="GitHub"
               sx={{ alignSelf: "center" }}
             >
@@ -278,7 +278,7 @@ export default function Footer() {
             </IconButton>
             <IconButton
               color="error"
-              href="https://twitter.com/MaterialUI"
+              href="https://www.youtube.com/@Stocksupporter-x8l"
               aria-label="X"
               sx={{ alignSelf: "center" }}
             >

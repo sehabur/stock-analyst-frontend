@@ -10,6 +10,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
+import { isWithinPreviousTwoDays } from "_helper/getter";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -27,6 +28,8 @@ export default function SearchStockCard(props: any) {
   const { data: item } = props;
 
   const itemType = item.type;
+
+  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
 
   return (
     <>
@@ -126,12 +129,26 @@ export default function SearchStockCard(props: any) {
                   }}
                 />
 
-                {item.haltStatus && item.haltStatus !== "none" && (
+                {item.haltStatus &&
+                  item.haltStatus !== "none" &&
+                  !isSpotEnabled && (
+                    <Chip
+                      variant="outlined"
+                      label="Halt"
+                      size="small"
+                      color={item.haltStatus === "buy" ? "success" : "error"}
+                      sx={{
+                        mr: 1,
+                        fontSize: ".8rem",
+                      }}
+                    />
+                  )}
+                {isSpotEnabled && (
                   <Chip
                     variant="outlined"
-                    label="Halt"
+                    label="Spot"
                     size="small"
-                    color={item.haltStatus === "buy" ? "success" : "error"}
+                    color="warning"
                     sx={{
                       mr: 1,
                       fontSize: ".8rem",

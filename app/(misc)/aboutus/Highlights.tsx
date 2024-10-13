@@ -11,6 +11,7 @@ import DonutSmallRoundedIcon from "@mui/icons-material/DonutSmallRounded";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import ExtensionRoundedIcon from "@mui/icons-material/ExtensionRounded";
+import AlarmOutlinedIcon from "@mui/icons-material/AlarmOutlined";
 import { Avatar } from "@mui/material";
 
 const items = [
@@ -26,6 +27,11 @@ const items = [
     description: "Fundamental data analysis and visualization for all stocks",
   },
   {
+    icon: <StackedBarChartRoundedIcon />,
+    title: "Technical Analysis",
+    description: "Better insight with tailored technical analysis",
+  },
+  {
     icon: <TuneRoundedIcon />,
     title: "Advanced screener",
     description:
@@ -38,9 +44,19 @@ const items = [
       "Supercharts powered by trading view with all required indicators and features.",
   },
   {
+    icon: <TuneRoundedIcon />,
+    title: "Custom Indicators",
+    description: "Custom made indicators to make your analysis easier",
+  },
+  {
     icon: <DonutSmallRoundedIcon />,
     title: "Sector Dashboard",
     description: "Sector wise share analysis. Data and charts for sectors.",
+  },
+  {
+    icon: <AlarmOutlinedIcon />,
+    title: "Price Alerts",
+    description: "Unlimited price alerts to keep you updated",
   },
   {
     icon: <ExtensionRoundedIcon />,
@@ -55,11 +71,9 @@ export default function Highlights() {
     <Box
       id="highlights"
       sx={{
-        pt: { xs: 4, sm: 8 },
-        pb: { xs: 4, sm: 8 },
+        pt: { xs: 4, sm: 4 },
+        pb: { xs: 4, sm: 4 },
         mb: 6,
-        color: "white",
-        bgcolor: "#171717",
         borderRadius: 1,
       }}
     >
@@ -81,9 +95,9 @@ export default function Highlights() {
           <Typography
             component="h2"
             gutterBottom
-            sx={{ fontSize: "2.5rem", fontWeight: 500 }}
+            sx={{ color: "text.primary", fontSize: "1.8rem", fontWeight: 500 }}
           >
-            Highlights
+            Our Features
           </Typography>
         </Box>
         <Grid container spacing={2.5}>
@@ -91,7 +105,6 @@ export default function Highlights() {
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Stack
                 direction="column"
-                color="inherit"
                 component={Card}
                 spacing={1}
                 useFlexGap
@@ -100,16 +113,17 @@ export default function Highlights() {
                   height: "100%",
                   border: "1px solid",
                   borderColor: "hsla(220, 25%, 25%, .3)",
-                  background: "transparent",
-                  backgroundColor: "grey.900",
+                  // background:
+                  //   "linear-gradient(135deg, #3a6fff, #5381ff, #8fb6ff)",
+                  // backgroundColor: "grey.900",
                   boxShadow: "none",
                   borderRadius: 3,
                 }}
               >
                 <Avatar
                   sx={{
-                    color: "info.light",
-                    bgcolor: "grey.800",
+                    // color: "info.light",
+                    // bgcolor: "grey.800",
                     borderRadius: 3,
                   }}
                 >
@@ -119,11 +133,11 @@ export default function Highlights() {
                   <Typography
                     fontWeight="medium"
                     gutterBottom
-                    sx={{ fontSize: "1.1rem" }}
+                    sx={{ fontSize: "1.1rem", color: "text.primary" }}
                   >
                     {item.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "grey.400" }}>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
                     {item.description}
                   </Typography>
                 </div>
