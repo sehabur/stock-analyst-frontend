@@ -56,13 +56,14 @@ const items = [
   {
     icon: <AlarmOutlinedIcon />,
     title: "Price Alerts",
-    description: "Unlimited price alerts to keep you updated",
+    description:
+      "Customized price alerts for stocks to always keep you updated",
   },
   {
     icon: <ExtensionRoundedIcon />,
     title: "User Portfolio",
     description:
-      "Create portfolio, favorite shares and create alerts for buy sell of stocks.",
+      "Create portfolio, favorite shares, get news alerts for your favorite stocks and more..",
   },
 ];
 

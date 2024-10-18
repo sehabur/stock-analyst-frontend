@@ -189,7 +189,7 @@ export default function FavoriteStocksCard(props: any) {
                         : "success.main",
                   }}
                 >
-                  {item.ltp.toFixed(2)}
+                  {item.close.toFixed(2)}
                 </Typography>
 
                 <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">

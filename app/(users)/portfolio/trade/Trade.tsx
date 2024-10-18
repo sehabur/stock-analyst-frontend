@@ -77,14 +77,14 @@ export default function Trade(props: any) {
   };
 
   function handleTradeOpen(tradingCode: string) {
-    const ltp = latestPrice.find(
+    const close = latestPrice.find(
       (item: any) => item.tradingCode === tradingCode
-    ).ltp;
+    ).close;
     setDialogOpen(true);
     setFormInputs((prevState: any) => ({
       ...prevState,
       tradingCode,
-      price: ltp,
+      price: close,
     }));
   }
 

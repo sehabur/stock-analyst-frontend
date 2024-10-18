@@ -224,24 +224,25 @@ const getData = {
 
       if (urlParameters.resolutionType === "intraday") {
         for (let i = 0; i < data.Data.length; i++) {
-          const tempData = data.Data[i];
-          if (tempData.ltp !== 0) {
+          const { time, close, volume, ycp } = data.Data[i];
+
+          if (close !== 0) {
             bars[i] = {
-              time: tempData.time,
-              low: i > 0 ? bars[i - 1].close : tempData.ltp,
-              high: tempData.ltp,
-              open: i > 0 ? bars[i - 1].close : tempData.ltp,
-              close: tempData.ltp,
-              volume: tempData.volume,
+              time: time,
+              low: i > 0 ? bars[i - 1].close : close,
+              high: close,
+              open: i > 0 ? bars[i - 1].close : close,
+              close: close,
+              volume: volume,
             };
           } else {
             bars[i] = {
-              time: tempData.time,
-              low: tempData.ycp,
-              high: tempData.ycp,
-              open: tempData.ycp,
-              close: tempData.ycp,
-              volume: tempData.volume,
+              time: time,
+              low: ycp,
+              high: ycp,
+              open: ycp,
+              close: ycp,
+              volume: volume,
             };
           }
         }

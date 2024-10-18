@@ -139,7 +139,7 @@ export default function GainerCard(props: any) {
                     fontWeight: 500,
                   }}
                 >
-                  {item.ltp.toFixed(1)}
+                  {item.close.toFixed(1)}
                 </Typography>
                 <Typography
                   sx={{ fontSize: ".85rem", mt: -0.5 }}

@@ -5,6 +5,9 @@ import dynamic from "next/dynamic";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 
 import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
+import FiberManualRecordRoundedIcon from "@mui/icons-material/FiberManualRecordRounded";
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+
 import { grey } from "@mui/material/colors";
 
 const GaugeComponent = dynamic(() => import("react-gauge-component"), {
@@ -40,7 +43,7 @@ export default function GaugeChart({ rsi }: any) {
           spacing={1.5}
           sx={{ my: 0.5 }}
         >
-          <SquareRoundedIcon sx={{ color: colors[0], fontSize: ".75rem" }} />
+          <CircleRoundedIcon sx={{ color: colors[0], fontSize: ".75rem" }} />
           <Typography
             sx={{
               fontSize: ".75rem",
@@ -57,7 +60,7 @@ export default function GaugeChart({ rsi }: any) {
           spacing={1.5}
           sx={{ my: 0.5 }}
         >
-          <SquareRoundedIcon sx={{ color: colors[1], fontSize: ".75rem" }} />
+          <CircleRoundedIcon sx={{ color: colors[1], fontSize: ".75rem" }} />
           <Typography
             sx={{
               fontSize: ".75rem",
@@ -73,7 +76,7 @@ export default function GaugeChart({ rsi }: any) {
           spacing={1.5}
           sx={{ my: 0.5 }}
         >
-          <SquareRoundedIcon sx={{ color: colors[2], fontSize: ".75rem" }} />
+          <CircleRoundedIcon sx={{ color: colors[2], fontSize: ".75rem" }} />
           <Typography
             sx={{
               fontSize: ".75rem",
@@ -86,6 +89,9 @@ export default function GaugeChart({ rsi }: any) {
       </Box>
       <GaugeComponent
         type="semicircle"
+        style={{
+          width: "275px",
+        }}
         pointer={{
           length: 0.7,
           width: 10,

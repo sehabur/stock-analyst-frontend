@@ -184,7 +184,7 @@ export default function SearchStockCard(props: any) {
                         : "success.main",
                   }}
                 >
-                  {item.ltp.toFixed(2)}
+                  {item.close.toFixed(2)}
                 </Typography>
 
                 <Typography sx={{ fontSize: ".85rem" }} color="text.secondary">

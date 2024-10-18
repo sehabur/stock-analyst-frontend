@@ -145,25 +145,42 @@ export default function EditComp() {
             />
           </Grid>
         </Grid>
+
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 4, mb: 3 }}
+          sx={{ mt: 3, mb: 3 }}
         >
           Update
         </Button>
 
-        <Typography
-          component={Link}
-          href="/"
-          sx={{
-            textDecoration: "underline",
-            color: "primary.main",
-          }}
-        >
-          Go back to homepage
-        </Typography>
+        <Box sx={{ mb: 1.5 }}>
+          <Typography
+            component={Link}
+            href="/manage-password/change"
+            sx={{
+              textDecoration: "underline",
+              color: "warning.main",
+              fontSize: "1rem",
+            }}
+          >
+            Change password
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography
+            component={Link}
+            href="/"
+            sx={{
+              textDecoration: "underline",
+              color: "primary.main",
+            }}
+          >
+            Go back to homepage
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

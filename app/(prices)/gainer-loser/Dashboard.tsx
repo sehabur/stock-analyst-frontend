@@ -451,7 +451,7 @@ export default function Dashboard({ initialdata }: any) {
     let newData = initialdata.map((item: any) => ({
       id: item._id,
       tradingCode: item.tradingCode,
-      ltp: item.ltp,
+      close: item.close,
       sector: item.sector,
       category: item.category,
       haltStatus: isWithinPreviousTwoDays(item.recordDate)
@@ -514,8 +514,8 @@ export default function Dashboard({ initialdata }: any) {
       width: 120,
     },
     {
-      field: "ltp",
-      headerName: "LTP (BDT)",
+      field: "close",
+      headerName: "Price (BDT)",
       align: "center",
       headerAlign: "center",
       width: 100,

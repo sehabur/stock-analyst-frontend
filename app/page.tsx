@@ -1,12 +1,5 @@
-import Banner from "./_components/homepage/Banner";
-import { Box, Grid, Typography } from "@mui/material";
-import Link from "next/link";
-
-import Divider from "@mui/material/Divider/Divider";
-import Hero from "./_components/homepage/Hero";
-import Highlights from "./_components/homepage/Highlights";
-import Pricing from "./_components/homepage/Pricing";
-import FAQ from "./(misc)/faq/FAQ";
+import type { Metadata } from "next";
+import { Box, Grid } from "@mui/material";
 
 import IndexChart from "@/components/homepage/IndexChart";
 import MarketMoverChart from "@/components/homepage/MarketMoverChart";
@@ -18,7 +11,7 @@ import TopFinancials from "@/components/homepage/TopFinancials";
 import Ipo from "@/components/homepage/Ipo";
 import Beta from "@/components/homepage/Beta";
 import IndexMover from "@/components/homepage/IndexMover";
-import type { Metadata } from "next";
+import Banner from "@/components/homepage/Banner";
 
 async function getIndexData() {
   const res = await fetch(
@@ -174,14 +167,6 @@ export default async function Home() {
 
   return (
     <Box component="main" sx={{ bgcolor: "homepageBackground" }}>
-      {/* <Hero />
-      <Divider />
-      <Highlights />
-      <Divider />
-      <Pricing />
-      <Divider />
-      <FAQ /> */}
-
       <Box sx={{ maxWidth: "1250px", mx: "auto", pt: { xs: 0, sm: 2 } }}>
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item xs={12} sm={7.5}>
@@ -221,20 +206,17 @@ export default async function Home() {
               <TopFinancials data={topFinancialsData} />
             </Box>
           </Grid>
-
           <Grid item xs={12} sm={6}>
             <IndexMover data={indexMover} />
           </Grid>
           <Grid item xs={12} sm={6}>
             <Beta data={beta} />
           </Grid>
-
-          <Grid item xs={12} sm={5}>
-            <Ipo data={ipo} />
-          </Grid>
-
           <Grid item xs={12} sm={7}>
             <BlockTr data={blockTrData} />
+          </Grid>
+          <Grid item xs={12} sm={5}>
+            <Ipo data={ipo} />
           </Grid>
         </Grid>
       </Box>

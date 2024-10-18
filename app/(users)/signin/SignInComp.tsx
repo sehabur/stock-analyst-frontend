@@ -169,7 +169,7 @@ export default function SignInComp({
         <Box sx={{ mb: 1 }}>
           <Typography
             component={Link}
-            href="/forget-passwprd"
+            href="/manage-password/reset"
             sx={{
               textDecoration: "underline",
               color: "primary.main",

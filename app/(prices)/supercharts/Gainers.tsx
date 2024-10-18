@@ -130,7 +130,7 @@ export default function Gainers(props: any) {
                         color: setColor(row.percentChange),
                       }}
                     >
-                      {row.ltp}
+                      {row.close}
                     </TableCell>
                     <TableCell
                       align="right"
@@ -198,7 +198,7 @@ export default function Gainers(props: any) {
                       align="right"
                       sx={{ color: setColor(row.percentChange) }}
                     >
-                      {row.ltp}
+                      {row.close}
                     </TableCell>
                     <TableCell
                       align="right"
@@ -266,7 +266,7 @@ export default function Gainers(props: any) {
                       align="right"
                       sx={{ color: setColor(row.percentChange) }}
                     >
-                      {row.ltp}
+                      {row.close}
                     </TableCell>
                     <TableCell
                       align="right"
@@ -334,7 +334,7 @@ export default function Gainers(props: any) {
                       align="right"
                       sx={{ color: setColor(row.percentChange) }}
                     >
-                      {row.ltp}
+                      {row.close}
                     </TableCell>
                     <TableCell
                       align="right"
@@ -402,7 +402,7 @@ export default function Gainers(props: any) {
                       align="right"
                       sx={{ color: setColor(row.percentChange) }}
                     >
-                      {row.ltp}
+                      {row.close}
                     </TableCell>
                     <TableCell
                       align="right"

@@ -31,15 +31,19 @@ import { filterOptions } from "./filters";
 import styles from "./Main.module.css";
 import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
-const startingFields = ["category", "tradingCode", "sector"];
-
-const endingFields = [
-  "ltp",
+const startingFields = [
+  "tradingCode",
+  "sector",
+  "category",
+  "close",
   "pricePercentChange",
   "volume",
   "pe",
   "marketCap",
   "totalShares",
+  "rsi",
+  "sma50",
+  "ema50",
 ];
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
@@ -51,7 +55,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
 const initialTextFieldInput = {
   sector: "",
   category: "",
-  ltp: "",
+  close: "",
   volume: "",
   marketCap: "",
   paidUpCap: "",
@@ -142,6 +146,8 @@ export default function Main() {
 
   const [tabValue, setTabValue] = useState(0);
 
+  const [resetKey, setresetKey] = useState(1);
+
   const [openCustomRangeMenu, setCustomRangeMenuOpen] =
     useState<boolean>(false);
 
@@ -172,7 +178,6 @@ export default function Main() {
           return params.value + item.suffix;
         };
       }
-
       return column;
     });
 
@@ -191,6 +196,7 @@ export default function Main() {
   const handleResetFilters = () => {
     setFormInputs({});
     setTextFieldInput(initialTextFieldInput);
+    setresetKey((state) => state + 1);
   };
 
   const handleMenuItemClick = (
@@ -225,7 +231,7 @@ export default function Main() {
           [name]: value,
         });
         setTextFieldInput({
-          ...formInputs,
+          ...textFieldInput,
           [name]: value,
         });
       }
@@ -243,11 +249,6 @@ export default function Main() {
     const min = event.target[2].value !== "" ? event.target[2].value : "null";
     const max = event.target[4].value !== "" ? event.target[4].value : "null";
 
-    setFormInputs({
-      ...formInputs,
-      [name]: min + ";" + max,
-    });
-
     setTextFieldInput({
       ...textFieldInput,
       [name]: "null;null",
@@ -263,17 +264,40 @@ export default function Main() {
       return prevState;
     });
     setCustomRangeMenuOpen(false);
+
+    setFormInputs({
+      ...formInputs,
+      [name]: min + ";" + max,
+    });
+  };
+
+  const createFieldSetMap = (initField: any, inputField: any) => {
+    const minStartingDisplayFieldLength = 1;
+    const minDisplayFieldLength = 12;
+
+    const inputFieldLength = inputField.length;
+
+    const unmatchedStartingField = initField.filter(
+      (item: any) => !inputField.includes(item)
+    );
+
+    const totalField = [...inputField, ...unmatchedStartingField].slice(
+      0,
+      Math.max(
+        minDisplayFieldLength,
+        inputFieldLength + minStartingDisplayFieldLength
+      )
+    );
+
+    return totalField;
   };
 
   const getScreenerData = async () => {
     try {
       setLoading(true);
-      const fieldSet: any = new Set([
-        ...startingFields,
-        ...Object.keys(formInputs),
-        ...endingFields,
-      ]);
-      setscreenerDatafields([...fieldSet]);
+      setscreenerDatafields(
+        createFieldSetMap(startingFields, Object.keys(formInputs))
+      );
 
       const res = await fetch(`/api/screener`, {
         method: "POST",
@@ -293,24 +317,6 @@ export default function Main() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    getScreenerData();
-  }, [formInputs]);
-
-  useEffect(() => {
-    if (!auth?.isPremiumEligible) handlePremiumDialogOpen();
-  }, [auth]);
-
-  useEffect(() => {
-    let column: any = {};
-
-    for (let item of filterOptions) {
-      column[item.name] =
-        screenerDatafields.indexOf(item.name) === -1 ? false : true;
-    }
-    setColumnVisibilityModel(column);
-  }, [screenerDatafields]);
 
   const customFilterMenu = (
     <>
@@ -335,66 +341,70 @@ export default function Main() {
                 mx: "auto",
               }}
             >
-              <TextField
-                name="title"
-                hidden
-                value={customRangeMenuContent.name}
-                sx={{ display: "none" }}
-              />
-              <Typography sx={{ fontSize: "1rem", mr: 2, mb: 1 }}>
-                Min Value:
-              </Typography>
-              <TextField
-                type="number"
-                name="minValue"
-                defaultValue={customRangeMenuContent.min}
-                sx={{ mr: 1, mb: 2 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end" variant="filled">
-                      {customRangeMenuContent.unit}
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{
-                  step: 0.01,
-                }}
-              />
-              <Typography sx={{ fontSize: "1rem", mr: 2, mb: 1 }}>
-                Max Value:
-              </Typography>
-              <TextField
-                type="number"
-                name="maxValue"
-                defaultValue={customRangeMenuContent.max}
-                sx={{ mr: 1 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {customRangeMenuContent.unit}
-                    </InputAdornment>
-                  ),
-                }}
-                inputProps={{
-                  step: 0.01,
-                }}
-              />
+              <Box sx={{ mb: 1 }}>
+                <TextField
+                  name="title"
+                  hidden
+                  value={customRangeMenuContent.name}
+                  sx={{ display: "none" }}
+                />
+                <Typography sx={{ fontSize: "1rem", mr: 2, mb: 1 }}>
+                  Min value:
+                </Typography>
+                <TextField
+                  type="number"
+                  name="minValue"
+                  defaultValue={customRangeMenuContent.min}
+                  sx={{ mr: 1, mb: 2 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" variant="filled">
+                        {customRangeMenuContent.unit}
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    step: 0.01,
+                  }}
+                />
+              </Box>
+              <Box sx={{ mb: 2 }}>
+                <Typography sx={{ fontSize: "1rem", mr: 2, mb: 1 }}>
+                  Max value:
+                </Typography>
+                <TextField
+                  type="number"
+                  name="maxValue"
+                  defaultValue={customRangeMenuContent.max}
+                  sx={{ mr: 1 }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {customRangeMenuContent.unit}
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{
+                    step: 0.01,
+                  }}
+                />
+              </Box>
             </Box>
           </DialogContent>
-          <DialogActions sx={{ mx: 2, my: 1 }}>
+          <DialogActions sx={{ mr: 2.5, my: 1 }}>
             <Button
               onClick={() => handleCustomRangeMenuClose()}
               variant="outlined"
-              color="warning"
-              sx={{ mr: 1, px: 2.5 }}
+              color="primary"
+              sx={{ mr: 1, px: 2.3 }}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              color="success"
+              color="primary"
               variant="contained"
-              sx={{ px: 2.5 }}
+              sx={{ px: 3.5 }}
             >
               Save
             </Button>
@@ -407,7 +417,7 @@ export default function Main() {
   const technicalFilters = filters
     .filter((item: any) => item.visible === 1 && item.placement == "technical")
     .map((filter: any) => (
-      <Grid item xs={6} sm={1.714} key={filter.name}>
+      <Grid item xs={6} sm={1.714} key={filter.name + resetKey.toString()}>
         <TextField
           variant="outlined"
           select
@@ -422,8 +432,11 @@ export default function Main() {
           <Typography
             sx={{
               px: 2,
-              pb: 0.7,
+              pb: 0.8,
+              pt: 0.3,
               color: "primary.main",
+              fontSize: ".9rem",
+              fontWeight: 700,
             }}
           >
             {filter.desc}
@@ -459,7 +472,7 @@ export default function Main() {
                 )
               }
             >
-              {option.text}
+              {option.text} {option.value == "null;null" && "⭐"}
             </MenuItem>
           ))}
         </TextField>
@@ -469,7 +482,7 @@ export default function Main() {
   const fundamentalalFilters = filters
     .filter((item: any) => item.visible === 1 && item.placement != "technical")
     .map((filter: any) => (
-      <Grid item xs={6} sm={1.714} key={filter.name}>
+      <Grid item xs={6} sm={1.714} key={filter.name + resetKey.toString()}>
         <TextField
           variant="outlined"
           select
@@ -484,8 +497,11 @@ export default function Main() {
           <Typography
             sx={{
               px: 2,
-              pb: 0.7,
+              pb: 0.8,
+              pt: 0.3,
               color: "primary.main",
+              fontSize: ".9rem",
+              fontWeight: 700,
             }}
           >
             {filter.desc}
@@ -521,12 +537,30 @@ export default function Main() {
                 )
               }
             >
-              {option.text}
+              {option.text} {option.value == "null;null" && "⭐"}
             </MenuItem>
           ))}
         </TextField>
       </Grid>
     ));
+
+  useEffect(() => {
+    let column: any = {};
+    for (let item of filterOptions) {
+      column[item.name] =
+        screenerDatafields.indexOf(item.name) === -1 ? false : true;
+    }
+    setColumnVisibilityModel(column);
+  }, [screenerDatafields]);
+
+  useEffect(() => {
+    getScreenerData();
+  }, [formInputs]);
+
+  useEffect(() => {
+    if (!auth?.isPremiumEligible) handlePremiumDialogOpen();
+    if (auth?.isPremiumEligible) handlePremiumDialogClose();
+  }, [auth]);
 
   return (
     <Box>
@@ -536,7 +570,9 @@ export default function Main() {
         maxWidth="sm"
         disableScrollLock={true}
       >
-        <PremiumDialogContent />
+        <DialogContent>
+          <PremiumDialogContent />
+        </DialogContent>
       </Dialog>
       <Box
         sx={{
@@ -544,10 +580,11 @@ export default function Main() {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-around",
-          borderBottom: 1,
-          borderColor: "divider",
+          // borderBottom: 1,
+          // borderColor: "divider",
           px: { xs: 2, sm: 4 },
           flexWrap: "wrap",
+          // bgcolor: "financeCardTitlecolor",
         }}
       >
         <Tabs
@@ -579,7 +616,7 @@ export default function Main() {
         {customFilterMenu}
         <Box
           sx={{
-            bgcolor: "financePageBgcolor",
+            bgcolor: "homepageBackground",
             pt: 1,
             // borderBottom: 1,
             // borderColor: "divider",
@@ -587,11 +624,11 @@ export default function Main() {
         >
           <Box
             sx={{
-              maxWidth: 1720,
+              maxWidth: 1530,
               mx: "auto",
               px: { xs: 2, sm: 4 },
               mt: 1.5,
-              pb: 0.1,
+              pb: 2.5,
             }}
           >
             <Box>
@@ -599,7 +636,7 @@ export default function Main() {
                 container
                 columnSpacing={{ xs: 1, sm: 1.4 }}
                 rowSpacing={1.4}
-                sx={{ mb: 2, display: tabValue == 0 ? "flex" : "none" }}
+                sx={{ display: tabValue == 0 ? "flex" : "none" }}
               >
                 {fundamentalalFilters}
               </Grid>
@@ -607,7 +644,7 @@ export default function Main() {
                 container
                 columnSpacing={{ xs: 1, sm: 1.4 }}
                 rowSpacing={1.4}
-                sx={{ mb: 2, display: tabValue == 1 ? "flex" : "none" }}
+                sx={{ display: tabValue == 1 ? "flex" : "none" }}
               >
                 {technicalFilters}
               </Grid>
@@ -615,7 +652,7 @@ export default function Main() {
                 container
                 columnSpacing={{ xs: 1, sm: 1.4 }}
                 rowSpacing={1.4}
-                sx={{ mb: 2, display: tabValue == 2 ? "flex" : "none" }}
+                sx={{ display: tabValue == 2 ? "flex" : "none" }}
               >
                 {fundamentalalFilters} {technicalFilters}
               </Grid>
@@ -624,11 +661,11 @@ export default function Main() {
         </Box>
         <Box
           sx={{
-            maxWidth: 1720,
+            maxWidth: 1530,
             mx: "auto",
             px: { xs: 2, sm: 4 },
             pt: 2,
-            pb: 4,
+            pb: 6,
           }}
         >
           <Box sx={{ height: 580 }}>
@@ -666,7 +703,8 @@ export default function Main() {
               }}
               loading={loading}
               sx={{
-                // border: 'none',
+                // border: "none",
+                borderRadius: 2,
                 ".MuiDataGrid-columnHeader": {
                   color: "text.primary",
                 },
@@ -677,6 +715,11 @@ export default function Main() {
                 },
                 ".MuiDataGrid-cell": {
                   fontWeight: 500,
+                  fontSize: ".875rem",
+                  textAlign: "center",
+                },
+                ".MuiDataGrid-root": {
+                  textAlign: "center",
                 },
               }}
             />

@@ -21,7 +21,17 @@ export default function Profile() {
   const auth = useSelector((state: any) => state.auth);
 
   return (
-    <Box sx={{ maxWidth: 550, px: 3 }}>
+    <Box
+      sx={{
+        maxWidth: 475,
+        px: 3,
+        pb: 6,
+        mt: { xs: 2, sm: 4 },
+        mx: "auto",
+        bgcolor: "secondaryBackground",
+        borderRadius: 3,
+      }}
+    >
       <Grid
         container
         spacing={4}
@@ -98,7 +108,7 @@ export default function Profile() {
                 )}
               </Box>
 
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                 <Button
                   component={Link}
                   href="/profile/edit"

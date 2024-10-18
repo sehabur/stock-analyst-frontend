@@ -270,6 +270,7 @@ export default function Footer() {
           >
             <IconButton
               color="primary"
+              target="_blank"
               href="https://www.facebook.com/profile.php?id=61566267416444"
               aria-label="GitHub"
               sx={{ alignSelf: "center" }}
@@ -278,6 +279,7 @@ export default function Footer() {
             </IconButton>
             <IconButton
               color="error"
+              target="_blank"
               href="https://www.youtube.com/@Stocksupporter-x8l"
               aria-label="X"
               sx={{ alignSelf: "center" }}

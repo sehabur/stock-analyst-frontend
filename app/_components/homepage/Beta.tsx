@@ -90,8 +90,8 @@ export default function Beta({ data }: any) {
       },
     },
     {
-      field: "ltp",
-      headerName: "LTP (BDT)",
+      field: "close",
+      headerName: "Price (BDT)",
       align: "right",
       headerAlign: "right",
       width: matchesSmUp ? 160 : 100,
@@ -144,8 +144,7 @@ export default function Beta({ data }: any) {
         </Box>
         <Box
           sx={{
-            mb: 2,
-            mt: 1,
+            mb: 1,
             ml: 0.8,
           }}
         >

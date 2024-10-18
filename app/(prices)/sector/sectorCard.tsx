@@ -143,7 +143,7 @@ export default function SectorSummaryCard({ data }: { data: any }) {
                     : "success.main",
               }}
             >
-              {data.ltp.toFixed(1)}
+              {data.close.toFixed(1)}
             </Typography>
             <Chip
               label={data.change}

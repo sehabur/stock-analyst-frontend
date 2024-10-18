@@ -239,7 +239,7 @@ export default function TopFinancials(props: any) {
                     </TableCell>
                     {matchesSmUp && (
                       <>
-                        <TableCell align="right">{row.ltp}</TableCell>
+                        <TableCell align="right">{row.close}</TableCell>
                         <TableCell align="right">{row.percentChange}</TableCell>
                       </>
                     )}

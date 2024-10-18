@@ -67,7 +67,7 @@ const formatCandleChartData = (data: any) => {
     const item = data[i];
 
     const open = item.open !== 0 ? item.open : item.ycp;
-    const close = item.ltp;
+    const close = item.close;
 
     if (close === 0) {
       candle.push({
@@ -120,7 +120,8 @@ const calcPercentChange = (current: any, previous: any) => {
 };
 
 const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
-  // if (!latestdata || !lastdaydata) return;
+  const { close, ycp } = latestdata;
+
   const {
     oneWeekBeforeData,
     oneMonthBeforeData,
@@ -129,15 +130,13 @@ const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
     fiveYearBeforeData,
   } = lastdaydata;
 
-  const { ltp, ycp } = latestdata;
-
   return {
-    today: calcPercentChange(ltp, ycp),
-    oneWeek: calcPercentChange(ltp, oneWeekBeforeData),
-    oneMonth: calcPercentChange(ltp, oneMonthBeforeData),
-    sixMonth: calcPercentChange(ltp, sixMonthBeforeData),
-    oneYear: calcPercentChange(ltp, oneYearBeforeData),
-    fiveYear: calcPercentChange(ltp, fiveYearBeforeData),
+    today: calcPercentChange(close, ycp),
+    oneWeek: calcPercentChange(close, oneWeekBeforeData),
+    oneMonth: calcPercentChange(close, oneMonthBeforeData),
+    sixMonth: calcPercentChange(close, sixMonthBeforeData),
+    oneYear: calcPercentChange(close, oneYearBeforeData),
+    fiveYear: calcPercentChange(close, fiveYearBeforeData),
   };
 };
 
@@ -220,14 +219,14 @@ export default function Overview({ stock }: any) {
       ? "#f45e6a"
       : "#00A25B";
 
-  const minuteChartData: any = stock.minute
-    // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
-    .map((item: { time: string; ltp: number; ycp: number }) => {
+  const minuteChartData: any = stock.minute.map(
+    (item: { time: string; close: number; ycp: number }) => {
       return {
         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
-        value: item.ltp !== 0 ? item.ltp : item.ycp,
+        value: item.close !== 0 ? item.close : item.ycp,
       };
-    });
+    }
+  );
 
   const dailyCandleData = formatCandleChartData(stock.daily);
   const weeklyCandleData = formatCandleChartData(stock.weekly);
@@ -722,7 +721,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {Math.min(stock.lastDay.oneYearLow, stock.latest.ltp) || "--"}
+                {Math.min(stock.lastDay.oneYearLow, stock.latest.close) || "--"}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -745,7 +744,8 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {Math.max(stock.lastDay.oneYearHigh, stock.latest.ltp) || "--"}
+                {Math.max(stock.lastDay.oneYearHigh, stock.latest.close) ||
+                  "--"}
               </Typography>
               <Typography
                 color="text.secondary"

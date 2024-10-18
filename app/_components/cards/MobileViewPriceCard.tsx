@@ -113,7 +113,7 @@ export default function MobileViewPriceCard({ item }: any) {
                       : "success.main",
                 }}
               >
-                {item.ltp}
+                {item.close}
               </Typography>
               <Typography sx={{ fontSize: ".8rem" }} color="text.secondary">
                 BDT

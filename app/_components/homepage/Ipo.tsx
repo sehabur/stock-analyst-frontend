@@ -26,7 +26,7 @@ export default function Ipo(props: any) {
   };
 
   return (
-    <Box sx={{ my: 6, mx: { xs: 2, sm: 0 } }}>
+    <Box sx={{ my: 6, ml: { xs: 1.5, sm: 8 }, mr: { xs: 1.5, sm: 0 } }}>
       <Button
         component={Link}
         href="/ipo"
@@ -51,11 +51,12 @@ export default function Ipo(props: any) {
           .map((item: any, index: number) => (
             <Paper
               sx={{
+                width: "100%",
                 mt: 2,
                 mb: { xs: 2, sm: 3 },
                 pt: { xs: 1.4, sm: 2.5 },
-                pb: { xs: 0, sm: 1.5 },
-                px: { xs: 1, sm: 2 },
+                pb: { xs: 1, sm: 1 },
+                px: { xs: 0, sm: 1.5 },
                 borderRadius: 2,
                 ":hover": {
                   bgcolor: "secondaryBackground",
@@ -136,7 +137,7 @@ export default function Ipo(props: any) {
                   />
                 </ListItem>
               </Box>
-              <Box sx={{ textAlign: "left", ml: 1 }}>
+              <Box sx={{ textAlign: "left", ml: 1.3 }}>
                 <Button
                   variant="text"
                   disableRipple
@@ -147,7 +148,7 @@ export default function Ipo(props: any) {
                     },
                   }}
                 >
-                  See Details
+                  See details
                 </Button>
               </Box>
             </Paper>
@@ -155,18 +156,16 @@ export default function Ipo(props: any) {
         {data.filter(
           (item: any) => new Date(item.subscriptionEnd) >= new Date()
         ).length < 1 && (
-          <Paper
-            elevation={0}
+          <Box
             sx={{
               my: 2,
-              py: 2,
-              px: 2,
-              bgcolor: "secondaryBackground",
-              maxWidth: 350,
+              px: 1,
             }}
           >
-            <Typography> There is no upcoming IPO to display.</Typography>
-          </Paper>
+            <Typography sx={{ color: "text.primary" }}>
+              There is no upcoming IPO to display.
+            </Typography>
+          </Box>
         )}
       </Box>
     </Box>

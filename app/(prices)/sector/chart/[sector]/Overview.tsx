@@ -29,22 +29,14 @@ const calcPercentChange = (current: any, previous: any) => {
 };
 
 const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
+  const { close, ycp } = latestdata;
   return {
-    today: calcPercentChange(latestdata?.ltp, latestdata?.ycp),
-    oneWeek: calcPercentChange(latestdata?.ltp, lastdaydata?.oneWeekBeforeData),
-    oneMonth: calcPercentChange(
-      latestdata?.ltp,
-      lastdaydata?.oneMonthBeforeData
-    ),
-    sixMonth: calcPercentChange(
-      latestdata?.ltp,
-      lastdaydata?.sixMonthBeforeData
-    ),
-    oneYear: calcPercentChange(latestdata?.ltp, lastdaydata?.oneYearBeforeData),
-    fiveYear: calcPercentChange(
-      latestdata?.ltp,
-      lastdaydata?.fiveYearBeforeData
-    ),
+    today: calcPercentChange(close, ycp),
+    oneWeek: calcPercentChange(close, lastdaydata?.oneWeekBeforeData),
+    oneMonth: calcPercentChange(close, lastdaydata?.oneMonthBeforeData),
+    sixMonth: calcPercentChange(close, lastdaydata?.sixMonthBeforeData),
+    oneYear: calcPercentChange(close, lastdaydata?.oneYearBeforeData),
+    fiveYear: calcPercentChange(close, lastdaydata?.fiveYearBeforeData),
   };
 };
 

@@ -55,7 +55,12 @@ const columns: GridColDef[] = [
     headerAlign: "left",
     width: 85,
   },
-  { field: "ltp", headerName: "LTP", align: "center", headerAlign: "center" },
+  {
+    field: "close",
+    headerName: "Price",
+    align: "center",
+    headerAlign: "center",
+  },
   {
     field: "haltStatus",
     headerName: "",

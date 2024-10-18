@@ -1,7 +1,14 @@
 "use client";
 import PieChart from "@/components/charts/PieChart";
 
-import { Paper, Typography, Stack, useTheme, Box } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Stack,
+  useTheme,
+  Box,
+  Divider,
+} from "@mui/material";
 import KeyboardDoubleArrowUpRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowUpRounded";
 import KeyboardDoubleArrowDownRoundedIcon from "@mui/icons-material/KeyboardDoubleArrowDownRounded";
 import PauseCircleOutlineRoundedIcon from "@mui/icons-material/PauseCircleOutlineRounded";
@@ -81,23 +88,34 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
       <Paper
         elevation={0}
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          // display: "flex",
+          // flexDirection: "column",
+          // alignItems: "center",
           pt: 2,
           pb: 1,
-          px: 2,
+          px: 0,
           bgcolor: "background.default",
           borderRadius: 3,
         }}
       >
         <Typography
           color="text.secondary"
-          sx={{ fontSize: "1.4rem", fontWeight: 700, mt: 1, mb: 1 }}
+          sx={{
+            fontSize: "1.4rem",
+            fontWeight: 700,
+            mt: 1,
+            mb: 1,
+            textAlign: "center",
+          }}
         >
           Market trend
         </Typography>
-        <Stack direction="row" alignItems="center" sx={{ mb: 1 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ mb: 1 }}
+        >
           <Box
             // component={Button}
             // onClick={(e) => handleClick(e, "uptrendItems")}
@@ -188,7 +206,7 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
             </Typography>
           </Box>
         </Stack>
-        <Box>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
           <MarketPieChart
             data={[
               data.issuesAdvanced,
@@ -198,11 +216,14 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
             colors={colors}
             labels={labels}
             // height={300}
-            width={matchesSmUp ? 400 : 375}
+            width={matchesSmUp ? 385 : 375}
             donutSize="60%"
           />
         </Box>
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ mb: 3.2, mt: 3 }}>
+          <Divider light />
+        </Box>
+        <Box>
           <Typography
             color="text.secondary"
             sx={{ fontSize: "1.4rem", fontWeight: 700, textAlign: "center" }}

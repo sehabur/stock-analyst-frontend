@@ -25,29 +25,6 @@ import Stack from "@mui/material/Stack";
 import AreaChart from "@/components/charts/AreaChart";
 import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 
-// const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-//   [`& .${toggleButtonGroupClasses.grouped}`]: {
-//     marginLeft: "12px",
-//     marginRight: "12px",
-//     border: 0,
-//     borderRadius: 3,
-//   },
-// }));
-// const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-//   "&.MuiToggleButtonGroup-grouped": {
-//     borderRadius: "24px !important",
-//     marginRight: "16px",
-//     border: `1px solid lightgrey !important`,
-//     paddingLeft: "18px",
-//     paddingTop: "4px",
-//     paddingBottom: "4px",
-//     paddingRight: "18px",
-//   },
-//   color: theme.palette.text.primary,
-//   // fontSize: ".9rem",
-//   // textTransform: "none",
-// }));
-
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
     marginLeft: "12px",
@@ -71,8 +48,6 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
     },
   },
   color: theme.palette.text.primary,
-  // fontSize: ".9rem",
-  // textTransform: "none",
 }));
 
 const formatCandleChartData = (data: any) => {
@@ -82,8 +57,8 @@ const formatCandleChartData = (data: any) => {
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
 
-    const open = item.open !== 0 ? item.open : item.ycp;
-    const close = item.ltp;
+    const open = item.open != 0 ? item.open : item.ycp;
+    const close = item.close;
 
     if (close === 0) {
       candle.push({
@@ -135,13 +110,23 @@ const calcPercentChange = (current: any, previous: any) => {
 };
 
 const formatPercentChangeData = (latestdata: any, lastdaydata: any) => {
+  const {
+    oneWeekBeforeData,
+    oneMonthBeforeData,
+    sixMonthBeforeData,
+    oneYearBeforeData,
+    fiveYearBeforeData,
+  } = lastdaydata;
+
+  const { close, ycp } = latestdata;
+
   return {
-    today: calcPercentChange(latestdata.ltp, latestdata.ycp),
-    oneWeek: calcPercentChange(latestdata.ltp, lastdaydata.oneWeekBeforeData),
-    oneMonth: calcPercentChange(latestdata.ltp, lastdaydata.oneMonthBeforeData),
-    sixMonth: calcPercentChange(latestdata.ltp, lastdaydata.sixMonthBeforeData),
-    oneYear: calcPercentChange(latestdata.ltp, lastdaydata.oneYearBeforeData),
-    fiveYear: calcPercentChange(latestdata.ltp, lastdaydata.fiveYearBeforeData),
+    today: calcPercentChange(close, ycp),
+    oneWeek: calcPercentChange(close, oneWeekBeforeData),
+    oneMonth: calcPercentChange(close, oneMonthBeforeData),
+    sixMonth: calcPercentChange(close, sixMonthBeforeData),
+    oneYear: calcPercentChange(close, oneYearBeforeData),
+    fiveYear: calcPercentChange(close, fiveYearBeforeData),
   };
 };
 
@@ -164,11 +149,11 @@ export default function Overview({ stock }: any) {
       : "#00A25B";
 
   const minuteChartData: any = stock.minute
-    .filter((item: any) => item.ltp !== 0)
-    .map((item: { time: string; ltp: number; ycp: number }) => {
+    .filter((item: any) => item.close !== 0)
+    .map((item: { time: string; close: number; ycp: number }) => {
       return {
         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
-        value: item.ltp,
+        value: item.close,
       };
     });
 
@@ -623,7 +608,7 @@ export default function Overview({ stock }: any) {
               >
                 {Math.max(
                   stock?.lastDay?.oneYearHigh,
-                  stock.latest.ltp
+                  stock.latest.close
                 )?.toFixed(2) || "--"}
               </Typography>
             </Stack>
@@ -642,7 +627,7 @@ export default function Overview({ stock }: any) {
               >
                 {Math.min(
                   stock?.lastDay?.oneYearLow,
-                  stock.latest.ltp
+                  stock.latest.close
                 )?.toFixed(2) || "--"}
               </Typography>
             </Stack>

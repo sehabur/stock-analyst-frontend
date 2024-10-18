@@ -96,7 +96,7 @@ const getLatestPrice = (latest: any) => {
       .minus({ days: 1 })
       .toFormat("dd MMM, 14:30");
   } else {
-    price = latest.ltp;
+    price = latest.close;
     time = DateTime.fromISO(latest.time)
       .plus({ hours: 6 })
       .toFormat("dd MMM, HH:mm");
@@ -155,7 +155,7 @@ export default async function StockDetails({ params }: any) {
         bgcolor: "background.default",
       }}
     >
-      <Box sx={{ py: { xs: 2, sm: 4 } }}>
+      <Box sx={{ py: { xs: 2, sm: 3 } }}>
         <Box
           sx={{
             maxWidth: 1250,

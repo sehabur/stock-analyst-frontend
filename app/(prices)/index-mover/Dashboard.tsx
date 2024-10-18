@@ -97,8 +97,8 @@ export default function Dashboard({ data }: any) {
       cellClassName: styles.tradingCodeCell,
     },
     {
-      field: "ltp",
-      headerName: "LTP (BDT)",
+      field: "close",
+      headerName: "Price (BDT)",
       align: "left",
       headerAlign: "left",
       width: matchesSmUp ? 200 : 100,

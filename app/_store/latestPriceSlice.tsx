@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const latestPriceSlice = createSlice({
-  name: 'latestPrice',
+  name: "latestPrice",
   initialState: [],
   reducers: {
     setData: (state: any, { payload }: { payload: any }) => {
-      return payload
-    }
-  }
-})
+      return payload;
+    },
+  },
+});
 
-export default latestPriceSlice
+export default latestPriceSlice;
