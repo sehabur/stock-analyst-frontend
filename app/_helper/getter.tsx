@@ -12,23 +12,25 @@ export const getUniques = (array: any, key: string) => {
   return uniques;
 };
 
-export const isWithinPreviousTwoDays = (date: any) => {
-  if (!date) return false;
+export const isWithinPreviousTwoDays = (givenDate: string) => {
+  if (!givenDate) return false;
 
-  const givenDate = new Date(date);
   const currentDate = new Date();
-
   currentDate.setHours(0, 0, 0, 0);
-  givenDate.setHours(0, 0, 0, 0);
 
-  const dayBeforeYesterday = new Date(givenDate);
-  dayBeforeYesterday.setDate(givenDate.getDate() - 2);
+  const endDate = new Date(givenDate);
+  endDate.setDate(endDate.getDate() - 1);
 
-  const yesterday = new Date(givenDate);
-  yesterday.setDate(givenDate.getDate() - 1);
+  const startDate = new Date(givenDate);
 
-  return (
-    currentDate.getTime() === dayBeforeYesterday.getTime() ||
-    currentDate.getTime() === yesterday.getTime()
-  );
+  let spotCount = 0;
+
+  while (spotCount < 2) {
+    startDate.setDate(startDate.getDate() - 1);
+
+    if (!(startDate.getDay() === 5 || startDate.getDay() === 6)) {
+      spotCount++;
+    }
+  }
+  return currentDate >= startDate && currentDate <= endDate;
 };
