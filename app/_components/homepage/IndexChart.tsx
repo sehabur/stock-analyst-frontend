@@ -28,62 +28,6 @@ import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonChecke
 import Tooltip from "@mui/material/Tooltip";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 
-// const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-//   [`& .${toggleButtonGroupClasses.grouped}`]: {
-//     marginRight: "24px",
-//     border: 0,
-//     borderRadius: 3,
-//   },
-// }));
-// const StyledToggleButton = styled(ToggleButton)(({ theme }: any) => ({
-//   "&.MuiToggleButtonGroup-grouped": {
-//     borderRadius: "24px !important",
-//     marginRight: "16px",
-//     // border: `1px solid lightgrey !important`,
-//     paddingLeft: "20px",
-//     paddingTop: "4px",
-//     paddingBottom: "4px",
-//     paddingRight: "20px",
-//     "&.Mui-selected": {
-//       // color: grey[50],
-//       // backgroundColor: theme.palette.primary.main,
-//       color: grey[50],
-//       backgroundColor: theme.palette.toggleButtonBgColor,
-//       // color: theme.palette.background.default,
-//       // backgroundColor: theme.palette.text.secondary,
-//     },
-//   },
-//   color: theme.palette.text.primary,
-//   backgroundColor: theme.palette.financeCardTitlecolor,
-//   // backgroundColor: theme.palette.financeCardTitlecolor,
-//   fontSize: ".9rem",
-//   textTransform: "none",
-// }));
-
-// const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-//   [`& .${toggleButtonGroupClasses.grouped}`]: {
-//     border: 0,
-//   },
-// }));
-// const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-//   "&.MuiToggleButtonGroup-grouped": {
-//     borderRadius: "24px !important",
-//     marginRight: "12px",
-//     border: `1px solid lightgrey !important`,
-//     paddingLeft: "24px",
-//     paddingRight: "24px",
-//     paddingTop: "3px",
-//     paddingBottom: "3px",
-//     "&.Mui-selected": {
-//       color: theme.palette.background.default,
-//       backgroundColor: theme.palette.text.secondary,
-//     },
-//   },
-//   color: theme.palette.text.primary,
-//   fontSize: ".9rem",
-//   // textTransform: "none",
-// }));
-
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
     border: 0,
@@ -110,31 +54,6 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   fontSize: ".875rem",
   color: theme.palette.primary.main,
 }));
-
-// const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
-//   [`& .${toggleButtonGroupClasses.grouped}`]: {
-//     border: 0,
-//     marginRight: "8px",
-//     marginLeft: "8px",
-//   },
-// }));
-
-// const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
-//   "&.MuiToggleButtonGroup-grouped": {
-//     borderRadius: "4px !important",
-//     marginRight: "10px",
-//     border: `1px solid lightgray !important`,
-//     // paddingLeft: "8px",
-//     // paddingRight: "8px",
-//     paddingTop: "5px",
-//     paddingBottom: "5px",
-//     "&.Mui-selected": {
-//       color: theme.palette.background.default,
-//       backgroundColor: theme.palette.text.secondary,
-//     },
-//   },
-//   color: theme.palette.text.primary,
-// }));
 
 const dseMap = [
   {
@@ -292,7 +211,13 @@ export default function IndexChart({ indexData }: any) {
         </StyledToggleButtonGroup>
       </Box>
 
-      <Grid container spacing={0.5} alignItems="center" justifyContent="center">
+      <Grid
+        container
+        spacing={0.5}
+        alignItems="center"
+        justifyContent="center"
+        sx={{ maxWidth: 730 }}
+      >
         <Grid item xs={12} sm={6}>
           <Stack
             direction="row"
@@ -392,7 +317,7 @@ export default function IndexChart({ indexData }: any) {
         />
       </Box>
       <Paper
-        // variant="outlined"
+        variant="outlined"
         elevation={0}
         sx={{
           display: "flex",
@@ -405,7 +330,7 @@ export default function IndexChart({ indexData }: any) {
           mt: 2,
           mb: 2,
           borderRadius: 2,
-          bgcolor: "secondaryBackground",
+          bgcolor: "marketVolumeCard",
           maxWidth: 640,
         }}
       >

@@ -149,7 +149,7 @@ const agmDateCalculation = (
   recordDateInit: string,
   declarationDateInit: string
 ) => {
-  const todayDate = DateTime.now().setZone("Asia/Dhaka");
+  const todayDate = DateTime.utc().startOf("day");
 
   let agmPrefix = "";
   let recordPrefix = "";
@@ -178,7 +178,7 @@ const agmDateCalculation = (
   if (declarationDateInit) {
     const declarationDateFormatted = DateTime.fromISO(declarationDateInit);
 
-    if (declarationDateFormatted == todayDate) {
+    if (declarationDateFormatted.toMillis() == todayDate.toMillis()) {
       isCircuitEnabled = false;
     }
     declarationDate = declarationDateFormatted.toFormat("dd MMM yyyy");
@@ -368,16 +368,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               Today
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.today.color,
               }}
@@ -397,16 +398,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               1 Week
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneWeek.color,
               }}
@@ -426,16 +428,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               1 Month
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneMonth.color,
               }}
@@ -455,16 +458,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               6 Month
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.sixMonth.color,
               }}
@@ -484,16 +488,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               1 Year
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneYear.color,
               }}
@@ -513,16 +518,17 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
                 color: "text.primary",
                 fontWeight: 500,
+                mb: 1,
               }}
             >
               5 Year
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.fiveYear.color,
               }}
@@ -768,7 +774,9 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.isCircuitEnabled ? stock.fundamentals.circuitLow : "No"}
+                {dates.isCircuitEnabled
+                  ? stock.fundamentals.circuitLow
+                  : "No limit"}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -791,7 +799,9 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.isCircuitEnabled ? stock.fundamentals.circuitUp : "No"}
+                {dates.isCircuitEnabled
+                  ? stock.fundamentals.circuitUp
+                  : "No limit"}
               </Typography>
               <Typography
                 color="text.secondary"
@@ -1036,7 +1046,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.agmDate || "--"}
+                {dates.agmDate || "-"}
               </Typography>
             </Stack>
           </Grid>
@@ -1056,7 +1066,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.recordDate || "--"}
+                {dates.recordDate || "-"}
               </Typography>
             </Stack>
           </Grid>

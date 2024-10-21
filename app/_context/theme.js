@@ -116,6 +116,7 @@ export const lightTheme = createTheme({
     homepageBackground: "#f8f8f8",
     gainerCardBackground: "#ffffff",
     gainerCardHover: "#f5f7fa",
+    marketVolumeCard: "#f7f7f7",
   },
   ...defaultSettings,
 });
@@ -139,6 +140,7 @@ export const darkTheme = createTheme({
     homepageBackground: "#070707",
     gainerCardBackground: "#212121",
     gainerCardHover: "#232323",
+    marketVolumeCard: "#232323",
   },
   ...defaultSettings,
 });
