@@ -221,7 +221,7 @@ export default async function StockDetails({ params }: any) {
               <Typography
                 sx={{
                   color: "text.primary",
-                  fontSize: { xs: "2.1rem", sm: "2.5rem" },
+                  fontSize: { xs: "2.1rem", sm: "2.4rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
                 }}
@@ -233,7 +233,7 @@ export default async function StockDetails({ params }: any) {
                 sx={{
                   color: "text.primary",
                   fontSize: { xs: "1.1rem", sm: "1.1rem" },
-                  ml: 0.6,
+                  ml: 0.8,
                 }}
               >
                 BDT
@@ -242,7 +242,7 @@ export default async function StockDetails({ params }: any) {
               <Typography
                 sx={{
                   color: textColor,
-                  fontSize: { xs: "1.3rem", sm: "1.5rem" },
+                  fontSize: { xs: "1.3rem", sm: "1.4rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
                   mx: 2,
@@ -254,7 +254,7 @@ export default async function StockDetails({ params }: any) {
               <Typography
                 sx={{
                   color: textColor,
-                  fontSize: { xs: "1.3rem", sm: "1.5rem" },
+                  fontSize: { xs: "1.3rem", sm: "1.4rem" },
                   fontWeight: 700,
                   fontFamily: "'Nunito Sans', sans-serif",
                   mr: 2,
@@ -328,7 +328,7 @@ export default async function StockDetails({ params }: any) {
             <Typography
               sx={{
                 color: "text.secondary",
-                fontSize: "1rem",
+                fontSize: ".9rem",
                 mt: { xs: 0.8, sm: 0 },
               }}
             >

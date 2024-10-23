@@ -57,11 +57,11 @@ const darkPalleteColors = {
 
 const defaultSettings = {
   typography: {
-    fontFamily: "'DM Sans', sans-serif",
+    // fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     body1: {
       fontSize: ".875rem",
       fontWeight: 500,
-      fontFamily: "'DM Sans', sans-serif",
     },
     // body2: {
     //   fontSize: ".875rem",
@@ -140,7 +140,7 @@ export const darkTheme = createTheme({
     homepageBackground: "#070707",
     gainerCardBackground: "#212121",
     gainerCardHover: "#232323",
-    marketVolumeCard: "#232323",
+    marketVolumeCard: "#212125",
   },
   ...defaultSettings,
 });

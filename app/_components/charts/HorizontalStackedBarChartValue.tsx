@@ -34,7 +34,7 @@ export default function HorizontalStackedBarChartValue(props: any) {
     colors: colors || [],
     chart: {
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       type: "bar",
       stacked: true,
       toolbar: {

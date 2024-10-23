@@ -29,11 +29,15 @@ import { DateTime } from "luxon";
 import { grey } from "@mui/material/colors";
 
 export default function BlockTransections({ blocktr }: any) {
+  const theme = useTheme();
+
+  const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
   return (
     <Box sx={{ maxWidth: "900px", mx: "auto", py: 4, px: { xs: 0, sm: 2 } }}>
       <TableContainer
         component={Paper}
-        sx={{ border: "none", borderRadius: 0 }}
+        // sx={{ border: "none", borderRadius: 0 }}
         variant="outlined"
       >
         <Table sx={{ minWidth: 560 }} size="small">
@@ -43,16 +47,16 @@ export default function BlockTransections({ blocktr }: any) {
                 ".MuiTableCell-head": {
                   // fontSize: "1rem",
                   fontWeight: 700,
-                  // py: 1,
+                  py: { xs: 1, sm: 2 },
                 },
               }}
             >
-              <TableCell>DATE</TableCell>
-              <TableCell>VALUE (MN)</TableCell>
-              <TableCell>VOLUME</TableCell>
-              <TableCell>TRADES</TableCell>
-              <TableCell>MAX PRICE</TableCell>
-              <TableCell>MIN PRICE</TableCell>
+              <TableCell align="center">DATE</TableCell>
+              <TableCell align="center">VALUE (MN)</TableCell>
+              <TableCell align="center">VOLUME</TableCell>
+              <TableCell align="center">TRADES</TableCell>
+              <TableCell align="center">MAX PRICE</TableCell>
+              <TableCell align="center">MIN PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,14 +77,14 @@ export default function BlockTransections({ blocktr }: any) {
                   },
                 }}
               >
-                <TableCell sx={{ minWidth: 90 }}>
-                  {DateTime.fromISO(row.date).toFormat("dd MMM")}
+                <TableCell align="center" sx={{ minWidth: 100 }}>
+                  {DateTime.fromISO(row.date).toFormat("dd-MM-yy")}
                 </TableCell>
-                <TableCell>{row.value}</TableCell>
-                <TableCell>{row.quantity}</TableCell>
-                <TableCell>{row.trades}</TableCell>
-                <TableCell>{row.maxPrice}</TableCell>
-                <TableCell>{row.minPrice}</TableCell>
+                <TableCell align="center">{row.value}</TableCell>
+                <TableCell align="center">{row.quantity}</TableCell>
+                <TableCell align="center">{row.trades}</TableCell>
+                <TableCell align="center">{row.maxPrice}</TableCell>
+                <TableCell align="center">{row.minPrice}</TableCell>
               </TableRow>
             ))}
           </TableBody>

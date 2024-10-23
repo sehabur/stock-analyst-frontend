@@ -861,7 +861,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals?.pe?.value}
+                {stock.fundamentals.pe?.value || "-"}
               </Typography>
             </Stack>
           </Grid>
@@ -940,7 +940,9 @@ export default function Overview({ stock }: any) {
                   mr: 0.7,
                 }}
               >
-                {(stock.fundamentals.shortTermLoan / 10).toFixed(2)}
+                {stock.fundamentals.shortTermLoan !== 0
+                  ? (stock.fundamentals.shortTermLoan / 10).toFixed(2)
+                  : 0}
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore
@@ -961,7 +963,9 @@ export default function Overview({ stock }: any) {
                   mr: 0.7,
                 }}
               >
-                {(stock.fundamentals.longTermLoan / 10).toFixed(2)}
+                {stock.fundamentals.longTermLoan !== 0
+                  ? (stock.fundamentals.longTermLoan / 10).toFixed(2)
+                  : 0}
               </Typography>
               <Typography color="text.secondary" sx={{ fontSize: ".875rem" }}>
                 Crore

@@ -6,7 +6,14 @@ import { Box, Card, Paper, Typography } from "@mui/material";
 export default function Logs({ data }: any) {
   return (
     <Box sx={{ maxWidth: 700, mx: "auto" }}>
-      <Typography sx={{ fontSize: "1.2rem", mb: 1, textAlign: "center" }}>
+      <Typography
+        sx={{
+          color: "text.primary",
+          fontSize: "1.2rem",
+          mb: 1,
+          textAlign: "center",
+        }}
+      >
         LOGS
       </Typography>
       {data.map((item: any, index: number) => (

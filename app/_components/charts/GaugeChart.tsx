@@ -36,7 +36,7 @@ export default function GaugeChart({ rsi }: any) {
         px: 0,
       }}
     >
-      <Box>
+      <Box sx={{ ml: { xs: 2, sm: 0 } }}>
         <Stack
           direction="row"
           alignItems="center"

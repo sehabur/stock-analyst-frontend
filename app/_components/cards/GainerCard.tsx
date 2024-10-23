@@ -60,7 +60,7 @@ export default function GainerCard(props: any) {
         // variant={matchesSmUp ? "outlined" : "elevation"}
       >
         <Grid container spacing={8} alignItems="center">
-          <Grid item xs={7.5} sm={8}>
+          <Grid item xs={8.4} sm={8}>
             <Typography
               noWrap
               gutterBottom
@@ -84,7 +84,7 @@ export default function GainerCard(props: any) {
                 size="small"
                 sx={{
                   borderRadius: 1,
-                  fontSize: ".9rem",
+                  fontSize: { xs: ".875rem", sm: ".9rem" },
                   mr: 1,
                   mb: 0.5,
                   // fontWeight: 700,
@@ -98,7 +98,7 @@ export default function GainerCard(props: any) {
                   borderRadius: 1,
                   mb: 0.5,
                   mr: 1,
-                  fontSize: ".9rem",
+                  fontSize: { xs: ".875rem", sm: ".9rem" },
                 }}
               />
               <Chip
@@ -110,13 +110,13 @@ export default function GainerCard(props: any) {
                 sx={{
                   borderRadius: 1,
                   mb: 0.5,
-                  fontSize: ".9rem",
+                  fontSize: { xs: ".875rem", sm: ".9rem" },
                 }}
               />
             </Stack>
 
             <Typography
-              sx={{ fontSize: ".875rem", ml: 0.3 }}
+              sx={{ fontSize: { xs: ".8rem", sm: ".875rem" }, ml: 0.3 }}
               color="text.primary"
             >
               {`Vol: ${item.volume} | Val: ${(item.value / 10).toFixed(2)}cr |
@@ -124,25 +124,29 @@ export default function GainerCard(props: any) {
             </Typography>
           </Grid>
 
-          <Grid item xs={4.5} sm={4}>
+          <Grid item xs={3.6} sm={4}>
             <Stack
               direction="row"
               alignItems="center"
               justifyContent="flex-end"
-              spacing={{ xs: 2.5, sm: 4 }}
+              spacing={{ xs: 1.5, sm: 4 }}
             >
-              <Stack direction="column" alignItems="flex-end" sx={{ mr: 0.7 }}>
+              <Stack
+                direction="column"
+                alignItems="flex-end"
+                sx={{ mr: { xs: 0, sm: 0 } }}
+              >
                 <Typography
                   color="text.primary"
                   sx={{
-                    fontSize: { xs: "1.4rem", sm: "1.6rem" },
+                    fontSize: { xs: "1.3rem", sm: "1.6rem" },
                     fontWeight: 500,
                   }}
                 >
                   {item.close.toFixed(1)}
                 </Typography>
                 <Typography
-                  sx={{ fontSize: ".85rem", mt: -0.5 }}
+                  sx={{ fontSize: { xs: ".8rem", sm: ".85rem" }, mt: -0.5 }}
                   color="text.secondary"
                 >
                   BDT
@@ -161,7 +165,7 @@ export default function GainerCard(props: any) {
                           ? "error.main"
                           : "success.main",
                       fontWeight: 700,
-                      fontSize: "1rem",
+                      fontSize: { xs: ".875rem", sm: "1rem" },
                     }}
                   >
                     {addPlusSign(item.change)}
@@ -180,7 +184,7 @@ export default function GainerCard(props: any) {
                         ? "error.main"
                         : "success.main",
                     fontWeight: 700,
-                    fontSize: ".95rem",
+                    fontSize: { xs: ".85rem", sm: ".95rem" },
                   }}
                 />
                 {item.haltStatus &&
@@ -200,7 +204,7 @@ export default function GainerCard(props: any) {
                       sx={{
                         borderRadius: 1,
                         mt: 1,
-                        fontSize: ".9rem",
+                        fontSize: { xs: ".85rem", sm: ".9rem" },
                       }}
                     />
                   )}
@@ -215,7 +219,7 @@ export default function GainerCard(props: any) {
                       borderRadius: 1,
                       mt: 1,
                       pl: 0.2,
-                      fontSize: ".9rem",
+                      fontSize: { xs: ".85rem", sm: ".9rem" },
                     }}
                   />
                 )}

@@ -10,7 +10,14 @@ export default function Logs({ data }: any) {
 
   return (
     <Box sx={{ maxWidth: 500, mx: "auto" }}>
-      <Typography sx={{ fontSize: "1.2rem", mb: 1, textAlign: "center" }}>
+      <Typography
+        sx={{
+          color: "text.primary",
+          fontSize: "1.2rem",
+          mb: 1,
+          textAlign: "center",
+        }}
+      >
         SETTINGS
       </Typography>
       {dataArr.map((item: any, index: number) => (

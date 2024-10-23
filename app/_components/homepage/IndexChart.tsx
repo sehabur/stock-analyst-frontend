@@ -246,7 +246,7 @@ export default function IndexChart({ indexData }: any) {
                 py: 1.8,
                 fontSize: "1rem",
                 fontFamily: "'Nunito Sans', sans-serif",
-                fontWeight: 700,
+                fontWeight: 800,
                 color: textColor,
               }}
             />
@@ -257,7 +257,7 @@ export default function IndexChart({ indexData }: any) {
                 borderRadius: 1,
                 py: 1.8,
                 fontSize: "1rem",
-                fontWeight: 700,
+                fontWeight: 800,
                 fontFamily: "'Nunito Sans', sans-serif",
                 color: textColor,
               }}

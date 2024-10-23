@@ -223,17 +223,17 @@ export default function News({ data }: any) {
         <Box>
           {news.slice(0, 4).map((item: any) => (
             <Card
-              sx={{ minWidth: 275, my: 1, borderRadius: 2 }}
+              sx={{ minWidth: 275, my: 1.5, borderRadius: 1 }}
               variant="outlined"
               elevation={0}
               key={item._id}
             >
               <CardActionArea onClick={() => handleItemClick(item)}>
-                <CardContent sx={{ py: 1 }}>
-                  <Typography noWrap sx={{ fontWeight: 700, fontSize: "1rem" }}>
+                <CardContent sx={{ py: 1.2 }}>
+                  <Typography noWrap sx={{ fontWeight: 600, fontSize: "1rem" }}>
                     {item.title}
                   </Typography>
-                  <Typography color="text.secondary">
+                  <Typography color="text.secondary" gutterBottom>
                     <Stack direction="row" alignItems="center">
                       <ScheduleRoundedIcon
                         color="success"
@@ -246,9 +246,9 @@ export default function News({ data }: any) {
                       />
                     </Stack>
                   </Typography>
-                  <Typography>
-                    {item.description.slice(0, 140) +
-                      (item.description.length > 140 ? ".." : "")}
+                  <Typography sx={{ fontSize: ".8rem" }}>
+                    {item.description.slice(0, 160) +
+                      (item.description.length > 160 ? ".." : "")}
                   </Typography>
                 </CardContent>
               </CardActionArea>
