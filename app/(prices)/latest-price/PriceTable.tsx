@@ -224,12 +224,13 @@ export default function PriceTable(props: any) {
               csvOptions: { disableToolbarButton: true },
             },
           }}
-          // pageSizeOptions={[10, 25, 50, 100]}
+          pageSizeOptions={[10, 25, 50, 100]}
           sx={{
             border: "none",
             ".MuiDataGrid-columnHeader": {
-              color: "text.primary",
+              color: "text.secondary",
               fontSize: ".85rem",
+              fontWeight: 500,
             },
             ".MuiDataGrid-cell": {
               fontWeight: 500,

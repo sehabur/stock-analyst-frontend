@@ -116,7 +116,7 @@ export default function News({ news }: any) {
                   <Typography
                     gutterBottom
                     sx={{
-                      fontWeight: 700,
+                      fontWeight: 600,
                       fontSize: "1.1rem",
                     }}
                   >

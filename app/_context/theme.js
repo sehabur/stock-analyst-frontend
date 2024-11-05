@@ -117,6 +117,7 @@ export const lightTheme = createTheme({
     gainerCardBackground: "#ffffff",
     gainerCardHover: "#f5f7fa",
     marketVolumeCard: "#f7f7f7",
+    logobg: "#f5f5f7",
   },
   ...defaultSettings,
 });
@@ -141,6 +142,7 @@ export const darkTheme = createTheme({
     gainerCardBackground: "#212121",
     gainerCardHover: "#232323",
     marketVolumeCard: "#212125",
+    logobg: "#292931",
   },
   ...defaultSettings,
 });

@@ -23,13 +23,13 @@ import {
   Fade,
   Slide,
   Drawer,
+  Avatar,
 } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import LoginIcon from "@mui/icons-material/Login";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import WhatshotRoundedIcon from "@mui/icons-material/WhatshotRounded";
 import NewspaperRoundedIcon from "@mui/icons-material/NewspaperRounded";
 import UpcomingRoundedIcon from "@mui/icons-material/UpcomingRounded";
 import CandlestickChartRoundedIcon from "@mui/icons-material/CandlestickChartRounded";
@@ -52,6 +52,7 @@ import BatchPredictionRoundedIcon from "@mui/icons-material/BatchPredictionRound
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { TransitionProps } from "@mui/material/transitions";
 
 import {
@@ -64,6 +65,7 @@ import ToastMessage from "@/components/shared/ToastMessage";
 import SearchStockCard from "./cards/SearchStockCard";
 import SigninDialogContent from "./shared/SigninDialogContent";
 import SearchBar from "./SearchBar";
+import { grey } from "@mui/material/colors";
 
 const TransitionSlide = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -112,7 +114,6 @@ export default function Header() {
   const [marketAnchorEl, setMarketAnchorEl] = useState<HTMLElement | null>(
     null
   );
-  const [stockAnchorEl, setStockAnchorEl] = useState<HTMLElement | null>(null);
   const [userAnchorEl, setUserAnchorEl] = useState<HTMLElement | null>(null);
   const [mobileViewAnchorEl, setMobileViewAnchorEl] =
     useState<HTMLElement | null>(null);
@@ -122,7 +123,6 @@ export default function Header() {
   const [openSigninDialog, setOpenSigninDialog] = useState(false);
 
   const openMarket = Boolean(marketAnchorEl);
-  const openStock = Boolean(stockAnchorEl);
   const openUser = Boolean(userAnchorEl);
   const openMobileView = Boolean(mobileViewAnchorEl);
 
@@ -161,13 +161,6 @@ export default function Header() {
     setMarketAnchorEl(null);
   };
 
-  const handleStockPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setStockAnchorEl(event.currentTarget);
-    handleMarketPopoverClose();
-  };
-  const handleStockPopoverClose = () => {
-    setStockAnchorEl(null);
-  };
   const handleUserPopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setUserAnchorEl(event.currentTarget);
   };
@@ -346,7 +339,7 @@ export default function Header() {
         onClick={() => handleUserPopoverClose("/favorites", true)}
         startIcon={<FavoriteBorderRoundedIcon color="primary" />}
         sx={{
-          py: 1,
+          py: 1.3,
           px: 3,
           textAlign: "left",
           color: "text.primary",
@@ -366,7 +359,7 @@ export default function Header() {
         onClick={() => handleUserPopoverClose("/price-alerts", true)}
         startIcon={<NotificationsNoneRoundedIcon color="primary" />}
         sx={{
-          py: 1,
+          py: 1.3,
           px: 3,
           textAlign: "left",
           color: "text.primary",
@@ -386,7 +379,7 @@ export default function Header() {
         onClick={() => handleUserPopoverClose("/portfolio", true)}
         startIcon={<BusinessCenterOutlinedIcon color="primary" />}
         sx={{
-          py: 1,
+          py: 1.3,
           px: 3,
           textAlign: "left",
           color: "text.primary",
@@ -406,7 +399,7 @@ export default function Header() {
         onClick={() => handleUserPopoverClose("/profile", true)}
         startIcon={<Person2OutlinedIcon color="primary" />}
         sx={{
-          py: 1,
+          py: 1.3,
           px: 3,
           textAlign: "left",
           color: "text.primary",
@@ -426,7 +419,7 @@ export default function Header() {
             onClick={handleSignOut}
             startIcon={<LogoutOutlinedIcon color="primary" />}
             sx={{
-              py: 1,
+              py: 1.3,
               px: 3,
               textAlign: "left",
               color: "text.primary",
@@ -448,7 +441,7 @@ export default function Header() {
             onClick={() => handleUserPopoverClose("/signin")}
             startIcon={<LoginIcon color="primary" />}
             sx={{
-              py: 1.2,
+              py: 1.3,
               px: 3,
               textAlign: "left",
               color: "text.primary",
@@ -468,7 +461,7 @@ export default function Header() {
             onClick={() => handleUserPopoverClose("/signup")}
             startIcon={<AddCircleOutlineIcon color="primary" />}
             sx={{
-              py: 1,
+              py: 1.3,
               px: 3,
               textAlign: "left",
               color: "text.primary",
@@ -488,261 +481,6 @@ export default function Header() {
 
   const stocksMenu = (
     <>
-      <Button
-        component={Link}
-        href="/index-mover"
-        startIcon={<TrendingUpRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Index movers
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/beta"
-        startIcon={<DataSaverOffRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Beta
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/block-tr"
-        startIcon={<BatchPredictionRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Block transections
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/latest-news"
-        startIcon={<NewspaperRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        News
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/ipo"
-        startIcon={<UpcomingRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Upcoming IPO
-      </Button>
-    </>
-  );
-
-  const marketsMenu = (
-    <>
-      <Button
-        component={Link}
-        href="/gainer-loser?type=gainer&variant=day"
-        startIcon={<EmojiEventsRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Top shares
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/latest-price"
-        startIcon={<CandlestickChartRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Latest price
-      </Button>
-      <Divider light />
-
-      <Button
-        component={Link}
-        href="/sector"
-        startIcon={<DonutSmallRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Sector dashboard
-      </Button>
-      <Divider light />
-
-      <Button
-        component={Link}
-        href="/index-mover"
-        startIcon={<TrendingUpRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Index movers
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/beta"
-        startIcon={<DataSaverOffRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          textAlign: "left",
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Beta
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/block-tr"
-        startIcon={<BatchPredictionRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Block transections
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/latest-news"
-        startIcon={<NewspaperRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        News
-      </Button>
-      <Divider light />
-      <Button
-        component={Link}
-        href="/ipo"
-        startIcon={<UpcomingRoundedIcon color="primary" />}
-        sx={{
-          py: 1,
-          px: 3,
-          color: "text.primary",
-          ":hover": {
-            background: "transparent",
-            color: "primary.main",
-          },
-        }}
-        disableRipple
-      >
-        Upcoming IPO
-      </Button>
-    </>
-  );
-
-  const mobileViewMenu = (
-    <>
-      <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 2 }}>
-        Markets
-      </Typography>
-      {marketsMenu}
-      <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 3 }}>
-        Stocks
-      </Typography>
       <Button
         component={Link}
         href="/screener"
@@ -780,6 +518,190 @@ export default function Header() {
       >
         Supercharts
       </Button>
+      <Button
+        component={Link}
+        href="/ai-insight"
+        startIcon={<AutoAwesomeIcon color="primary" />}
+        sx={{
+          py: 1,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        AI insight
+      </Button>
+    </>
+  );
+
+  const marketsMenu = (
+    <>
+      <Button
+        component={Link}
+        href="/gainer-loser?type=gainer&variant=day"
+        startIcon={<EmojiEventsRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Top shares
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/latest-price"
+        startIcon={<CandlestickChartRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Latest price
+      </Button>
+      <Divider light />
+
+      <Button
+        component={Link}
+        href="/sector"
+        startIcon={<DonutSmallRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Sector dashboard
+      </Button>
+      <Divider light />
+
+      <Button
+        component={Link}
+        href="/index-mover"
+        startIcon={<TrendingUpRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Index movers
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/beta"
+        startIcon={<DataSaverOffRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          textAlign: "left",
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Beta
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/block-tr"
+        startIcon={<BatchPredictionRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Block transections
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/latest-news"
+        startIcon={<NewspaperRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        News
+      </Button>
+      <Divider light />
+      <Button
+        component={Link}
+        href="/ipo"
+        startIcon={<UpcomingRoundedIcon color="primary" />}
+        sx={{
+          py: 1.3,
+          px: 3,
+          color: "text.primary",
+          ":hover": {
+            background: "transparent",
+            color: "primary.main",
+          },
+        }}
+        disableRipple
+      >
+        Upcoming IPO
+      </Button>
+    </>
+  );
+
+  const mobileViewMenu = (
+    <>
+      <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 2 }}>
+        Markets
+      </Typography>
+      {marketsMenu}
+
+      <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 3 }}>
+        Stocks
+      </Typography>
+      {stocksMenu}
 
       <Typography gutterBottom color="text.secondary" sx={{ px: 2.5, mt: 3 }}>
         Packages
@@ -832,7 +754,7 @@ export default function Header() {
             mx: "auto",
           }}
         >
-          <Box component={Link} href="/">
+          {/* <Box component={Link} href="/">
             <img
               src={
                 themeColor === "dark"
@@ -847,6 +769,49 @@ export default function Header() {
               }}
               alt="logo of stocksupporter"
             />
+          </Box> */}
+
+          <Box
+            component={Link}
+            href="/"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+            }}
+          >
+            <Box component={Link} href="/">
+              <Avatar sx={{ bgcolor: "logobg", width: 38, height: 38 }}>
+                <img
+                  src={"/images/logo/logo-icon-only.png"}
+                  style={{
+                    width: "auto",
+                    // marginTop: "5px",
+                    height: "32px",
+                    cursor: "pointer",
+                  }}
+                  alt="logo of stocksupporter"
+                />
+              </Avatar>
+            </Box>
+            <Box>
+              <Typography
+                sx={{ fontWeight: 700, lineHeight: 1, fontSize: ".9rem" }}
+              >
+                STOCK
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  color: "text.secondary",
+                  fontSize: "1rem",
+                }}
+              >
+                supporter
+              </Typography>
+            </Box>{" "}
           </Box>
 
           {matchesSmUp && (
@@ -898,6 +863,17 @@ export default function Header() {
                 }}
               >
                 Supercharts
+              </Button>
+              <Button
+                component={Link}
+                href="/ai-insight"
+                sx={{
+                  color: "text.primary",
+                  px: 2,
+                  borderRadius: 8,
+                }}
+              >
+                AI insight ✨
               </Button>
               <Button
                 component={Link}
@@ -1000,20 +976,11 @@ export default function Header() {
 
       <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250 }}
+          sx={{ width: 250, my: 2 }}
           role="presentation"
           onClick={toggleDrawer(false)}
         >
-          <Box sx={{ ml: 2.4, my: 3 }}>
-            {/* <Typography
-              variant="h5"
-              component={Link}
-              href="/"
-              color="primary.main"
-            >
-              Stocksupporter
-            </Typography> */}
-
+          <Box sx={{ ml: 2.4 }}>
             <Box component={Link} href="/">
               <img
                 src={
@@ -1089,35 +1056,6 @@ export default function Header() {
       </Popover>
 
       <Popover
-        id="stocks-mouse-over-popover"
-        open={openStock}
-        anchorEl={stockAnchorEl}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        slotProps={{ paper: { onMouseLeave: handleStockPopoverClose } }}
-        sx={{
-          "& .MuiPopover-paper": {
-            borderRadius: 2,
-          },
-          // pointerEvents: 'none',
-        }}
-        disableScrollLock={true}
-        onClose={handleStockPopoverClose}
-      >
-        <Box
-          sx={{
-            width: 220,
-            py: 1,
-            pointerEvents: "auto",
-          }}
-        >
-          {stocksMenu}
-        </Box>
-      </Popover>
-
-      <Popover
         id="markets-mouse-over-popover"
         open={openMarket}
         anchorEl={marketAnchorEl}
@@ -1137,8 +1075,8 @@ export default function Header() {
       >
         <Box
           sx={{
-            width: 220,
-            py: 1,
+            width: 235,
+            py: 0.8,
             pointerEvents: "auto",
           }}
         >

@@ -54,6 +54,10 @@ export default function RootLayout({ children }: any) {
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
         ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet"
+        ></link>
         <script
           type="text/javascript"
           src="/app/_library/charting_library/charting_library.js"

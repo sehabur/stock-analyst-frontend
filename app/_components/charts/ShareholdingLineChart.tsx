@@ -18,7 +18,7 @@ export default function ShareholdingLineChart(props: any) {
     chart: {
       type: "line",
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       zoom: {
         enabled: false,
       },

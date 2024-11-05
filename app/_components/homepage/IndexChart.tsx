@@ -27,6 +27,7 @@ import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 import Tooltip from "@mui/material/Tooltip";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -173,10 +174,10 @@ export default function IndexChart({ indexData }: any) {
         component={Link}
         href={`/index-details/${currentIndex.tradingCode}`}
         color="primary"
-        endIcon={<ChevronRightRoundedIcon />}
+        endIcon={<ArrowForwardIosRoundedIcon />}
         sx={{
-          fontSize: "1.2rem",
-          fontWeight: 700,
+          fontSize: { xs: "1.2rem", sm: "1.4rem" },
+          fontWeight: 600,
           ":hover": {
             bgcolor: "transparent",
             color: "primary.main",

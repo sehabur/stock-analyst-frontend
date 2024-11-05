@@ -34,7 +34,7 @@ export default function Ipo(props: any) {
         endIcon={<ArrowForwardIosRoundedIcon />}
         sx={{
           fontSize: "1.5rem",
-          fontWeight: 700,
+          fontWeight: 600,
           ":hover": {
             bgcolor: "transparent",
             color: "primary.main",

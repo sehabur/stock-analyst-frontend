@@ -63,25 +63,29 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 }));
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
-    borderRadius: "24px !important",
+    borderRadius: "5px !important",
     marginRight: "14px",
     border: `1px solid lightgrey !important`,
     paddingLeft: "16px",
     paddingTop: "4px",
     paddingBottom: "4px",
     paddingRight: "16px",
+    "&.Mui-selected": {
+      color: theme.palette.background.default,
+      backgroundColor: theme.palette.text.secondary,
+    },
   },
   color: theme.palette.text.primary,
-  // fontSize: ".9rem",
-  // textTransform: "none",
 }));
+
+const NEWS_COUNT_TO_DISPLAY = 150;
 
 export default function News({ data }: any) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [dialogContent, setDialogContent] = useState<any>({});
 
-  const [news, setNews] = useState<any>(data.slice(0, 300));
+  const [news, setNews] = useState<any>(data.slice(0, NEWS_COUNT_TO_DISPLAY));
 
   const [alignment, setAlignment] = useState(" ");
 
@@ -102,9 +106,8 @@ export default function News({ data }: any) {
               : item.description.search(text);
           if (position !== -1) return item;
         })
-        .slice(0, 300);
+        .slice(0, NEWS_COUNT_TO_DISPLAY);
 
-      console.log(newData.length);
       setNews(newData);
     }
   };
@@ -122,8 +125,6 @@ export default function News({ data }: any) {
     setDialogContent(item);
   };
 
-  const handleDataChange = () => {};
-
   return (
     <Box>
       <Dialog
@@ -133,7 +134,7 @@ export default function News({ data }: any) {
         maxWidth="sm"
         disableScrollLock={true}
       >
-        <DialogTitle sx={{ fontWeight: 700, fontSize: "1.3jhjrem" }}>
+        <DialogTitle sx={{ fontWeight: 600, pr: 3 }}>
           {dialogContent?.title}
         </DialogTitle>
         <DialogContent dividers>
@@ -148,9 +149,7 @@ export default function News({ data }: any) {
               style={{ fontSize: "1rem", color: "#089981" }}
             />
           </Stack>
-          <Typography sx={{ fontSize: "1rem", pb: 2 }}>
-            {dialogContent?.description}
-          </Typography>
+          <Typography sx={{ pb: 2 }}>{dialogContent?.description}</Typography>
         </DialogContent>
 
         <IconButton
@@ -198,7 +197,6 @@ export default function News({ data }: any) {
               <StyledToggleButton
                 value={item.search}
                 sx={{ px: 2, mb: 1 }}
-                onClick={handleDataChange}
                 key={index}
               >
                 {item.title}
@@ -227,7 +225,7 @@ export default function News({ data }: any) {
                 <CardContent sx={{ pb: 0 }}>
                   <Typography
                     gutterBottom
-                    sx={{ fontWeight: 700, fontSize: "1.1rem" }}
+                    sx={{ fontWeight: 600, fontSize: "1.1rem" }}
                   >
                     {item.title}
                   </Typography>
@@ -256,8 +254,8 @@ export default function News({ data }: any) {
                     </Stack>
                   </Typography>
                   <Typography>
-                    {item.description.slice(0, 135) +
-                      (item.description.length > 135 ? ".." : "")}
+                    {item.description.slice(0, 130) +
+                      (item.description.length > 130 ? ".." : "")}
                   </Typography>
                 </CardContent>
                 <CardActions sx={{ pt: 0, pl: 1.5 }}>

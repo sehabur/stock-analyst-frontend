@@ -57,7 +57,7 @@ export default function BlockTr({ data }: any) {
             endIcon={<ArrowForwardIosRoundedIcon />}
             sx={{
               fontSize: { xs: "1.3rem", sm: "1.5rem" },
-              fontWeight: 700,
+              fontWeight: 600,
               my: 0.5,
               ":hover": {
                 bgcolor: "transparent",

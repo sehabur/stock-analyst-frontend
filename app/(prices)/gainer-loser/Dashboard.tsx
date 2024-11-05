@@ -762,7 +762,8 @@ export default function Dashboard({ initialdata }: any) {
                 overflow: "visible",
                 lineHeight: "1.43rem",
                 whiteSpace: "normal",
-                fontWeight: 700,
+                color: "text.secondary",
+                fontWeight: 500,
               },
               ".MuiDataGrid-cell": {
                 fontWeight: 500,

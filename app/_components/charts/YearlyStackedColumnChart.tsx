@@ -19,7 +19,7 @@ export default function YearlyStackedColumnChart(props: any) {
     chart: {
       stacked: true,
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       toolbar: {
         show: false,
         tools: {

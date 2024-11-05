@@ -102,9 +102,9 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
           color="text.secondary"
           sx={{
             fontSize: "1.4rem",
-            fontWeight: 700,
+            fontWeight: 600,
             mt: 1,
-            mb: 1,
+            mb: 2,
             textAlign: "center",
           }}
         >
@@ -220,13 +220,13 @@ export default function MarketMoverChart({ data, rsi, sectorData }: any) {
             donutSize="60%"
           />
         </Box>
-        <Box sx={{ mb: 3.2, mt: 3 }}>
+        <Box sx={{ mb: 3.5, mt: 3 }}>
           <Divider light />
         </Box>
         <Box>
           <Typography
             color="text.secondary"
-            sx={{ fontSize: "1.4rem", fontWeight: 700, textAlign: "center" }}
+            sx={{ fontSize: "1.4rem", fontWeight: 600, textAlign: "center" }}
           >
             Sentiment
           </Typography>

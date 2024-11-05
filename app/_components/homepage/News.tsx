@@ -178,7 +178,7 @@ export default function News({ data }: any) {
           endIcon={<ArrowForwardIosRoundedIcon />}
           sx={{
             fontSize: "1.6rem",
-            fontWeight: 700,
+            fontWeight: 600,
             mb: 1,
             pl: 0.3,
             ":hover": {

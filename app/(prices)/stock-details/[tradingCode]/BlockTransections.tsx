@@ -45,9 +45,10 @@ export default function BlockTransections({ blocktr }: any) {
             <TableRow
               sx={{
                 ".MuiTableCell-head": {
-                  // fontSize: "1rem",
-                  fontWeight: 700,
-                  py: { xs: 1, sm: 2 },
+                  fontSize: ".9rem",
+                  color: "text.secondary",
+                  fontWeight: 500,
+                  py: { xs: 1, sm: 1.5 },
                 },
               }}
             >
@@ -65,9 +66,10 @@ export default function BlockTransections({ blocktr }: any) {
                 key={row._id}
                 hover={true}
                 sx={{
-                  ".MuiTableCell": {
-                    fontSize: "1rem",
-                    fontWeight: 700,
+                  ".MuiTableCell-body": {
+                    color: "text.primary",
+                    fontSize: ".875rem",
+                    fontWeight: 500,
                   },
                   "&:nth-of-type(odd)": {
                     backgroundColor: "financePageBgcolor",

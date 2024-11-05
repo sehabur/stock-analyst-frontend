@@ -89,7 +89,7 @@ const getNews = async () => {
 };
 const getTopFinancials = async () => {
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/prices/topFinancials?setlimit=12`,
+    `${process.env.BACKEND_URL}/api/prices/topFinancials?setlimit=14`,
     {
       next: { revalidate: 0 },
     }

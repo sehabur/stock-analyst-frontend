@@ -106,7 +106,12 @@ export default function SectorStatus(props: any) {
         >
           <Typography
             color="text.primary"
-            sx={{ fontSize: "1.5rem", mb: 2, textAlign: "center" }}
+            sx={{
+              fontSize: "1.5rem",
+              mb: 2,
+              textAlign: "center",
+              fontWeight: 500,
+            }}
           >
             Top sector by gain
           </Typography>
@@ -131,7 +136,12 @@ export default function SectorStatus(props: any) {
         >
           <Typography
             color="text.primary"
-            sx={{ fontSize: "1.5rem", mb: 2, textAlign: "center" }}
+            sx={{
+              fontSize: "1.5rem",
+              mb: 2,
+              textAlign: "center",
+              fontWeight: 500,
+            }}
           >
             Top sector by value
           </Typography>

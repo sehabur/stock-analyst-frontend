@@ -703,12 +703,12 @@ export default function Main() {
               }}
               loading={loading}
               sx={{
-                // border: "none",
                 borderRadius: 2,
-                ".MuiDataGrid-columnHeader": {
-                  color: "text.primary",
-                },
                 ".MuiDataGrid-columnHeaderTitle": {
+                  color: "text.secondary",
+                  fontSize: ".85rem",
+                  fontWeight: 500,
+                  textTransform: "uppercase",
                   overflow: "visible",
                   whiteSpace: "normal",
                   lineHeight: "normal",

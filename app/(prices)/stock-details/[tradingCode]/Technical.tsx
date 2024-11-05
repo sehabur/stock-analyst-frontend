@@ -87,11 +87,11 @@ export default function Technical(props: any) {
   return (
     <Box
       sx={{
-        maxWidth: "1250px",
+        maxWidth: 1120,
         mx: "auto",
         pt: { xs: 4, sm: 6 },
-        pb: { xs: 8, sm: 12 },
-        px: 2,
+        pb: { xs: 8, sm: 6 },
+        px: 3,
       }}
     >
       <LoadingSpinner open={isLoading} />
@@ -117,7 +117,7 @@ export default function Technical(props: any) {
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>
             Simple Moving Averages
           </Typography>
-          <TableContainer sx={{ maxWidth: 450 }}>
+          <TableContainer sx={{ maxWidth: 400 }}>
             <Table>
               <TableHead>
                 <TableRow
@@ -125,6 +125,7 @@ export default function Technical(props: any) {
                     ".MuiTableCell-head": {
                       color: "text.secondary",
                       pb: 1,
+                      px: 0,
                     },
                   }}
                 >
@@ -132,14 +133,20 @@ export default function Technical(props: any) {
                   <TableCell align="right">VALUE</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  ".MuiTableCell-body": {
+                    px: 0,
+                  },
+                }}
+              >
                 <TableRow hover={true}>
                   <TableCell align="left">Simple moving average (10)</TableCell>
                   <TableCell
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma10}
+                    {sma10 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -148,7 +155,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma20}
+                    {sma20 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -157,7 +164,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma30}
+                    {sma30 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -166,7 +173,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma50}
+                    {sma50 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -177,7 +184,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma100}
+                    {sma100 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -188,7 +195,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {sma200}
+                    {sma200 || "-"}
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -199,7 +206,7 @@ export default function Technical(props: any) {
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>
             Exponential Moving Averages
           </Typography>
-          <TableContainer sx={{ maxWidth: 450 }}>
+          <TableContainer sx={{ maxWidth: 400 }}>
             <Table>
               <TableHead>
                 <TableRow
@@ -207,6 +214,7 @@ export default function Technical(props: any) {
                     ".MuiTableCell-head": {
                       color: "text.secondary",
                       pb: 1,
+                      px: 0,
                     },
                   }}
                 >
@@ -214,7 +222,13 @@ export default function Technical(props: any) {
                   <TableCell align="right">VALUE</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  ".MuiTableCell-body": {
+                    px: 0,
+                  },
+                }}
+              >
                 <TableRow hover={true}>
                   <TableCell align="left">
                     Exponential moving average (10)
@@ -223,7 +237,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema10}
+                    {ema10 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -234,7 +248,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema20}
+                    {ema20 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -245,7 +259,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema30}
+                    {ema30 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -256,7 +270,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema50}
+                    {ema50 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -267,7 +281,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema100}
+                    {ema100 || "-"}
                   </TableCell>
                 </TableRow>
                 <TableRow hover={true}>
@@ -278,7 +292,7 @@ export default function Technical(props: any) {
                     align="right"
                     sx={{ fontWeight: 700, fontSize: "1rem" }}
                   >
-                    {ema200}
+                    {ema200 || "-"}
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -289,7 +303,7 @@ export default function Technical(props: any) {
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>
             Oscillators
           </Typography>
-          <TableContainer sx={{ maxWidth: 450 }}>
+          <TableContainer sx={{ maxWidth: 400 }}>
             <Table>
               <TableHead>
                 <TableRow
@@ -297,6 +311,7 @@ export default function Technical(props: any) {
                     ".MuiTableCell-head": {
                       color: "text.secondary",
                       pb: 1,
+                      px: 0,
                     },
                   }}
                 >
@@ -304,7 +319,13 @@ export default function Technical(props: any) {
                   <TableCell align="right">VALUE</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  ".MuiTableCell-body": {
+                    px: 0,
+                  },
+                }}
+              >
                 <TableRow hover={true}>
                   <TableCell align="left">
                     Relative Strength Index (14)
@@ -373,7 +394,7 @@ export default function Technical(props: any) {
           <Typography sx={{ fontSize: "1.3rem", color: "text.primary", mb: 1 }}>
             Pivots
           </Typography>
-          <TableContainer sx={{ maxWidth: 450 }}>
+          <TableContainer sx={{ maxWidth: 400 }}>
             <Table>
               <TableHead>
                 <TableRow
@@ -381,6 +402,7 @@ export default function Technical(props: any) {
                     ".MuiTableCell-head": {
                       color: "text.secondary",
                       pb: 1,
+                      px: 0,
                     },
                   }}
                 >
@@ -388,7 +410,13 @@ export default function Technical(props: any) {
                   <TableCell align="right">VALUE</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  ".MuiTableCell-body": {
+                    px: 0,
+                  },
+                }}
+              >
                 <TableRow hover={true}>
                   <TableCell align="left">Support 3</TableCell>
                   <TableCell
@@ -486,42 +514,31 @@ export default function Technical(props: any) {
             </Box>
 
             <Box sx={{ maxWidth: 350 }}>
-              {technicals?.candlestick.length > 0 ? (
-                technicals?.candlestick
-                  .sort((a: any, b: any) => {
-                    const date2: any = new Date(b.date);
-                    const date1: any = new Date(a.date);
-                    return date2 - date1;
-                  })
-                  .map((item: any) => (
-                    <>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <InsightsRoundedIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={formatPatternName(item.value)}
-                          secondary={DateTime.fromISO(item.date).toFormat(
-                            "dd MMM, yyyy"
-                          )}
-                          sx={{
-                            "& .MuiListItemText-primary": {
-                              fontSize: "1rem",
-                              color: "text.primary",
-                            },
-                          }}
-                        />
-                      </ListItem>
-                      {technicals?.candlestick?.length > 1 && (
-                        <Divider light variant="middle" />
-                      )}
-                    </>
-                  ))
+              {technicals?.candlestick?.value ? (
+                <ListItem sx={{ px: 0 }}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <InsightsRoundedIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={formatPatternName(technicals?.candlestick?.value)}
+                    secondary={DateTime.fromISO(
+                      technicals?.candlestick?.date
+                    ).toFormat("dd MMM, yyyy")}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        fontSize: "1rem",
+                        color: "text.primary",
+                      },
+                    }}
+                  />
+                </ListItem>
               ) : (
                 <Box sx={{ mt: 3 }}>
-                  <Typography color="warning.main">No patterns</Typography>
+                  <Typography color="warning.main">
+                    No candlestick formed
+                  </Typography>
                 </Box>
               )}
             </Box>
@@ -555,11 +572,12 @@ export default function Technical(props: any) {
                 Last 1 year
               </Typography>
             </Box>
-            <Box sx={{ maxWidth: 350 }}>
+            <Box sx={{ maxWidth: 350, mt: 3 }}>
+              <Divider light variant="middle" />
               {technicals?.patterns.length > 0 ? (
                 technicals?.patterns.map((item: any) => (
                   <>
-                    <ListItem sx={{ py: 0.8 }}>
+                    <ListItem sx={{ my: 0 }}>
                       <ListItemAvatar sx={{ mt: 1 }}>
                         <TroubleshootRoundedIcon color="success" />
                       </ListItemAvatar>
@@ -577,7 +595,7 @@ export default function Technical(props: any) {
                   </>
                 ))
               ) : (
-                <Box sx={{ mt: 3 }}>
+                <Box sx={{ mt: 2, ml: 2 }}>
                   <Typography color="warning.main">No patterns</Typography>
                 </Box>
               )}

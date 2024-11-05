@@ -35,19 +35,20 @@ export default function BlockTransection({ data, summary, date }: any) {
             <TableRow
               sx={{
                 ".MuiTableCell-head": {
-                  fontSize: "1rem",
-                  fontWeight: 600,
-                  pb: 1.5,
+                  fontSize: ".9rem",
+                  fontWeight: 500,
+                  color: "text.secondary",
+                  pb: 1,
                 },
               }}
             >
-              <TableCell align="left">Date</TableCell>
-              <TableCell align="left">Trading Code</TableCell>
-              <TableCell align="center">Value (Mn)</TableCell>
-              <TableCell align="center">Volume</TableCell>
-              <TableCell align="center">Trades</TableCell>
-              <TableCell align="center">Max Price</TableCell>
-              <TableCell align="center">Min Price</TableCell>
+              <TableCell align="left">DATE</TableCell>
+              <TableCell align="left">TRADING CODE</TableCell>
+              <TableCell align="center">VALUE (MN)</TableCell>
+              <TableCell align="center">VOLUME</TableCell>
+              <TableCell align="center">TRADES</TableCell>
+              <TableCell align="center">MAX PRICE</TableCell>
+              <TableCell align="center">MIN PRICE</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -56,9 +57,8 @@ export default function BlockTransection({ data, summary, date }: any) {
                 key={row._id}
                 hover={true}
                 sx={{
-                  ".MuiTableCell": {
-                    fontSize: "1rem",
-                    fontWeight: 700,
+                  ".MuiTableCell-body": {
+                    fontWeight: 500,
                   },
                   "&:nth-of-type(odd)": {
                     backgroundColor: "financePageBgcolor",

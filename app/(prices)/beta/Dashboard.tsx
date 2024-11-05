@@ -95,7 +95,7 @@ export default function Dashboard({ data }: any) {
     },
     {
       field: "close",
-      headerName: "Price (BDT)",
+      headerName: "PRICE (BDT)",
       align: "left",
       headerAlign: "left",
       width: matchesSmUp ? 200 : 100,

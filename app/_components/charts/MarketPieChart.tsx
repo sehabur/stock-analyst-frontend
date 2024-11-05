@@ -16,7 +16,7 @@ export default function MarketPieChart(props: any) {
     chart: {
       type: "donut",
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
     },
     plotOptions: {
       pie: {

@@ -60,7 +60,7 @@ export default function SearchStockCard(props: any) {
                 <Typography
                   sx={{
                     fontSize: "1rem",
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: "text.primary",
                     mr: { xs: 1, sm: 1 },
                   }}

@@ -1,0 +1,18 @@
+#content {
+  line-height: 1.6;
+}
+
+#content h3 {
+  color: #333;
+  margin-top: 24px;
+  margin-bottom: 18px;
+}
+
+#content p {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
+#content li {
+  margin: 18px; /* top right bottom left */
+}

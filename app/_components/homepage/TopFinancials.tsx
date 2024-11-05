@@ -91,16 +91,17 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
   "&.MuiToggleButtonGroup-grouped": {
     borderRadius: "5px !important",
-    marginBottom: "10px",
+    // marginBottom: "10px",
     border: `1px solid lightgrey !important`,
     paddingLeft: "12px",
-    paddingTop: "5px",
-    paddingBottom: "5px",
+    // paddingTop: "5px",
+    // paddingBottom: "5px",
     paddingRight: "12px",
     "&.Mui-selected": {
       color: theme.palette.background.default,
       backgroundColor: theme.palette.text.secondary,
     },
+    fontSize: ".875rem",
   },
   color: theme.palette.text.primary,
   // fontSize: ".9rem",
@@ -144,7 +145,7 @@ export default function TopFinancials(props: any) {
           endIcon={<ArrowForwardIosRoundedIcon />}
           sx={{
             fontSize: "1.6rem",
-            fontWeight: 700,
+            fontWeight: 600,
             mb: 1,
             pl: 0.3,
             ":hover": {
@@ -158,7 +159,7 @@ export default function TopFinancials(props: any) {
         </Button>
       </Box>
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ mt: 0.2, minWidth: 125 }}>
+        <Box sx={{ mt: 0.2, minWidth: 135 }}>
           <StyledToggleButtonGroup
             size="small"
             value={alignment}
@@ -168,7 +169,11 @@ export default function TopFinancials(props: any) {
             aria-label="Platform"
           >
             {options.map((item: any, index: number) => (
-              <StyledToggleButton value={item.tag} sx={{ px: 2 }} key={index}>
+              <StyledToggleButton
+                value={item.tag}
+                sx={{ px: 2, mb: 1.1, py: 1 }}
+                key={index}
+              >
                 {item.button}
               </StyledToggleButton>
             ))}
@@ -179,17 +184,18 @@ export default function TopFinancials(props: any) {
             component={Paper}
             // elevation={0}
             variant="outlined"
-            sx={{ borderRadius: 2, minWidth: { xs: "100%", sm: 445 } }}
+            sx={{ borderRadius: 2, minWidth: { xs: "100%", sm: 435 } }}
           >
             <Table size="small">
-              <TableHead sx={{ height: 65 }}>
+              <TableHead sx={{ height: 69 }}>
                 <TableRow
                   sx={{
                     ".MuiTableCell-head": {
-                      fontSize: "1rem",
+                      fontSize: ".9rem",
                       fontWeight: 500,
                       // bgcolor: "financeCardTitlecolor",
                       color: "text.primary",
+                      lineHeight: 1.5,
                     },
                   }}
                 >

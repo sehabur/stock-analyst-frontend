@@ -48,8 +48,8 @@ export default async function Ipo({}) {
             color="text.secondary"
             gutterBottom
             sx={{
-              fontSize: "1.6rem",
-              fontWeight: 500,
+              fontSize: "1.5rem",
+              fontWeight: 700,
               textAlign: "center",
               my: 2,
             }}
@@ -74,7 +74,7 @@ export default async function Ipo({}) {
                   sx={{
                     my: 2,
                     mx: 2,
-                    borderRadius: 3,
+                    borderRadius: 2,
                     width: { xs: 320, sm: 350 },
                   }}
                   elevation={6}
@@ -85,7 +85,7 @@ export default async function Ipo({}) {
                       sx={{
                         color: "primary.main",
                         fontSize: { xs: "1.1rem", sm: "1.2rem" },
-                        mx: 2,
+                        px: { xs: 2, sm: 3 },
                         pt: 2,
                         pb: 0.6,
                       }}
@@ -94,7 +94,7 @@ export default async function Ipo({}) {
                     </Typography>
                     <Divider />
 
-                    <Box sx={{ py: 1 }}>
+                    <Box sx={{ py: 1, px: { xs: 0, sm: 1 } }}>
                       <ListItem sx={{ pt: 0 }}>
                         <ListItemAvatar>
                           <Avatar>
@@ -198,8 +198,8 @@ export default async function Ipo({}) {
             color="text.secondary"
             gutterBottom
             sx={{
-              fontSize: "1.6rem",
-              fontWeight: 500,
+              fontSize: "1.5rem",
+              fontWeight: 700,
               textAlign: "center",
               my: 2,
             }}
@@ -224,7 +224,7 @@ export default async function Ipo({}) {
                   sx={{
                     my: 2,
                     mx: 2,
-                    borderRadius: 3,
+                    borderRadius: 2,
                     width: { xs: 320, sm: 350 },
                   }}
                   elevation={6}
@@ -235,7 +235,7 @@ export default async function Ipo({}) {
                       sx={{
                         color: "primary.main",
                         fontSize: { xs: "1.1rem", sm: "1.2rem" },
-                        mx: 2,
+                        px: { xs: 2, sm: 3 },
                         pt: 2,
                         pb: 0.6,
                       }}
@@ -244,7 +244,7 @@ export default async function Ipo({}) {
                     </Typography>
                     <Divider />
 
-                    <Box sx={{ py: 1 }}>
+                    <Box sx={{ py: 1, px: { xs: 0, sm: 1 } }}>
                       <ListItem sx={{ pt: 0 }}>
                         <ListItemAvatar>
                           <Avatar>

@@ -91,7 +91,7 @@ export default function Beta({ data }: any) {
     },
     {
       field: "close",
-      headerName: "Price (BDT)",
+      headerName: "PRICE (BDT)",
       align: "right",
       headerAlign: "right",
       width: matchesSmUp ? 160 : 100,
@@ -131,7 +131,7 @@ export default function Beta({ data }: any) {
             sx={{
               mb: 1,
               fontSize: "1.5rem",
-              fontWeight: 700,
+              fontWeight: 600,
               ":hover": {
                 bgcolor: "transparent",
                 color: "primary.main",

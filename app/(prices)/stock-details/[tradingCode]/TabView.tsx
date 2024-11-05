@@ -17,6 +17,7 @@ import MarketDepth from "./MarketDepth";
 import BlockTransections from "./BlockTransections";
 import News from "./News";
 import Technical from "./Technical";
+import AiGeneratedInsight from "./AiGeneratedInsight";
 
 const TabPanel = (props: any) => {
   const { children, value, index, ...other } = props;
@@ -66,6 +67,22 @@ export default function TabView(props: any) {
     {
       title: "News",
       component: <News news={news} />,
+    },
+    {
+      title: "AI insight ✨",
+      component: (
+        <AiGeneratedInsight
+          tradingCode={tradingCode}
+          epsCurrent={stock.fundamentals.epsCurrent}
+          pe={stock.fundamentals.pe?.value}
+          pbv={stock.fundamentals.pbv?.value}
+          pcf={stock.fundamentals.pcf?.value}
+          technicals={stock.fundamentals.technicals}
+          fundamentals={stock.fundamentals.screener}
+          cashDividend={stock.fundamentals.cashDividend}
+          price={stock.latest.close}
+        />
+      ),
     },
     {
       title: "Technicals",

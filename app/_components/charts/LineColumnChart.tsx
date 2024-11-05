@@ -18,7 +18,7 @@ export default function LineColumnChart(props: any) {
     chart: {
       type: "line",
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       toolbar: {
         show: false,
         tools: {

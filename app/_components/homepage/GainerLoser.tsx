@@ -95,7 +95,7 @@ export default function GainerLoser({ data }: any) {
               endIcon={<ArrowForwardIosRoundedIcon />}
               sx={{
                 fontSize: "1.6rem",
-                fontWeight: 700,
+                fontWeight: 600,
                 ":hover": {
                   bgcolor: "transparent",
                   color: "primary.main",
@@ -151,7 +151,7 @@ export default function GainerLoser({ data }: any) {
               endIcon={<ArrowForwardIosRoundedIcon />}
               sx={{
                 fontSize: "1.6rem",
-                fontWeight: 700,
+                fontWeight: 600,
                 ":hover": {
                   bgcolor: "transparent",
                   color: "primary.main",

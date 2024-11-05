@@ -17,7 +17,7 @@ export default function MultipleLineChart(props: any) {
     colors: lineColors,
     chart: {
       foreColor: theme.palette.text.primary,
-      fontFamily: "'DM Sans', sans-serif",
+      fontFamily: "'Poppins', sans-serif",
       toolbar: {
         show: false,
         tools: {

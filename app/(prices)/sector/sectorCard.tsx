@@ -53,6 +53,7 @@ export default function SectorSummaryCard({ data }: { data: any }) {
           my: { xs: 1, sm: 2 },
           mx: { xs: 0, sm: 1.5 },
           p: 2,
+          borderRadius: 2,
         }}
         variant="outlined"
       >
@@ -61,11 +62,11 @@ export default function SectorSummaryCard({ data }: { data: any }) {
             <Typography
               gutterBottom
               color={textColor}
-              sx={{ fontSize: "1.15rem" }}
+              sx={{ fontSize: "1.2rem", fontWeight: 600 }}
             >
               {data.sector}
             </Typography>
-            <Typography sx={{ fontWeight: 500, fontSize: "1rem" }}>
+            <Typography sx={{ fontWeight: 500, fontSize: ".95rem" }}>
               Total value: {(data.valueTotal / 10).toFixed(2)} Crore
             </Typography>
             <Stack direction="row" alignItems="center" sx={{ my: 1.2 }}>

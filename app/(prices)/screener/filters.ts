@@ -1926,9 +1926,6 @@ export const filterOptions = [
       { type: "default", value: "hammer", text: "Hammer" },
       { type: "default", value: "inverted_hammer", text: "Inverted Hammer" },
 
-      { type: "default", value: "bullish_harami", text: "Bullish Harami" },
-      { type: "default", value: "bearish_harami", text: "Bearish Harami" },
-
       {
         type: "default",
         value: "bullish_engulfing",
@@ -1940,11 +1937,19 @@ export const filterOptions = [
         text: "Bearish Engulfing",
       },
 
-      { type: "default", value: "bullish_pin_bar", text: "Bullish Pin Bar" },
-      { type: "default", value: "bearish_pin_bar", text: "Bearish Pin Bar" },
+      { type: "default", value: "bullish_harami", text: "Bullish Harami" },
+      { type: "default", value: "bearish_harami", text: "Bearish Harami" },
+
       { type: "default", value: "morning_star", text: "Morning Star" },
       { type: "default", value: "evening_star", text: "Evening Star" },
       { type: "default", value: "shooting_star", text: "Shooting Star" },
+
+      { type: "default", value: "dragonfly_doji", text: "Dragonfly Doji" },
+      { type: "default", value: "gravestone_doji", text: "Gravestone Doji" },
+      { type: "default", value: "longlegged_doji", text: "Longlegged Doji" },
+      { type: "default", value: "common_doji", text: "Common Doji" },
+
+      { type: "default", value: "dark_cloud_cover", text: "Dark Cloud Cover" },
       {
         type: "default",
         value: "three_white_soldiers",
@@ -1955,29 +1960,31 @@ export const filterOptions = [
         value: "three_black_crows",
         text: "Three Black Crows",
       },
+
       {
         type: "default",
         value: "three_inside_down",
         text: "Three Inside Down",
       },
       { type: "default", value: "three_outside_up", text: "Three Outside Up" },
+
+      { type: "default", value: "piercing_line", text: "Piercing Line" },
+
       { type: "default", value: "tweezer_top", text: "Tweezer Top" },
       { type: "default", value: "tweezer_bottom", text: "Tweezer Bottom" },
-      { type: "default", value: "bullish_marubozu", text: "Bullish Marubozu" },
-      { type: "default", value: "bearish_marubozu", text: "Bearish Marubozu" },
-      { type: "default", value: "dragonfly_doji", text: "Dragonfly Doji" },
-      { type: "default", value: "gravestone_doji", text: "Gravestone Doji" },
-      { type: "default", value: "dark_cloud_cover", text: "Dark Cloud Cover" },
-      { type: "default", value: "hanging_man", text: "Hanging Man" },
-      { type: "default", value: "mat_hold", text: "Mat Hold" },
-      { type: "default", value: "spinning_top", text: "Spinning Top" },
-      {
-        type: "default",
-        value: "falling_three_methods",
-        text: "Falling Three Methods",
-      },
-      { type: "default", value: "piercing_line", text: "Piercing Line" },
-      { type: "default", value: "dark_cloud_cover", text: "Dark Cloud Cover" },
+
+      // { type: "default", value: "bullish_pin_bar", text: "Bullish Pin Bar" },
+      // { type: "default", value: "bearish_pin_bar", text: "Bearish Pin Bar" },
+      // { type: "default", value: "bullish_marubozu", text: "Bullish Marubozu" },
+      // { type: "default", value: "bearish_marubozu", text: "Bearish Marubozu" },
+      // { type: "default", value: "hanging_man", text: "Hanging Man" },
+      // { type: "default", value: "mat_hold", text: "Mat Hold" },
+      // { type: "default", value: "spinning_top", text: "Spinning Top" },
+      // {
+      //   type: "default",
+      //   value: "falling_three_methods",
+      //   text: "Falling Three Methods",
+      // },
     ],
   },
   {
