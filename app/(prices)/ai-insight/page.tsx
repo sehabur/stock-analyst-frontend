@@ -18,7 +18,7 @@ const getStockList = async () => {
   return res.json();
 };
 
-export default async function Page() {
+export default async function AiContent() {
   const allStockList = await getStockList();
 
   return (

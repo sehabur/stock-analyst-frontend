@@ -55,8 +55,6 @@ export default function SharePrice() {
     setSectorFormInputs(value);
   };
 
-  console.log(latestPrice, initSharelist, shares);
-
   return (
     <>
       <Box sx={{ textAlign: { xs: "right", sm: "left" } }}>

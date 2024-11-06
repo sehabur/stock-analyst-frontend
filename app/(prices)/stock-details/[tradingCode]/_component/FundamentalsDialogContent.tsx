@@ -1,27 +1,6 @@
 "use client";
-import {
-  Box,
-  Grid,
-  Typography,
-  Stack,
-  Tab,
-  Tabs,
-  useTheme,
-  useMediaQuery,
-  Paper,
-  Button,
-  Modal,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
-  Chip,
-  Card,
-  CardActionArea,
-  CardContent,
-} from "@mui/material";
+import { Box, Typography, DialogTitle, DialogContent } from "@mui/material";
 
-import { fundamentalsTooltip } from "@/data/info";
 import FundamentalInfoCard from "./FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
 import QuarterlyColumnChart from "@/components/charts/QuarterlyColumnChart";

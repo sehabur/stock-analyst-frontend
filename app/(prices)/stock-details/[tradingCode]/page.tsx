@@ -37,19 +37,6 @@ const getStockDetails = async (tradingCode: string) => {
   return res.json();
 };
 
-// const getMarketDepth = async (tradingCode: string) => {
-//   const res = await fetch(
-//     `${process.env.BACKEND_URL}/api/prices/marketDepth?inst=${tradingCode}`,
-//     {
-//       next: { revalidate: 0 },
-//     }
-//   );
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-//   return res.json();
-// };
-
 const getNews = async (tradingCode: string) => {
   const res = await fetch(
     `${process.env.BACKEND_URL}/api/prices/news/${tradingCode}`,

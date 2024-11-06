@@ -184,8 +184,6 @@ export default function PriceTable(props: any) {
     };
   });
 
-  console.log(shares);
-
   return (
     <Box>
       <Box sx={{ height: "80vh" }}>

@@ -137,12 +137,12 @@ export default function AiGeneratedInsight(props: any) {
 
   const [languageAlignment, setLanguageAlignment] = useState("En");
 
+  const [doc, setDoc] = useState<any>();
+
   const [fontSelected, setFontSelected] = useState({
     size: ".875rem",
     family: "'Poppins', sans-serif",
   });
-
-  const doc: any = document;
 
   const handleAlignmentChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -169,96 +169,103 @@ export default function AiGeneratedInsight(props: any) {
   };
 
   const getData = async (queryType: string, dataTitle: string) => {
-    // try {
+    try {
+      // const doc: any = document;
 
-    // const doc: any = document;
+      if (queryType === "general") {
+        setdata((state: any) => {
+          if (!state[tradingCode]) {
+            state[tradingCode] = {};
+          }
+          state[tradingCode]["general"] = {
+            En: generalInfoEn,
+            Bn: generalInfoBn,
+          };
+          return state;
+        });
+        doc.getElementById("content").innerHTML = marked.parse(
+          data[tradingCode][queryType][languageAlignment]
+        );
+      }
 
-    if (queryType === "general") {
-      setdata((state: any) => {
-        if (!state[tradingCode]) {
-          state[tradingCode] = {};
-        }
-        state[tradingCode]["general"] = {
-          En: generalInfoEn,
-          Bn: generalInfoBn,
-        };
-        return state;
-      });
-      doc.getElementById("content").innerHTML = marked.parse(
+      if (
+        data[tradingCode] &&
+        data[tradingCode][queryType] &&
         data[tradingCode][queryType][languageAlignment]
-      );
-    }
+      ) {
+        doc.getElementById("content").innerHTML = marked.parse(
+          data[tradingCode][queryType][languageAlignment]
+        );
+        // console.log(data[tradingCode][queryType][languageAlignment]);
+        return;
+      }
 
-    if (
-      data[tradingCode] &&
-      data[tradingCode][queryType] &&
-      data[tradingCode][queryType][languageAlignment]
-    ) {
       doc.getElementById("content").innerHTML = marked.parse(
-        data[tradingCode][queryType][languageAlignment]
+        "*Please wait... AI model is generating data...*"
       );
-      console.log(data[tradingCode][queryType][languageAlignment]);
-      return;
-    }
 
-    doc.getElementById("content").innerHTML = marked.parse(
-      "*Please wait... AI model is generating data...*"
-    );
-
-    const res: any = await fetch(`/api/aiGeneratedInsight`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tradingCode: tradingCode,
-        queryType,
-        dataTitle,
-        dataField: queryType + languageAlignment,
-        language: languageAlignment,
-        isDataFeed: false,
-        data: null,
-      }),
-    });
-    const apiRes = await res.json();
-
-    if (res.ok) {
-      setdata((state: any) => {
-        console.log(state);
-        if (!state[tradingCode]) {
-          state[tradingCode] = {};
-        }
-        if (!state[tradingCode][queryType]) {
-          state[tradingCode][queryType] = {};
-        }
-        state[tradingCode][queryType][languageAlignment] = apiRes.content;
-
-        state[tradingCode]["general"] = {
-          En: generalInfoEn,
-          Bn: generalInfoBn,
-        };
-
-        return state;
+      const res: any = await fetch(`/api/aiGeneratedInsight`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tradingCode: tradingCode,
+          queryType,
+          dataTitle,
+          dataField: queryType + languageAlignment,
+          language: languageAlignment,
+          isDataFeed: false,
+          data: null,
+        }),
       });
-      doc.getElementById("content").innerHTML = marked.parse(apiRes.content);
-    } else {
+      const apiRes = await res.json();
+
+      if (res.ok) {
+        setdata((state: any) => {
+          // console.log(state);
+          if (!state[tradingCode]) {
+            state[tradingCode] = {};
+          }
+          if (!state[tradingCode][queryType]) {
+            state[tradingCode][queryType] = {};
+          }
+          state[tradingCode][queryType][languageAlignment] = apiRes.content;
+
+          state[tradingCode]["general"] = {
+            En: generalInfoEn,
+            Bn: generalInfoBn,
+          };
+
+          return state;
+        });
+        doc.getElementById("content").innerHTML = marked.parse(apiRes.content);
+      } else {
+        doc.getElementById("content").innerHTML = marked.parse(
+          "Something went wrong"
+        );
+      }
+    } catch (error) {
       doc.getElementById("content").innerHTML = marked.parse(
         "Something went wrong"
       );
     }
-    // } catch (error) {
-    //   doc.getElementById("content").innerHTML = marked.parse(
-    //     "Something went wrong"
-    //   );
-    // }
   };
 
   useEffect(() => {
-    doc.getElementById("content").innerHTML = marked.parse(
-      initdata[""]["general"]["En"]
-    );
-    console.log(initdata[""]["general"]["En"]);
+    if (doc) {
+      doc.getElementById("content").innerHTML = marked.parse(
+        initdata[""]["general"]["En"]
+      );
+    }
+    // console.log(initdata[""]["general"]["En"]);
   }, [doc]);
+
+  useEffect(() => {
+    if (window?.document) {
+      setDoc(window.document);
+    }
+  }, []);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -390,8 +397,9 @@ export default function AiGeneratedInsight(props: any) {
                     alignItems: "flex-start",
                   }}
                 >
-                  {options.map((item: any) => (
+                  {options.map((item: any, index: number) => (
                     <StyledToggleButton
+                      key={index}
                       value={item.queryType}
                       sx={{
                         px: { xs: 1.5, md: 2 },

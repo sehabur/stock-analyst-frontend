@@ -141,7 +141,7 @@ export default function AiGeneratedInsight(props: any) {
 
   const [languageAlignment, setLanguageAlignment] = useState("En");
 
-  const doc: any = document;
+  const [doc, setDoc] = useState<any>();
 
   const handleAlignmentChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -215,7 +215,7 @@ export default function AiGeneratedInsight(props: any) {
       }
 
       doc.getElementById("content").innerHTML = marked.parse(
-        "*Please wait. AI model is generating data...*"
+        "*Please wait... AI model is generating data...*"
       );
 
       const queryBody: any = getQueryDataBody();
@@ -252,17 +252,13 @@ export default function AiGeneratedInsight(props: any) {
         );
       }
     } catch (error) {
-      doc.getElementById("content").innerHTML = marked.parse(
-        "Something went wrong"
-      );
+      if (doc) {
+        doc.getElementById("content").innerHTML = marked.parse(
+          "Something went wrong"
+        );
+      }
     }
   };
-
-  useEffect(() => {
-    doc.getElementById("content").innerHTML = marked.parse(
-      initdata["general"]["En"]
-    );
-  }, [doc]);
 
   useEffect(() => {
     const { queryType, dataTitle } = options.find(
@@ -270,6 +266,20 @@ export default function AiGeneratedInsight(props: any) {
     );
     getData(queryType, dataTitle);
   }, [alignment, languageAlignment]);
+
+  useEffect(() => {
+    if (doc) {
+      doc.getElementById("content").innerHTML = marked.parse(
+        initdata["general"]["En"]
+      );
+    }
+  }, [doc]);
+
+  useEffect(() => {
+    if (window?.document) {
+      setDoc(window.document);
+    }
+  }, []);
 
   return (
     <Box sx={{ pt: { xs: 0, md: 2 }, pb: { xs: 0, md: 2 }, width: "100%" }}>
@@ -359,8 +369,9 @@ export default function AiGeneratedInsight(props: any) {
                   alignItems: "flex-start",
                 }}
               >
-                {options.map((item: any) => (
+                {options.map((item: any, index: number) => (
                   <StyledToggleButton
+                    key={index}
                     value={item.queryType}
                     sx={{
                       px: { xs: 1.5, md: 2 },
