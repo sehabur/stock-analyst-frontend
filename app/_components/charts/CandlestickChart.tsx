@@ -70,7 +70,8 @@ export default function CandlestickChart(props: { data: any[] }) {
     chart.current.applyOptions({
       watermark: {
         visible: true,
-        fontSize: 24,
+        fontSize: 22,
+        fontFamily: "'Poppins', sans-serif",
         horzAlign: "center",
         vertAlign: "center",
         color: "rgba(125, 125, 125, 0.3)",
@@ -94,7 +95,6 @@ export default function CandlestickChart(props: { data: any[] }) {
     chartContainerRef.current.appendChild(tooltip.current);
 
     chart.current.subscribeCrosshairMove((param: any) => {
-      console.log(param);
       if (
         param.point === undefined ||
         !param.time ||
@@ -108,7 +108,6 @@ export default function CandlestickChart(props: { data: any[] }) {
         const dateStr = param.time;
         tooltip.current.style.display = "block";
         const data = param.seriesData.get(candleSeries);
-        console.log(data);
         // const price = data.value !== undefined ? data.value : data.close;
         tooltip.current.innerHTML = `<div><div style="color: ${"#2962FF"}">Apple Inc.</div><div style="font-size: 24px; margin: 4px 0px; color: ${"black"}">
                 ${Math.round(100 * data.close) / 100}

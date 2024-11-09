@@ -291,7 +291,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -300,7 +302,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.today.color,
               }}
@@ -320,7 +322,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -329,7 +333,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneWeek.color,
               }}
@@ -349,7 +353,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -358,7 +364,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneMonth.color,
               }}
@@ -378,7 +384,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -387,7 +395,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.sixMonth.color,
               }}
@@ -407,7 +415,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -416,7 +426,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.oneYear.color,
               }}
@@ -424,6 +434,9 @@ export default function Overview({ stock }: any) {
               {percentChangeData.oneYear.text}
             </Typography>
           </Box>
+          {!matchesSmDown && (
+            <Divider orientation="vertical" flexItem variant="middle" />
+          )}
           <Box
             sx={{
               mx: { xs: 2, sm: 4 },
@@ -433,7 +446,9 @@ export default function Overview({ stock }: any) {
           >
             <Typography
               sx={{
-                fontSize: "1.1rem",
+                fontSize: { xs: ".875rem", sm: "1rem" },
+                mb: 1,
+                minWidth: 70,
                 color: "text.primary",
                 fontWeight: 500,
               }}
@@ -442,7 +457,7 @@ export default function Overview({ stock }: any) {
             </Typography>
             <Typography
               sx={{
-                fontSize: "1.2rem",
+                fontSize: { xs: "1rem", sm: "1.2rem" },
                 fontWeight: 700,
                 color: percentChangeData.fiveYear.color,
               }}

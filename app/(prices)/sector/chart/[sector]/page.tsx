@@ -67,7 +67,7 @@ const getLatestPrice = (latest: any) => {
       time: "",
     };
   }
-  const price = latest.ltp.toFixed(2);
+  const price = latest.close.toFixed(2);
   const time = DateTime.fromISO(latest.time)
     .plus({ hours: 6 })
     .toFormat("dd MMM, HH:mm");
@@ -176,28 +176,6 @@ export default async function Sector({ params }: any) {
                   : 0}
                 {"%"}
               </Typography>
-
-              {/* <Tooltip
-                  title={`Market is ${data.marketOpenStatus?.toLowerCase()} now`}
-                  enterTouchDelay={10}
-                  arrow
-                >
-                  <Chip
-                    label={data.marketOpenStatus}
-                    variant="outlined"
-                    size="small"
-                    icon={
-                      data?.marketOpenStatus == "Open" ? (
-                        <RadioButtonCheckedRoundedIcon color="success" />
-                      ) : stock?.marketOpenStatus == "Closed" ? (
-                        <DoDisturbOnRoundedIcon color="error" />
-                      ) : (
-                        <DoDisturbOnRoundedIcon color="warning" />
-                      )
-                    }
-                    sx={{ fontSize: ".875rem", px: 0.3 }}
-                  />
-                </Tooltip> */}
             </Box>
 
             <Typography
@@ -281,7 +259,7 @@ export default async function Sector({ params }: any) {
                       fontWeight: 500,
                     }}
                   >
-                    {data.latest.ycp}
+                    {data.latest.open}
                   </Typography>
                 </Stack>
               </Grid>

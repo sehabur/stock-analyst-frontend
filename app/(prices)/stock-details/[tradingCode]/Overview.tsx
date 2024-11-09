@@ -34,6 +34,33 @@ import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import Stack from "@mui/material/Stack";
 import { constants } from "crypto";
 
+const changeDays = [
+  {
+    field: "today",
+    title: "Today",
+  },
+  {
+    field: "oneWeek",
+    title: "1 Week",
+  },
+  {
+    field: "oneMonth",
+    title: "1 Month",
+  },
+  {
+    field: "sixMonth",
+    title: "6 Months",
+  },
+  {
+    field: "oneYear",
+    title: "1 Year",
+  },
+  {
+    field: "fiveYear",
+    title: "5 Years",
+  },
+];
+
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
     marginLeft: "12px",
@@ -219,20 +246,20 @@ export default function Overview({ stock }: any) {
       ? "#f45e6a"
       : "#00A25B";
 
-  const minuteChartData: any = stock.minute.map(
-    (item: { time: string; close: number; ycp: number }) => {
+  const minuteChartData: any = stock.minute
+    .filter((item: { ltp: number }) => item.ltp !== 0)
+    .map((item: { time: string; ltp: number; ycp: number }) => {
       return {
         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
-        value: item.close !== 0 ? item.close : item.ycp,
+        value: item.ltp,
       };
-    }
-  );
+    });
 
   const dailyCandleData = formatCandleChartData(stock.daily);
   const weeklyCandleData = formatCandleChartData(stock.weekly);
   const monthlyCandleData = formatCandleChartData(stock.monthly);
 
-  const percentChangeData = formatPercentChangeData(
+  const percentChangeData: any = formatPercentChangeData(
     stock.latest,
     stock.lastDay
   );
@@ -364,6 +391,7 @@ export default function Overview({ stock }: any) {
               mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
+              minWidth: 70,
             }}
           >
             <Typography
@@ -394,6 +422,7 @@ export default function Overview({ stock }: any) {
               mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
+              minWidth: 70,
             }}
           >
             <Typography
@@ -424,6 +453,7 @@ export default function Overview({ stock }: any) {
               mx: 2,
               my: { xs: 1, sm: 0 },
               textAlign: "center",
+              minWidth: 70,
             }}
           >
             <Typography

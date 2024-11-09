@@ -69,18 +69,18 @@ export default function TabView(props: any) {
       component: <News news={news} />,
     },
     {
-      title: "AI insight ✨",
+      title: "AI insight",
       component: (
         <AiGeneratedInsight
           tradingCode={tradingCode}
-          epsCurrent={stock.fundamentals.epsCurrent}
-          pe={stock.fundamentals.pe?.value}
-          pbv={stock.fundamentals.pbv?.value}
-          pcf={stock.fundamentals.pcf?.value}
-          technicals={stock.fundamentals.technicals}
-          fundamentals={stock.fundamentals.screener}
-          cashDividend={stock.fundamentals.cashDividend}
-          price={stock.latest.close}
+          epsCurrent={stock.fundamentals?.epsCurrent}
+          pe={stock.fundamentals?.pe?.value}
+          pbv={stock.fundamentals?.pbv?.value}
+          pcf={stock.fundamentals?.pcf?.value}
+          technicals={stock.fundamentals?.technicals}
+          fundamentals={stock.fundamentals?.screener}
+          cashDividend={stock.fundamentals?.cashDividend}
+          price={stock.latest?.close}
         />
       ),
     },

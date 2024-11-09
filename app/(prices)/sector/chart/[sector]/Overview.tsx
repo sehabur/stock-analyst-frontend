@@ -2,11 +2,8 @@
 import React from "react";
 import {
   Box,
-  Button,
   Divider,
-  Grid,
   Paper,
-  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -76,7 +73,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -85,7 +84,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.today.color,
             }}
@@ -105,7 +104,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -114,7 +115,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.oneWeek.color,
             }}
@@ -134,7 +135,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -143,7 +146,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.oneMonth.color,
             }}
@@ -163,7 +166,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -172,7 +177,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.sixMonth.color,
             }}
@@ -192,7 +197,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -201,7 +208,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.oneYear.color,
             }}
@@ -221,7 +228,9 @@ export default function Overview({ data }: any) {
         >
           <Typography
             sx={{
-              fontSize: "1.1rem",
+              fontSize: { xs: ".875rem", sm: "1rem" },
+              minWidth: 70,
+              mb: 1,
               color: "text.primary",
               fontWeight: 500,
             }}
@@ -230,7 +239,7 @@ export default function Overview({ data }: any) {
           </Typography>
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.2rem" },
               fontWeight: 700,
               color: percentChangeData.fiveYear.color,
             }}

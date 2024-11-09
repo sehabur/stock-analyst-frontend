@@ -102,16 +102,16 @@ export default function SectorChart({ data }: any) {
     }
   };
 
-  const minuteChartData: any = data.minute
-    // .filter((item: any) => item.ltp !== 0 || item.close !== 0)
-    .map((item: { time: string; ltp: number; ycp: number }) => {
+  const minuteChartData: any = data.minute.map(
+    (item: { time: string; close: number }) => {
       return {
         time: DateTime.fromISO(item.time).plus({ hours: 6 }).toUnixInteger(),
-        value: item.ltp !== 0 ? item.ltp : item.ycp,
+        value: item.close,
       };
-    });
+    }
+  );
 
-  const latestMinuteData = data.minute[data.minute.length - 1].change;
+  const latestMinuteData = data.latest.change;
 
   const chartColor =
     latestMinuteData === 0
@@ -159,7 +159,7 @@ export default function SectorChart({ data }: any) {
               data={minuteChartData}
               color={chartColor}
               height={325}
-              chartWidthValue={1120}
+              chartWidthValue={1080}
             />
           </Box>
         )}
@@ -191,30 +191,6 @@ export default function SectorChart({ data }: any) {
           </Box>
         )}
       </Box>
-
-      {/* <TextField
-        select
-        name="sector"
-        value={sectorFormInputs}
-        onChange={handleFormChange}
-        size="small"
-        variant="outlined"
-        sx={{ width: 300, mb: 1 }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">Sector:</InputAdornment>
-          ),
-        }}
-      >
-        <MenuItem key="all" value="all">
-          All
-        </MenuItem>
-        {sectorList.map((option) => (
-          <MenuItem key={option.tag} value={option.tag}>
-            {option.name}
-          </MenuItem>
-        ))}
-      </TextField> */}
     </Box>
   );
 }

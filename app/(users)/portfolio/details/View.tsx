@@ -122,9 +122,11 @@ export default function View({ id }: any) {
                   align="left"
                   sx={{ color: formatColor(stock.unrealizedGain) }}
                 >
-                  <Typography>{stock.totalSellPrice}</Typography>
+                  <Typography>{stock.totalSellPrice.toFixed(2)}</Typography>
                   <Typography>
-                    {`${stock.unrealizedGain} (${stock.unrealizedGainPercent}%)`}
+                    {`${stock.unrealizedGain.toFixed(
+                      2
+                    )} (${stock.unrealizedGainPercent.toFixed(2)}%)`}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -147,10 +149,12 @@ export default function View({ id }: any) {
                 }}
               >
                 <Typography sx={{ fontSize: "1rem", fontWeight: 700 }}>
-                  {portfolio?.totalPortfolioSellPrice}
+                  {portfolio?.totalPortfolioSellPrice.toFixed(2)}
                 </Typography>
                 <Typography sx={{ fontSize: "1rem", fontWeight: 700 }}>
-                  {`${portfolio?.totalUnrealizedGain} (${portfolio?.totalUnrealizedGainPercent}%)`}
+                  {`${portfolio?.totalUnrealizedGain.toFixed(2) || 0} (${
+                    portfolio?.totalUnrealizedGainPercent.toFixed(2) || 0
+                  }%)`}
                 </Typography>
               </TableCell>
             </TableRow>

@@ -94,7 +94,7 @@ export default function HorizontalStackedBarChartValue(props: any) {
     tooltip: {
       theme: "dark",
       custom: function ({ series, seriesIndex, dataPointIndex, w }: any) {
-        console.log(series, seriesIndex, dataPointIndex, w);
+        // console.log(series, seriesIndex, dataPointIndex, w);
 
         let totalValue = 0;
         let totalDataPointValue = 0;

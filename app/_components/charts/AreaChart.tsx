@@ -104,13 +104,16 @@ export default function AreaChart(props: AreaChartProps) {
     chart.current.applyOptions({
       watermark: {
         visible: true,
-        fontSize: 24,
+        fontSize: 22,
+        fontFamily: "'Poppins', sans-serif",
         horzAlign: "center",
         vertAlign: "center",
         color: "rgba(125, 125, 125, 0.3)",
         text: "Stocksupporter",
       },
     });
+
+    // chart.current.timeScale().fitContent();
 
     if (fitContent) {
       chart.current.timeScale().fitContent();

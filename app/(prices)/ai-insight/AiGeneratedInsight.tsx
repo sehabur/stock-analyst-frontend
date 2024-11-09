@@ -170,7 +170,7 @@ export default function AiGeneratedInsight(props: any) {
 
   const getData = async (queryType: string, dataTitle: string) => {
     try {
-      // const doc: any = document;
+      if (!doc) return;
 
       if (queryType === "general") {
         setdata((state: any) => {
@@ -246,20 +246,37 @@ export default function AiGeneratedInsight(props: any) {
         );
       }
     } catch (error) {
-      doc.getElementById("content").innerHTML = marked.parse(
-        "Something went wrong"
-      );
+      if (doc) {
+        doc.getElementById("content").innerHTML = marked.parse(
+          "Something went wrong"
+        );
+      }
     }
   };
 
+  // useEffect(() => {
+  //   if (doc) {
+  //     doc.getElementById("content").innerHTML = marked.parse(
+  //       initdata[""]["general"]["En"]
+  //     );
+  //   }
+  //   // console.log(initdata[""]["general"]["En"]);
+  // }, [doc]);
+
   useEffect(() => {
-    if (doc) {
+    if (doc && alignment == "general") {
       doc.getElementById("content").innerHTML = marked.parse(
-        initdata[""]["general"]["En"]
+        initdata[""][alignment][languageAlignment]
       );
+      setFontSelected({
+        size: languageAlignment == "Bn" ? "1rem" : ".875rem",
+        family:
+          languageAlignment == "Bn"
+            ? '"Noto Sans Bengali", sans-serif'
+            : "'Poppins', sans-serif",
+      });
     }
-    // console.log(initdata[""]["general"]["En"]);
-  }, [doc]);
+  }, [doc, languageAlignment]);
 
   useEffect(() => {
     if (window?.document) {
@@ -269,9 +286,11 @@ export default function AiGeneratedInsight(props: any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
     const { queryType, dataTitle } = options.find(
       (item: any) => item.queryType == alignment
     );
+
     getData(queryType, dataTitle);
 
     setFontSelected({
@@ -286,7 +305,7 @@ export default function AiGeneratedInsight(props: any) {
   // console.log(tradingCode, data);
 
   return (
-    <Box sx={{ pt: { xs: 0, md: 2 }, pb: { xs: 0, md: 2 }, width: "100%" }}>
+    <Box sx={{ pt: { xs: 0, md: 4 }, pb: { xs: 0, md: 4 }, width: "100%" }}>
       {/* <LoadingSpinner open={isLoading} /> */}
       <Box
         sx={{
@@ -300,25 +319,25 @@ export default function AiGeneratedInsight(props: any) {
       </Box>
       <Box
         sx={{
-          maxWidth: 950,
+          maxWidth: 1050,
           mx: "auto",
           bgcolor: "secondaryBackground",
-          pl: { xs: 2, md: 4 },
-          pr: { xs: 2, md: 4 },
-          pb: { xs: 3, md: 4 },
-          pt: { xs: 3, md: 4 },
+          pl: { xs: 2, md: 5 },
+          pr: { xs: 2, md: 5 },
+          pb: { xs: 3, md: 5 },
+          pt: { xs: 3, md: 5 },
           borderRadius: { xs: 0, md: 2 },
           display: auth?.isPremiumEligible ? "flex" : "none",
         }}
       >
         <Grid container columnSpacing={5}>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={2.8}>
             <Box component="form" onSubmit={handleSubmit}>
               <Box sx={{ mb: { xs: 1.5, md: 2 } }}>
                 <Typography
                   sx={{ color: "text.secondary", mb: { xs: 1, md: 1 } }}
                 >
-                  Select output language:
+                  Select language:
                 </Typography>
 
                 <Paper
@@ -397,22 +416,24 @@ export default function AiGeneratedInsight(props: any) {
                     alignItems: "flex-start",
                   }}
                 >
-                  {options.map((item: any, index: number) => (
-                    <StyledToggleButton
-                      key={index}
-                      value={item.queryType}
-                      sx={{
-                        px: { xs: 1.5, md: 2 },
-                        py: { xs: 0.5, md: 0.6 },
-                        mb: { xs: 1.3, md: 1.3 },
-                        mr: { xs: 1.5, md: 0 },
-                        width: { xs: "inherit", md: "100%" },
-                        fontSize: { xs: ".85rem", md: ".9rem" },
-                      }}
-                    >
-                      {matchesMdUp ? item.buttonText : item.buttonTextSmall}
-                    </StyledToggleButton>
-                  ))}
+                  {options
+                    .filter((item: any) => item.queryType != "general")
+                    .map((item: any, index: number) => (
+                      <StyledToggleButton
+                        key={index}
+                        value={item.queryType}
+                        sx={{
+                          px: { xs: 1.5, md: 2 },
+                          py: { xs: 0.5, md: 0.6 },
+                          mb: { xs: 1.3, md: 1.3 },
+                          mr: { xs: 1.5, md: 0 },
+                          width: { xs: "inherit", md: "100%" },
+                          fontSize: { xs: ".85rem", md: ".9rem" },
+                        }}
+                      >
+                        {matchesMdUp ? item.buttonText : item.buttonTextSmall}
+                      </StyledToggleButton>
+                    ))}
                 </StyledToggleButtonGroup>
               </Box>
 
@@ -429,16 +450,14 @@ export default function AiGeneratedInsight(props: any) {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={9.2}>
             <Paper
               variant="outlined"
               sx={{
-                // px: 3,
-                // py: 2,
                 mt: { xs: 1, md: 0 },
                 bgcolor: "transparent",
                 borderRadius: 3,
-                minHeight: { xs: 320, md: 525 },
+                minHeight: { xs: 320, md: 480 },
               }}
             >
               <Box sx={{ px: { xs: 2, md: 3 }, py: 1.5 }}>

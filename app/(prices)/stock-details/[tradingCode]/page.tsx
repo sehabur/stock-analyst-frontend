@@ -174,7 +174,7 @@ export default async function StockDetails({ params }: any) {
                 sx={{
                   borderRadius: 1,
                   fontSize: "1rem",
-                  fontWeight: 500,
+                  fontWeight: 600,
                   mt: 1,
                 }}
               />
@@ -182,8 +182,8 @@ export default async function StockDetails({ params }: any) {
                 label={`Category ${stock.fundamentals.category}`}
                 sx={{
                   borderRadius: 1,
-                  mx: { xs: 0.8, sm: 2 },
-                  fontSize: ".875rem",
+                  mx: { xs: 0.8, sm: 1.2 },
+                  fontSize: ".9rem",
                   mt: 1,
                 }}
               />
@@ -191,7 +191,7 @@ export default async function StockDetails({ params }: any) {
                 label={stock.fundamentals.sector}
                 sx={{
                   borderRadius: 1,
-                  fontSize: ".875rem",
+                  fontSize: ".9rem",
                   mt: 1,
                 }}
               />

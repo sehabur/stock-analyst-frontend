@@ -16,7 +16,7 @@ import { Divider, useTheme } from "@mui/material";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.primary" mt={1}>
+    <Typography variant="body2" color="text.primary">
       {"Copyright © "}
       <Box component="span" sx={{ fontWeight: 700 }}>
         Stocksupporter
@@ -41,7 +41,7 @@ export default function Footer() {
           alignItems: "center",
           gap: { xs: 4, sm: 4 },
           pt: { xs: 3, sm: 5 },
-          pb: { xs: 4, sm: 5 },
+          pb: { xs: 4, sm: 4 },
           textAlign: { sm: "center", md: "left" },
         }}
       >
@@ -196,6 +196,7 @@ export default function Footer() {
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
             pt: 3,
             width: "100%",
             borderTop: "1px solid",
@@ -261,7 +262,7 @@ export default function Footer() {
           </Box>
           <Stack
             direction="row"
-            justifyContent="left"
+            alignItems="center"
             spacing={1}
             useFlexGap
             sx={{

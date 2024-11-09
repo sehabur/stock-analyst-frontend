@@ -53,6 +53,7 @@ import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
 import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import { TransitionProps } from "@mui/material/transitions";
 
 import {
@@ -65,7 +66,7 @@ import ToastMessage from "@/components/shared/ToastMessage";
 import SearchStockCard from "./cards/SearchStockCard";
 import SigninDialogContent from "./shared/SigninDialogContent";
 import SearchBar from "./SearchBar";
-import { grey } from "@mui/material/colors";
+import { grey, yellow } from "@mui/material/colors";
 
 const TransitionSlide = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -754,7 +755,7 @@ export default function Header() {
             mx: "auto",
           }}
         >
-          {/* <Box component={Link} href="/">
+          <Box component={Link} href="/">
             <img
               src={
                 themeColor === "dark"
@@ -764,14 +765,14 @@ export default function Header() {
               style={{
                 width: "auto",
                 marginTop: "5px",
-                height: "35px",
+                height: "33px",
                 cursor: "pointer",
               }}
               alt="logo of stocksupporter"
             />
-          </Box> */}
+          </Box>
 
-          <Box
+          {/* <Box
             component={Link}
             href="/"
             sx={{
@@ -811,8 +812,8 @@ export default function Header() {
               >
                 supporter
               </Typography>
-            </Box>{" "}
-          </Box>
+            </Box>
+          </Box> */}
 
           {matchesSmUp && (
             <Box
@@ -867,13 +868,14 @@ export default function Header() {
               <Button
                 component={Link}
                 href="/ai-insight"
+                endIcon={<AutoAwesomeRoundedIcon sx={{ color: yellow[700] }} />}
                 sx={{
                   color: "text.primary",
                   px: 2,
                   borderRadius: 8,
                 }}
               >
-                AI insight ✨
+                AI insight
               </Button>
               <Button
                 component={Link}

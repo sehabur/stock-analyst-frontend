@@ -10,6 +10,7 @@ import {
   DialogContent,
   IconButton,
   Chip,
+  useTheme,
 } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -81,6 +82,8 @@ const StyledToggleButton = styled(ToggleButton)(({ theme }) => ({
 const NEWS_COUNT_TO_DISPLAY = 150;
 
 export default function News({ data }: any) {
+  const theme = useTheme();
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const [dialogContent, setDialogContent] = useState<any>({});
@@ -134,19 +137,28 @@ export default function News({ data }: any) {
         maxWidth="sm"
         disableScrollLock={true}
       >
-        <DialogTitle sx={{ fontWeight: 600, pr: 3 }}>
-          {dialogContent?.title}
-        </DialogTitle>
+        <DialogTitle sx={{ mr: 3 }}>{dialogContent?.title}</DialogTitle>
         <DialogContent dividers>
           <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
             <ScheduleRoundedIcon
               color="success"
-              sx={{ fontSize: "1.2rem", mr: 1.3 }}
+              sx={{ fontSize: "1.2rem", mr: 1 }}
             />
             <ReactTimeAgo
-              date={dialogContent?.date}
+              date={dialogContent.time || dialogContent.date}
               locale="en-US"
-              style={{ fontSize: "1rem", color: "#089981" }}
+              style={{ fontSize: "1rem", color: theme.palette.success.main }}
+            />
+            <Chip
+              label={DateTime.fromISO(dialogContent.date).toFormat(
+                "dd MMM, yyyy"
+              )}
+              size="small"
+              sx={{
+                ml: 2,
+                borderRadius: 1,
+                fontSize: ".9rem",
+              }}
             />
           </Stack>
           <Typography sx={{ pb: 2 }}>{dialogContent?.description}</Typography>
@@ -233,12 +245,12 @@ export default function News({ data }: any) {
                     <Stack direction="row" alignItems="center">
                       <ScheduleRoundedIcon
                         color="success"
-                        sx={{ fontSize: "1.1rem", mr: 1.3 }}
+                        sx={{ fontSize: "1.1rem", mr: 1 }}
                       />
                       <ReactTimeAgo
                         date={item.time || item.date}
                         locale="en-US"
-                        style={{ color: "#089981" }}
+                        style={{ color: theme.palette.success.main }}
                       />
                       <Chip
                         label={DateTime.fromISO(item.date).toFormat(

@@ -161,7 +161,6 @@ export default function TradingviewChart() {
 
             const { content } = await res.json();
             if (res.ok) {
-              console.log(content);
               return content;
             } else {
               if (res.status === 401) {

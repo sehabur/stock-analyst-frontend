@@ -164,40 +164,44 @@ export default function AiGeneratedInsight(props: any) {
   const getQueryDataBody = () => {
     return {
       technical: {
-        betaOneYear: technicals.beta,
-        movingAverages: technicals.movingAverages,
-        oscillators: technicals.oscillators,
-        candlestick: technicals.candlestick,
+        betaOneYear: technicals?.beta,
+        movingAverages: technicals?.movingAverages,
+        oscillators: technicals?.oscillators,
+        supportAndResistance: technicals?.pivots,
+        candlestick: technicals?.candlestick?.value,
+        currency: "BDT",
       },
       fundamentalRatio: {
-        priceToEarningRatio: pe.toFixed(2),
-        priceToBookValueRatio: pbv.toFixed(2),
-        earningsPerShare: epsCurrent.toFixed(2),
-        priceToSalesRatio: fundamentals.ps.value.toFixed(2),
-        debtToEquityRatio: fundamentals.de.value.toFixed(2),
-        returnOfEquity: fundamentals.roe.value.toFixed(2),
-        returnOfAssets: fundamentals.roa.value.toFixed(2),
-        dividendYield: fundamentals.dividendYield.value.toFixed(2),
-        currentRatio: fundamentals.currentRatio.value.toFixed(2),
-        netIncomeRatio: fundamentals.netIncomeRatio.value.toFixed(2),
+        priceToEarningRatio: pe?.toFixed(2),
+        priceToBookValueRatio: pbv?.toFixed(2),
+        earningsPerShare: epsCurrent?.toFixed(2),
+        priceToSalesRatio: fundamentals?.ps?.value?.toFixed(2),
+        debtToEquityRatio: fundamentals?.de?.value?.toFixed(2),
+        returnOfEquity: fundamentals?.roe?.value?.toFixed(2),
+        returnOfAssets: fundamentals?.roa?.value?.toFixed(2),
+        dividendYield: fundamentals?.dividendYield?.value?.toFixed(2),
+        currentRatio: fundamentals?.currentRatio?.value?.toFixed(2),
+        netIncomeRatio: fundamentals?.netIncomeRatio?.value?.toFixed(2),
         NetOperatingCashFlowPerShare:
-          fundamentals.nocfpsQuarterly.value.toFixed(2),
-        NetAssetValue: fundamentals.navQuarterly.value.toFixed(2),
+          fundamentals?.nocfpsQuarterly?.value?.toFixed(2),
+        NetAssetValue: fundamentals?.navQuarterly?.value?.toFixed(2),
+        currency: "BDT",
       },
       financial: {
-        reserveAndSurplus: fundamentals.reserveSurplus.value * 1000000,
-        bookValue: fundamentals.bookValue.value,
-        totalLiabilities: fundamentals.totalLiabilities.value,
-        netIncome: fundamentals.netIncome.value,
-        totalAsset: fundamentals.totalAsset.value,
-        revenue: fundamentals.revenue.value,
-        earningBeforeInterestAndTaxes: fundamentals.ebit.value,
-        operatingProfit: fundamentals.operatingProfit.value,
+        reserveAndSurplus: fundamentals?.reserveSurplus?.value * 1000000,
+        bookValue: fundamentals?.bookValue?.value,
+        totalLiabilities: fundamentals?.totalLiabilities?.value,
+        netIncome: fundamentals?.netIncome?.value,
+        totalAsset: fundamentals?.totalAsset?.value,
+        revenue: fundamentals?.revenue?.value,
+        earningBeforeInterestAndTaxes: fundamentals?.ebit?.value,
+        operatingProfit: fundamentals?.operatingProfit?.value,
+        currency: "BDT",
       },
       fairValue: {
-        priceToCashFlowRatio: pcf.toFixed(2),
+        priceToCashFlowRatio: pcf?.toFixed(2),
         NetOperatingCashFlowPerShare:
-          fundamentals.nocfpsQuarterly.value.toFixed(2),
+          fundamentals?.nocfpsQuarterly?.value?.toFixed(2),
         dividendInPercentage: cashDividend,
         currentPrice: price,
         currency: "BDT",
@@ -207,6 +211,8 @@ export default function AiGeneratedInsight(props: any) {
 
   const getData = async (queryType: string, dataTitle: string) => {
     try {
+      if (!doc) return;
+
       if (data[queryType][languageAlignment]) {
         doc.getElementById("content").innerHTML = marked.parse(
           data[queryType][languageAlignment]
@@ -308,11 +314,11 @@ export default function AiGeneratedInsight(props: any) {
       >
         <Grid container columnSpacing={5}>
           <Grid item xs={12} md={3}>
-            <Box sx={{ mb: { xs: 1.5, md: 2 } }}>
+            <Box sx={{ mb: { xs: 1.5, md: 3 } }}>
               <Typography
                 sx={{ color: "text.secondary", mb: { xs: 1, md: 1 } }}
               >
-                Select output language:
+                Select language:
               </Typography>
 
               <Paper
@@ -369,22 +375,24 @@ export default function AiGeneratedInsight(props: any) {
                   alignItems: "flex-start",
                 }}
               >
-                {options.map((item: any, index: number) => (
-                  <StyledToggleButton
-                    key={index}
-                    value={item.queryType}
-                    sx={{
-                      px: { xs: 1.5, md: 2 },
-                      py: { xs: 0.5, md: 0.7 },
-                      mb: { xs: 1.3, md: 1.3 },
-                      mr: { xs: 1.5, md: 0 },
-                      width: { xs: "inherit", md: "100%" },
-                      fontSize: { xs: ".85rem", md: ".9rem" },
-                    }}
-                  >
-                    {matchesMdUp ? item.buttonText : item.buttonTextSmall}
-                  </StyledToggleButton>
-                ))}
+                {options
+                  .filter((item: any) => item.queryType != "general")
+                  .map((item: any, index: number) => (
+                    <StyledToggleButton
+                      key={index}
+                      value={item.queryType}
+                      sx={{
+                        px: { xs: 1.5, md: 2 },
+                        py: { xs: 0.5, md: 0.7 },
+                        mb: { xs: 1.3, md: 1.3 },
+                        mr: { xs: 1.5, md: 0 },
+                        width: { xs: "inherit", md: "100%" },
+                        fontSize: { xs: ".85rem", md: ".9rem" },
+                      }}
+                    >
+                      {matchesMdUp ? item.buttonText : item.buttonTextSmall}
+                    </StyledToggleButton>
+                  ))}
               </StyledToggleButtonGroup>
             </Box>
           </Grid>
@@ -398,7 +406,7 @@ export default function AiGeneratedInsight(props: any) {
                 mt: { xs: 1, md: 0 },
                 bgcolor: "transparent",
                 borderRadius: 3,
-                minHeight: { xs: 320, md: 390 },
+                minHeight: { xs: 320, md: 354 },
               }}
             >
               <Box sx={{ px: { xs: 2, md: 3 }, py: 1.5 }}>
