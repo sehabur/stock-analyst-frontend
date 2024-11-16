@@ -177,29 +177,39 @@ export default function Dashboard({ data }: any) {
         </Typography>
       </Box>
       <Box sx={{ mx: "auto" }}>
-        <DataGrid
-          rows={data[typeAlignment]}
-          columns={columns}
-          hideFooter={true}
-          sx={{
-            ".MuiDataGrid-columnHeader": {
-              color: "text.secondary",
-              fontSize: { xs: ".8rem", sm: ".9rem" },
-            },
-            "& .MuiDataGrid-columnHeaderTitle": {
-              overflow: "visible",
-              lineHeight: "1.43rem",
-              whiteSpace: "normal",
-            },
-            border: "none",
-            width: matchesSmUp ? 600 : "90vw",
-            mx: "auto",
-            mb: 6,
-            fontSize: ".9rem",
-            fontWeight: 500,
-          }}
-        />
+        {data[typeAlignment].length > 0 && (
+          <DataGrid
+            rows={data[typeAlignment]}
+            columns={columns}
+            hideFooter={true}
+            sx={{
+              ".MuiDataGrid-columnHeader": {
+                color: "text.secondary",
+                fontSize: { xs: ".8rem", sm: ".9rem" },
+              },
+              "& .MuiDataGrid-columnHeaderTitle": {
+                overflow: "visible",
+                lineHeight: "1.43rem",
+                whiteSpace: "normal",
+              },
+              border: "none",
+              width: matchesSmUp ? 600 : "90vw",
+              mx: "auto",
+              mb: 6,
+              fontSize: ".9rem",
+              fontWeight: 500,
+            }}
+          />
+        )}
       </Box>
+      {data[typeAlignment].length < 1 && (
+        <Typography
+          textAlign="center"
+          sx={{ fontSize: "1.1rem", color: "text.secondary", pt: 2, pb: 6 }}
+        >
+          No data to display
+        </Typography>
+      )}
     </Box>
   );
 }

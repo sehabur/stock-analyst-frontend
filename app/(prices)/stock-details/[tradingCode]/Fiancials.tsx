@@ -1,6 +1,6 @@
 "use client";
-import AreaChart from "@/components/charts/AreaChart";
-import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Box,
   Grid,
@@ -17,23 +17,17 @@ import {
   Slider,
   Divider,
 } from "@mui/material";
-import { DateTime } from "luxon";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import React, { useState } from "react";
-import { grey } from "@mui/material/colors";
-
 import CloseIcon from "@mui/icons-material/Close";
+import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
+
 import PieChart from "@/components/charts/PieChart";
 import { yearEndMap } from "@/data/dse";
 import ShareholdingLineChart from "@/components/charts/ShareholdingLineChart";
-import SquareRoundedIcon from "@mui/icons-material/SquareRounded";
 import FinancialCard from "@/components/cards/FinancialCard";
 import { fundamentalsTooltip } from "@/data/info";
 import FundamentalInfoCard from "./_component/FundamentalInfoCard";
 import YearlyStackedColumnChart from "@/components/charts/YearlyStackedColumnChart";
 import FundamentalsDialogContent from "./_component/FundamentalsDialogContent";
-import { useSelector } from "react-redux";
 import PremiumDialogContent from "@/components/shared/PremiumDialogContent";
 
 const formatYearlyData = (data: any, divideFactor = 1, nonZero = false) => {
@@ -152,99 +146,60 @@ const quarterMonthsGetter = (
 };
 
 const formatQuarterlyData = (data: any, yearEnd: string) => {
-  if (!data) return;
-  if (data.length < 2) return;
+  if (!data || data.length < 1) return;
 
-  data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
+  data.sort((a: { year: number }, b: { year: number }) => b.year - a.year);
 
-  const lastYearData = data[data.length - 2];
-  const thisYearData = data[data.length - 1];
+  const thisYearData = data[0];
+  const lastYearData = data.length >= 2 && data[1];
 
   const { qMonths, currentYearValue, lastYearValue } = quarterMonthsGetter(
     yearEnd,
-    thisYearData.year,
-    lastYearData.year
+    thisYearData?.year,
+    lastYearData?.year
   );
 
   const categories = qMonths;
 
-  let datapointSeries1: any;
+  const datapointSeries2 = [
+    thisYearData?.q1 == 0 ? 0 : thisYearData?.q1 || null,
+    thisYearData?.q2 == 0 ? 0 : thisYearData?.q2 || null,
+    thisYearData?.q3 == 0 ? 0 : thisYearData?.q3 || null,
+    thisYearData?.q4 == 0 ? 0 : thisYearData?.q4 || null,
+  ];
+
+  let dataSeries = [];
+
   if (lastYearData) {
-    datapointSeries1 = [
-      lastYearData?.q1 || null,
-      lastYearData?.q2 || null,
-      lastYearData?.q3 || null,
-      lastYearData?.q4 || null,
+    const datapointSeries1 = [
+      lastYearData?.q1 == 0 ? 0 : lastYearData?.q1 || null,
+      lastYearData?.q2 == 0 ? 0 : lastYearData?.q2 || null,
+      lastYearData?.q3 == 0 ? 0 : lastYearData?.q3 || null,
+      lastYearData?.q4 == 0 ? 0 : lastYearData?.q4 || null,
+    ];
+
+    dataSeries = [
+      {
+        name: lastYearValue,
+        data: datapointSeries1,
+      },
+      {
+        name: currentYearValue,
+        data: datapointSeries2,
+      },
     ];
   } else {
-    datapointSeries1 = [];
+    dataSeries = [
+      {
+        name: currentYearValue,
+        data: datapointSeries2,
+      },
+    ];
   }
 
-  const datapointSeries2 = [
-    thisYearData?.q1 || null,
-    thisYearData?.q2 || null,
-    thisYearData?.q3 || null,
-    thisYearData?.q4 || null,
-  ];
-
   return {
     categories,
-    dataSeries: [
-      {
-        name: lastYearValue,
-        data: datapointSeries1,
-      },
-      {
-        name: currentYearValue,
-        data: datapointSeries2,
-      },
-    ],
-  };
-};
-
-const formatQuarterlyEpsData = (data: any, yearEnd: string) => {
-  if (!data) return;
-  if (data.length < 2) return;
-
-  data.sort((a: { year: number }, b: { year: number }) => a.year - b.year);
-
-  const thisYearData = data[data.length - 1];
-  const lastYearData = data[data.length - 2];
-
-  const { qMonths, currentYearValue, lastYearValue } = quarterMonthsGetter(
-    yearEnd,
-    thisYearData.year,
-    lastYearData.year
-  );
-  const categories = qMonths;
-  const datapointSeries2 = [
-    thisYearData?.q1 || null,
-    thisYearData?.q2 || null,
-    thisYearData?.q3 || null,
-    thisYearData?.q4 || null,
-  ];
-  const datapointSeries1 = [
-    lastYearData?.q1 || null,
-    lastYearData?.q2 || null,
-    lastYearData?.q3 || null,
-    lastYearData?.q4 || null,
-  ];
-
-  return {
-    // current: epsCurrent,
-    // changeText,
-    // changeTextColor,
-    categories,
-    dataSeries: [
-      {
-        name: lastYearValue,
-        data: datapointSeries1,
-      },
-      {
-        name: currentYearValue,
-        data: datapointSeries2,
-      },
-    ],
+    dataSeries: dataSeries,
   };
 };
 
@@ -363,6 +318,7 @@ const formatShareholdingData = (data: any) => {
 };
 
 export default function Financials({ data }: any) {
+  console.log(data);
   const auth = useSelector((state: any) => state.auth);
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -428,7 +384,7 @@ export default function Financials({ data }: any) {
     data?.screener?.dividend?.data,
     data.dividendYield
   );
-  const epsQuarterly = formatQuarterlyEpsData(data.epsQuaterly, data.yearEnd);
+  const epsQuarterly = formatQuarterlyData(data.epsQuaterly, data.yearEnd);
   const navQuarterly = formatQuarterlyData(data.navQuaterly, data.yearEnd);
   const nocfpsQuarterly = formatQuarterlyData(
     data.nocfpsQuaterly,

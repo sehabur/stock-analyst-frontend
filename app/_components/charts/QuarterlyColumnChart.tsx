@@ -71,6 +71,7 @@ export default function QuarterlyColumnChart(props: any) {
       borderColor: theme.palette.chartGridColor,
     },
     legend: {
+      showForSingleSeries: true,
       itemMargin: {
         horizontal: matchesSmDown ? 10 : 20,
         vertical: matchesSmDown ? 5 : 20,

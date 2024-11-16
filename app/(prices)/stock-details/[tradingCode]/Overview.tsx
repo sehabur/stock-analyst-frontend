@@ -1157,14 +1157,17 @@ export default function Overview({ stock }: any) {
           </Typography>
         </Box>
 
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="center"
-          rowSpacing={{ xs: 2, sm: 6 }}
-          columnSpacing={{ xs: 2, sm: 6 }}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            columnGap: { xs: 6, md: 8 },
+            rowGap: 3,
+          }}
         >
-          <Grid item xs={12} sm={3.5}>
+          <Box>
             <Typography
               color="text.secondary"
               gutterBottom
@@ -1177,9 +1180,9 @@ export default function Overview({ stock }: any) {
                 {stock.fundamentals.sector}
               </Typography>
             </Stack>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} sm={2}>
+          <Box>
             <Typography
               color="text.secondary"
               gutterBottom
@@ -1192,9 +1195,9 @@ export default function Overview({ stock }: any) {
                 {stock.fundamentals.listingYear}
               </Typography>
             </Stack>
-          </Grid>
+          </Box>
 
-          <Grid item xs={12} sm={3.3}>
+          <Box>
             <Typography color="text.secondary" sx={{ fontSize: "1rem" }}>
               E-Mail
             </Typography>
@@ -1206,8 +1209,8 @@ export default function Overview({ stock }: any) {
                 {stock.fundamentals.address.email}
               </Typography>
             </Stack>
-          </Grid>
-          <Grid item xs={12} sm={3.2}>
+          </Box>
+          <Box>
             <Typography
               component={Link}
               href="/"
@@ -1232,8 +1235,8 @@ export default function Overview({ stock }: any) {
                 {stock.fundamentals.address.website}
               </Typography>
             </Stack>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
 
         <Box sx={{ mt: 4 }}>
           <Typography

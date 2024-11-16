@@ -201,7 +201,8 @@ export default function AiGeneratedInsight(props: any) {
       }
 
       doc.getElementById("content").innerHTML = marked.parse(
-        "*Please wait... AI model is generating data...*"
+        `*Please wait...<br/><br/>
+        AI model is generating data...*`
       );
 
       const res: any = await fetch(`/api/aiGeneratedInsight`, {
@@ -472,6 +473,7 @@ export default function AiGeneratedInsight(props: any) {
                   px: { xs: 2, md: 3 },
                   pt: 2,
                   pb: 2,
+                  color: "text.primary",
                   fontSize: fontSelected.size,
                   fontFamily: fontSelected.family,
                 }}

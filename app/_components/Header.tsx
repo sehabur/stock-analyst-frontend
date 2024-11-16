@@ -519,6 +519,7 @@ export default function Header() {
       >
         Supercharts
       </Button>
+      <Divider light />
       <Button
         component={Link}
         href="/ai-insight"

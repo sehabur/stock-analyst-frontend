@@ -193,6 +193,14 @@ export default function IndexMover({ data }: any) {
             }}
           />
         </Box>
+        {data[typeAlignment].length < 1 && (
+          <Typography
+            textAlign="center"
+            sx={{ fontSize: "1rem", color: "text.secondary", pt: 3 }}
+          >
+            No data to display
+          </Typography>
+        )}
         <SeeMoreButton href="/index-mover" />
       </Paper>
     </Box>

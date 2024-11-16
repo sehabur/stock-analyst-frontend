@@ -164,17 +164,18 @@ export default function AiGeneratedInsight(props: any) {
   const getQueryDataBody = () => {
     return {
       technical: {
-        betaOneYear: technicals?.beta,
-        movingAverages: technicals?.movingAverages,
-        oscillators: technicals?.oscillators,
         supportAndResistance: technicals?.pivots,
+        oscillators: technicals?.oscillators,
+        movingAverages: technicals?.movingAverages,
         candlestick: technicals?.candlestick?.value,
+        betaOneYear: technicals?.beta,
         currency: "BDT",
       },
       fundamentalRatio: {
         priceToEarningRatio: pe?.toFixed(2),
-        priceToBookValueRatio: pbv?.toFixed(2),
         earningsPerShare: epsCurrent?.toFixed(2),
+        NetAssetValue: fundamentals?.navQuarterly?.value?.toFixed(2),
+        priceToBookValueRatio: pbv?.toFixed(2),
         priceToSalesRatio: fundamentals?.ps?.value?.toFixed(2),
         debtToEquityRatio: fundamentals?.de?.value?.toFixed(2),
         returnOfEquity: fundamentals?.roe?.value?.toFixed(2),
@@ -184,25 +185,24 @@ export default function AiGeneratedInsight(props: any) {
         netIncomeRatio: fundamentals?.netIncomeRatio?.value?.toFixed(2),
         NetOperatingCashFlowPerShare:
           fundamentals?.nocfpsQuarterly?.value?.toFixed(2),
-        NetAssetValue: fundamentals?.navQuarterly?.value?.toFixed(2),
         currency: "BDT",
       },
       financial: {
+        totalAsset: fundamentals?.totalAsset?.value,
+        revenue: fundamentals?.revenue?.value,
+        netIncome: fundamentals?.netIncome?.value,
         reserveAndSurplus: fundamentals?.reserveSurplus?.value * 1000000,
         bookValue: fundamentals?.bookValue?.value,
         totalLiabilities: fundamentals?.totalLiabilities?.value,
-        netIncome: fundamentals?.netIncome?.value,
-        totalAsset: fundamentals?.totalAsset?.value,
-        revenue: fundamentals?.revenue?.value,
         earningBeforeInterestAndTaxes: fundamentals?.ebit?.value,
         operatingProfit: fundamentals?.operatingProfit?.value,
         currency: "BDT",
       },
       fairValue: {
+        dividendInPercentage: cashDividend,
         priceToCashFlowRatio: pcf?.toFixed(2),
         NetOperatingCashFlowPerShare:
           fundamentals?.nocfpsQuarterly?.value?.toFixed(2),
-        dividendInPercentage: cashDividend,
         currentPrice: price,
         currency: "BDT",
       },
@@ -221,7 +221,8 @@ export default function AiGeneratedInsight(props: any) {
       }
 
       doc.getElementById("content").innerHTML = marked.parse(
-        "*Please wait... AI model is generating data...*"
+        `*Please wait...<br/><br/>
+        AI model is generating data...*`
       );
 
       const queryBody: any = getQueryDataBody();
@@ -421,6 +422,7 @@ export default function AiGeneratedInsight(props: any) {
                   px: { xs: 2, md: 3 },
                   pt: 2,
                   pb: 2,
+                  color: "text.primary",
                   fontSize: languageAlignment == "Bn" ? "1rem" : ".875rem",
                   fontFamily:
                     languageAlignment == "Bn"

@@ -170,29 +170,39 @@ export default function Beta({ data }: any) {
           </StyledToggleButtonGroup>
         </Box>
 
-        <Box>
-          <DataGrid
-            rows={data[typeAlignment]}
-            columns={columns}
-            hideFooter={true}
-            rowHeight={41}
-            sx={{
-              ".MuiDataGrid-columnHeader": {
-                color: "text.secondary",
-                // fontSize: { xs: ".8rem", sm: ".8rem" },
-              },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                overflow: "visible",
-                lineHeight: "1.43rem",
-                whiteSpace: "normal",
-              },
-              border: "none",
-              width: matchesSmUp ? "100%" : "90vw",
-              fontSize: ".9rem",
-              fontWeight: 500,
-            }}
-          />
-        </Box>
+        {data[typeAlignment].length > 0 && (
+          <Box>
+            <DataGrid
+              rows={data[typeAlignment]}
+              columns={columns}
+              hideFooter={true}
+              rowHeight={41}
+              sx={{
+                ".MuiDataGrid-columnHeader": {
+                  color: "text.secondary",
+                  // fontSize: { xs: ".8rem", sm: ".8rem" },
+                },
+                "& .MuiDataGrid-columnHeaderTitle": {
+                  overflow: "visible",
+                  lineHeight: "1.43rem",
+                  whiteSpace: "normal",
+                },
+                border: "none",
+                width: matchesSmUp ? "100%" : "90vw",
+                fontSize: ".9rem",
+                fontWeight: 500,
+              }}
+            />
+          </Box>
+        )}
+        {data[typeAlignment].length < 1 && (
+          <Typography
+            textAlign="center"
+            sx={{ fontSize: "1rem", color: "text.secondary", pt: 4, pb: 2 }}
+          >
+            No data to display
+          </Typography>
+        )}
         <SeeMoreButton href="/beta" />
       </Paper>
     </Box>

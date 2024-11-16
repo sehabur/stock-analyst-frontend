@@ -203,6 +203,14 @@ export default function Dashboard({ data }: any) {
           }}
         />
       </Box>
+      {data[typeAlignment].length < 1 && (
+        <Typography
+          textAlign="center"
+          sx={{ fontSize: "1.1rem", color: "text.secondary", pt: 2, pb: 6 }}
+        >
+          No data to display
+        </Typography>
+      )}
     </Box>
   );
 }
