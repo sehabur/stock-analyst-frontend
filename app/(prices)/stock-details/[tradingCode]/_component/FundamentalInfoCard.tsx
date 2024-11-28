@@ -14,6 +14,7 @@ export default function FundamentalInfoCard(props: any) {
   const { text } = props;
 
   const theme = useTheme();
+
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (

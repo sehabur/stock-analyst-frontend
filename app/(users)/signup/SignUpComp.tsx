@@ -20,7 +20,7 @@ import Spinner from "@/components/shared/Spinner";
 import { authActions } from "_store";
 import { useDispatch } from "react-redux";
 
-export default function SignUpComp() {
+export default function SignUpComp({ redirect, action }: any) {
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -32,9 +32,9 @@ export default function SignUpComp() {
 
   const dispatch = useDispatch();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  const redirect = searchParams.get("redirect");
+  // const redirect = searchParams.get("redirect");
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -82,7 +82,17 @@ export default function SignUpComp() {
         // handlePremiumDialogOpen();
         dispatch(authActions.login(data.user));
         setErrorMessage("");
-        router.push("/");
+
+        if (action === "generate_otp") {
+          const res = await fetch(`/api/generate-otp`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${data.user.token}`,
+            },
+          });
+        }
+        router.push(redirect || "/");
       } else {
         let errorMsg = "";
 
@@ -241,8 +251,9 @@ export default function SignUpComp() {
         </Button>
         <Typography
           component={Link}
-          href={`/signin${redirect ? "?redirect=" + redirect : ""}`}
-          variant="body2"
+          href={`/signin${
+            redirect ? "?redirect=" + encodeURIComponent(redirect) : ""
+          }${action ? "&action=" + action : ""}`}
           sx={{
             textDecoration: "underline",
             color: "primary.main",

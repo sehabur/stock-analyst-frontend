@@ -13,7 +13,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -32,7 +32,7 @@ export default function FavoriteStocksCard(props: any) {
 
   const itemType = item.type;
 
-  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
+  const isSpotEnabled = isBetweenSpotRange(item.spotRange);
 
   const theme = useTheme();
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));

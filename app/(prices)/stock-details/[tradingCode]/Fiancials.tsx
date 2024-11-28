@@ -318,7 +318,6 @@ const formatShareholdingData = (data: any) => {
 };
 
 export default function Financials({ data }: any) {
-  console.log(data);
   const auth = useSelector((state: any) => state.auth);
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -1194,7 +1193,8 @@ export default function Financials({ data }: any) {
         {!auth?.isPremiumEligible && (
           <Box
             sx={{
-              py: { xs: 1, sm: 4 },
+              py: { xs: 4, sm: 4 },
+              px: 1,
               maxWidth: 700,
               mx: "auto",
               display: auth?.isPremiumEligible ? "none" : "block",
@@ -1410,24 +1410,23 @@ export default function Financials({ data }: any) {
               </Grid>
               <Grid item xs={6} sm={3}>
                 <FinancialCard
-                  titleShort="Net Income"
-                  title="Net Income"
-                  unit="Crore"
-                  divideFactor={10000000}
-                  data={data?.screener?.netIncome}
-                  dialogtype="netIncome"
-                  handleItemClick={handleItemClick}
-                />
-              </Grid>
-
-              <Grid item xs={6} sm={3}>
-                <FinancialCard
                   titleShort="Operating Profit"
                   title="Operating Profit"
                   unit="Crore"
                   divideFactor={10000000}
                   data={data?.screener?.operatingProfit}
                   dialogtype="operatingProfit"
+                  handleItemClick={handleItemClick}
+                />
+              </Grid>
+              <Grid item xs={6} sm={3}>
+                <FinancialCard
+                  titleShort="Net Income"
+                  title="Net Income"
+                  unit="Crore"
+                  divideFactor={10000000}
+                  data={data?.screener?.netIncome}
+                  dialogtype="netIncome"
                   handleItemClick={handleItemClick}
                 />
               </Grid>

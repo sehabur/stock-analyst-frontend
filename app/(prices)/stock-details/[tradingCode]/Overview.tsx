@@ -1,6 +1,7 @@
 "use client";
-import AreaChart from "@/components/charts/AreaChart";
-import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
+import React from "react";
+import Link from "next/link";
+import { DateTime } from "luxon";
 import {
   Box,
   Grid,
@@ -8,58 +9,20 @@ import {
   useTheme,
   useMediaQuery,
   Paper,
-  Card,
-  CardActionArea,
-  CardContent,
-  Slider,
   Divider,
+  Stack,
   Button,
 } from "@mui/material";
-import { DateTime } from "luxon";
-import React from "react";
-import { grey } from "@mui/material/colors";
-import OverviewCard from "@/components/cards/OverviewCard";
-import Link from "next/link";
-
+import InfoIcon from "@mui/icons-material/Info";
 import { styled } from "@mui/material/styles";
-
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
   toggleButtonGroupClasses,
 } from "@mui/material/ToggleButtonGroup";
-
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded";
-import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import Stack from "@mui/material/Stack";
-import { constants } from "crypto";
 
-const changeDays = [
-  {
-    field: "today",
-    title: "Today",
-  },
-  {
-    field: "oneWeek",
-    title: "1 Week",
-  },
-  {
-    field: "oneMonth",
-    title: "1 Month",
-  },
-  {
-    field: "sixMonth",
-    title: "6 Months",
-  },
-  {
-    field: "oneYear",
-    title: "1 Year",
-  },
-  {
-    field: "fiveYear",
-    title: "5 Years",
-  },
-];
+import AreaChart from "@/components/charts/AreaChart";
+import CandlestickVolumeChart from "@/components/charts/CandlestickVolumeChart";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   [`& .${toggleButtonGroupClasses.grouped}`]: {
@@ -174,7 +137,8 @@ function isValidDate(date: any) {
 const agmDateCalculation = (
   agmDateInit: string,
   recordDateInit: string,
-  declarationDateInit: string
+  declarationDateInit: string,
+  lastUpdateDate: string
 ) => {
   const todayDate = DateTime.utc().startOf("day");
 
@@ -211,8 +175,13 @@ const agmDateCalculation = (
     declarationDate = declarationDateFormatted.toFormat("dd MMM yyyy");
   }
 
+  let isTodayRecordDate = false;
+
   if (recordDateInit) {
     const recordDateFormatted = DateTime.fromISO(recordDateInit);
+
+    isTodayRecordDate =
+      new Date(lastUpdateDate).getTime() == new Date(recordDateInit).getTime();
 
     if (recordDateFormatted < todayDate) {
       recordPrefix = "Last";
@@ -229,6 +198,7 @@ const agmDateCalculation = (
     agmDate,
     recordDate,
     declarationDate,
+    isTodayRecordDate,
   };
 };
 
@@ -267,7 +237,8 @@ export default function Overview({ stock }: any) {
   const dates = agmDateCalculation(
     stock.fundamentals.lastAgm,
     stock.fundamentals.recordDate,
-    stock.fundamentals.declarationDate
+    stock.fundamentals.declarationDate,
+    stock.latest.date
   );
 
   const handleAlignment = (
@@ -298,6 +269,30 @@ export default function Overview({ stock }: any) {
       >
         {stock.fundamentals.tradingCode} Chart
       </Button>
+      {dates.isTodayRecordDate && (
+        <Paper
+          elevation={0}
+          sx={{
+            bgcolor: "secondaryBackground",
+            borderRadius: 2,
+            // maxWidth: 500,
+            mt: 1,
+            mb: 4,
+            ml: 0.8,
+            mr: 1,
+            py: 1.8,
+            px: 2,
+          }}
+        >
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <InfoIcon color="info" />
+            <Typography sx={{ fontSize: { xs: ".9rem", sm: "1.1rem" } }}>
+              No trading as today is record date
+            </Typography>
+          </Stack>
+        </Paper>
+      )}
+
       <Box
         sx={{
           display: "flex",
@@ -598,13 +593,13 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.open}
+                {dates.isTodayRecordDate ? "-" : stock.latest.open}
               </Typography>
               <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                BDT
+                {dates?.isTodayRecordDate ? "" : "BDT"}
               </Typography>
             </Stack>
           </Grid>
@@ -621,13 +616,13 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.low}
+                {dates.isTodayRecordDate ? "-" : stock.latest.low}
               </Typography>
               <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                BDT
+                {dates?.isTodayRecordDate ? "" : "BDT"}
               </Typography>
             </Stack>
           </Grid>
@@ -644,14 +639,14 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.latest.high}
+                {dates.isTodayRecordDate ? "-" : stock.latest.high}
               </Typography>
 
               <Typography
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                BDT
+                {dates?.isTodayRecordDate ? "" : "BDT"}
               </Typography>
             </Stack>
           </Grid>
@@ -804,7 +799,9 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.isCircuitEnabled
+                {dates.isTodayRecordDate
+                  ? "-"
+                  : dates.isCircuitEnabled
                   ? stock.fundamentals.circuitLow
                   : "No limit"}
               </Typography>
@@ -812,7 +809,9 @@ export default function Overview({ stock }: any) {
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                {dates.isCircuitEnabled ? "BDT" : ""}
+                {!dates?.isTodayRecordDate && dates.isCircuitEnabled
+                  ? "BDT"
+                  : ""}
               </Typography>
             </Stack>
           </Grid>
@@ -829,7 +828,9 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {dates.isCircuitEnabled
+                {dates.isTodayRecordDate
+                  ? "-"
+                  : dates.isCircuitEnabled
                   ? stock.fundamentals.circuitUp
                   : "No limit"}
               </Typography>
@@ -837,7 +838,9 @@ export default function Overview({ stock }: any) {
                 color="text.secondary"
                 sx={{ ml: 0.7, fontSize: ".875rem" }}
               >
-                {dates.isCircuitEnabled ? "BDT" : ""}
+                {!dates?.isTodayRecordDate && dates.isCircuitEnabled
+                  ? "BDT"
+                  : ""}
               </Typography>
             </Stack>
           </Grid>
@@ -891,7 +894,7 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.pe?.value || "-"}
+                {stock.fundamentals.pe?.value?.toFixed(2) || "-"}
               </Typography>
             </Stack>
           </Grid>
@@ -910,8 +913,8 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.screener?.epsQuarterly?.value ||
-                  stock.fundamentals.screener?.epsYearly?.value}
+                {stock.fundamentals.screener?.epsQuarterly?.value?.toFixed(2) ||
+                  stock.fundamentals.screener?.epsYearly?.value?.toFixed(2)}
               </Typography>
             </Stack>
           </Grid>
@@ -930,8 +933,8 @@ export default function Overview({ stock }: any) {
                   fontWeight: 500,
                 }}
               >
-                {stock.fundamentals.screener?.navQuarterly?.value ||
-                  stock.fundamentals.screener?.navYearly?.value}
+                {stock.fundamentals.screener?.navQuarterly?.value?.toFixed(2) ||
+                  stock.fundamentals.screener?.navYearly?.value?.toFixed(2)}
               </Typography>
             </Stack>
           </Grid>

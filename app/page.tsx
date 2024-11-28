@@ -129,7 +129,7 @@ async function getIndexMover() {
 export const metadata: Metadata = {
   title: "Stocksupporter - Stock Analysis Tool for DSE",
   description:
-    "Get finacial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
+    "Get financial data and prepared analytics for Dhaka Stock Exchange (DSE) stocks helping you find the perfect trade.",
   keywords: [
     "DSE",
     "DSEX",

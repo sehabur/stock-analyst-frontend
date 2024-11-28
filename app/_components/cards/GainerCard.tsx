@@ -15,7 +15,7 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 import TrendingDownRoundedIcon from "@mui/icons-material/TrendingDownRounded";
 import AdjustIcon from "@mui/icons-material/Adjust";
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -36,7 +36,7 @@ export default function GainerCard(props: any) {
 
   const matchesSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
+  const isSpotEnabled = isBetweenSpotRange(item.spotRange);
 
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>

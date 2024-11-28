@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 
 import styles from "./Dashboard.module.css";
 import MobileViewPriceCard from "@/components/cards/MobileViewPriceCard";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 // const variantMap = [
 //   {
@@ -454,9 +454,7 @@ export default function Dashboard({ initialdata }: any) {
       close: item.close,
       sector: item.sector,
       category: item.category,
-      haltStatus: isWithinPreviousTwoDays(item.recordDate)
-        ? "spot"
-        : item.haltStatus,
+      haltStatus: isBetweenSpotRange(item.spotRange) ? "spot" : item.haltStatus,
       recordDate: item.recordDate,
       change: item[variantAlignment].change,
       percentChange: item[variantAlignment].percentChange,

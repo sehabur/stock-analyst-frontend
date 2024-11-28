@@ -14,7 +14,7 @@ import Alert from "@mui/material/Alert/Alert";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { authActions } from "_store";
+import { authActions, favoriteActions } from "_store";
 import Spinner from "@/components/shared/Spinner";
 
 export default function SignInComp({
@@ -68,7 +68,10 @@ export default function SignInComp({
 
       if (res.ok) {
         setErrorMessage("");
+
         dispatch(authActions.login(data.user));
+        dispatch(favoriteActions.setData(data.user.favorites));
+
         externalDialogClose();
 
         if (action === "generate_otp") {
@@ -79,12 +82,6 @@ export default function SignInComp({
               Authorization: `Bearer ${data.user.token}`,
             },
           });
-
-          // if (res.ok) {
-          //   router.push(redirect || "/");
-          // } else {
-          //   setErrorMessage("OTP generation failed");
-          // }
         }
         router.push(redirect || "/");
       } else {
@@ -182,7 +179,9 @@ export default function SignInComp({
         <Box>
           <Typography
             component={Link}
-            href={`/signup${redirect ? "?redirect=" + redirect : ""}`}
+            href={`/signup${
+              redirect ? "?redirect=" + encodeURIComponent(redirect) : ""
+            }${action ? "&action=" + action : ""}`}
             sx={{
               textDecoration: "underline",
               color: "primary.main",

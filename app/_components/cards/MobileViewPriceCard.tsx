@@ -3,10 +3,10 @@ import React from "react";
 import Link from "next/link";
 
 import { Box, Grid, Paper, Typography, Stack, Chip } from "@mui/material";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 export default function MobileViewPriceCard({ item }: any) {
-  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
+  const isSpotEnabled = isBetweenSpotRange(item.spotRange);
 
   return (
     <Box component={Link} href={`/stock-details/${item.tradingCode}`}>

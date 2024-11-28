@@ -12,6 +12,14 @@ export const getUniques = (array: any, key: string) => {
   return uniques;
 };
 
+export const isBetweenSpotRange = (spotRangeArr: Date[]) => {
+  if (!spotRangeArr || spotRangeArr.length < 2) return false;
+  const start = new Date(spotRangeArr[0]).getTime();
+  const end = new Date(spotRangeArr[1]).getTime();
+  const now = new Date().getTime();
+  return now > start && now < end;
+};
+
 export const isWithinPreviousTwoDays = (givenDate: string) => {
   if (!givenDate) return false;
 

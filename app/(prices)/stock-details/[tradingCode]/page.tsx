@@ -22,7 +22,7 @@ import DoDisturbOnRoundedIcon from "@mui/icons-material/DoDisturbOnRounded";
 import RadioButtonCheckedRoundedIcon from "@mui/icons-material/RadioButtonCheckedRounded";
 import Trades from "./_component/Trades";
 import FavoriteButton from "@/components/buttons/FavoriteButton";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 const getStockDetails = async (tradingCode: string) => {
   const res = await fetch(
@@ -133,7 +133,7 @@ export default async function StockDetails({ params }: any) {
       ? "error.main"
       : "success.main";
 
-  const isSpotEnabled = isWithinPreviousTwoDays(stock.fundamentals.recordDate);
+  const isSpotEnabled = isBetweenSpotRange(stock.fundamentals.spotRange);
 
   return (
     <Box
@@ -169,7 +169,7 @@ export default async function StockDetails({ params }: any) {
 
             <Box sx={{ display: "flex", flexWrap: "wrap" }}>
               <Chip
-                label={stock.fundamentals.tradingCode}
+                label={tradingCode}
                 variant="outlined"
                 sx={{
                   borderRadius: 1,
@@ -321,16 +321,13 @@ export default async function StockDetails({ params }: any) {
             >
               {latestPriceData.time}
             </Typography>
-            <Trades
-              data={stock.minute}
-              tradingCode={stock.fundamentals.tradingCode}
-            />
+            <Trades data={stock.minute} tradingCode={tradingCode} />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", mt: 0.8 }}>
-            <FavoriteButton tradingCode={stock.fundamentals.tradingCode} />
+            <FavoriteButton tradingCode={tradingCode} />
             <Button
               component={Link}
-              href={`/supercharts?symbol=${stock.fundamentals.tradingCode}`}
+              href={`/supercharts?symbol=${encodeURIComponent(tradingCode)}`}
               target="_blank"
               sx={{ borderRadius: 2, py: 1.05 }}
               variant="contained"

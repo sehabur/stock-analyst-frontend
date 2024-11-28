@@ -45,6 +45,13 @@ export const yearEndMap = [
     q3: "Q3 (Oct-Dec)",
     q4: "Q4 (Jan-Mar)",
   },
+  {
+    yearEnd: "30-Sep",
+    q1: "Q1 (Oct-Dec)",
+    q2: "Q2 (Jan-Mar)",
+    q3: "Q3 (Apr-Jun)",
+    q4: "Q4 (Jul-Sep)",
+  },
 ];
 
 export const dse30Stocks = [

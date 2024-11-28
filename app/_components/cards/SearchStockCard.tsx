@@ -10,7 +10,7 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 const addPlusSign = (value: number) => {
   let result;
@@ -29,7 +29,7 @@ export default function SearchStockCard(props: any) {
 
   const itemType = item.type;
 
-  const isSpotEnabled = isWithinPreviousTwoDays(item.recordDate);
+  const isSpotEnabled = isBetweenSpotRange(item.spotRange);
 
   return (
     <>

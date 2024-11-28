@@ -294,7 +294,8 @@ export default function AiGeneratedInsight(props: any) {
         sx={{
           maxWidth: 700,
           mx: "auto",
-          py: 2,
+          py: 4,
+          px: 3,
           display: auth?.isPremiumEligible ? "none" : "block",
         }}
       >

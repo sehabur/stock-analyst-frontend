@@ -7,7 +7,9 @@ import Typography from "@mui/material/Typography";
 
 import SignUpComp from "./SignUpComp";
 
-export default function SignUp() {
+export default function SignUp({ searchParams }: any) {
+  const { redirect, action } = searchParams;
+
   return (
     <Box
       component="main"
@@ -30,7 +32,7 @@ export default function SignUp() {
         </Typography>
       </Box>
       <Box sx={{ px: 2, pb: 4, maxWidth: 400, mx: "auto" }}>
-        <SignUpComp />
+        <SignUpComp redirect={redirect} action={action} />
       </Box>
     </Box>
   );

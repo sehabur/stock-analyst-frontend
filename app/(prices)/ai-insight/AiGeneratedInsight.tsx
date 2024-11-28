@@ -14,6 +14,8 @@ import {
   Autocomplete,
   TextField,
   Button,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup, {
@@ -139,10 +141,20 @@ export default function AiGeneratedInsight(props: any) {
 
   const [doc, setDoc] = useState<any>();
 
+  const [openPremiumDialog, setOpenPremiumDialog] = useState(false);
+
   const [fontSelected, setFontSelected] = useState({
     size: ".875rem",
     family: "'Poppins', sans-serif",
   });
+
+  const handlePremiumDialogOpen = () => {
+    setOpenPremiumDialog(true);
+  };
+
+  const handlePremiumDialogClose = () => {
+    setOpenPremiumDialog(false);
+  };
 
   const handleAlignmentChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -303,12 +315,26 @@ export default function AiGeneratedInsight(props: any) {
     });
   };
 
+  useEffect(() => {
+    if (!auth?.isPremiumEligible) handlePremiumDialogOpen();
+    if (auth?.isPremiumEligible) handlePremiumDialogClose();
+  }, [auth]);
+
   // console.log(tradingCode, data);
 
   return (
     <Box sx={{ pt: { xs: 0, md: 4 }, pb: { xs: 0, md: 4 }, width: "100%" }}>
-      {/* <LoadingSpinner open={isLoading} /> */}
-      <Box
+      <Dialog
+        open={openPremiumDialog}
+        fullWidth
+        maxWidth="sm"
+        disableScrollLock={true}
+      >
+        <DialogContent>
+          <PremiumDialogContent />
+        </DialogContent>
+      </Dialog>
+      {/* <Box
         sx={{
           maxWidth: 700,
           mx: "auto",
@@ -317,7 +343,7 @@ export default function AiGeneratedInsight(props: any) {
         }}
       >
         <PremiumDialogContent variant="outlined" />
-      </Box>
+      </Box> */}
       <Box
         sx={{
           maxWidth: 1050,
@@ -328,7 +354,7 @@ export default function AiGeneratedInsight(props: any) {
           pb: { xs: 3, md: 5 },
           pt: { xs: 3, md: 5 },
           borderRadius: { xs: 0, md: 2 },
-          display: auth?.isPremiumEligible ? "flex" : "none",
+          // display: auth?.isPremiumEligible ? "flex" : "none",
         }}
       >
         <Grid container columnSpacing={5}>

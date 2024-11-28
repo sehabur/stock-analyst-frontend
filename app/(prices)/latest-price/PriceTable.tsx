@@ -10,7 +10,7 @@ import {
 } from "@mui/x-data-grid";
 import { styled } from "@mui/material/styles";
 import styles from "./Pricetable.module.css";
-import { isWithinPreviousTwoDays } from "_helper/getter";
+import { isBetweenSpotRange, isWithinPreviousTwoDays } from "_helper/getter";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }: any) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -178,9 +178,7 @@ export default function PriceTable(props: any) {
     return {
       ...item,
       id: index,
-      haltStatus: isWithinPreviousTwoDays(item.recordDate)
-        ? "spot"
-        : item.haltStatus,
+      haltStatus: isBetweenSpotRange(item.spotRange) ? "spot" : item.haltStatus,
     };
   });
 
